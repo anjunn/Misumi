@@ -1,0 +1,16 @@
+let loginPage= require('../functions/login.js');
+let upLoadpage= require('../functions/upload.js');
+let data = require('../Data/dataset.js');
+
+module.exports = function () {
+
+  this.Given(/^User access sample 3D page$/, () => {
+    browser.url('https://prs-origin-tst.meviy.misumi-ec.com/');
+  });
+
+  this.When(/^User login to meviy$/, (table) => {
+    let loginDetails= table.rowsHash();
+    loginPage.loginToMeviy(loginDetails);
+  });
+ 
+};

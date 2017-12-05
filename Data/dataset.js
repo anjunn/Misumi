@@ -1,28 +1,13 @@
 	module.exports = {
 
-	login:
-	{
-		userName:"Qburst1",
-		password:"test1",
-	},
-	
-   mypageUrl:
+	 error:
    {
-   	url:"https://prs-origin-tst.meviy.misumi-ec.com/mypage"
+      error1:"正常に認証処理ができませんでした。ログインIDとパスワードをお確かめの上、再度ログインしてください。",
    },
-
-   itemName:
-   {
-   	item:"パーツ一覧"
+   uploadPath :
+  {
+      url1:"../QA_Automation/FileUpload/Core-Pin.x_t",
+      url2:"../QA_Automation/FileUpload/multiple_pins.SLDPRT",
+      url3:"../QA_Automation/FileUpload/pin_and plate.x_t"
    },
-
-   orderPage:
-   {
-   	title:"注文手続き"
-   },
-
-    uploadPath:
-   {
-      path:"../misumi/FileUpload/L32B_EP-CP_COVER_LWR_EE.SLDPRT"
-   }
 };
