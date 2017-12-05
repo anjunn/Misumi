@@ -1,0 +1,32 @@
+{
+  "name": "QA Automation for meviy
+  "description": "QA Automation for meviy",
+  "version": "1.0.0",
+  "scripts": {
+    "test-ci-chrome": "node_modules/.bin/wdio wdio.conf.chrome.js --suite example",
+    "test-ci-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite example",
+    "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
+    "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0"
+  },
+  "dependencies": {
+    "chai": "^3.5.0",
+    "cucumber": "^2.2.0",
+    "deepmerge": "^1.3.2",
+    "fibers": "^2.0.0",
+    "node-resemble-js": "^0.2.0",
+    "pixelmatch": "^4.0.2",
+    "require-dir": "^0.3.1",
+    "selenium-standalone": "^6.4.1",
+    "wdio-cucumber-framework": "^0.3.0",
+    "wdio-spec-reporter": "^0.1.0",
+    "wdio-chromedriver-service": "~0.1",
+    "wdio-selenium-standalone-service": "^0.0.8",
+    "webdriverio": "^4.8.0"
+  },
+  "devDependencies": {
+    "wdio-allure-reporter": "^0.1.2",
+    "wdio-chromedriver-service": "^0.1.1",
+    "wdio-screenshot": "^0.6.0",
+    "wdio-visual-regression-service": "^0.8.0"
+  }
+}
