@@ -23,7 +23,15 @@ let misumi = {
         this.loginbtn.click();
       } 
     }
-  }
+  },
+  checkUrl: {
+    value: function() {
+      browser.waitForEnabled('#uploadfile');
+      var url = browser.getUrl();
+      expect(url).to.equal(data.url.myPageUrl);
+      } 
+    }
+
 };
 
 module.exports = Object.create(Page,misumi);

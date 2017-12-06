@@ -8,9 +8,12 @@ module.exports = function () {
     browser.url('https://prs-origin-tst.meviy.misumi-ec.com/');
   });
 
-  this.When(/^User login to meviy$/, (table) => {
-    let loginDetails= table.rowsHash();
+  this.When(/^User login to meviy$/, () => {
+    let loginDetails= data.loginCredentials[0];
     loginPage.loginToMeviy(loginDetails);
   });
- 
+
+  this.Then(/User lands in mypage url$/, () => {
+  	loginPage.checkUrl();
+      });
 };
