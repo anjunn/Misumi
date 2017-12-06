@@ -1,28 +1,28 @@
 	module.exports = {
+   loginCredentials:[
+    {
+      UserId:"qburst5",
+      Password:"T76JJ23E",
+    },
+    {
+      UserId:"qburst6",
+      Password:"DIRJR2F7",
+    },
+     {
+      UserId:"qburst7",
+      Password:"5FDS3FTK",
+     }
+   ],
 
-	login:
-	{
-		userName:"Qburst1",
-		password:"test1",
-	},
-	
-   mypageUrl:
+   url:
    {
-   	url:"https://prs-origin-tst.meviy.misumi-ec.com/mypage"
+      myPageUrl:"https://prs-origin-tst.meviy.misumi-ec.com/mypage",
    },
 
-   itemName:
-   {
-   	item:"パーツ一覧"
+   uploadPath :
+  {
+      url1:"../QA_Automation/Data/FileUpload/Core-Pin.x_t",
+      url2:"../QA_Automation/Data/FileUpload/multiple_pins.SLDPRT",
+      url3:"../QA_Automation/Data/FileUpload/pin_and plate.x_t"
    },
-
-   orderPage:
-   {
-   	title:"注文手続き"
-   },
-
-    uploadPath:
-   {
-      path:"../misumi/FileUpload/L32B_EP-CP_COVER_LWR_EE.SLDPRT"
-   }
 };
