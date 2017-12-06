@@ -11,17 +11,19 @@ let misumi = {
 
   loginToMeviy: {
     value: function(loginDetails) {
-      this.startRightAway.waitForEnabled();
-      this.startRightAway.click();
+      // this.startRightAway.waitForEnabled();
+      // this.startRightAway.click();
       this.memberID.waitForEnabled();
       this.memberID.setValue(loginDetails.UserId);
       this.password.setValue(loginDetails.Password);
       this.loginbtn.click();
-      browser.pause(1000);
-      if (typeof(this.error) != "undefined") {
-        this.loginbtn.waitForEnabled();
-        this.loginbtn.click();
-      } 
+      browser.pause(3000);
+         var url = browser.getUrl();
+         if(url=="https://prs-origin-tst.meviy.misumi-ec.com/login")
+         {
+          this.loginbtn.waitForEnabled();
+          this.loginbtn.click();
+        } 
     }
   },
   checkUrl: {

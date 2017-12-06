@@ -9,10 +9,13 @@ let singlePin = {
   surfaceTreatment: {get: function () { return browser.element('//*[@name="surfaceId"]');}},
   tolerance:{get: function () { return browser.element('//*[@name="toleranceClassId"]');}},
   getEstimate:{get: function () { return browser.element('//*[contains(text(),"見積りに進む")]');}},
-  thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure//img'); } },
+  thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
+
+  quantityChange: {get: function () { return browser.element('//*[@id="0"]');}},
+  
 
   quotationConditionFill: {
-    value: function(loginDetails) {
+    value: function() {
       this.quantity.waitForEnabled();
       this.quantity.setValue(singlePinData.quotationCondition.quantity);
       this.material.selectByVisibleText(singlePinData.quotationCondition.material);
@@ -23,12 +26,22 @@ let singlePin = {
     }
   },
   checkThumbNail: {
-    value: function(loginDetails) {
-      this.thumbnail.waitForVisible();
+    value: function() {
+      
       
     }
   },
-
+  openProject: {
+    value: function() {
+      this.thumbnail.waitForVisible();
+      this.thumbnail.click();
+    }
+  },
+  quotionConditionInPartsView: {
+    value: function() {
+      this.quantityChange.setValue(singlePinData.quotionConditionInPartsView.quantity);
+    }
+  }
 };
 
 module.exports = Object.create(Page,singlePin);

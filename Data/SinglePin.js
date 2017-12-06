@@ -6,4 +6,8 @@
       surfaceTreatment :"なし",
       ToleranceGrade :"並級",
    },
+     quotionConditionInPartsView:
+    {
+      quantity :"6",
+    },
 };

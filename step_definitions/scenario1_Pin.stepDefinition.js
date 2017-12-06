@@ -15,6 +15,20 @@ module.exports = function () {
   });
 
    this.Then(/^Thumb nail of 3D appears$/, () => {
-   singlePinPage.quotationConditionFill();
+   singlePinPage.checkThumbNail();
   });
-};
+
+  this.Given(/^User Open the uploaded project$/, () => {
+   singlePinPage.openProject();
+  });
+
+  this.When(/^Define quotation condition in parts view$/, () => {
+   singlePinPage.quotionConditionInPartsView();
+  });
+
+   this.Then(/^Place the order$/, () => {
+   singlePinPage.placeOrder();
+  });
+
+
+  };
