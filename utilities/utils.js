@@ -12,11 +12,11 @@ const commonUtilities = {
       }
       const isVisible = browser.isVisible('//span[@class="percent"]');
       if (isVisible && index * 100 < waitTime) {
-        this.waitForLoading(waitTime, index + 1);
+        this.waitForLoading(index + 1);
       } else if (isVisible && index * 100 >= waitTime) {
         throw `Processing not finished even after ${waitTime}`;
       } else if (!isVisible && !waitForExtraLoad) {
-        this.waitForLoading(waitTime, index, true);
+        this.waitForLoading(index, true);
       }
     } catch (err) {
       console.log(`Wait for Loading failed with error: ${err}`);

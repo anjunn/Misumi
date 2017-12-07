@@ -8,11 +8,13 @@ let misumi = {
   password: {get: function () { return browser.element('//*[@id="pass"]');}},
   loginbtn: {get: function () { return browser.element('//*[@class="btn btnColor01"]');}},
   error: {get: function () { return browser.element('//*[@id="error2"]/small');}},
-
+  logoutUser:{get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
+  logout:{get: function () { return browser.element('//*[@id="logoutButton"]');}},
+  
   loginToMeviy: {
     value: function(loginDetails) {
-      // this.startRightAway.waitForEnabled();
-      // this.startRightAway.click();
+      this.startRightAway.waitForEnabled();
+      this.startRightAway.click();
       this.memberID.waitForEnabled();
       this.memberID.setValue(loginDetails.UserId);
       this.password.setValue(loginDetails.Password);
@@ -32,8 +34,14 @@ let misumi = {
       var url = browser.getUrl();
       expect(url).to.equal(data.url.myPageUrl);
       } 
+    },
+  logoutFunction:{
+    value: function() {
+     this.logoutUser.waitForEnabled();
+     this.logoutUser.click();
+     this.logout.waitForEnabled();
+     this.logout.click();  
     }
-
-};
-
+    }
+ };   
 module.exports = Object.create(Page,misumi);

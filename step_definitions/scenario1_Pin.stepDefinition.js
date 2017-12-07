@@ -2,6 +2,7 @@
 let upLoadPage= require('../functions/upload.js');
 let data = require('../Data/dataset.js');
 let singlePinPage= require('../functions/singlePin.js');
+let loginPage= require('../functions/login.js');
 
 module.exports = function () {
 
@@ -30,6 +31,7 @@ module.exports = function () {
    this.Then(/^Place the order$/, () => {
    singlePinPage.addToCart();
    singlePinPage.orderPage();
+  
   });
    
    this.Then(/^User is taken to the Thankyou page$/, () => {
@@ -38,6 +40,7 @@ module.exports = function () {
 
    this.When(/^Go to order history$/, () => {
    singlePinPage.checkHistory();
+   loginPage.logoutFunction();
   });
 
    

@@ -2,7 +2,9 @@ let Page = require('./page');
 let data=require('../Data/dataset.js');
 
 let misumi = {
-uploadId:{get: function () { return browser.element('//*[@id="uploadfile"]');}},
+
+  uploadId: { get: function () { return browser.element('//*[@id="uploadfile"]');} },
+
   upload: {
     value: function(url) {
       this.uploadId.waitForEnabled();
