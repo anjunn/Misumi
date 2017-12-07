@@ -4,6 +4,7 @@ let singlePinData = require('../Data/SinglePin.js');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
+let base64Img = require('base64-img');
 var order;
 
 let singlePin = {
@@ -27,7 +28,7 @@ let singlePin = {
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   verifyOrderNo: { get: function () { return browser.element('//*[@id="main"]/div/div/div/div[1]/div/p[2]/span');}},
-  
+
   quotationConditionFill: {
     value: function() {
       this.quantity.waitForEnabled();
@@ -42,9 +43,9 @@ let singlePin = {
     value: function() {
       browser.waitForLoading();
       this.thumbnail.waitForVisible();
-      var size = this.thumbnail.getElementSize();
-      expect(size.width).to.be.at.least(190);
-      expect(size.height).to.be.at.least(140);
+      var thumbnailData = this.thumbnail.getAttribute('src');
+      var expectedData = base64Img.base64Sync('./Data/screens/singlepinthumbnail.png');
+      expect(thumbnailData).to.be.equal(expectedData);
     }
   },
   openProject: {
@@ -60,14 +61,17 @@ let singlePin = {
       browser.saveScreenshot('./Data/screens/singlepin.png');
       this.arrow.click();
       var actualImage = fs.createReadStream('./Data/screens/singlepin.png').pipe(new PNG()).on('parsed', doneReading);
+      // var actualImage = fs.createReadStream('./Data/screens/singlepinwrong.png').pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./Data/screens/singlepinexpected.png').pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
         var diff = new PNG({width: actualImage.width, height: actualImage.height});
         var totalPixels = 768000;
-        var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.2});
+        var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
         var expectedDiff = ( (100 - data.imageAccuracy) / 100 ) * totalPixels;
+        console.log(pixelDiff);
+        console.log(expectedDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
       }
     }
@@ -100,17 +104,17 @@ let singlePin = {
       var title = this.thankYouHeading.getText();
       expect(title).to.equal(singlePinData.thankyou.heading);
       this.orderNo.waitForVisible();
-      order= this.orderNo.getText();
+      order = this.orderNo.getText();
       console.log("ONO:" + order);
     }
   },
   checkHistory:{
     value: function() {
-     this.goToHistory.waitForEnabled();
-     this.goToHistory.click();
-     this.verifyOrderNo.waitForEnabled();
-     var verifyOrder=this.verifyOrderNo.getText();
-     expect(order).to.equal(verifyOrder);    
+      this.goToHistory.waitForEnabled();
+      this.goToHistory.click();
+      this.verifyOrderNo.waitForEnabled();
+      var verifyOrder = this.verifyOrderNo.getText();
+      expect(order).to.equal(verifyOrder);
     }
   },
 };

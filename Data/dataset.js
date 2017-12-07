@@ -23,5 +23,5 @@ module.exports = {
     url2: "../QA_Automation/Data/FileUpload/multiple_pins.SLDPRT",
     url3: "../QA_Automation/Data/FileUpload/pin_and plate.x_t"
   },
-  imageAccuracy: 90
+  imageAccuracy: 95
 };

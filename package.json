@@ -23,6 +23,7 @@
     "webdriverio": "^4.8.0"
   },
   "devDependencies": {
+    "base64-img": "^1.0.3",
     "fs": "0.0.1-security",
     "pixelmatch": "^4.0.2",
     "pngjs": "^3.3.1",
