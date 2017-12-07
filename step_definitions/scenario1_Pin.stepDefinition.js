@@ -23,7 +23,8 @@ module.exports = function () {
   });
 
   this.When(/^Define quotation condition in parts view$/, () => {
-   singlePinPage.quotionConditionInPartsView();
+    singlePinPage.compareImage();
+    singlePinPage.quotionConditionInPartsView();
   });
 
    this.Then(/^Place the order$/, () => {
