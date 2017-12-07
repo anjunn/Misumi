@@ -7,26 +7,24 @@ let pixelmatch = require('pixelmatch');
 
 let singlePin = {
 
-  quantity: {get: function () { return browser.element('//*[@class="customInput"]//input[@type="number"]');}},
-  material: {get: function () { return browser.element('//*[@name="materialId"]');}},
-  surfaceTreatment: {get: function () { return browser.element('//*[@name="surfaceId"]');}},
-  tolerance:{get: function () { return browser.element('//*[@name="toleranceClassId"]');}},
-  getEstimate:{get: function () { return browser.element('//*[contains(text(),"見積りに進む")]');}},
+  quantity: { get: function () { return browser.element('//*[@class="customInput"]//input[@type="number"]'); } },
+  material: { get: function () { return browser.element('//*[@name="materialId"]'); } },
+  surfaceTreatment: { get: function () { return browser.element('//*[@name="surfaceId"]'); } },
+  tolerance:{ get: function () { return browser.element('//*[@name="toleranceClassId"]'); } },
+  getEstimate:{ get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); } },
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); } },
-
-  quantityChange: {get: function () { return browser.element('//*[@id="0"]');}},
-
+  quantityChange: { get: function () { return browser.element('//*[@id="0"]'); } },
 
   quotationConditionFill: {
     value: function() {
+      browser.waitForLoading();
       this.quantity.waitForEnabled();
       this.quantity.setValue(singlePinData.quotationCondition.quantity);
       this.material.selectByVisibleText(singlePinData.quotationCondition.material);
       this.surfaceTreatment.selectByVisibleText(singlePinData.quotationCondition.surfaceTreatment);
       this.tolerance.selectByVisibleText(singlePinData.quotationCondition.ToleranceGrade);
       this.getEstimate.click();
-
     }
   },
   checkThumbNail: {
@@ -50,6 +48,7 @@ let singlePin = {
       browser.saveScreenshot('./Data/screens/singlepin.png');
       this.arrow.click();
       var actualImage = fs.createReadStream('./Data/screens/singlepin.png').pipe(new PNG()).on('parsed', doneReading);
+      // var actualImage = fs.createReadStream('./Data/screens/singlepinwrong.png').pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./Data/screens/singlepinexpected.png').pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
