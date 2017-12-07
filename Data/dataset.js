@@ -19,9 +19,9 @@ module.exports = {
     login: "https://prs-origin-tst.meviy.misumi-ec.com/login",
   },
   uploadPath: {
-    url1: "../QA_Automation/Data/FileUpload/Core-Pin.x_t",
-    url2: "../QA_Automation/Data/FileUpload/multiple_pins.SLDPRT",
-    url3: "../QA_Automation/Data/FileUpload/pin_and plate.x_t"
+    url1: "./data/cad_drawings/single_pin.x_t",
+    url2: "./data/cad_drawings/multiple_pins.SLDPRT",
+    url3: "./data/cad_drawings/pin_and_plate.x_t"
   },
   imageAccuracy: 95
 };

@@ -17,7 +17,7 @@
 
       capabilities: [{
         browserName:   'chrome',
-        
+
       }],
 
       // Gets executed before test execution begins. At this point you can access all global
@@ -37,10 +37,10 @@
          let size = {
           width: 1280,
           height: 600
-        }; 
+        };
         browser.setViewportSize(size);
         browser.timeouts('page load', 60000);
       }
-    }); 
+    });
 
 

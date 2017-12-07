@@ -1,5 +1,5 @@
 let Page = require('./page');
-let data=require('../Data/dataset.js');
+let data=require('../data/dataset.js');
 
 let misumi = {
 
@@ -8,7 +8,7 @@ let misumi = {
   upload: {
     value: function(url) {
       this.uploadId.waitForEnabled();
-      browser.chooseFile('#uploadfile',url);
+      browser.chooseFile('#uploadfile', url);
     }
   }
 };

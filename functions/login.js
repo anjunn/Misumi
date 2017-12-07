@@ -1,5 +1,5 @@
 let Page = require('./page');
-let data=require('../Data/dataset.js');
+let data=require('../data/dataset.js');
 
 let misumi = {
 
@@ -7,7 +7,7 @@ let misumi = {
   memberID: { get: function () { return browser.element('//*[@id="id"]');}},
   password: { get: function () { return browser.element('//*[@id="pass"]');}},
   loginbtn: { get: function () { return browser.element('//*[@class="btn btnColor01"]');}},
-  error: { get: function () { return browser.element('//*[@id="error2"]/small');}},
+  error: { get: function () { return browser.element('//*[@id="error1"]/small');}},
   logoutUser:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logout:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
 
@@ -21,7 +21,7 @@ let misumi = {
       this.loginbtn.click();
       browser.pause(5000);
       var url = browser.getUrl();
-      if (url==data.url.login) {
+      if (url == data.url.login) {
         this.loginbtn.waitForEnabled();
         this.loginbtn.click();
       }

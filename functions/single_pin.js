@@ -1,6 +1,6 @@
 let Page = require('./page');
-let data = require('../Data/dataset.js');
-let singlePinData = require('../Data/SinglePin.js');
+let data = require('../data/dataset.js');
+let singlePinData = require('../data/single_pin.js');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
@@ -15,7 +15,7 @@ let singlePin = {
   tolerance:{ get: function () { return browser.element('//*[@name="toleranceClassId"]'); } },
   getEstimate:{ get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); } },
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
-  quantityChange: { get: function () { return browser.element('//*[@id="0"]');}},
+  quantityChange: { get: function () { return browser.element('//input[@id="0"]');}},
   checkBox: { get: function () { return browser.element('//*[@id="main"]/div[2]/div/div[1]/div/label/span');}},
   placeOrder: { get: function () { return browser.element('//*[contains(text(),"注文を確定する")]');}},
   logoutUser: { get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
@@ -44,7 +44,7 @@ let singlePin = {
       browser.waitForLoading();
       this.thumbnail.waitForVisible();
       var thumbnailData = this.thumbnail.getAttribute('src');
-      var expectedData = base64Img.base64Sync('./Data/screens/singlepinthumbnail.png');
+      var expectedData = base64Img.base64Sync('./data/screens/single_pin_thumbnail.png');
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },
@@ -58,11 +58,11 @@ let singlePin = {
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(3000);
-      browser.saveScreenshot('./Data/screens/singlepin.png');
+      browser.saveScreenshot('./data/screens/single_pin.png');
       this.arrow.click();
-      var actualImage = fs.createReadStream('./Data/screens/singlepin.png').pipe(new PNG()).on('parsed', doneReading);
-      // var actualImage = fs.createReadStream('./Data/screens/singlepinwrong.png').pipe(new PNG()).on('parsed', doneReading);
-      var expectedImage = fs.createReadStream('./Data/screens/singlepinexpected.png').pipe(new PNG()).on('parsed', doneReading);
+      var actualImage = fs.createReadStream('./data/screens/single_pin.png').pipe(new PNG()).on('parsed', doneReading);
+      // var actualImage = fs.createReadStream('./Data/screens/single_pin_wrong.png').pipe(new PNG()).on('parsed', doneReading);
+      var expectedImage = fs.createReadStream('./data/screens/single_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
@@ -79,7 +79,9 @@ let singlePin = {
   quotionConditionInPartsView: {
     value: function() {
       this.quantityChange.waitForEnabled();
-      this.quantityChange.setValue(singlePinData.quotionConditionInPartsView.quantity);
+      browser.execute(function (quantity) {
+        document.querySelector('input[id="0"]').value = quantity;
+      }, singlePinData.quotionConditionInPartsView.quantity);
       this.frame.click();
     }
   },
