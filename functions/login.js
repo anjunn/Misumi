@@ -17,9 +17,9 @@ let misumi = {
       this.memberID.setValue(loginDetails.UserId);
       this.password.setValue(loginDetails.Password);
       this.loginbtn.click();
-      browser.pause(3000);
+      browser.pause(5000);
          var url = browser.getUrl();
-         if(url=="https://prs-origin-tst.meviy.misumi-ec.com/login")
+         if(url==data.url.login)
          {
           this.loginbtn.waitForEnabled();
           this.loginbtn.click();

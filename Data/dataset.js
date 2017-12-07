@@ -17,6 +17,7 @@
    url:
    {
       myPageUrl:"https://prs-origin-tst.meviy.misumi-ec.com/mypage",
+      login:"https://prs-origin-tst.meviy.misumi-ec.com/login",
    },
 
    uploadPath :

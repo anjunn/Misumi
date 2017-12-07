@@ -27,8 +27,18 @@ module.exports = function () {
   });
 
    this.Then(/^Place the order$/, () => {
-   singlePinPage.placeOrder();
+   singlePinPage.addToCart();
+   singlePinPage.orderPage();
+  });
+   
+   this.Then(/^User is taken to the Thankyou page$/, () => {
+   singlePinPage.checkTitle();
   });
 
+   this.When(/^Go to order history$/, () => {
+   singlePinPage.checkHistory();
+  });
+
+   
 
   };

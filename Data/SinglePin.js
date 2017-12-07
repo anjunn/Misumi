@@ -8,6 +8,10 @@
    },
      quotionConditionInPartsView:
     {
-      quantity :"6",
+      quantity :"2",
     },
+     thankyou:
+   {
+      heading:"注文手続き",
+   }
 };
