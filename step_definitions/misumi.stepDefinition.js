@@ -1,6 +1,6 @@
 let loginPage= require('../functions/login.js');
 let upLoadpage= require('../functions/upload.js');
-let data = require('../data/dataset.js');
+let data = require('../data/dataset.json');
 
 module.exports = function () {
 

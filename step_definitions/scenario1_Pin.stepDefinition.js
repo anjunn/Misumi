@@ -1,6 +1,6 @@
 
 let upLoadPage= require('../functions/upload.js');
-let data = require('../data/dataset.js');
+let data = require('../data/dataset.json');
 let singlePinPage= require('../functions/single_pin.js');
 let loginPage= require('../functions/login.js');
 

@@ -1,5 +1,5 @@
 let Page = require('./page');
-let data=require('../data/dataset.js');
+let data=require('../data/dataset.json');
 
 let misumi = {
 
