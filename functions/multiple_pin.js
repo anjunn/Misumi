@@ -1,6 +1,6 @@
 let Page = require('./page');
-let data = require('../data/dataset.json');
-let singlePinData = require('../data/single_pin.json');
+let data = require('../data/dataset.js');
+let multiplePinData = require('../data/multiple_pin.json');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
@@ -35,9 +35,9 @@ let singlePin = {
   quotationConditionFill: {
     value: function() {
       this.quantity.waitForEnabled();
-      this.material.selectByVisibleText(singlePinData.quotationCondition.material);
-      this.surfaceTreatment.selectByVisibleText(singlePinData.quotationCondition.surfaceTreatment);
-      this.tolerance.selectByVisibleText(singlePinData.quotationCondition.ToleranceGrade);
+      this.material.selectByVisibleText(multiplePinData.quotationCondition.material);
+      this.surfaceTreatment.selectByVisibleText(multiplePinData.quotationCondition.surfaceTreatment);
+      this.tolerance.selectByVisibleText(multiplePinData.quotationCondition.ToleranceGrade);
       this.getEstimate.click();
     }
   },
@@ -46,12 +46,14 @@ let singlePin = {
       browser.waitForLoading();
       this.thumbnail.waitForVisible();
       var thumbnailData = this.thumbnail.getAttribute('src');
-      var expectedData = base64Img.base64Sync('./data/screens/single_pin_thumbnail.png');
+      var expectedData = base64Img.base64Sync('./data/screens/multiple_pin_thumbnail.png');
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },
   openProject: {
     value: function() {
+      browser.pause(1000);
+      this.thumbnail.waitForVisible();
       this.thumbnail.click();
     }
   },
@@ -60,11 +62,10 @@ let singlePin = {
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(3000);
-      browser.saveScreenshot('./data/screens/single_pin.png');
+      browser.saveScreenshot('./data/screens/multiple_pin.png');
       this.arrow.click();
-      var actualImage = fs.createReadStream('./data/screens/single_pin.png').pipe(new PNG()).on('parsed', doneReading);
-      // var actualImage = fs.createReadStream('./Data/screens/single_pin_wrong.png').pipe(new PNG()).on('parsed', doneReading);
-      var expectedImage = fs.createReadStream('./data/screens/single_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
+      var actualImage = fs.createReadStream('./data/screens/multiple_pin.png').pipe(new PNG()).on('parsed', doneReading);
+      var expectedImage = fs.createReadStream('./data/screens/multiple_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
@@ -77,15 +78,7 @@ let singlePin = {
       }
     }
   },
-  quotionConditionInPartsView: {
-    value: function() {
-      this.quantityChange.waitForEnabled();
-      browser.execute(function (quantity) {
-        document.querySelector('input[id="0"]').value = quantity;
-      }, singlePinData.quotionConditionInPartsView.quantity);
-      this.frame.click();
-    }
-  },
+
   addToCart:{
     value: function() {
       this.cart.waitForEnabled();
@@ -114,7 +107,7 @@ let singlePin = {
     value: function() {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
-      expect(title).to.equal(singlePinData.thankyou.heading);
+      expect(title).to.equal(multiplePinData.thankyou.heading);
       this.orderNo.waitForVisible();
       order = this.orderNo.getText();
       console.log("ONO:" + order);

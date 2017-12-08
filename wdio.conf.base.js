@@ -15,9 +15,16 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
 
+  // suites: {
+  //   example: [
+  //     './feature/scenario1_pin.feature',
+
+  //   ]
+  // },
   suites: {
     example: [
       './feature/scenario1_pin.feature',
+      './feature/scenario2_Multiplepin.feature',
 
     ]
   },
@@ -127,12 +134,13 @@ exports.config = {
     tags: require('./tagsProcessor')(process.argv),
     require: [
       './step_definitions/misumi.stepDefinition.js',
-      './step_definitions/scenario1_pin.stepDefinition.js'
+      './step_definitions/scenario1_Pin.stepDefinition.js',
+      './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
     ],
     failFast: true,
     dryRun: false,
     colors: true,
-    timeout: 120000
+    timeout: 500000
   },
 
   onPrepare: function () {
