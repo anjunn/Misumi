@@ -1,5 +1,5 @@
 let Page = require('./page');
-let data = require('../data/dataset.js');
+let data = require('../data/dataset.json');
 let multiplePinData = require('../data/multiple_pin.json');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
@@ -89,8 +89,6 @@ let singlePin = {
     value: function() {
       browser.pause(1000);
       this.customerNumberInput.waitForVisible();
-      console.log(this.customerNumberInput.value);
-      console.log(this.customerNumberInput.value.ELEMENT);
       const searchButtonPos = browser.elementIdLocation(this.customerNumberInput.value.ELEMENT);
       browser.scroll(searchButtonPos.value.x, searchButtonPos.value.y-80);
       this.customerNumberInput.click();
@@ -110,7 +108,6 @@ let singlePin = {
       expect(title).to.equal(multiplePinData.thankyou.heading);
       this.orderNo.waitForVisible();
       order = this.orderNo.getText();
-      console.log("ONO:" + order);
     }
   },
   checkHistory:{

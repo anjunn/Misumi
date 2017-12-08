@@ -96,8 +96,6 @@ let singlePin = {
     value: function() {
       browser.pause(1000);
       this.customerNumberInput.waitForVisible();
-      console.log(this.customerNumberInput.value);
-      console.log(this.customerNumberInput.value.ELEMENT);
       const searchButtonPos = browser.elementIdLocation(this.customerNumberInput.value.ELEMENT);
       browser.scroll(searchButtonPos.value.x, searchButtonPos.value.y-80);
       this.customerNumberInput.click();
@@ -117,7 +115,6 @@ let singlePin = {
       expect(title).to.equal(singlePinData.thankyou.heading);
       this.orderNo.waitForVisible();
       order = this.orderNo.getText();
-      console.log("ONO:" + order);
     }
   },
   checkHistory:{
