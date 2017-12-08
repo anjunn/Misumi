@@ -17,7 +17,7 @@ exports.config = {
 
   suites: {
     example: [
-      './feature/misumi.feature',
+      './feature/scenario1_pin.feature',
 
     ]
   },
@@ -127,6 +127,7 @@ exports.config = {
     tags: require('./tagsProcessor')(process.argv),
     require: [
       './step_definitions/misumi.stepDefinition.js',
+      './step_definitions/scenario1_pin.stepDefinition.js'
     ],
     failFast: true,
     dryRun: false,
