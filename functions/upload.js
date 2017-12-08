@@ -26,13 +26,23 @@ let misumi = {
           };
           this.files = [file];
         };
-        // var fakeDropEvent = new Event('drop');
-        var fakeDropEvent = document.createEvent("DragEvent");
-        fakeDropEvent.initEvent("drop", true, true);
+        var fakeDropEvent;
+        if (document.createEvent) {
+          fakeDropEvent = document.createEvent("HTMLEvents");
+          fakeDropEvent.initEvent("drop", true, true)
+        } else {
+          fakeDropEvent = document.createEventObject();
+          fakeDropEvent.eventType = "DragEvent";
+        }
         Object.defineProperty(fakeDropEvent, 'dataTransfer', {
           value: new FakeDataTransfer(document.getElementById('inputFileDragHandler').files[0])
         });
-        document.querySelector('.dragArea').dispatchEvent(fakeDropEvent);
+        var element = document.querySelector('.dragArea');
+        if (document.createEvent) {
+          element.dispatchEvent(fakeDropEvent);
+        } else {
+          element.fireEvent("on" + event.eventType, fakeDropEvent);
+        }
       });
     }
   }
