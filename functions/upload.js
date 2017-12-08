@@ -8,7 +8,30 @@ let misumi = {
   upload: {
     value: function(url) {
       this.uploadId.waitForEnabled();
-      browser.chooseFile('#uploadfile', url);
+      browser.execute(function () {
+        var inputElement = document.createElement('input');
+        inputElement.type = 'file';
+        inputElement.id = 'inputFileDragHandler';
+        document.body.appendChild(inputElement);
+      });
+      browser.chooseFile('#inputFileDragHandler', url);
+      browser.execute(function () {
+        function FakeDataTransfer(file) {
+          this.dropEffect = 'all';
+          this.effectAllowed = 'all';
+          this.items = [];
+          this.types = ['Files'];
+          this.getData = function() {
+            return file;
+          };
+          this.files = [file];
+        };
+        var fakeDropEvent = new DragEvent('drop');
+        Object.defineProperty(fakeDropEvent, 'dataTransfer', {
+          value: new FakeDataTransfer(document.getElementById('inputFileDragHandler').files[0])
+        });
+        document.querySelector('.dragArea').dispatchEvent(fakeDropEvent);
+      });
     }
   }
 };
