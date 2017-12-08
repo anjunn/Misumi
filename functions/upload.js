@@ -26,7 +26,9 @@ let misumi = {
           };
           this.files = [file];
         };
-        var fakeDropEvent = new DragEvent('drop');
+        // var fakeDropEvent = new Event('drop');
+        var fakeDropEvent = document.createEvent("DragEvent");
+        fakeDropEvent.initEvent("drop", true, true);
         Object.defineProperty(fakeDropEvent, 'dataTransfer', {
           value: new FakeDataTransfer(document.getElementById('inputFileDragHandler').files[0])
         });
