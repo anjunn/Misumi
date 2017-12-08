@@ -32,7 +32,6 @@ let singlePin = {
   quotationConditionFill: {
     value: function() {
       this.quantity.waitForEnabled();
-      this.quantity.setValue(singlePinData.quotationCondition.quantity);
       this.material.selectByVisibleText(singlePinData.quotationCondition.material);
       this.surfaceTreatment.selectByVisibleText(singlePinData.quotationCondition.surfaceTreatment);
       this.tolerance.selectByVisibleText(singlePinData.quotationCondition.ToleranceGrade);
@@ -70,8 +69,7 @@ let singlePin = {
         var totalPixels = 768000;
         var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
         var expectedDiff = ( (100 - data.imageAccuracy) / 100 ) * totalPixels;
-        console.log(pixelDiff);
-        console.log(expectedDiff);
+        console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
       }
     }
@@ -114,7 +112,7 @@ let singlePin = {
     value: function() {
       this.goToHistory.waitForEnabled();
       this.goToHistory.click();
-      this.verifyOrderNo.waitForEnabled();
+      this.verifyOrderNo.waitForVisible();
       var verifyOrder = this.verifyOrderNo.getText();
       expect(order).to.equal(verifyOrder);
     }
