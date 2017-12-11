@@ -1,5 +1,6 @@
-Feature: Check meviy.misumi-ec.com
-Scenario: Test the Senario1 - Single Pin upload and order
+Feature: Scenario 1
+
+Scenario: Single Pin upload and order
 
 Given User access sample 3D page
 When User login to meviy
