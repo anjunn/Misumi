@@ -10,6 +10,7 @@ Then 3D Thumb nail of multiple pins appears
 
 Given User Open the uploaded multiple pin project
 When User check feature recognition
+When User Check grouping
 Then Place the order for the multiple pins
 
 When User is taken to Thankyou page

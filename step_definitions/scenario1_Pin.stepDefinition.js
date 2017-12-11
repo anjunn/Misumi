@@ -1,13 +1,13 @@
 
 let upLoadPage= require('../functions/upload.js');
-let data = require('../data/dataset.json');
+let data = require('../data/input_data/dataset.json');
 let singlePinPage= require('../functions/single_pin.js');
 let loginPage= require('../functions/login.js');
 
 module.exports = function () {
 
   this.Given(/^Upload 3D data for pin$/, () => {
-    url=data.uploadPath.url1;
+    url=data.uploadPath.single_pin;
     upLoadPage.upload(url);
   });
 

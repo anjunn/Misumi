@@ -11,16 +11,20 @@
     {
       "UserId": "qburst7",
       "Password": "5FDS3FTK"
+    },
+    {
+      "UserId": "QB_QA-Auto01",
+      "Password": "VRIFBTD9"
     }
+
   ],
   "url": {
     "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
     "login": "https://prs-origin-tst.meviy.misumi-ec.com/login"
   },
   "uploadPath": {
-    "url1": "./data/cad_drawings/single_pin.x_t",
-    "url2": "./data/cad_drawings/multiple_pins.SLDPRT",
-    "url3": "./data/cad_drawings/pin_and_plate.x_t"
-  },
-  "imageAccuracy": 95
+    "single_pin": "./data/cad_drawings/single_pin.x_t",
+    "multiple_pin": "./data/cad_drawings/multiple_pins.SLDPRT",
+    "pin_plate": "./data/cad_drawings/pin_and_plate.x_t"
+  }
 }

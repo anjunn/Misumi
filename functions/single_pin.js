@@ -1,6 +1,7 @@
 let Page = require('./page');
-let data = require('../data/dataset.json');
-let singlePinData = require('../data/single_pin.json');
+let data = require('../data/input_data/dataset.json');
+let expected_data = require('../data/expected_results/single_pin_expected.json');
+let singlePinData = require('../data/input_data/single_pin.json');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
@@ -20,6 +21,8 @@ let singlePin = {
   placeOrder: { get: function () { return browser.element('//*[contains(text(),"注文を確定する")]');}},
   logoutUser: { get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logout: { get: function () { return browser.element('//*[@id="logoutButton"]');}},
+  groupValue: { get: function () { return browser.element('//*[@class="groupItemCount"]//font//font');}},
+  groupImage: { get: function () { return browser.element('//*[@class="group"]//img');}},
   frame: { get: function () { return browser.element('//*[@class="boxCheckbox"]');}},
   cart: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]');}},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); } },
@@ -46,7 +49,7 @@ let singlePin = {
       browser.waitForLoading();
       this.thumbnail.waitForVisible();
       var thumbnailData = this.thumbnail.getAttribute('src');
-      var expectedData = base64Img.base64Sync('./data/screens/single_pin_thumbnail.png');
+      var expectedData = base64Img.base64Sync('./data/screens/expected_screens/single_pin_expected/single_pin_thumbnail.png');
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },
@@ -62,16 +65,16 @@ let singlePin = {
       browser.pause(3000);
       browser.saveScreenshot('./data/screens/single_pin.png');
       this.arrow.click();
-      var actualImage = fs.createReadStream('./data/screens/single_pin.png').pipe(new PNG()).on('parsed', doneReading);
+      var actualImage = fs.createReadStream('./data/screens/actual_screens/single_pin.png').pipe(new PNG()).on('parsed', doneReading);
       // var actualImage = fs.createReadStream('./Data/screens/single_pin_wrong.png').pipe(new PNG()).on('parsed', doneReading);
-      var expectedImage = fs.createReadStream('./data/screens/single_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
+      var expectedImage = fs.createReadStream('./data/screens/expected_screens/single_pin_expected/single_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
         var diff = new PNG({width: actualImage.width, height: actualImage.height});
         var totalPixels = 768000;
         var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
-        var expectedDiff = ( (100 - data.imageAccuracy) / 100 ) * totalPixels;
+        var expectedDiff = ( (100 - expected_data.imageAccuracy) / 100 ) * totalPixels;
         console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
       }
@@ -112,7 +115,7 @@ let singlePin = {
     value: function() {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
-      expect(title).to.equal(singlePinData.thankyou.heading);
+      expect(title).to.equal(expected_data.thankyou.heading);
       this.orderNo.waitForVisible();
       order = this.orderNo.getText();
     }

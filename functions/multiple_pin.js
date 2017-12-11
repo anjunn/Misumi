@@ -1,6 +1,7 @@
 let Page = require('./page');
-let data = require('../data/dataset.json');
-let multiplePinData = require('../data/multiple_pin.json');
+let data = require('../data/input_data/dataset.json');
+let expected_data = require('../data/expected_results/multiple_pin_expected.json');
+let multiplePinData = require('../data/input_data/multiple_pin.json');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
@@ -21,6 +22,8 @@ let singlePin = {
   logoutUser: { get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logout: { get: function () { return browser.element('//*[@id="logoutButton"]');}},
   frame: { get: function () { return browser.element('//*[@class="boxCheckbox"]');}},
+  groupValue: {value: function (t) {return browser.element(`(//*[@class="groupItemCount"])[${t}]`); }},
+  groupImage: { value: function (t) { return browser.element(`(//*[@class="group"]//img)[${t}]`);}},
   cart: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]');}},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); } },
   customerNumberInput: { get: function () { return browser.element('//*[contains(text(),"一括入力") and @class="js-modal notEasescroll"]');}},
@@ -46,7 +49,7 @@ let singlePin = {
       browser.waitForLoading();
       this.thumbnail.waitForVisible();
       var thumbnailData = this.thumbnail.getAttribute('src');
-      var expectedData = base64Img.base64Sync('./data/screens/multiple_pin_thumbnail.png');
+      var expectedData = base64Img.base64Sync('./data/screens/expected_screens/multiple_pin_expected/multiple_pin_thumbnail.png');
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },
@@ -62,23 +65,38 @@ let singlePin = {
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(3000);
-      browser.saveScreenshot('./data/screens/multiple_pin.png');
+      browser.saveScreenshot('./data/screens/actual_screens/multiple_pin.png');
       this.arrow.click();
-      var actualImage = fs.createReadStream('./data/screens/multiple_pin.png').pipe(new PNG()).on('parsed', doneReading);
-      var expectedImage = fs.createReadStream('./data/screens/multiple_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
+      var actualImage = fs.createReadStream('./data/screens/actual_screens/multiple_pin.png').pipe(new PNG()).on('parsed', doneReading);
+      var expectedImage = fs.createReadStream('./data/screens/expected_screens/multiple_pin_expected/multiple_pin_expected.png').pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
         var diff = new PNG({width: actualImage.width, height: actualImage.height});
         var totalPixels = 768000;
         var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
-        var expectedDiff = ( (100 - data.imageAccuracy) / 100 ) * totalPixels;
+        var expectedDiff = ( (100 - expected_data.imageAccuracy) / 100 ) * totalPixels;
         console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
       }
     }
   },
-
+  checkGrouping:{
+    value: function() {
+      for(var i=1;i<=4;i++) {
+        //console.log('========', i);
+        //console.log(this.groupValue(i));
+        const groupValuePos = browser.elementIdLocation(this.groupValue(i).value.ELEMENT);
+        browser.scroll(groupValuePos.value.x, groupValuePos.value.y);
+        if(typeof this.groupValue(i).getText()!="undefined")
+         {
+           console.log(this.groupValue(i).getText());
+          // browser.debug();
+           this.groupImage(i).isVisible();  
+         }
+      }
+    }
+  },
   addToCart:{
     value: function() {
       this.cart.waitForEnabled();
@@ -92,7 +110,7 @@ let singlePin = {
       const searchButtonPos = browser.elementIdLocation(this.customerNumberInput.value.ELEMENT);
       browser.scroll(searchButtonPos.value.x, searchButtonPos.value.y-80);
       this.customerNumberInput.click();
-      this.customerNumberPart1.waitForEnabled();
+      this.customerNumberPart1.waitForEnabled(); 
       this.customerNumberPart1.setValue("ERR");
       this.customerNumberPart2.setValue("1234");
       this.Okbutton.click();
@@ -105,7 +123,7 @@ let singlePin = {
     value: function() {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
-      expect(title).to.equal(multiplePinData.thankyou.heading);
+      expect(title).to.equal(expected_data.thankyou.heading);
       this.orderNo.waitForVisible();
       order = this.orderNo.getText();
     }

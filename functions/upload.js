@@ -1,13 +1,14 @@
 let Page = require('./page');
-let data=require('../data/dataset.json');
+let data=require('../data/input_data/dataset.json');
 
 let misumi = {
 
   uploadId: { get: function () { return browser.element('//*[@id="uploadfile"]');} },
+  waitForFormComponent: { get: function () { return browser.element('//form[@name="uploadform"]');} },
 
   upload: {
     value: function(url) {
-      this.uploadId.waitForEnabled();
+      this.waitForFormComponent.waitForVisible();
       browser.chooseFile('#uploadfile', url);
     }
   }

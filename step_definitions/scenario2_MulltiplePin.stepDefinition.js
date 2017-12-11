@@ -1,13 +1,13 @@
 
 let upLoadPage= require('../functions/upload.js');
-let data = require('../Data/dataset.json');
+let data = require('../Data/input_data/dataset.json');
 let multiplePinPage= require('../functions/multiple_pin.js');
 let loginPage= require('../functions/login.js');
 
 module.exports = function () {
 
   this.Given(/^Upload 3D data for multiple pin$/, () => {
-    url=data.uploadPath.url2;
+    url=data.uploadPath.multiple_pin;
     upLoadPage.upload(url);
   });
 
@@ -26,7 +26,9 @@ module.exports = function () {
   this.When(/^User check feature recognition$/, () => {
     multiplePinPage.compareImage();
   });
-
+  this.When(/^User Check grouping$/, () => {
+    multiplePinPage.checkGrouping();
+  });
   this.Then(/^Place the order for the multiple pins$/, () => {
     multiplePinPage.addToCart();
     multiplePinPage.orderPage();
