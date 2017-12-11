@@ -2,4 +2,3 @@ node_modules/
 reports/
 allure-results/
 debug.log
-data/screens/actual_screens/

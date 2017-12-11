@@ -1,7 +1,13 @@
 {
+  "quotationCondition": {
+    "name": "コアピン",
+    "quantity": "2",
+    "material": "SKH51 (58～60HRC)",
+    "surfaceTreatment": "なし",
+    "ToleranceGrade": "並級"
+  },
   "thankyou": {
     "heading": "注文手続き"
   },
-
   "imageAccuracy": 95
 }

@@ -17,6 +17,12 @@ let singlePin = {
   getEstimate:{ get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); } },
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
   quantityChange: { get: function () { return browser.element('//input[@id="0"]');}},
+  singlePinPart: { get: function () { return browser.element('//*[@id="lstPartsBuy"]//div/p[@class="model"]/a');}},
+  itemName: { get: function() { return browser.element('//select[@id="condArticleType"]/option[1]'); } },
+  itemQuantity: { get: function() { return browser.element('//input[@id="condcount"]'); } },
+  itemMaterial: { get: function() { return browser.element('//select[@id="MATERIALTYPE.ARTICLE_TYPE_ID_0.0"]/option[1]'); } },
+  itemSurface: { get: function() { return browser.element('//select[@id="SURFACETYPE.ARTICLE_TYPE_ID_0.0"]/option[1]'); } },
+  backButton: { get: function() { return browser.element('//*[@id="wrapper"]/div//span/p/a'); } },
   checkBox: { get: function () { return browser.element('//*[@id="main"]/div[2]/div/div[1]/div/label/span');}},
   placeOrder: { get: function () { return browser.element('//*[contains(text(),"注文を確定する")]');}},
   logoutUser: { get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
@@ -63,7 +69,7 @@ let singlePin = {
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(3000);
-      browser.saveScreenshot('./data/screens/single_pin.png');
+      browser.saveScreenshot('./data/screens/actual_screens/single_pin.png');
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual_screens/single_pin.png').pipe(new PNG()).on('parsed', doneReading);
       // var actualImage = fs.createReadStream('./Data/screens/single_pin_wrong.png').pipe(new PNG()).on('parsed', doneReading);
@@ -87,6 +93,23 @@ let singlePin = {
         document.querySelector('input[id="0"]').value = quantity;
       }, singlePinData.quotionConditionInPartsView.quantity);
       this.frame.click();
+    }
+  },
+  checkQuotation: {
+    value: function() {
+      this.singlePinPart.click();
+      this.itemName.waitForEnabled();
+      this.itemName.isSelected();
+      this.itemMaterial.isSelected();
+      this.itemSurface.isSelected();
+      var name = this.itemName.getText();
+      var material = this.itemMaterial.getText();
+      var surface = this.itemSurface.getText();
+      expect(name).to.be.equal(expected_data.quotationCondition.name);
+      expect(quantity).to.be.equal(expected_data.quotationCondition.quantity);
+      expect(material).to.be.equal(expected_data.quotationCondition.material);
+      expect(surface).to.be.equal(expected_data.quotationCondition.surfaceTreatment);
+      this.backButton.click()
     }
   },
   addToCart:{

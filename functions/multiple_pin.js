@@ -92,7 +92,7 @@ let singlePin = {
          {
            console.log(this.groupValue(i).getText());
           // browser.debug();
-           this.groupImage(i).isVisible();  
+           this.groupImage(i).isVisible();
          }
       }
     }
@@ -110,7 +110,7 @@ let singlePin = {
       const searchButtonPos = browser.elementIdLocation(this.customerNumberInput.value.ELEMENT);
       browser.scroll(searchButtonPos.value.x, searchButtonPos.value.y-80);
       this.customerNumberInput.click();
-      this.customerNumberPart1.waitForEnabled(); 
+      this.customerNumberPart1.waitForEnabled();
       this.customerNumberPart1.setValue("ERR");
       this.customerNumberPart2.setValue("1234");
       this.Okbutton.click();

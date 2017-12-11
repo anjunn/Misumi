@@ -26,6 +26,7 @@ module.exports = function () {
   this.When(/^Define quotation condition in parts view$/, () => {
     singlePinPage.compareImage();
     singlePinPage.quotionConditionInPartsView();
+    singlePinPage.checkQuotation();
   });
 
   this.Then(/^Place the order$/, () => {
