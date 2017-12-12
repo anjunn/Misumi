@@ -41,13 +41,15 @@ module.exports = function () {
 
    this.When(/^User verify if product total and procced to order button is enabled for single pin$/, () => {
     singlePinPage.checkTotal();
-  });
-
-  this.Then(/^Place the order$/, () => {
     singlePinPage.addToCart();
+  });
+   this.Then(/^Check if product name and order details is shown in order page for single pin$/, () => {
+    singlePinPage.orderPageValidation();
+  });
+   this.Then(/^Place the order$/, () => {
     singlePinPage.orderPage();
   });
-
+ 
   this.Then(/^User is taken to the Thankyou page$/, () => {
     singlePinPage.checkTitleThankYou();
   });

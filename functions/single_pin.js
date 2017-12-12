@@ -45,11 +45,13 @@ let singlePin = {
   fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
   productDetailsPageProductName: { get: function () { return browser.element('//*[@id="header3d"]/ul/li[4]/label');}},
   productDetailsAmount: { get: function () { return browser.element('//*[@class="amountText"]//span');}},
+  orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
+  orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
+  orderPageTotal: { get: function () { return browser.element('//*[@class="amount"]//span');}},
 
   verifyUpload: {
     value: function() {
       this.fileUploadProductName.waitForVisible();
-      //browser.debug();
       expect(this.fileUploadProductName.getText()).to.be.equal(expected_data.project_detailsFileUpload.project_name);
       this.getEstimate.isVisible();
     }
@@ -148,6 +150,18 @@ let singlePin = {
       this.cart.click();
     }
   },
+  orderPageValidation:{
+    value: function() {
+      this.customerNumberInput.waitForVisible();
+      expect(this.orderPageHeading.getText()).to.be.equal(expected_data.order_page.heading);
+      // const prodName = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
+      // browser.scroll(prodName.value.x, prodName.value.y-80);
+      browser.moveToObject('//*[@class="title"]//span', 0, -80);
+      expect(this.orderPageProductName.getText()).to.be.equal(expected_data.order_page.project_name);
+      expect(this.orderPageHeading.getText()).to.be.equal(expected_data.order_page.total);
+     }
+    },
+
   orderPage:{
     value: function() {
       browser.pause(1000);
