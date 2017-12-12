@@ -36,7 +36,7 @@ let singlePin = {
   verifyOrderNo: { get: function () { return browser.element('//*[@id="main"]/div/div/div/div[1]/div/p[2]/span');}},
   price: { get: function () { return browser.element('(//*[@class="price"]//span[2])[1]');}},
   productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]');}},
-    fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
+  fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
   productDetailsPageProductName: { get: function () { return browser.element('//*[@id="header3d"]/ul/li[4]/label');}},
   productDetailsAmount: { get: function () { return browser.element('//*[@class="amountText"]//span');}},
  

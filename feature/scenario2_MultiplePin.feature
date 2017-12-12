@@ -1,8 +1,13 @@
 Feature: Check meviy.misumi-ec.com
-Scenario: Test the Senario1 - Single Pin upload and order
+Scenario: Test the Senario2 - Multiple Pin upload and order
 
 Given User access sample 3D page
-When User login to meviy
+Then User is able to see the webpage header
+And User is able to view Start Right away button
+When User is at login page
+Then User validates Member ID field
+And User validates Password field
+Then User enters Member Id and password
 
 Given Upload 3D data for multiple pin
 When Verify if upload is successfull for multiple pin
