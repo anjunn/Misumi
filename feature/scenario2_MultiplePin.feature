@@ -21,6 +21,3 @@ When Define quotation condition in parts view for multiple pin
 When User Check grouping
 When User verify if product total and procced to order button is enabled for multiple pin
 Then Place the order for the multiple pins
-
-When User is taken to Thankyou page
-Then Go to order history and check the product
