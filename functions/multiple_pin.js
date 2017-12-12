@@ -40,6 +40,9 @@ let singlePin = {
   fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
   productDetailsPageProductName: { get: function () { return browser.element('//*[@id="header3d"]/ul/li[4]/label');}},
   productDetailsAmount: { get: function () { return browser.element('//*[@class="amountText"]//span');}},
+  orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
+  orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
+  orderPageTotal: { get: function () { return browser.element('//*[@class="amount"]//span');}},
 
   orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
   orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},

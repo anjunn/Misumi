@@ -44,13 +44,12 @@ module.exports = function () {
 
   this.When(/^User verify if product total and procced to order button is enabled for multiple pin$/, () => {
     multiplePinPage.checkTotal();
-  });
-  this.Then(/^Place the order for the multiple pins$/, () => {
     multiplePinPage.addToCart();
   });
   this.Then(/^Check if product name and order details is shown in order page for multiple pin$/, () => {
     multiplePinPage.orderPageValidation();
   });
+
   this.Then(/^Place the order for the multiple pins$/, () => {
     multiplePinPage.orderPage();
   });

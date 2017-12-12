@@ -17,6 +17,7 @@ Feature: Scenario 2
 		When User Check grouping
 		When User verify if product total and procced to order button is enabled for multiple pin
 		Then Check if product name and order details is shown in order page for multiple pin
+
 		Then Place the order for the multiple pins
 
 		When User is taken to Thankyou page
