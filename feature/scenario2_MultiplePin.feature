@@ -5,7 +5,6 @@ Feature: Scenario 2
 
 		Given User access sample 3D page
 		When User login to meviy
-
 		Given Upload 3D data for multiple pin
 		When Verify if upload is successfull for multiple pin
 		When User define quotation condition for the multple pin

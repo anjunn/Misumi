@@ -15,7 +15,7 @@
   "order_page": {
     "heading": "注文手続き",
     "project_name": "multiple_pins.SLDPRT",
-    "total": "18,236"
+    "total": "19,086"
   },
 
   "imageAccuracy": 95,
@@ -25,5 +25,6 @@
   },
 
   "grouping": [ 2, 5, 12,4 ]
+  }
 
 }
