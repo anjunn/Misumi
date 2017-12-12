@@ -3,7 +3,12 @@ Feature: Scenario 1
 Scenario: Single Pin upload and order
 
 Given User access sample 3D page
-When User login to meviy
+Then User is able to see the webpage header
+And User is able to view Start Right away button
+When User is at login page
+Then User validates Member ID field
+And User validates Password field
+Then User enters Member Id and password
 
 Given Upload 3D data for pin
 When Verify if upload is successfull for single pin
