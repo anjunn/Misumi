@@ -17,12 +17,13 @@ let singlePin = {
   getEstimate:{ get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); } },
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
   quantityChange: { get: function () { return browser.element('//input[@id="0"]');}},
+  priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]');}},
   checkBox: { get: function () { return browser.element('//*[@id="main"]/div[2]/div/div[1]/div/label/span');}},
   placeOrder: { get: function () { return browser.element('//*[contains(text(),"注文を確定する")]');}},
   logoutUser: { get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logout: { get: function () { return browser.element('//*[@id="logoutButton"]');}},
   frame: { get: function () { return browser.element('//*[@class="boxCheckbox"]');}},
-  groupValue: {value: function (t) {return browser.element(`(//*[@class="groupItemCount"])[${t}]`); }},
+  groupValue: {value: function (t) {return browser.element(`(//span[@class="groupItemCount"])[${t}]`); }},
   groupImage: { value: function (t) { return browser.element(`(//*[@class="group"]//img)[${t}]`);}},
   cart: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]');}},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); } },
@@ -34,7 +35,26 @@ let singlePin = {
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   verifyOrderNo: { get: function () { return browser.element('//*[@id="main"]/div/div/div/div[1]/div/p[2]/span');}},
+  price: { get: function () { return browser.element('(//*[@class="price"]//span[2])[1]');}},
+  productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]');}},
+  fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
+  productDetailsPageProductName: { get: function () { return browser.element('//*[@id="header3d"]/ul/li[4]/label');}},
+  productDetailsAmount: { get: function () { return browser.element('//*[@class="amountText"]//span');}},
+  orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
+  orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
+  orderPageTotal: { get: function () { return browser.element('//*[@class="amount"]//span');}},
 
+  orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
+  orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
+  orderPageTotal: { get: function () { return browser.element('//*[@class="amount"]//span');}},
+
+  verifyUpload: {
+    value: function() {
+      this.fileUploadProductName.waitForVisible();
+      expect(this.fileUploadProductName.getText()).to.be.equal(expected_data.project_detailsFileUpload.project_name);
+      this.getEstimate.isVisible();
+    }
+  },
   quotationConditionFill: {
     value: function() {
       this.quantity.waitForEnabled();
@@ -53,6 +73,12 @@ let singlePin = {
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },
+   priceName: {
+    value: function() {
+      expect(this.productName.getText()).to.be.equal(expected_data.project_detailsThumbnail.project_name);
+      expect(this.price.getText()).to.be.equal(expected_data.project_detailsThumbnail.project_price);
+    }
+  },
   openProject: {
     value: function() {
       browser.pause(1000);
@@ -64,7 +90,7 @@ let singlePin = {
     value: function() {
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(3000);
+      browser.pause(4000);
       browser.saveScreenshot('./data/screens/actual_screens/multiple_pin.png');
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual_screens/multiple_pin.png').pipe(new PNG()).on('parsed', doneReading);
@@ -81,20 +107,50 @@ let singlePin = {
       }
     }
   },
+  quotionConditionInPartsView: {
+    value: function() {
+      this.quantityChange.waitForEnabled();
+      var price = this.priceText.getText();
+      expect(price).to.be.equal(expected_data.project_detailsThumbnail.project_price);
+      browser.execute(function (quantity) {
+        var element = document.querySelector('input[id="0"]');
+        element.value = quantity;
+        if ("createEvent" in document) {
+          var evt = document.createEvent("HTMLEvents");
+          evt.initEvent("change", false, true);
+          element.dispatchEvent(evt);
+        } else {
+          element.fireEvent("onchange");
+        }
+      }, multiplePinData.quotionConditionInPartsView.quantity);
+      browser.pause(2000);
+      var newPrice = this.priceText.getText();
+      expect(newPrice).to.be.equal(expected_data.product_detail_page.total)
+      this.frame.click();
+    }
+  },
   checkGrouping:{
     value: function() {
-      for(var i=1;i<=4;i++) {
-        //console.log('========', i);
-        //console.log(this.groupValue(i));
-        const groupValuePos = browser.elementIdLocation(this.groupValue(i).value.ELEMENT);
-        browser.scroll(groupValuePos.value.x, groupValuePos.value.y);
-        if(typeof this.groupValue(i).getText()!="undefined")
-         {
-           console.log(this.groupValue(i).getText());
-          // browser.debug();
-           this.groupImage(i).isVisible();
-         }
+      for (var i = 1; i <= 4; i++) {
+        browser.moveToObject(`(//*[@class="groupItemCount"])[${i}]`);
+        // const groupValuePos = browser.elementIdLocation(this.groupValue(i).value.ELEMENT);
+        // browser.scroll(groupValuePos.value.x, groupValuePos.value.y);
+        if (typeof this.groupValue(i).getText() != "undefined") {
+          var parts = this.groupValue(i).getText();
+          // console.log(parts);
+          // console.log(`[${expected_data.grouping[i-1]}]`);
+          expect(parts).to.be.equal(`[${expected_data.grouping[i-1]}]`);
+          this.groupImage(i).isVisible();
+        }
       }
+    }
+  },
+  checkTotal: {
+    value: function() {
+     this.productDetailsPageProductName.waitForVisible();
+     expect(this.productDetailsPageProductName.getText()).to.be.equal(expected_data.product_detail_page.project_name);
+     expect(this.productDetailsAmount.getText()).to.be.equal(expected_data.product_detail_page.total);
+     this.cart.isVisible();
     }
   },
   addToCart:{
@@ -103,6 +159,17 @@ let singlePin = {
       this.cart.click();
     }
   },
+   orderPageValidation:{
+    value: function() {
+      this.customerNumberInput.waitForVisible();
+      expect(this.orderPageHeading.getText()).to.be.equal(expected_data.order_page.heading);
+      // const prodName = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
+      // browser.scroll(prodName.value.x, prodName.value.y-80);
+      browser.moveToObject('//*[@class="title"]//span', 0, -80);
+      expect(this.orderPageProductName.getText()).to.be.equal(expected_data.order_page.project_name);
+      expect(this.orderPageTotal.getText()).to.be.equal(expected_data.order_page.total);
+     }
+    },
   orderPage:{
     value: function() {
       browser.pause(1000);
@@ -119,7 +186,7 @@ let singlePin = {
       this.placeOrder.click();
     }
   },
-  checkTitle:{
+  checkTitleThankYou:{
     value: function() {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();

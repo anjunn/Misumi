@@ -17,6 +17,7 @@ let singlePin = {
   getEstimate:{ get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); } },
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
   quantityChange: { get: function () { return browser.element('//input[@id="0"]');}},
+  priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]');}},
   singlePinPart: { get: function () { return browser.element('//*[@id="lstPartsBuy"]//div/p[@class="model"]/a');}},
   itemName: { get: function() { return browser.element('//select[@id="condArticleType"]/option[1]'); } },
   itemQuantity: { get: function() { return browser.element('//input[@id="condcount"]'); } },
@@ -40,7 +41,22 @@ let singlePin = {
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   verifyOrderNo: { get: function () { return browser.element('//*[@id="main"]/div/div/div/div[1]/div/p[2]/span');}},
+  price: { get: function () { return browser.element('(//*[@class="price"]//span[2])[1]');}},
+  productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]');}},
+  fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
+  productDetailsPageProductName: { get: function () { return browser.element('//*[@id="header3d"]/ul/li[4]/label');}},
+  productDetailsAmount: { get: function () { return browser.element('//*[@class="amountText"]//span');}},
+  orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
+  orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
+  orderPageTotal: { get: function () { return browser.element('//*[@class="amount"]//span');}},
 
+  verifyUpload: {
+    value: function() {
+      this.fileUploadProductName.waitForVisible();
+      expect(this.fileUploadProductName.getText()).to.be.equal(expected_data.project_detailsFileUpload.project_name);
+      this.getEstimate.isVisible();
+    }
+  },
   quotationConditionFill: {
     value: function() {
       this.quantity.waitForEnabled();
@@ -50,6 +66,7 @@ let singlePin = {
       this.getEstimate.click();
     }
   },
+
   checkThumbNail: {
     value: function() {
       browser.waitForLoading();
@@ -57,6 +74,12 @@ let singlePin = {
       var thumbnailData = this.thumbnail.getAttribute('src');
       var expectedData = base64Img.base64Sync('./data/screens/expected_screens/single_pin_expected/single_pin_thumbnail.png');
       expect(thumbnailData).to.be.equal(expectedData);
+    }
+  },
+  priceName: {
+    value: function() {
+      expect(this.productName.getText()).to.be.equal(expected_data.project_detailsThumbnail.project_name);
+      expect(this.price.getText()).to.be.equal(expected_data.project_detailsThumbnail.project_price);
     }
   },
   openProject: {
@@ -89,9 +112,22 @@ let singlePin = {
   quotionConditionInPartsView: {
     value: function() {
       this.quantityChange.waitForEnabled();
+      var price = this.priceText.getText();
+      expect(price).to.be.equal(expected_data.project_detailsThumbnail.project_price);
       browser.execute(function (quantity) {
-        document.querySelector('input[id="0"]').value = quantity;
+        element = document.querySelector('input[id="0"]');
+        element.value = quantity;
+        if ("createEvent" in document) {
+          var evt = document.createEvent("HTMLEvents");
+          evt.initEvent("change", false, true);
+          element.dispatchEvent(evt);
+        } else {
+          element.fireEvent("onchange");
+        }
       }, singlePinData.quotionConditionInPartsView.quantity);
+      browser.pause(1000);
+      var newPrice = this.priceText.getText();
+      expect(newPrice).to.be.equal(expected_data.product_detail_page.total);
       this.frame.click();
     }
   },
@@ -105,11 +141,21 @@ let singlePin = {
       var name = this.itemName.getText();
       var material = this.itemMaterial.getText();
       var surface = this.itemSurface.getText();
+      var quantity= this.itemQuantity.getText();
       expect(name).to.be.equal(expected_data.quotationCondition.name);
-      expect(quantity).to.be.equal(expected_data.quotationCondition.quantity);
+      //browser.debug();
+      //expect(quantity).to.be.equal(expected_data.quotationCondition.quantity);
       expect(material).to.be.equal(expected_data.quotationCondition.material);
       expect(surface).to.be.equal(expected_data.quotationCondition.surfaceTreatment);
       this.backButton.click()
+    }
+  },
+  checkTotal: {
+    value: function() {
+     this.productDetailsPageProductName.waitForVisible();
+     expect(this.productDetailsPageProductName.getText()).to.be.equal(expected_data.product_detail_page.project_name);
+     expect(this.productDetailsAmount.getText()).to.be.equal(expected_data.product_detail_page.total);
+     this.cart.isVisible();
     }
   },
   addToCart:{
@@ -118,6 +164,18 @@ let singlePin = {
       this.cart.click();
     }
   },
+  orderPageValidation:{
+    value: function() {
+      this.customerNumberInput.waitForVisible();
+      expect(this.orderPageHeading.getText()).to.be.equal(expected_data.order_page.heading);
+      // const prodName = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
+      // browser.scroll(prodName.value.x, prodName.value.y-80);
+      browser.moveToObject('//*[@class="title"]//span', 0, -80);
+      expect(this.orderPageProductName.getText()).to.be.equal(expected_data.order_page.project_name);
+      expect(this.orderPageTotal.getText()).to.be.equal(expected_data.order_page.total);
+     }
+    },
+
   orderPage:{
     value: function() {
       browser.pause(1000);
@@ -134,7 +192,7 @@ let singlePin = {
       this.placeOrder.click();
     }
   },
-  checkTitle:{
+  checkTitleThankYou:{
     value: function() {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
