@@ -61,7 +61,7 @@ let misumi = {
         }
 
         dispatchEvent(fakeDragEvent);
-        window.setTimeout(() => dispatchEvent(fakeDropEvent), 1500);
+        window.setTimeout(function() { dispatchEvent(fakeDropEvent) }, 1500);
       });
     }
   }

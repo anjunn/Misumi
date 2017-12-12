@@ -22,6 +22,7 @@ When User does Feature Recognition for single pin
 When Define quotation condition in parts view
 When Verify if quotation condition has been properly inputed
 When User verify if product total and procced to order button is enabled for single pin
+Then Check if product name and order details is shown in order page for single pin
 Then Place the order
 
 When User is taken to the Thankyou page
