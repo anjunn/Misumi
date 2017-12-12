@@ -17,12 +17,13 @@ let singlePin = {
   getEstimate:{ get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); } },
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); } },
   quantityChange: { get: function () { return browser.element('//input[@id="0"]');}},
+  priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]');}},
   checkBox: { get: function () { return browser.element('//*[@id="main"]/div[2]/div/div[1]/div/label/span');}},
   placeOrder: { get: function () { return browser.element('//*[contains(text(),"注文を確定する")]');}},
   logoutUser: { get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logout: { get: function () { return browser.element('//*[@id="logoutButton"]');}},
   frame: { get: function () { return browser.element('//*[@class="boxCheckbox"]');}},
-  groupValue: {value: function (t) {return browser.element(`(//*[@class="groupItemCount"])[${t}]`); }},
+  groupValue: {value: function (t) {return browser.element(`(//span[@class="groupItemCount"])[${t}]`); }},
   groupImage: { value: function (t) { return browser.element(`(//*[@class="group"]//img)[${t}]`);}},
   cart: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]');}},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); } },
@@ -39,6 +40,7 @@ let singlePin = {
   fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]');}},
   productDetailsPageProductName: { get: function () { return browser.element('//*[@id="header3d"]/ul/li[4]/label');}},
   productDetailsAmount: { get: function () { return browser.element('//*[@class="amountText"]//span');}},
+
   orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
   orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
   orderPageTotal: { get: function () { return browser.element('//*[@class="amount"]//span');}},
@@ -85,7 +87,7 @@ let singlePin = {
     value: function() {
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(3000);
+      browser.pause(4000);
       browser.saveScreenshot('./data/screens/actual_screens/multiple_pin.png');
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual_screens/multiple_pin.png').pipe(new PNG()).on('parsed', doneReading);
@@ -105,27 +107,42 @@ let singlePin = {
   quotionConditionInPartsView: {
     value: function() {
       this.quantityChange.waitForEnabled();
+      var price = this.priceText.getText();
+      expect(price).to.be.equal(expected_data.project_detailsThumbnail.project_price);
       browser.execute(function (quantity) {
-        document.querySelector('input[id="0"]').value = quantity;
+        var element = document.querySelector('input[id="0"]');
+        element.value = quantity;
+        if ("createEvent" in document) {
+          var evt = document.createEvent("HTMLEvents");
+          evt.initEvent("change", false, true);
+          element.dispatchEvent(evt);
+        } else {
+          element.fireEvent("onchange");
+        }
       }, multiplePinData.quotionConditionInPartsView.quantity);
+      browser.pause(2000);
+      var newPrice = this.priceText.getText();
+      expect(newPrice).to.be.equal(expected_data.product_detail_page.total)
       this.frame.click();
     }
   },
   checkGrouping:{
     value: function() {
-      for(var i=1;i<=4;i++) {
-        const groupValuePos = browser.elementIdLocation(this.groupValue(i).value.ELEMENT);
-        browser.scroll(groupValuePos.value.x, groupValuePos.value.y);
-        if(typeof this.groupValue(i).getText()!="undefined")
-         {
-           console.log(this.groupValue(i).getText());
-           this.groupImage(i).isVisible();
-         }
+      for (var i = 1; i <= 4; i++) {
+        browser.moveToObject(`(//*[@class="groupItemCount"])[${i}]`);
+        // const groupValuePos = browser.elementIdLocation(this.groupValue(i).value.ELEMENT);
+        // browser.scroll(groupValuePos.value.x, groupValuePos.value.y);
+        if (typeof this.groupValue(i).getText() != "undefined") {
+          var parts = this.groupValue(i).getText();
+          // console.log(parts);
+          // console.log(`[${expected_data.grouping[i-1]}]`);
+          expect(parts).to.be.equal(`[${expected_data.grouping[i-1]}]`);
+          this.groupImage(i).isVisible();
+        }
       }
     }
   },
-
-   checkTotal: {
+  checkTotal: {
     value: function() {
      this.productDetailsPageProductName.waitForVisible();
      expect(this.productDetailsPageProductName.getText()).to.be.equal(expected_data.product_detail_page.project_name);
