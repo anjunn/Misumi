@@ -1,8 +1,23 @@
 {
+   "project_detailsFileUpload": {
+    "project_name": "multiple_pins.SLDPRT"
+  },
+
+"project_detailsThumbnail": {
+    "project_name": "multiple_pins.SLDPRT",
+    "project_price":"18,236"
+  },
+
+  "product_detail_page": {
+    "project_name": "multiple_pins.SLDPRT",
+    "total": "18,236"
+  },
 
   "imageAccuracy": 95,
   
   "thankyou": {
     "heading": "注文手続き"
   }
+
+
 }
