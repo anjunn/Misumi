@@ -172,7 +172,7 @@ let singlePin = {
       // browser.scroll(prodName.value.x, prodName.value.y-80);
       browser.moveToObject('//*[@class="title"]//span', 0, -80);
       expect(this.orderPageProductName.getText()).to.be.equal(expected_data.order_page.project_name);
-      expect(this.orderPageHeading.getText()).to.be.equal(expected_data.order_page.total);
+      expect(this.orderPageTotal.getText()).to.be.equal(expected_data.order_page.total);
      }
     },
 
