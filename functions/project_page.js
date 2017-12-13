@@ -19,6 +19,8 @@ let  projectPage = {
     value: function() {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
+      this.arrow.waitForVisible();
+      browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
     }
   },
   compareImage: {

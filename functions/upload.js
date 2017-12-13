@@ -1,5 +1,7 @@
 let Page = require('./page');
 let base64Img = require('base64-img');
+let fs = require('fs');
+var path = require('path');
 
 let  uploadPage = {
 
@@ -15,7 +17,13 @@ let  uploadPage = {
   productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]'); }},
 
   upload: {
-    value: function(path) {
+    value: function(filePath) {
+
+      var date = (new Date()).getTime();
+      var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
+      browser.params.fileName = path.basename(newPath);
+      fs.rename(filePath, newPath, function() {});
+
       this.waitForFormComponent.waitForVisible();
 
       browser.execute(function () {
@@ -25,7 +33,7 @@ let  uploadPage = {
         document.body.appendChild(inputElement);
       });
 
-      browser.chooseFile('#inputFileDragHandler', path);
+      browser.chooseFile('#inputFileDragHandler', newPath);
 
       browser.execute(function () {
         function FakeDataTransfer(file) {
@@ -71,12 +79,14 @@ let  uploadPage = {
         dispatchEvent(fakeDragEvent);
         window.setTimeout(function() { dispatchEvent(fakeDropEvent) }, 1500);
       });
+
+      fs.rename(newPath, filePath, function() {});
     }
   },
   verifyUpload: {
-    value: function(projectName) {
+    value: function() {
       this.fileUploadProductName.waitForVisible();
-      expect(this.fileUploadProductName.getText()).to.be.equal(projectName);
+      expect(this.fileUploadProductName.getText()).to.be.equal(browser.params.fileName);
       this.getEstimate.isVisible();
     }
   },
@@ -99,8 +109,9 @@ let  uploadPage = {
     }
   },
   checkNameAndPrice: {
-    value: function(project_name) {
-      expect(this.productName.getText()).to.be.equal(project_name);
+    value: function() {
+      browser.params.singlePin.initailPrice = this.price.getText();
+      expect(this.productName.getText()).to.be.equal(browser.params.fileName);
       expect(this.price.getText()).to.not.be.null;
     }
   }

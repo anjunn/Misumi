@@ -53,7 +53,7 @@ module.exports = function () {
   });
 
   this.Then(/^Check if product name and order details is shown in order page for multiple pin$/, () => {
-    orderPage.orderPageValidation(expectedData.orderPageHeading, multiplePinExpectedData.projectName);
+    orderPage.orderPageValidation(expectedData.orderPageHeading);
   });
 
   this.Then(/^Place the order for the multiple pins$/, () => {

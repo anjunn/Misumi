@@ -24,11 +24,11 @@ let  orderPage = {
     }
   },
   orderPageValidation: {
-    value: function(heading, name) {
+    value: function(heading) {
       this.customerNumberInput.waitForVisible();
       expect(this.orderPageHeading.getText()).to.be.equal(heading);
       browser.moveToObject('//*[@class="title"]//span', 0, -80);
-      expect(this.orderPageProductName.getText()).to.be.equal(name);
+      expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
   placeOrder: {
