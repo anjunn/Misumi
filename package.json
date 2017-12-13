@@ -3,8 +3,10 @@
   "description": "QA Automation for meviy",
   "version": "1.0.0",
   "scripts": {
-    "test-ci-chrome": "node_modules/.bin/wdio wdio.conf.chrome.js --suite example",
-    "test-ci-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite example",
+    "test-ci-chrome": "node_modules/.bin/wdio wdio.conf.chrome.js --suite all",
+    "test-ci-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite all",
+    "test-ci-s1": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario1",
+    "test-ci-s2": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario2",
     "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
     "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0"
   },

@@ -1,30 +1,27 @@
 {
-   "project_detailsFileUpload": {
-    "project_name": "multiple_pins.SLDPRT"
+  "projectName": "multiple_pins.SLDPRT",
+
+  "quotationCondition": {
+    "material": "SKH51 (58～60HRC)",
+    "surfaceTreatment": "なし",
+    "ToleranceGrade": "並級"
   },
 
-"project_detailsThumbnail": {
-    "project_name": "multiple_pins.SLDPRT",
-    "project_price":"18,236"
+  "quotationConditionInPartsView": {
+    "quantity": 3
   },
 
-  "product_detail_page": {
-    "project_name": "multiple_pins.SLDPRT",
-    "total": "19,086"
-  },
-  "order_page": {
-    "heading": "注文手続き",
-    "project_name": "multiple_pins.SLDPRT",
-    "total": "19,086"
-  },
-
-  "imageAccuracy": 95,
-
-  "thankyou": {
-    "heading": "注文手続き"
+  "partNames": {
+    "part1": "角エジェクタピン",
+    "part2": "コアピン",
+    "part3": "エジェクタピン",
+    "part4": "コアピン",
+    "part5": "段付きエジェクタピン",
+    "part6": "エジェクタピン",
+    "part7": "エジェクタピン"
   },
 
   "grouping": [ 2, 5, 12,4 ]
-  
+
 }
 

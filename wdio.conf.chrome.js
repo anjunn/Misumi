@@ -28,7 +28,7 @@
          */
          let chai = require('chai');
          global.expect = chai.expect;
-
+         global.assert = chai.assert;
          console.log('Starting Test Case: -', specs[0].replace(/^.*[\\\/]/, ''));
 
          let utils = require('./utilities/utils');
@@ -40,6 +40,7 @@
         };
         browser.setViewportSize(size);
         browser.timeouts('page load', 60000);
+        browser.params = this.params;
       }
     });
 

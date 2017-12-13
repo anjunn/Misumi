@@ -22,10 +22,15 @@ exports.config = {
   //   ]
   // },
   suites: {
-    example: [
+    scenario1: [
+      './feature/scenario1_pin.feature'
+    ],
+    scenario2: [
+      './feature/scenario2_Multiplepin.feature'
+    ],
+    all: [
       './feature/scenario1_pin.feature',
       './feature/scenario2_Multiplepin.feature',
-
     ]
   },
 
@@ -87,7 +92,7 @@ exports.config = {
   //
   // Set a base URL in order to shorten url command calls. If your url parameter starts
   // with "/", then the base url gets prepended.
-  baseUrl: 'https://misumi.com/',
+  baseUrl: 'https://prs-origin-tst.meviy.misumi-ec.com',
 
 
   //
@@ -97,16 +102,12 @@ exports.config = {
   //     outputDir: './reports/'
   //   }
   // },
-
-
-    // ...
-    reporters: ['allure','spec'],
-    reporterOptions: {
-        allure: {
-            outputDir: 'allure-results'
-        }
-    },
-    // ...
+  reporters: ['allure','spec'],
+  reporterOptions: {
+    allure: {
+      outputDir: 'allure-results'
+    }
+  },
 
 
   plugins: {
@@ -121,7 +122,7 @@ exports.config = {
   // services: ['sauce','appium','selenium-standalone'],
   //
   // services: ['selenium-standalone'],
-   seleniumLogs: './reports/',
+  seleniumLogs: './reports/',
   // seleniumArgs: [{'version': '3.0.1'}, {'drivers.chrome.version': '2.27'}, {'drivers.chrome.arch': 'x64'}],
 
   //
@@ -133,7 +134,7 @@ exports.config = {
   cucumberOpts: {
     tags: require('./tagsProcessor')(process.argv),
     require: [
-      './step_definitions/misumi.stepDefinition.js',
+      './step_definitions/login.stepDefinition.js',
       './step_definitions/scenario1_Pin.stepDefinition.js',
       './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
     ],
@@ -160,6 +161,16 @@ exports.config = {
       let screenShot = './reports/screenshots/' + new Date().getTime() + featureName + ' ' + stepName + '.png';
       console.log('Adding screenshot: ' + screenShot);
       browser.saveScreenshot(screenShot);
+    }
+  },
+
+  // params for storing global variables
+  params: {
+    singlePin: {
+      totalPrice: ''
+    },
+    multiplePin: {
+      totalPrice: ''
     }
   }
 };
