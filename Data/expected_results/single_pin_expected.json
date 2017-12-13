@@ -1,34 +1,19 @@
 {
-   "project_detailsFileUpload": {
-    "project_name": "single_pin.x_t"
-  },
 
-   "project_detailsThumbnail": {
-    "project_name": "single_pin.x_t",
-    "project_price":"5,043"
-  },
+  "projectName": "single_pin.x_t",
 
   "quotationCondition": {
-    "name": "コアピン",
-    "quantity": "2",
     "material": "SKH51 (58～60HRC)",
     "surfaceTreatment": "なし",
     "ToleranceGrade": "並級"
   },
 
-  "thankyou": {
-    "heading": "注文手続き"
+  "quotationConditionInPartsView": {
+    "quantity": 2
   },
 
-  "product_detail_page": {
-    "project_name": "single_pin.x_t",
-    "total": "9,800"
-  },
-  "order_page": {
-    "heading": "注文手続き",
-    "project_name": "single_pin.x_t",
-    "total": "9,800"
-  },
+  "partNames": {
+    "part1": "コアピン"
+  }
 
-  "imageAccuracy": 95
 }

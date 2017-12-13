@@ -1,22 +1,22 @@
 /*
- Utility functions
+Utility functions
 */
 
 const commonUtilities = {
-  waitForLoading: function waitForLoading(index = 1, waitForExtraLoad = false) {
+  waitForLoading: function waitForLoading(element, index = 1, waitForExtraLoad = false) {
     waitTime = browser.options.waitforTimeout;
     try {
       browser.pause(1000);
       if (waitForExtraLoad) {
         browser.pause(500);
       }
-      const isVisible = browser.isVisible('//span[@class="percent"]');
+      const isVisible = browser.isVisible(element);
       if (isVisible && index * 100 < waitTime) {
-        this.waitForLoading(index + 1);
+        this.waitForLoading(element, index + 1);
       } else if (isVisible && index * 100 >= waitTime) {
         throw `Processing not finished even after ${waitTime}`;
       } else if (!isVisible && !waitForExtraLoad) {
-        this.waitForLoading(index, true);
+        this.waitForLoading(element, index, true);
       }
     } catch (err) {
       console.log(`Wait for Loading failed with error: ${err}`);

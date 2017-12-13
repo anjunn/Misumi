@@ -1,13 +1,21 @@
 let Page = require('./page');
-let data=require('../data/input_data/dataset.json');
+let base64Img = require('base64-img');
 
-let misumi = {
+let  uploadPage = {
 
-  uploadId: { get: function () { return browser.element('//*[@id="uploadfile"]');} },
-  waitForFormComponent: { get: function () { return browser.element('//form[@name="uploadform"]');} },
+  waitForFormComponent: { get: function () { return browser.element('//form[@name="uploadform"]'); }},
+  fileUploadProductName: { get: function () { return browser.element('//*[@class="filename displayFileName"]'); }},
+  getEstimate: { get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); }},
+  quantity: { get: function () { return browser.element('//*[@class="customInput"]//input[@type="number"]'); }},
+  material: { get: function () { return browser.element('//*[@name="materialId"]'); }},
+  surfaceTreatment: { get: function () { return browser.element('//*[@name="surfaceId"]'); }},
+  tolerance:{ get: function () { return browser.element('//*[@name="toleranceClassId"]'); }},
+  thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); }},
+  price: { get: function () { return browser.element('(//*[@class="price"]//span[2])[1]'); }},
+  productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]'); }},
 
   upload: {
-    value: function(url) {
+    value: function(path) {
       this.waitForFormComponent.waitForVisible();
 
       browser.execute(function () {
@@ -17,7 +25,7 @@ let misumi = {
         document.body.appendChild(inputElement);
       });
 
-      browser.chooseFile('#inputFileDragHandler', url);
+      browser.chooseFile('#inputFileDragHandler', path);
 
       browser.execute(function () {
         function FakeDataTransfer(file) {
@@ -64,7 +72,38 @@ let misumi = {
         window.setTimeout(function() { dispatchEvent(fakeDropEvent) }, 1500);
       });
     }
+  },
+  verifyUpload: {
+    value: function(projectName) {
+      this.fileUploadProductName.waitForVisible();
+      expect(this.fileUploadProductName.getText()).to.be.equal(projectName);
+      this.getEstimate.isVisible();
+    }
+  },
+  quotationConditionFill: {
+    value: function(quotationCondition) {
+      this.quantity.waitForEnabled();
+      this.material.selectByVisibleText(quotationCondition.material);
+      this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
+      this.tolerance.selectByVisibleText(quotationCondition.ToleranceGrade);
+      this.getEstimate.click();
+    }
+  },
+  checkThumbNail: {
+    value: function(expectedThumbnail) {
+      browser.waitForLoading('//span[@class="percent"]');
+      this.thumbnail.waitForVisible();
+      var thumbnailData = this.thumbnail.getAttribute('src');
+      var expectedData = base64Img.base64Sync('./data/screens/expected_screens/' + expectedThumbnail);
+      expect(thumbnailData).to.be.equal(expectedData);
+    }
+  },
+  checkNameAndPrice: {
+    value: function(project_name) {
+      expect(this.productName.getText()).to.be.equal(project_name);
+      expect(this.price.getText()).to.not.be.null;
+    }
   }
 };
 
-module.exports = Object.create(Page,misumi);
+module.exports = Object.create(Page, uploadPage);

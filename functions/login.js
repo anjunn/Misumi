@@ -1,7 +1,7 @@
 let Page = require('./page');
-let data=require('../data/input_data/dataset.json');
+let data = require('../data/input_data/dataset.json');
 
-let misumi = {
+let loginPage = {
 
   startRightAway: { get: function () { return browser.element('//*[@class="loginBtn"]//*[contains(text(),"すぐにはじめる")]');}},
   memberID: { get: function () { return browser.element('//*[@id="id"]');}},
@@ -12,22 +12,6 @@ let misumi = {
   logout:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
   homepageHeader:{ get: function () { return browser.element('//*[@id="moldMv"]/div/div/div/h1');}},
 
-  loginToMeviy: {
-    value: function(loginDetails) {
-      this.startRightAway.waitForEnabled();
-      this.startRightAway.click();
-      this.memberID.waitForEnabled();
-      this.memberID.setValue(loginDetails.UserId);
-      this.password.setValue(loginDetails.Password);
-      this.loginbtn.click();
-      browser.pause(5000);
-      var url = browser.getUrl();
-      if (url == data.url.login) {
-        this.loginbtn.waitForEnabled();
-        this.loginbtn.click();
-      }
-    }
-  },
   checkUrl: {
     value: function() {
       browser.waitForEnabled('#uploadfile');
@@ -43,44 +27,39 @@ let misumi = {
       this.logout.click();
     }
   },
-
   checkHomePage: {
     value: function(){
       let header = this.homepageHeader.getText();
-       return header;
+      return header;
     }
-    },
-   checkRightAwayBtn: {
-      value: function(){
-        let visible=false;
-        if (this.startRightAway.isVisible()){ 
-          visible ="true";
-        }
-      return visible;
-     }
-   },
-
-   validateMemberID: {
-      value: function(){
-        expect(this.memberID.isVisible()).to.equal(true);
+  },
+  checkRightAwayBtn: {
+    value: function(){
+      let visible = false;
+      if (this.startRightAway.isVisible()) {
+        visible = "true";
       }
-   },
-
-   validatePassword: {
+      return visible;
+    }
+  },
+  validateMemberID: {
+    value: function(){
+      expect(this.memberID.isVisible()).to.equal(true);
+    }
+  },
+  validatePassword: {
     value: function(){
       expect(this.password.isVisible()).to.equal(true);
     }
-   },
-
+  },
   validateLoginBtn: {
     value: function(){
       this.startRightAway.click();
       browser.pause(3000);
       expect(this.loginbtn.isVisible()).to.equal(true);
     }
-   },
-
-   memberLogin: {
+  },
+  memberLogin: {
     value: function(loginDetails) {
       this.memberID.waitForEnabled();
       this.memberID.setValue(loginDetails.UserId);
@@ -88,12 +67,12 @@ let misumi = {
       this.loginbtn.click();
       browser.pause(5000);
       var url = browser.getUrl();
-      if (url == data.url.login) 
-      {
+      if (url == data.url.login) {
         this.loginbtn.waitForEnabled();
         this.loginbtn.click();
       }
     }
-   },
+  },
  };
-module.exports = Object.create(Page,misumi);
+
+module.exports = Object.create(Page,loginPage);

@@ -1,5 +1,6 @@
-Feature: Check meviy.misumi-ec.com
-Scenario: Test the Senario2 - Multiple Pin upload and order
+Feature: Scenario2
+
+Scenario: Multiple Pin upload and order
 
 Given User access sample 3D page
 Then User is able to see the webpage header
@@ -17,8 +18,11 @@ When User verify project name and price for multiple pin
 
 Given User Open the uploaded multiple pin project
 When User check feature recognition
-When Define quotation condition in parts view for multiple pin
-When User Check grouping
-When User verify if product total and procced to order button is enabled for multiple pin
+Then Define quotation condition in parts view for multiple pin
+Then User verify part names for multiple pin
+Then User Check grouping
+
+Given User goes to order page of multiple pin
+Then Check if product name and order details is shown in order page for multiple pin
 Then Place the order for the multiple pins
 

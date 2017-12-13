@@ -1,65 +1,71 @@
-
-let upLoadPage= require('../functions/upload.js');
 let data = require('../Data/input_data/dataset.json');
-let multiplePinPage= require('../functions/multiple_pin.js');
-let loginPage= require('../functions/login.js');
+let expectedData = require('../data/expected_results/common.json');
+let multiplePinExpectedData = require('../data/expected_results/multiple_pin_expected.json');
+let loginPage = require('../functions/login.js');
+let uploadPage = require('../functions/upload.js');
+let projectPage = require('../functions/project_page');
+let orderPage = require('../functions/order_page.js');
 
 module.exports = function () {
 
   this.Given(/^Upload 3D data for multiple pin$/, () => {
-    url=data.uploadPath.multiple_pin;
-    upLoadPage.upload(url);
+    path = data.uploadPath.multiplePin;
+    uploadPage.upload(path);
   });
 
-   this.When(/^Verify if upload is successfull for multiple pin$/, () => {
-    multiplePinPage.verifyUpload();
+  this.When(/^Verify if upload is successfull for multiple pin$/, () => {
+    uploadPage.verifyUpload(multiplePinExpectedData.projectName);
   });
 
   this.When(/^User define quotation condition for the multple pin$/, () => {
-    multiplePinPage.quotationConditionFill();
+    uploadPage.quotationConditionFill(multiplePinExpectedData.quotationCondition);
   });
 
   this.Then(/^Check 3D Thumb nail of multiple pins appears$/, () => {
-    multiplePinPage.checkThumbNail();
+    uploadPage.checkThumbNail('multiple_pin_expected/multiple_pin_thumbnail.png');
   });
    this.When(/^User verify project name and price for multiple pin$/, () => {
-    multiplePinPage.priceName();
+    uploadPage.checkNameAndPrice(multiplePinExpectedData.projectName);
   });
 
   this.Given(/^User Open the uploaded multiple pin project$/, () => {
-    multiplePinPage.openProject();
+    projectPage.openProject();
   });
 
   this.When(/^User check feature recognition$/, () => {
-    multiplePinPage.compareImage();
+    // projectPage.compareImage('multiple_pin.png', 'multiple_pin_expected/multiple_pin_expected.png');
   });
 
-  this.When(/^Define quotation condition in parts view for multiple pin$/, () => {
-    multiplePinPage.quotionConditionInPartsView();
+  this.Then(/^Define quotation condition in parts view for multiple pin$/, () => {
+    projectPage.quotionConditionInPartsView(multiplePinExpectedData.quotationConditionInPartsView.quantity, 'multiplePin');
+  });
+
+  this.When(/^User verify part names for multiple pin$/, () => {
+    projectPage.checkMultiplePinName(multiplePinExpectedData.partNames);
   });
 
   this.When(/^User Check grouping$/, () => {
-    multiplePinPage.checkGrouping();
+    projectPage.checkGrouping(multiplePinExpectedData.grouping);
   });
 
-  this.When(/^User verify if product total and procced to order button is enabled for multiple pin$/, () => {
-    multiplePinPage.checkTotal();
-    multiplePinPage.addToCart();
+  this.When(/^User goes to order page of multiple pin$/, () => {
+    orderPage.goToOrderPage();
   });
+
   this.Then(/^Check if product name and order details is shown in order page for multiple pin$/, () => {
-    multiplePinPage.orderPageValidation();
+    orderPage.orderPageValidation(expectedData.orderPageHeading, multiplePinExpectedData.projectName);
   });
 
   this.Then(/^Place the order for the multiple pins$/, () => {
-    multiplePinPage.orderPage();
+   orderPage.placeOrder();
   });
 
   this.Then(/^User is taken to Thankyou page$/, () => {
-    multiplePinPage.checkTitleThankYou();
+    orderPage.checkTitleThankYou(expectedData.thankyouHeading);
   });
 
   this.When(/^Go to order history and check the product$/, () => {
-    multiplePinPage.checkHistory();
+    orderPage.checkHistory();
     loginPage.logoutFunction();
   });
 };
