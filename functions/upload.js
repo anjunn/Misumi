@@ -110,7 +110,7 @@ let  uploadPage = {
   },
   checkNameAndPrice: {
     value: function() {
-      browser.params.singlePin.initailPrice = this.price.getText();
+      browser.params.initialPrice = this.price.getText();
       expect(this.productName.getText()).to.be.equal(browser.params.fileName);
       expect(this.price.getText()).to.not.be.null;
     }

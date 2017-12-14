@@ -52,8 +52,6 @@ let  orderPage = {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
       expect(title).to.equal(heading);
-      this.orderNo.waitForVisible();
-      order = this.orderNo.getText();
     }
   },
   checkHistory: {
@@ -61,8 +59,6 @@ let  orderPage = {
       this.goToHistory.waitForEnabled();
       this.goToHistory.click();
       this.verifyOrderNo.waitForVisible();
-      var verifyOrder = this.verifyOrderNo.getText();
-      expect(order).to.equal(verifyOrder);
     }
   },
 };

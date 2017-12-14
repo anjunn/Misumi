@@ -167,15 +167,9 @@ exports.config = {
 
   // params for storing global variables
   params: {
-    projectPageUrl: '',
-    fileName: '',
-    singlePin: {
-      initialPrice: '',
-      totalPrice: ''
-    },
-    multiplePin: {
-      initialPrice: '',
-      totalPrice: ''
-    }
+    projectPageUrl: null,
+    fileName: null,
+    initialPrice: null,
+    totalPrice: null
   }
 };

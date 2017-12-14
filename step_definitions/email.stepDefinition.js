@@ -1,5 +1,4 @@
 let emailPage = require('../functions/mail.js');
-let singlePinExpectedData = require('../data/expected_results/single_pin_expected.json');
 
 module.exports = function () {
 
@@ -13,10 +12,10 @@ module.exports = function () {
 
   this.Then(/^User verify project details in the mail$/, () => {
     emailPage.selectMail();
-    emailPage.validateMail(browser.params.singlePin.initialPrice, singlePinExpectedData.projectName);
+    emailPage.validateMail();
   });
 
   this.Then(/^User goes back to project page$/, () => {
-    browser.url(browser.params.projectPageUrl);
+    emailPage.goToProductPage();
   });
 };

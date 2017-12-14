@@ -1,7 +1,16 @@
 let Page = require('./page');
+let projectPageUrl;
 
+/**
+ * email Page Object
+ *
+ * @class functions/email
+ * @type {Page}
+ */
 let emailPage = {
-
+  /**
+   * define elements
+   */
   emailField: { get: function () { return browser.element('//input[@type="email"]');} },
   passwordField: { get: function () { return browser.element('//input[@type="password"]');} },
   menuIcon: { get: function () { return browser.element('//button[@id="O365_MainLink_NavMenu"]');} },
@@ -9,14 +18,16 @@ let emailPage = {
   submit: { get: function () { return browser.element('//input[@type="submit"]');} },
   estimateFav: { get: function () { return browser.element('//*[@id="primaryContainer"]/div[5]/div/div[1]/div/div[1]/div[2]/div/div[1]/div[2]/button/span[1]');} },
   openMail: { get: function () { return browser.element('//div[@autoid="_lvv_9"]');} },
-  mailEstimateFolder: { get: function () { return browser.element('//*[@id="_ariaId_45.folder"]');} },
+  mailEstimateFolder: { get: function () { return browser.element('//div[@id="MailFolderPane.FavoritesFolders"]//span[@title="見積り"]');} },
   fileNameInMail: { value: function (name) { return browser.element(`//span[contains(text(),("${name}"))]`);} },
   mailCheckbox: { value: function (name) { return browser.element(`//span[contains(text(),("${name}"))]/../..//button[@role="checkbox"]`);} },
   maildeleteIcon: { get: function () { return browser.element('//button[@title="削除 (Del)"]');} },
   mailLink: { get: function () { return browser.element('//*[@id="Item.MessageNormalizedBody"]/div/div/div/font/span/div/a');} },
   mailPreview: { get: function () { return browser.element('//*[@id="Item.MessageNormalizedBody"]/div/div/div/font/span/div');} },
 
-  // Login into account.
+  /**
+   * Login into account.
+   */
   login: {
     value: function() {
       this.emailField.setValue('test.t8zb.meviy@misumi.co.jp');
@@ -27,7 +38,9 @@ let emailPage = {
     }
   },
 
-  // Navigate to mail section.
+  /**
+   * Navigate to mail section.
+   */
   selectMail: {
     value: function() {
       this.menuIcon.waitForVisible();
@@ -43,25 +56,31 @@ let emailPage = {
     }
   },
 
-  // Find the mail with uploaded file name in the mail subject.
+  /**
+   * Verify price, name and link in mail
+   */
   validateMail: {
-    value: function(price) {
+    value: function() {
       if (this.fileNameInMail(browser.params.fileName).isVisible()) {
         this.fileNameInMail(browser.params.fileName).click();
         this.mailCheckbox((browser.params.fileName)).click();
         this.mailPreview.waitForVisible();
-
-        // Check for stored price, file name and link with the values in mail.
-
-        expect(this.mailPreview.getText()).to.include(price);
+        expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
         expect(this.mailPreview.getText()).to.include(browser.params.fileName);
         expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
         expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
-
-        // After confirmation, delete the mail for avoiding future error.
-
-        this.maildeleteIcon.click();
+        projectPageUrl = this.mailLink.getText();
+        this.maildeleteIcon.click(); // After confirmation, delete the mail for avoiding future error.
       }
+    }
+  },
+
+  /**
+   * User goes back to product page
+   */
+  goToProductPage: {
+    value: function() {
+      browser.url(projectPageUrl)
     }
   }
 }

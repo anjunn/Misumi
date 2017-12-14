@@ -7,6 +7,7 @@ let expectedData = require('../data/expected_results/common.json');
 let  projectPage = {
 
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); }},
+  chatBox: { get : function() { return browser.element('//div[@id="aibis-waiting"]/div[@class="titlebar"]'); }},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
   singlePinPart: { get: function() { return browser.element('//*[@id="lstPartsBuy"]//div/span[@class="class"]'); }},
   quantityChange: { get: function () { return browser.element('//input[@id="0"]'); }},
@@ -25,6 +26,7 @@ let  projectPage = {
   },
   compareImage: {
     value: function(actualImagePath, expectedImagePath) {
+      this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(4000);
@@ -45,7 +47,7 @@ let  projectPage = {
     }
   },
   quotionConditionInPartsView: {
-    value: function(quantity, type) {
+    value: function(quantity) {
       this.quantityChange.waitForEnabled();
       var price = this.priceText.getText();
       expect(price).to.not.be.null;
@@ -62,7 +64,7 @@ let  projectPage = {
       }, quantity);
       browser.pause(3000);
       var newPrice  = this.priceText.getText();
-      browser.params[type].totalPrice = newPrice;
+      browser.params.totalPrice = newPrice;
       expect(newPrice).to.be.above(price);
     }
   },
