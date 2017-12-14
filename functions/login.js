@@ -1,78 +1,112 @@
 let Page = require('./page');
-let data = require('../data/input_data/dataset.json');
+let data = require('../data/input-data/dataset.json');
 
 let loginPage = {
 
-  startRightAway: { get: function () { return browser.element('//*[@class="loginBtn"]//*[contains(text(),"すぐにはじめる")]');}},
-  memberID: { get: function () { return browser.element('//*[@id="id"]');}},
-  password: { get: function () { return browser.element('//*[@id="pass"]');}},
-  loginbtn: { get: function () { return browser.element('//*[@class="btn btnColor01"]');}},
-  error: { get: function () { return browser.element('//*[@id="error1"]/small');}},
-  logoutUser:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
-  logout:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
-  homepageHeader:{ get: function () { return browser.element('//*[@id="moldMv"]/div/div/div/h1');}},
+  startRightAway: { get: function () { return browser.element('//li[@class="loginBtn"]');}},
+  userNameField: { get: function () { return browser.element('//input[@id="id"]');}},
+  passwordField: { get: function () { return browser.element('//input[@id="pass"]');}},
+  loginButton: { get: function () { return browser.element('//div[@id="login_btn_on"]');}},
+  errorMessage: { get: function () { return browser.element('//div[@id="error1"]/small');}},
+  memberMenuButton:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
+  logoutButton:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
+  homepageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//[@class="inner"]/h1');}},
 
-  checkUrl: {
-    value: function() {
-      browser.waitForEnabled('#uploadfile');
-      var url = browser.getUrl();
-      expect(url).to.equal(data.url.myPageUrl);
+  /*
+   * Goes to Home Page
+   */
+  goToHomePage: {
+    value: function () {
+      browser.url('https://prs-origin-tst.meviy.misumi-ec.com/');
     }
   },
-  logoutFunction:{
+
+  /*
+   * Logs out from the website
+   */
+  logout: {
     value: function() {
-      this.logoutUser.waitForEnabled();
-      this.logoutUser.click();
-      this.logout.waitForEnabled();
-      this.logout.click();
+      this.memberMenuButtonButton.waitForEnabled();
+      this.memberMenuButton.click();
+      this.logoutButton.waitForEnabled();
+      this.logoutButton.click();
     }
   },
-  checkHomePage: {
+
+  /*
+   * Validates the webpage header
+   */
+
+  validateWebpageHeader: {
     value: function(){
       let header = this.homepageHeader.getText();
-      return header;
+      expect(expectedData.homePageTitle).to.equal(header);
     }
   },
-  checkRightAwayBtn: {
+
+  /*
+   * Validates the start right away button
+   */
+  validateRightAwayButton: {
     value: function(){
-      let visible = false;
-      if (this.startRightAway.isVisible()) {
-        visible = "true";
-      }
-      return visible;
+      expect(this.startRightAway.isVisible()).to.equal(true);
     }
   },
-  validateMemberID: {
+
+  /*
+   * Validates the username field in login page
+   */
+  validateUserNameField: {
     value: function(){
-      expect(this.memberID.isVisible()).to.equal(true);
+      expect(this.userNameField.isVisible()).to.equal(true);
     }
   },
-  validatePassword: {
+
+  /*
+   * Validates the password field in login page
+   */
+  validatePasswordField: {
     value: function(){
-      expect(this.password.isVisible()).to.equal(true);
+      expect(this.passwordField.isVisible()).to.equal(true);
     }
   },
-  validateLoginBtn: {
+
+  /*
+   * Goes to login page
+   */
+  goToLoginPage: {
     value: function(){
       this.startRightAway.click();
-      browser.pause(3000);
-      expect(this.loginbtn.isVisible()).to.equal(true);
     }
   },
-  memberLogin: {
-    value: function(loginDetails) {
-      this.memberID.waitForEnabled();
-      this.memberID.setValue(loginDetails.UserId);
-      this.password.setValue(loginDetails.Password);
-      this.loginbtn.click();
+
+  /*
+   * Validates the login page url
+   */
+  validateLoginPageUrl: {
+    value: function () {
+      this.loginButton.waitForVisible();
+      expect(browser.getUrl()).to.equal(data.url.login);
+    }
+  },
+
+  /*
+   * Logs into the website
+   */
+  login: {
+    value: function() {
+      var loginDetails = data.loginCredentials[0];
+      this.userNameField.waitForEnabled();
+      this.userNameField.setValue(loginDetails.UserId);
+      this.passwordField.setValue(loginDetails.Password);
+      this.loginButton.click();
       browser.pause(5000);
-      var url = browser.getUrl();
-      if (url == data.url.login) {
-        this.loginbtn.waitForEnabled();
-        this.loginbtn.click();
+      if (this.errorMessage.isVisible()) {
+        this.loginButton.waitForEnabled();
+        this.loginButton.click();
       }
     }
   },
  };
 
-module.exports = Object.create(Page,loginPage);
+module.exports = Object.create(Page, loginPage);

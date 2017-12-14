@@ -1,10 +1,10 @@
-let data = require('../Data/input_data/dataset.json');
-let expectedData = require('../data/expected_results/common.json');
-let multiplePinExpectedData = require('../data/expected_results/multiple_pin_expected.json');
+let data = require('../data/input-data/dataset.json');
+let expectedData = require('../data/expected-results/common.json');
+let multiplePinExpectedData = require('../data/expected-results/multiple-pin-expected.json');
 let loginPage = require('../functions/login.js');
 let uploadPage = require('../functions/upload.js');
-let projectPage = require('../functions/project_page');
-let orderPage = require('../functions/order_page.js');
+let projectPage = require('../functions/project');
+let orderPage = require('../functions/order.js');
 
 module.exports = function () {
 

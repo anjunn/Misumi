@@ -1,15 +1,14 @@
-
 let data = require('../data/input_data/dataset.json');
-let expectedData = require('../data/expected_results/common.json');
-let singlePinExpectedData = require('../data/expected_results/single_pin_expected.json');
+let expectedData = require('../data/expected-results/common.json');
+let singlePinExpectedData = require('../data/expected-results/single-pin-expected.json');
 let loginPage = require('../functions/login.js');
 let uploadPage = require('../functions/upload.js');
-let projectPage = require('../functions/project_page');
-let orderPage = require('../functions/order_page');
+let projectPage = require('../functions/project');
+let orderPage = require('../functions/order');
 
 module.exports = function () {
 
-  this.Given(/^Upload 3D data for pin$/, () => {
+  this.Given(/^Upload 3D data for single pin$/, () => {
     path = data.uploadPath.singlePin;
     uploadPage.upload(path);
   });

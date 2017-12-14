@@ -95,7 +95,7 @@ let  uploadPage = {
       this.quantity.waitForEnabled();
       this.material.selectByVisibleText(quotationCondition.material);
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
-      this.tolerance.selectByVisibleText(quotationCondition.ToleranceGrade);
+      this.tolerance.selectByVisibleText(quotationCondition.toleranceGrade);
       this.getEstimate.click();
     }
   },

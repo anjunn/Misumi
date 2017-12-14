@@ -1,37 +1,39 @@
 let loginPage = require('../functions/login.js');
 let data = require('../data/input_data/dataset.json');
-let expectedData = require('../data/expected_results/common.json');
+let expectedData = require('../data/expected-results/common.json');
 
 module.exports = function () {
 
-  this.Given(/^User access sample 3D page$/, () => {
-    browser.url('https://prs-origin-tst.meviy.misumi-ec.com/');
+  this.Given(/^User goes to Home Page$/, () => {
+    loginPage.goToHomePage();
   });
 
-  this.Then(/^User is able to see the webpage header$/, () => {
-  	var exp = loginPage.checkHomePage();
-  	expect(expectedData.homePageTitle).to.equal(exp);
+  this.Then(/^User validates the webpage header$/, () => {
+  	loginPage.validateWebpageHeader();  	
   });
 
-  this.Then(/^User is able to view Start Right away button$/, () => {
-  	var vis = loginPage.checkRightAwayBtn();
-  	expect(vis).to.equal("true");
+  this.Then(/^User validates the Start Right Away button$/, () => {
+  	loginPage.validateRightAwayButton();
   });
 
-  this.When(/^User is at login page$/, () => {
-   	loginPage.validateLoginBtn();
+  this.When(/^User goes to Login Page$/, () => {
+   	loginPage.goToLoginPage();
   });
 
-  this.Then(/^User validates Member ID field$/, () => {
-   	loginPage.validateMemberID();
+  this.When(/^User is redirected to Login Page$/, () => {
+    loginPage.validateLoginPageUrl();
+  });
+
+  this.Then(/^User validates username field$/, () => {
+   	loginPage.validateUserNameField();
   });
 
   this.Then(/^User validates Password field$/, () => {
-   	loginPage.validatePassword();
+   	loginPage.validatePasswordField();
   });
 
-  this.Then(/^User enters Member Id and password$/, () => {
+  this.Then(/^User enters credentials and logs in$/, () => {
     let loginDetails = data.loginCredentials[0];
-    loginPage.memberLogin(loginDetails);
+    loginPage.login(loginDetails);
   });
 };
