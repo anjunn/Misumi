@@ -28,6 +28,9 @@ exports.config = {
     scenario2: [
       './feature/scenario2_Multiplepin.feature'
     ],
+    scenario3: [
+      './feature/scenario3PinandPlate.feature'
+    ],
     all: [
       './feature/scenario1_pin.feature',
       './feature/scenario2_Multiplepin.feature',
@@ -137,6 +140,7 @@ exports.config = {
       './step_definitions/login.stepDefinition.js',
       './step_definitions/scenario1_Pin.stepDefinition.js',
       './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
+      './step_definitions/scenario3PinAndPlate.stepDefinition.js',
     ],
     failFast: true,
     dryRun: false,

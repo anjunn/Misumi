@@ -70,6 +70,7 @@ let loginPage = {
       if (url == data.url.login) {
         this.loginbtn.waitForEnabled();
         this.loginbtn.click();
+        
       }
     }
   },

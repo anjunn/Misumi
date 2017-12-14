@@ -1,0 +1,10 @@
+{
+  "projectName": "pin_and_plate.x_t",
+
+ "quotationCondition": {
+    "material": "SKH51 (58～60HRC)",
+    "surfaceTreatment": "なし",
+    "ToleranceGrade": "並級",
+    "productType": "断熱板"
+  }
+}

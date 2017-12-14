@@ -13,9 +13,14 @@ let  uploadPage = {
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); }},
   price: { get: function () { return browser.element('(//*[@class="price"]//span[2])[1]'); }},
   productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]'); }},
+  nextButton: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
+  productTypePinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]//dd[@class="customSelect"]/select[@class="textBold"]');}},
+  nextButtonPinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]/ul/li[2]/a');}},
+
 
   upload: {
     value: function(path) {
+     
       this.waitForFormComponent.waitForVisible();
 
       browser.execute(function () {
@@ -80,14 +85,24 @@ let  uploadPage = {
       this.getEstimate.isVisible();
     }
   },
+  
   quotationConditionFill: {
     value: function(quotationCondition) {
       this.quantity.waitForEnabled();
       this.material.selectByVisibleText(quotationCondition.material);
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
       this.tolerance.selectByVisibleText(quotationCondition.ToleranceGrade);
+     if(this.getEstimate.isVisible())
+     {
       this.getEstimate.click();
-    }
+     }
+     else
+      this.nextButton.click();
+      this.nextButtonPinAndPlate.waitForEnabled();
+      this.productTypePinAndPlate.selectByVisibleText(quotationCondition.productType);
+      this.nextButtonPinAndPlate.click();
+    
+     }
   },
   checkThumbNail: {
     value: function(expectedThumbnail) {
@@ -104,6 +119,8 @@ let  uploadPage = {
       expect(this.price.getText()).to.not.be.null;
     }
   }
+
 };
+
 
 module.exports = Object.create(Page, uploadPage);
