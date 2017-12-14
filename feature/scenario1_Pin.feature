@@ -17,6 +17,11 @@ Then Check if Thumb nail of 3D appears
 When User verify project name and price for single pin
 
 Given User Open the uploaded project
+When User opens email
+And User logins to mail account
+Then User verify project details in the mail
+And User goes back to project page
+
 When User does Feature Recognition for single pin
 Then User verify part names for single pin
 Then Define quotation condition in parts view

@@ -16,7 +16,12 @@ When User define quotation condition for the multple pin
 Then Check 3D Thumb nail of multiple pins appears
 When User verify project name and price for multiple pin
 
-Given User Open the uploaded multiple pin project
+Given User Open the uploaded project
+When User opens email
+And User logins to mail account
+Then User verify project details in the mail
+And User goes back to project page
+
 When User check feature recognition
 Then Define quotation condition in parts view for multiple pin
 Then User verify part names for multiple pin

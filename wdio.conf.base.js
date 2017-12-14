@@ -137,6 +137,7 @@ exports.config = {
       './step_definitions/login.stepDefinition.js',
       './step_definitions/scenario1_Pin.stepDefinition.js',
       './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
+      './step_definitions/email.stepDefinition.js'
     ],
     failFast: true,
     dryRun: false,
@@ -166,11 +167,9 @@ exports.config = {
 
   // params for storing global variables
   params: {
-    singlePin: {
-      totalPrice: ''
-    },
-    multiplePin: {
-      totalPrice: ''
-    }
+    projectPageUrl: null,
+    fileName: null,
+    initialPrice: null,
+    totalPrice: null
   }
 };

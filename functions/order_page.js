@@ -24,11 +24,11 @@ let  orderPage = {
     }
   },
   orderPageValidation: {
-    value: function(heading, name) {
+    value: function(heading) {
       this.customerNumberInput.waitForVisible();
       expect(this.orderPageHeading.getText()).to.be.equal(heading);
       browser.moveToObject('//*[@class="title"]//span', 0, -80);
-      expect(this.orderPageProductName.getText()).to.be.equal(name);
+      expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
   placeOrder: {
@@ -52,8 +52,6 @@ let  orderPage = {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
       expect(title).to.equal(heading);
-      this.orderNo.waitForVisible();
-      order = this.orderNo.getText();
     }
   },
   checkHistory: {
@@ -61,8 +59,6 @@ let  orderPage = {
       this.goToHistory.waitForEnabled();
       this.goToHistory.click();
       this.verifyOrderNo.waitForVisible();
-      var verifyOrder = this.verifyOrderNo.getText();
-      expect(order).to.equal(verifyOrder);
     }
   },
 };
