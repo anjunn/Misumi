@@ -1,14 +1,34 @@
 let data = require('../data/input_data/dataset.json');
-
+let plateData = require('../data/input_data/plate.json');
 let pinPlate = require('../data/expected_results/pinandplate.json');
 let uploadPage = require('../functions/upload.js');
 let projectPage = require('../functions/project_page');
 let orderPage = require('../functions/order_page');
 
-
 module.exports = function () {
-
   
+  this.Given(/^Upload 3D data for plate$/, () => {
+    path = data.uploadPath.plate;
+    uploadPage.upload(path);
+  });
+
+  this.When(/^Verify if upload is successful for plate$/, () => {
+    uploadPage.verifyUpload(plateData.projectName);
+  });
+
+  this.When(/^User define quotation condition for the plate$/, () => {
+    uploadPage.quotationConditionFillPlate(plateData.quotationCondition);
+  });
+
+  this.Then(/^Check 3D Thumb nail of plate appears$/, () => {
+    uploadPage.checkThumbNail('plateExpected/plateThumbnail.png');
+  });
+  this.When(/^Click Continue to specify the Estimate condition button$/, () => {
+    uploadPage.goToEstimateCondition();
+  });
+  this.Then(/^User check feature recognition for plate$/, () => {
+    projectPage.compareImage('plate.png', 'plateExpected/plateExpected.png');
+  });
 
 
 
@@ -32,6 +52,7 @@ module.exports = function () {
 
 
 
+<<<<<<< HEAD
   this.Given(/^Upload 3D data for pin and plate$/, () => {
     path = data.uploadPath.pinPlate;
     uploadPage.upload(path);
@@ -65,3 +86,16 @@ module.exports = function () {
 };
 
 
+=======
+
+
+
+
+
+
+
+
+
+
+};
+>>>>>>> plate upload under scenaio 3

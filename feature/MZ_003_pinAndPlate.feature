@@ -10,11 +10,12 @@ Then User validates Member ID field
 And User validates Password field
 Then User enters Member Id and password
 
-# Given Upload 3D data for plate
-# When Verify if upload is successfull for plate
-# When User define quotation condition for the plate
-# Then Check 3D Thumb nail of plate appears
-# When User verify project name and price for plate
+Given Upload 3D data for plate
+When Verify if upload is successful for plate
+When User define quotation condition for the plate
+Then Check 3D Thumb nail of plate appears
+When Click Continue to specify the Estimate condition button
+Then User check feature recognition for plate
 
 Given Upload 3D data for pin and plate
 When Verify if upload is successfull for pin and plate
@@ -24,6 +25,7 @@ When User verify project name and price for pin and plate
 
 Given User Open the uploaded pin and plate project
 When User check feature recognition for pin and plate
+
 
 
 

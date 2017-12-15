@@ -34,6 +34,7 @@ exports.config = {
     all: [
       './feature/scenario1_pin.feature',
       './feature/scenario2_Multiplepin.feature',
+      './feature/scenario3PinAndPlate.feature',
     ]
   },
 

@@ -31,7 +31,7 @@ module.exports = function () {
   });
 
   this.Then(/^User enters Member Id and password$/, () => {
-    let loginDetails = data.loginCredentials[0];
+    let loginDetails = data.loginCredentials[1];
     loginPage.memberLogin(loginDetails);
   });
 };

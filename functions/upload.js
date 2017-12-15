@@ -16,7 +16,10 @@ let  uploadPage = {
   nextButton: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
   productTypePinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]//dd[@class="customSelect"]/select[@class="textBold"]');}},
   nextButtonPinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]/ul/li[2]/a');}},
-
+  nextButtonPlate: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
+  productTypePlate: { get: function () { return browser.element('//select[@name="articleTypeId"]'); }}, 
+  continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
+   
 
   upload: {
     value: function(path) {
@@ -116,21 +119,19 @@ let  uploadPage = {
       expect(this.productName.getText()).to.be.equal(project_name);
       expect(this.price.getText()).to.not.be.null;
     }
+  },
+  quotationConditionFillPlate: {
+    value: function(quotationCondition) {
+      this.quantity.waitForEnabled();
+      this.productTypePlate.selectByVisibleText(quotationCondition.productTypePlate);
+      this.nextButtonPlate.click();
+    }
+  },
+    goToEstimateCondition: {
+    value: function() {
+      this.continueToEstimateConditionButton.waitForEnabled();
+      this.continueToEstimateConditionButton.click();
+    }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
 module.exports = Object.create(Page, uploadPage);
