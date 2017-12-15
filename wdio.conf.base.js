@@ -23,18 +23,18 @@ exports.config = {
   // },
   suites: {
     scenario1: [
-      './feature/scenario1_pin.feature'
+      './feature/MZ_001_pin.feature'
     ],
     scenario2: [
-      './feature/scenario2_Multiplepin.feature'
+      './feature/MZ_002_multiplePin.feature'
     ],
     scenario3: [
-      './feature/scenario3PinandPlate.feature'
+      './feature/MZ_003_pinAndPlate.feature'
     ],
     all: [
-      './feature/scenario1_pin.feature',
-      './feature/scenario2_Multiplepin.feature',
-      './feature/scenario3PinAndPlate.feature',
+      './feature/MZ_001_pin.feature',
+      './feature/MZ_002_multiplePin.feature',
+      './feature/MZ_003_pinaAndPlate.feature',
     ]
   },
 

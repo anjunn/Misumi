@@ -27,32 +27,9 @@ module.exports = function () {
     uploadPage.goToEstimateCondition();
   });
   this.Then(/^User check feature recognition for plate$/, () => {
-    projectPage.compareImage('plate.png', 'plateExpected/plateExpected.png');
+    // projectPage.compareImage('plate.png', 'plateExpected/plateExpected.png');
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
   this.Given(/^Upload 3D data for pin and plate$/, () => {
     path = data.uploadPath.pinPlate;
     uploadPage.upload(path);
@@ -83,19 +60,6 @@ module.exports = function () {
   });
 
 
-};
-
-
-=======
-
-
-
-
-
-
-
-
-
 
 };
->>>>>>> plate upload under scenaio 3
+

@@ -19,6 +19,7 @@ module.exports = function () {
   });
 
   this.When(/^User is at login page$/, () => {
+    loginPage.clickStartRightAwayButton();
    	loginPage.validateLoginBtn();
   });
 
@@ -33,5 +34,9 @@ module.exports = function () {
   this.Then(/^User enters Member Id and password$/, () => {
     let loginDetails = data.loginCredentials[1];
     loginPage.memberLogin(loginDetails);
+  });
+
+    this.When(/^User clicks Start Right Away button in homepage$/, () => {
+    loginPage.clickStartRightAwayButton();
   });
 };

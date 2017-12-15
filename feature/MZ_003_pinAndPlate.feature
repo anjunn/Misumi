@@ -17,6 +17,8 @@ Then Check 3D Thumb nail of plate appears
 When Click Continue to specify the Estimate condition button
 Then User check feature recognition for plate
 
+Given User access sample 3D page
+Then User clicks Start Right Away button in homepage
 Given Upload 3D data for pin and plate
 When Verify if upload is successfull for pin and plate
 When User define quotation condition for the pin and plate
@@ -24,7 +26,7 @@ Then Check 3D Thumb nail of pin and plate appears
 When User verify project name and price for pin and plate
 
 Given User Open the uploaded pin and plate project
-When User check feature recognition for pin and plate
+# When User check feature recognition for pin and plate
 
 
 
