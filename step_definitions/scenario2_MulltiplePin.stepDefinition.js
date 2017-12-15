@@ -33,11 +33,11 @@ module.exports = function () {
   });
 
   this.When(/^User check feature recognition$/, () => {
-    // projectPage.compareImage('multiple_pin.png', 'multiple_pin_expected/multiple_pin_expected.png');
+    projectPage.compareImage('multiple_pin.png', 'multiple_pin_expected/multiple_pin_expected.png');
   });
 
   this.Then(/^Define quotation condition in parts view for multiple pin$/, () => {
-    projectPage.quotionConditionInPartsView(multiplePinExpectedData.quotationConditionInPartsView.quantity, 'multiplePin');
+    projectPage.quotionConditionInPartsView(multiplePinExpectedData.quotationConditionInPartsView.quantity);
   });
 
   this.When(/^User verify part names for multiple pin$/, () => {
@@ -53,7 +53,7 @@ module.exports = function () {
   });
 
   this.Then(/^Check if product name and order details is shown in order page for multiple pin$/, () => {
-    orderPage.orderPageValidation(expectedData.orderPageHeading, multiplePinExpectedData.projectName);
+    orderPage.orderPageValidation(expectedData.orderPageHeading);
   });
 
   this.Then(/^Place the order for the multiple pins$/, () => {

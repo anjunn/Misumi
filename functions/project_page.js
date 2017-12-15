@@ -7,9 +7,10 @@ let expectedData = require('../data/expected_results/common.json');
 let  projectPage = {
 
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); }},
+  chatBox: { get : function() { return browser.element('//div[@id="aibis-waiting"]/div[@class="titlebar"]'); }},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
   singlePinPart: { get: function() { return browser.element('//*[@id="lstPartsBuy"]//div/span[@class="class"]'); }},
-  quantityChange: { get: function () { return browser.element('//input[@id="0"]'); }},
+  quantityChange: { get: function () { return browser.element('(//input[@type="number"])[1]'); }},
   priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]'); }},
   multiplePinPart: { value: function(part) { return browser.element(`(//*[@id="lstPartsBuy"]//div/span[@class="class"])[${part}]`); }},
   groupValue: { value: function (n) {return browser.element(`(//span[@class="groupItemCount"])[${n}]`); }},
@@ -19,10 +20,13 @@ let  projectPage = {
     value: function() {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
+      this.arrow.waitForVisible();
+      browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
     }
   },
   compareImage: {
     value: function(actualImagePath, expectedImagePath) {
+      this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(4000);
@@ -43,12 +47,12 @@ let  projectPage = {
     }
   },
   quotionConditionInPartsView: {
-    value: function(quantity, type) {
+    value: function(quantity) {
       this.quantityChange.waitForEnabled();
       var price = this.priceText.getText();
       expect(price).to.not.be.null;
       browser.execute(function (quantity) {
-        element = document.querySelector('input[id="0"]');
+        element = document.querySelector('input[type="number"]');
         element.value = quantity;
         if ("createEvent" in document) {
           var evt = document.createEvent("HTMLEvents");
@@ -60,7 +64,7 @@ let  projectPage = {
       }, quantity);
       browser.pause(3000);
       var newPrice  = this.priceText.getText();
-      browser.params[type].totalPrice = newPrice;
+      browser.params.totalPrice = newPrice;
       expect(newPrice).to.be.above(price);
     }
   },

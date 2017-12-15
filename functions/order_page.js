@@ -15,7 +15,6 @@ let  orderPage = {
   thankYouHeading: { get: function () { return browser.element('//*[@id="main"]/div/h1');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
-  verifyOrderNo: { get: function () { return browser.element('//*[@id="main"]/div/div/div/div[1]/div/p[2]/span');}},
 
   goToOrderPage: {
     value: function() {
@@ -24,11 +23,11 @@ let  orderPage = {
     }
   },
   orderPageValidation: {
-    value: function(heading, name) {
+    value: function(heading) {
       this.customerNumberInput.waitForVisible();
       expect(this.orderPageHeading.getText()).to.be.equal(heading);
       browser.moveToObject('//*[@class="title"]//span', 0, -80);
-      expect(this.orderPageProductName.getText()).to.be.equal(name);
+      expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
   placeOrder: {
@@ -52,17 +51,12 @@ let  orderPage = {
       this.thankYouHeading.waitForEnabled();
       var title = this.thankYouHeading.getText();
       expect(title).to.equal(heading);
-      this.orderNo.waitForVisible();
-      order = this.orderNo.getText();
     }
   },
   checkHistory: {
     value: function() {
       this.goToHistory.waitForEnabled();
       this.goToHistory.click();
-      this.verifyOrderNo.waitForVisible();
-      var verifyOrder = this.verifyOrderNo.getText();
-      expect(order).to.equal(verifyOrder);
     }
   },
 };

@@ -43,7 +43,7 @@ module.exports = function () {
   });
 
   this.Then(/^Define quotation condition in parts view$/, () => {
-    projectPage.quotionConditionInPartsView(singlePinExpectedData.quotationConditionInPartsView.quantity, 'singlePin');
+    projectPage.quotionConditionInPartsView(singlePinExpectedData.quotationConditionInPartsView.quantity);
   });
 
   this.Given(/^User goes to order page single pin$/, () => {
@@ -51,7 +51,7 @@ module.exports = function () {
   });
 
   this.Then(/^Check if product name and order details is shown in order page for single pin$/, () => {
-    orderPage.orderPageValidation(expectedData.orderPageHeading, singlePinExpectedData.projectName);
+    orderPage.orderPageValidation(expectedData.orderPageHeading);
   });
 
   this.Then(/^Place the order$/, () => {
