@@ -15,6 +15,13 @@ let  uploadPage = {
   thumbnail: { get : function() { return browser.element('//*[@class="dataBox"]//..//*[@class="figureBox"]//img'); }},
   price: { get: function () { return browser.element('(//*[@class="price"]//span[2])[1]'); }},
   productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]'); }},
+  nextButton: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
+  productTypePinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]//dd[@class="customSelect"]/select[@class="textBold"]');}},
+  nextButtonPinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]/ul/li[2]/a');}},
+  nextButtonPlate: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
+  productTypePlate: { get: function () { return browser.element('//select[@name="articleTypeId"]'); }}, 
+  continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
+   
 
   upload: {
     value: function(filePath) {
@@ -96,8 +103,17 @@ let  uploadPage = {
       this.material.selectByVisibleText(quotationCondition.material);
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
       this.tolerance.selectByVisibleText(quotationCondition.ToleranceGrade);
+     if(this.getEstimate.isVisible())
+     {
       this.getEstimate.click();
-    }
+     }
+     else
+      this.nextButton.click();
+      this.nextButtonPinAndPlate.waitForEnabled();
+      this.productTypePinAndPlate.selectByVisibleText(quotationCondition.productType);
+      this.nextButtonPinAndPlate.click();
+     }
+ 
   },
   checkThumbNail: {
     value: function(expectedThumbnail) {
@@ -114,7 +130,19 @@ let  uploadPage = {
       expect(this.productName.getText()).to.be.equal(browser.params.fileName);
       expect(this.price.getText()).to.not.be.null;
     }
+  },
+  quotationConditionFillPlate: {
+    value: function(quotationCondition) {
+      this.quantity.waitForEnabled();
+      this.productTypePlate.selectByVisibleText(quotationCondition.productTypePlate);
+      this.nextButtonPlate.click();
+    }
+  },
+    goToEstimateCondition: {
+    value: function() {
+      this.continueToEstimateConditionButton.waitForEnabled();
+      this.continueToEstimateConditionButton.click();
+    }
   }
 };
-
 module.exports = Object.create(Page, uploadPage);

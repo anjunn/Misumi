@@ -23,14 +23,18 @@ exports.config = {
   // },
   suites: {
     scenario1: [
-      './feature/scenario1_pin.feature'
+      './feature/MZ_001_pin.feature'
     ],
     scenario2: [
-      './feature/scenario2_Multiplepin.feature'
+      './feature/MZ_002_multiplePin.feature'
+    ],
+    scenario3: [
+      './feature/MZ_003_pinAndPlate.feature'
     ],
     all: [
-      './feature/scenario1_pin.feature',
-      './feature/scenario2_Multiplepin.feature',
+      './feature/MZ_001_pin.feature',
+      './feature/MZ_002_multiplePin.feature',
+      './feature/MZ_003_pinaAndPlate.feature',
     ]
   },
 
@@ -137,6 +141,7 @@ exports.config = {
       './step_definitions/login.stepDefinition.js',
       './step_definitions/scenario1_Pin.stepDefinition.js',
       './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
+      './step_definitions/scenario3PinAndPlate.stepDefinition.js',
       './step_definitions/email.stepDefinition.js'
     ],
     failFast: true,

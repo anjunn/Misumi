@@ -54,11 +54,12 @@ let loginPage = {
   },
   validateLoginBtn: {
     value: function(){
-      this.startRightAway.click();
-      browser.pause(3000);
       expect(this.loginbtn.isVisible()).to.equal(true);
     }
   },
+  /*
+  * 
+  */
   memberLogin: {
     value: function(loginDetails) {
       this.memberID.waitForEnabled();
@@ -73,6 +74,18 @@ let loginPage = {
       }
     }
   },
+  
+  /*
+  *
+  Function to click 'Start Right Away' button when user is alredy logged in
+  */
+
+  clickStartRightAwayButton:{
+    value:function(){
+      this.startRightAway.waitForEnabled();
+      this.startRightAway.click();
+    }
+  }
  };
 
 module.exports = Object.create(Page,loginPage);
