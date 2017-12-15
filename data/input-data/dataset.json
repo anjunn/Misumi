@@ -23,8 +23,8 @@
     "login": "https://prs-origin-tst.meviy.misumi-ec.com/login"
   },
   "uploadPath": {
-    "singlePin": "./data/cad_drawings/single_pin.x_t",
-    "multiplePin": "./data/cad_drawings/multiple_pins.SLDPRT",
-    "pinPlate": "./data/cad_drawings/pin_and_plate.x_t"
+    "singlePin": "./data/cad-drawings/single_pin.x_t",
+    "multiplePin": "./data/cad-drawings/multiple_pins.SLDPRT",
+    "pinPlate": "./data/cad-drawings/pin_and_plate.x_t"
   }
 }

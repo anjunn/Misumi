@@ -54,11 +54,10 @@ let  orderPage = {
       expect(title).to.equal(heading);
     }
   },
-  checkHistory: {
+  goToOrderHistory: {
     value: function() {
       this.goToHistory.waitForEnabled();
       this.goToHistory.click();
-      this.verifyOrderNo.waitForVisible();
     }
   },
 };

@@ -1,5 +1,6 @@
 let Page = require('./page');
 let data = require('../data/input-data/dataset.json');
+let expectedData = require('../data/expected-results/common.json');
 
 let loginPage = {
 
@@ -10,7 +11,7 @@ let loginPage = {
   errorMessage: { get: function () { return browser.element('//div[@id="error1"]/small');}},
   memberMenuButton:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logoutButton:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
-  homepageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//[@class="inner"]/h1');}},
+  homepageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//*[@class="inner"]//h1');}},
 
   /*
    * Goes to Home Page
@@ -76,6 +77,7 @@ let loginPage = {
    */
   goToLoginPage: {
     value: function(){
+      this.startRightAway.waitForVisible();
       this.startRightAway.click();
     }
   },
@@ -95,7 +97,7 @@ let loginPage = {
    */
   login: {
     value: function() {
-      var loginDetails = data.loginCredentials[0];
+      var loginDetails = data.loginCredentials[2];
       this.userNameField.waitForEnabled();
       this.userNameField.setValue(loginDetails.UserId);
       this.passwordField.setValue(loginDetails.Password);

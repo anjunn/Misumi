@@ -22,15 +22,9 @@ exports.config = {
   //   ]
   // },
   suites: {
-    scenario1: [
-      './feature/scenario1_pin.feature'
-    ],
-    scenario2: [
-      './feature/scenario2_Multiplepin.feature'
-    ],
-    all: [
-      './feature/scenario1_pin.feature',
-      './feature/scenario2_Multiplepin.feature',
+    smoke: [
+      // './feature/MZ_001-singlePinUpload.feature',
+      './feature/MZ_002-multiplePinUpload.feature'
     ]
   },
 
@@ -135,8 +129,9 @@ exports.config = {
     tags: require('./tagsProcessor')(process.argv),
     require: [
       './step_definitions/login.stepDefinition.js',
-      './step_definitions/scenario1_Pin.stepDefinition.js',
-      './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
+      './step_definitions/order.stepDefinition.js',
+      './step_definitions/upload.stepDefinition.js',
+      './step_definitions/project.stepDefinition.js',
       './step_definitions/email.stepDefinition.js'
     ],
     failFast: true,

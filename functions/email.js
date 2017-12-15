@@ -1,5 +1,5 @@
 let Page = require('./page');
-let projectPageUrl;
+let projectPageUrlFromMail;
 
 /**
  * email Page Object
@@ -15,7 +15,7 @@ let emailPage = {
   passwordField: { get: function () { return browser.element('//input[@type="password"]');} },
   menuIcon: { get: function () { return browser.element('//button[@id="O365_MainLink_NavMenu"]');} },
   mailIcon: { get: function () { return browser.element('//img[@aria-label="Go to your email"]/..');} },
-  submit: { get: function () { return browser.element('//input[@type="submit"]');} },
+  submitButton: { get: function () { return browser.element('//input[@type="submit"]');} },
   estimateFav: { get: function () { return browser.element('//*[@id="primaryContainer"]/div[5]/div/div[1]/div/div[1]/div[2]/div/div[1]/div[2]/button/span[1]');} },
   openMail: { get: function () { return browser.element('//div[@autoid="_lvv_9"]');} },
   mailEstimateFolder: { get: function () { return browser.element('//div[@id="MailFolderPane.FavoritesFolders"]//span[@title="見積り"]');} },
@@ -25,21 +25,30 @@ let emailPage = {
   mailLink: { get: function () { return browser.element('//*[@id="Item.MessageNormalizedBody"]/div/div/div/font/span/div/a');} },
   mailPreview: { get: function () { return browser.element('//*[@id="Item.MessageNormalizedBody"]/div/div/div/font/span/div');} },
 
-  /**
-   * Login into account.
+  /*
+   * Goes to email account home
    */
-  login: {
-    value: function() {
-      this.emailField.setValue('test.t8zb.meviy@misumi.co.jp');
-      this.submit.click();
-      this.passwordField.waitForVisible();
-      this.passwordField.setValue('Puvo5108');
-      this.submit.click();
+  goToEmail: {
+    value: function () {
+      browser.url('https://login.microsoftonline.com/');
     }
   },
 
   /**
-   * Navigate to mail section.
+   * Logs into email
+   */
+  loginToEmail: {
+    value: function() {
+      this.emailField.setValue('test.t8zb.meviy@misumi.co.jp');
+      this.submitButton.click();
+      this.passwordField.waitForVisible();
+      this.passwordField.setValue('Puvo5108');
+      this.submitButton.click();
+    }
+  },
+
+  /**
+   * Navigates to mail section.
    */
   selectMail: {
     value: function() {
@@ -61,15 +70,19 @@ let emailPage = {
    */
   validateMail: {
     value: function() {
-      if (this.fileNameInMail(browser.params.fileName).isVisible()) {
-        this.fileNameInMail(browser.params.fileName).click();
-        this.mailCheckbox((browser.params.fileName)).click();
+      let fileName = browser.params.fileName;
+      let initialPrice = browser.params.initialPrice;
+      projectPageUrl = browser.params.projectPageUrl;
+
+      if (this.fileNameInMail(fileName).isVisible()) {
+        this.fileNameInMail(fileName).click();
+        this.mailCheckbox(fileName).click();
         this.mailPreview.waitForVisible();
-        expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
-        expect(this.mailPreview.getText()).to.include(browser.params.fileName);
-        expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
-        expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
-        projectPageUrl = this.mailLink.getText();
+        expect(this.mailPreview.getText()).to.include(initialPrice);
+        expect(this.mailPreview.getText()).to.include(fileName);
+        expect(this.mailLink.getText()).to.include(projectPageUrl.match(/^[^?]*/)[0]);
+        expect(this.mailLink.getText()).to.include(projectPageUrl.match(/qtId=([^&]*)/)[0]);
+        projectPageUrlFromMail = this.mailLink.getText();
         this.maildeleteIcon.click(); // After confirmation, delete the mail for avoiding future error.
       }
     }
@@ -80,7 +93,7 @@ let emailPage = {
    */
   goToProductPage: {
     value: function() {
-      browser.url(projectPageUrl)
+      browser.url(projectPageUrlFromMail)
     }
   }
 }

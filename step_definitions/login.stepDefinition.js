@@ -1,6 +1,5 @@
 let loginPage = require('../functions/login.js');
-let data = require('../data/input_data/dataset.json');
-let expectedData = require('../data/expected-results/common.json');
+let data = require('../data/input-data/dataset.json');
 
 module.exports = function () {
 
@@ -33,7 +32,10 @@ module.exports = function () {
   });
 
   this.Then(/^User enters credentials and logs in$/, () => {
-    let loginDetails = data.loginCredentials[0];
-    loginPage.login(loginDetails);
+    loginPage.login();
+  });
+
+  this.When(/^User logs out$/, () => {
+    loginPage.logout();
   });
 };
