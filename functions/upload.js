@@ -20,7 +20,6 @@ let  uploadPage = {
 
   upload: {
     value: function(path) {
-     
       this.waitForFormComponent.waitForVisible();
 
       browser.execute(function () {
@@ -85,7 +84,6 @@ let  uploadPage = {
       this.getEstimate.isVisible();
     }
   },
-  
   quotationConditionFill: {
     value: function(quotationCondition) {
       this.quantity.waitForEnabled();
@@ -101,8 +99,8 @@ let  uploadPage = {
       this.nextButtonPinAndPlate.waitForEnabled();
       this.productTypePinAndPlate.selectByVisibleText(quotationCondition.productType);
       this.nextButtonPinAndPlate.click();
-    
      }
+ 
   },
   checkThumbNail: {
     value: function(expectedThumbnail) {
@@ -120,7 +118,19 @@ let  uploadPage = {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
-
-
 module.exports = Object.create(Page, uploadPage);

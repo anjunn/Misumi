@@ -1,14 +1,36 @@
-
 let data = require('../data/input_data/dataset.json');
-let expectedData = require('../data/expected_results/common.json');
+
 let pinPlate = require('../data/expected_results/pinandplate.json');
-let loginPage = require('../functions/login.js');
 let uploadPage = require('../functions/upload.js');
 let projectPage = require('../functions/project_page');
 let orderPage = require('../functions/order_page');
 
 
 module.exports = function () {
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   this.Given(/^Upload 3D data for pin and plate$/, () => {
     path = data.uploadPath.pinPlate;
