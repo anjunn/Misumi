@@ -23,18 +23,19 @@ exports.config = {
   // },
   suites: {
     scenario1: [
-      './feature/MZ_001_pin.feature'
+      './feature/MZ_001-singlePinUpload.feature'
     ],
     scenario2: [
-      './feature/MZ_002_multiplePin.feature'
+      './feature/MZ_002-multiplePinUpload.feature'
     ],
     scenario3: [
-      './feature/MZ_003_pinAndPlate.feature'
+      './feature/MZ_003-pinAndPlateUpload.feature'
     ],
     all: [
-      './feature/MZ_001_pin.feature',
-      './feature/MZ_002_multiplePin.feature',
-      './feature/MZ_003_pinAndPlate.feature',
+      './feature/MZ_001-singlePinUpload.feature',
+      './feature/MZ_002-multiplePinUpload.feature',
+      './feature/MZ_003-pinAndPlateUpload.feature',
+      './feature/MZ_003-plateUpload.feature',
     ]
   },
 

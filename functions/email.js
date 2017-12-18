@@ -1,5 +1,5 @@
 let Page = require('./page');
-let inputData = require('../data/input_data/dataset.json');
+let inputData = require('../data/input-data/dataset.json');
 let projectPageUrlFromMail;
 
 /**

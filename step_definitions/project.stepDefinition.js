@@ -1,5 +1,6 @@
 let projectPage = require('../functions/project');
-let multiplePinExpectedData = require('../data/expected-results/multiple_pin_expected.json');
+let singlePinExpectedData = require('../data/expected-results/single-pin.json');
+let multiplePinExpectedData = require('../data/expected-results/multiple-pin.json');
 
 module.exports = function () {
 

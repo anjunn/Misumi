@@ -1,14 +1,17 @@
-Feature: Pin and Plate
+Feature: Scenario 3
+
+Scenario: User logins to presentation site
+
+Given User goes to Home Page
+Then User validates the webpage header
+Then User validates the Start Right Away button
+When User goes to Login Page
+Then User is redirected to Login Page
+Then User validates username field
+Then User validates Password field
+Then User enters credentials and logs in
 
 Scenario: Pin and Plate upload
-
-Given User access sample 3D page
-Then User is able to see the webpage header
-And User is able to view Start Right away button
-When User is at login page
-Then User validates Member ID field
-And User validates Password field
-Then User enters Member Id and password
 
 Given Upload 3D data for pin and plate
 When Verify if upload is successfull for pin and plate
@@ -16,7 +19,7 @@ When User define quotation condition for the pin and plate
 Then Check 3D Thumb nail of pin and plate appears
 When User verify project name and price for pin and plate
 
-Scenario: Email validation for pin and plate
+Scenario: Email validation after upload
 
 Given User Open the uploaded project
 When User opens email

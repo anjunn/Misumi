@@ -1,6 +1,6 @@
 Feature: Scenario 2
 
-Scenario: Multiple Pin upload and order
+Scenario: User logins to presentation site
 
 Given User goes to Home Page
 Then User validates the webpage header
@@ -11,11 +11,15 @@ Then User validates username field
 Then User validates Password field
 Then User enters credentials and logs in
 
+Scenario: Multiple Pin upload
+
 Given User uploads 3D data for multiple pin
 When User verifies whether upload is successful for multiple pin
 When User defines quotation condition for multiple pin
 Then User checks whether thumb nail of 3D appears for multiple pin
 When User verifies project name and price for multiple pin
+
+Scenario: Email validation after upload
 
 Given User opens the uploaded project
 When User decides to check the email

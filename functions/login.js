@@ -97,10 +97,9 @@ let loginPage = {
    */
   login: {
     value: function() {
-      var loginDetails = data.loginCredentials[2];
       this.userNameField.waitForEnabled();
-      this.userNameField.setValue(loginDetails.UserId);
-      this.passwordField.setValue(loginDetails.Password);
+      this.userNameField.setValue(data.loginCredentials.presentation.username);
+      this.passwordField.setValue(data.loginCredentials.presentation.password);
       this.loginButton.click();
       browser.pause(5000);
       if (this.errorMessage.isVisible()) {

@@ -1,5 +1,5 @@
 let loginPageManagement = require('../functions/managementLogin.js');
-let data = require('../data/input_data/dataset.json');
+let data = require('../data/input-data/dataset.json');
 
 module.exports = function () {
 

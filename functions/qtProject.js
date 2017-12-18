@@ -1,5 +1,5 @@
 let Page = require('./page');
-let expectedData = require('../data/expected_results/common.json');
+let expectedData = require('../data/expected-results/common.json');
 /**
  * Qt project Page Object
  *

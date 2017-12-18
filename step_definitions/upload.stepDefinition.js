@@ -1,7 +1,7 @@
 let uploadPage = require('../functions/upload');
 let data = require('../data/input-data/dataset.json');
-let singlePinExpectedData = require('../data/expected-results/single_pin_expected.json');
-let multiplePinExpectedData = require('../data/expected-results/multiple_pin_expected.json');
+let singlePinExpectedData = require('../data/expected-results/single-pin.json');
+let multiplePinExpectedData = require('../data/expected-results/multiple-pin.json');
 
 module.exports = function () {
 
@@ -15,7 +15,7 @@ module.exports = function () {
   	} else {
   	  path = data.uploadPath.pinPlate;
   	}
-  	uploadPage.upload(path);    
+  	uploadPage.upload(path);
   });
 
   this.When(/^User verifies whether upload is successful for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
@@ -57,7 +57,7 @@ module.exports = function () {
 
   this.When(/^User verifies project name and price for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
 	if(pinType === 'single pin') {
-      uploadPage.checkNameAndPrice(singlePinExpectedData.projectName);    
+      uploadPage.checkNameAndPrice(singlePinExpectedData.projectName);
   	} else if(pinType === 'multiple pin') {
   	  uploadPage.checkNameAndPrice(multiplPinExpectedData.projectName);
   	} else if(pinType === 'plate') {

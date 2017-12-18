@@ -1,6 +1,6 @@
 let Page = require('./page');
-let data = require('../data/input_data/dataset.json');
-expectedData = require('../data/expected_results/common.json');
+let data = require('../data/input-data/dataset.json');
+expectedData = require('../data/expected-results/common.json');
 /**
  * Login Page Object
  *

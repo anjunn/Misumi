@@ -2,7 +2,7 @@ let Page = require('./page');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
-let expectedData = require('../data/expected_results/common.json');
+let expectedData = require('../data/expected-results/common.json');
 /**
  * project Page Object
  *

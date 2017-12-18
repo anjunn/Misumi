@@ -1,6 +1,6 @@
 let qtProjectPage = require('../functions/qtProject.js');
-let pinAndPlateExpectedData = require('../data/expected_results/pinandplate.json');
-let pinAndPlateInputData = require('../data/input_data/pinandplate.json');
+let pinAndPlateExpectedData = require('../data/expected-results/pin-and-plate.json');
+let pinAndPlateInputData = require('../data/input-data/pin-and-plate.json');
 
 module.exports = function () {
 
