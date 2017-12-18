@@ -119,7 +119,7 @@ let  uploadPage = {
       browser.waitForLoading('//span[@class="percent"]');
       this.thumbnail.waitForVisible();
       var thumbnailData = this.thumbnail.getAttribute('src');
-      var expectedData = base64Img.base64Sync('./data/screens/expected_screens/' + expectedThumbnail);
+      var expectedData = base64Img.base64Sync('./data/screens/expected-screens/' + expectedThumbnail);
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },

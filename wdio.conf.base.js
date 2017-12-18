@@ -141,9 +141,9 @@ exports.config = {
     tags: require('./tagsProcessor')(process.argv),
     require: [
       './step_definitions/login.stepDefinition.js',
-      './step_definitions/scenario1_Pin.stepDefinition.js',
-      './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
-      './step_definitions/scenario3PinAndPlate.stepDefinition.js',
+      './step_definitions/order.stepDefinition.js',
+      './step_definitions/upload.stepDefinition.js',
+      './step_definitions/project.stepDefinition.js',
       './step_definitions/email.stepDefinition.js',
       './step_definitions/managementLogin.stepDefinition.js',
       './step_definitions/qtProjectList.stepDefinition.js',

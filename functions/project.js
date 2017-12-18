@@ -50,10 +50,10 @@ let  projectPage = {
       this.arrow.waitForVisible();
       this.arrow.click();
       browser.pause(4000);
-      browser.saveScreenshot('./data/screens/actual_screens/' + actualImagePath);
+      browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
       this.arrow.click();
-      var actualImage = fs.createReadStream('./data/screens/actual_screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
-      var expectedImage = fs.createReadStream('./data/screens/expected_screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
+      var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
+      var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
