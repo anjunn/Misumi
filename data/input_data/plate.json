@@ -2,5 +2,13 @@
   "projectName": "Heat_Insulation_Sheet.SLDPRT",
   "quotationCondition": {
     "productTypePlate": "断熱板"
+  },
+  "quotationResult": {
+    "minQuantity": "1",
+    "maxQuantity": "5",
+    "pricePerUnitPrice": "1100",
+    "sellingPrice":"1200",
+    "purchasePrice":"900",
+    "deliveryDays":"10"
   }
 }

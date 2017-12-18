@@ -34,7 +34,7 @@ exports.config = {
     all: [
       './feature/MZ_001_pin.feature',
       './feature/MZ_002_multiplePin.feature',
-      './feature/MZ_003_pinaAndPlate.feature',
+      './feature/MZ_003_pinAndPlate.feature',
     ]
   },
 
@@ -118,7 +118,9 @@ exports.config = {
     'wdio-screenshot': {}
   },
 
-  //
+  // Remove depreciation warnings
+  deprecationWarnings: false,
+
   // Test runner services
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
@@ -142,7 +144,10 @@ exports.config = {
       './step_definitions/scenario1_Pin.stepDefinition.js',
       './step_definitions/scenario2_MulltiplePin.stepDefinition.js',
       './step_definitions/scenario3PinAndPlate.stepDefinition.js',
-      './step_definitions/email.stepDefinition.js'
+      './step_definitions/email.stepDefinition.js',
+      './step_definitions/managementLogin.stepDefinition.js',
+      './step_definitions/qtProjectList.stepDefinition.js',
+      './step_definitions/qtProject.stepDefinition.js'
     ],
     failFast: true,
     dryRun: false,
@@ -175,6 +180,11 @@ exports.config = {
     projectPageUrl: null,
     fileName: null,
     initialPrice: null,
-    totalPrice: null
+    totalPrice: null,
+    qtProjectListId: null,
+    pinAndPlatePrice: {
+      part1: null,
+      part2: null
+    }
   }
 };

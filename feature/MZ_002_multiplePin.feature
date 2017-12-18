@@ -1,6 +1,6 @@
 Feature: Scenario2
 
-Scenario: Multiple Pin upload and order
+Scenario: Upload multiple pin file
 
 Given User access sample 3D page
 Then User is able to see the webpage header
@@ -16,11 +16,15 @@ When User define quotation condition for the multple pin
 Then Check 3D Thumb nail of multiple pins appears
 When User verify project name and price for multiple pin
 
+Scenario: Email validation for multiple pin
+
 Given User Open the uploaded project
 When User opens email
 And User logins to mail account
 Then User verify project details in the mail
 And User goes back to project page
+
+Scenario: Feature recognition and order product for multiple pin
 
 When User check feature recognition
 Then Define quotation condition in parts view for multiple pin

@@ -1,26 +1,22 @@
 {
-  "loginCredentials": [
-    {
-      "UserId": "qburst5",
-      "Password": "T76JJ23E"
+  "loginCredentials": {
+    "presentation": {
+      "username": "QB_QA-Auto01",
+      "assword": "VRIFBTD9"
     },
-    {
-      "UserId": "qburst6",
-      "Password": "DIRJR2F7"
+    "management": {
+      "username": "Anju",
+      "password": "Anju"
     },
-    {
-      "UserId": "qburst7",
-      "Password": "5FDS3FTK"
-    },
-    {
-      "UserId": "QB_QA-Auto01",
-      "Password": "VRIFBTD9"
+    "mail": {
+      "username": "test.t8zb.meviy@misumi.co.jp",
+      "password": "Puvo5108"
     }
-
-  ],
+  },
   "url": {
     "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
-    "login": "https://prs-origin-tst.meviy.misumi-ec.com/login"
+    "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
+    "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi"
   },
   "uploadPath": {
     "singlePin": "./data/cad_drawings/single_pin.x_t",

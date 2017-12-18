@@ -6,7 +6,7 @@ let projectPage = require('../functions/project_page');
 let orderPage = require('../functions/order_page');
 
 module.exports = function () {
-  
+
   this.Given(/^Upload 3D data for plate$/, () => {
     path = data.uploadPath.plate;
     uploadPage.upload(path);
@@ -59,7 +59,17 @@ module.exports = function () {
     projectPage.compareImage('pinAndPlate.png', 'pinandplateexpected/pinAndPlate.png');
   });
 
+  this.Then(/^Define quotation condition in parts view for pin and plate$/, () => {
+    projectPage.quotionConditionInPartsView(pinPlate.quotationConditionInPartsView.quantity);
+  });
 
+  this.Then(/^User check the different parts name in parts view$/, () => {
+    projectPage.checkPinAndPlatePartsName(pinPlate.partNames);
+  });
+
+  this.Then(/^User request for manual quotation in parts view$/, () => {
+    projectPage.estimateConditionPartsview(pinPlate.estimateCondition);
+  });
 
 };
 

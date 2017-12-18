@@ -58,13 +58,13 @@ let loginPage = {
     }
   },
   /*
-  * 
+  *
   */
   memberLogin: {
-    value: function(loginDetails) {
+    value: function() {
       this.memberID.waitForEnabled();
-      this.memberID.setValue(loginDetails.UserId);
-      this.password.setValue(loginDetails.Password);
+      this.memberID.setValue(data.loginCredentials.presentation.username);
+      this.password.setValue(data.loginCredentials.presentation.password);
       this.loginbtn.click();
       browser.pause(5000);
       var url = browser.getUrl();
@@ -74,7 +74,7 @@ let loginPage = {
       }
     }
   },
-  
+
   /*
   *
   Function to click 'Start Right Away' button when user is alredy logged in

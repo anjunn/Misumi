@@ -1,6 +1,6 @@
 Feature: Scenario 1
 
-Scenario: Single Pin upload and order
+Scenario: Upload single pin file
 
 Given User access sample 3D page
 Then User is able to see the webpage header
@@ -16,11 +16,15 @@ When User define quotation condition for the pin
 Then Check if Thumb nail of 3D appears
 When User verify project name and price for single pin
 
+Scenario: Email validation for single pin
+
 Given User Open the uploaded project
 When User opens email
 And User logins to mail account
 Then User verify project details in the mail
 And User goes back to project page
+
+Scenario: Feature recognition and order product for single pin
 
 When User does Feature Recognition for single pin
 Then User verify part names for single pin

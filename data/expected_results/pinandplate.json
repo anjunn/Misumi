@@ -6,5 +6,19 @@
     "surfaceTreatment": "なし",
     "ToleranceGrade": "並級",
     "productType": "断熱板"
+  },
+
+  "quotationConditionInPartsView": {
+    "quantity": 2
+  },
+
+  "partNames": {
+    "part1": "コアピン",
+    "part2": "コアピン",
+    "part3": "断熱板"
+  },
+
+  "estimateCondition": {
+    "material": "スタンダード（HIPS）ミオレックス PMX573A"
   }
 }

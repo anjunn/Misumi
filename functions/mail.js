@@ -1,4 +1,5 @@
 let Page = require('./page');
+let inputData = require('../data/input_data/dataset.json');
 let projectPageUrl;
 
 /**
@@ -30,10 +31,10 @@ let emailPage = {
    */
   login: {
     value: function() {
-      this.emailField.setValue('test.t8zb.meviy@misumi.co.jp');
+      this.emailField.setValue(inputData.loginCredentials.mail.username);
       this.submit.click();
       this.passwordField.waitForVisible();
-      this.passwordField.setValue('Puvo5108');
+      this.passwordField.setValue(inputData.loginCredentials.mail.password);
       this.submit.click();
     }
   },
@@ -65,7 +66,8 @@ let emailPage = {
         this.fileNameInMail(browser.params.fileName).click();
         this.mailCheckbox((browser.params.fileName)).click();
         this.mailPreview.waitForVisible();
-        expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
+        browser.pause(2000);
+        if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
         expect(this.mailPreview.getText()).to.include(browser.params.fileName);
         expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
         expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
