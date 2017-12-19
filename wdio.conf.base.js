@@ -167,23 +167,30 @@ exports.config = {
   // variables, such as `browser`. It is the perfect place to define custom commands.
   before: function (capabilities, specs) {
     /**
+     * Initilaize global variables
+     */
+    browser.params = this.params;
+    /**
      * Setup the Chai assertion framework
      */
-     let chai = require('chai');
-     global.expect = chai.expect;
-     global.assert = chai.assert;
-     console.log('Starting Test Case: -', specs[0].replace(/^.*[\\\/]/, ''));
-
-     let utils = require('./utilities/utils');
-     utils.init();
-
-     let size = {
+    let chai = require('chai');
+    global.expect = chai.expect;
+    global.assert = chai.assert;
+    /**
+     * Initialize utility functions
+     */
+    let utils = require('./utilities/utils');
+    utils.init();
+     /**
+     * Configure viewport size
+     */
+    let size = {
       width: 1280,
       height: 600
     };
     browser.setViewportSize(size);
-    browser.timeouts('page load', 60000);
-    browser.params = this.params;
+
+    console.log('Starting Test Case: -', specs[0].replace(/^.*[\\\/]/, ''));
   },
 
   onPrepare: function () {
