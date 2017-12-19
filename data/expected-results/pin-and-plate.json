@@ -1,0 +1,13 @@
+{
+  "numberOfParts": 3,
+
+  "partNames": {
+    "part1": "コアピン",
+    "part2": "コアピン",
+    "part3": "断熱板"
+  },
+
+  "estimateCondition": {
+    "material": "スタンダード（HIPS）ミオレックス PMX573A"
+  }
+}

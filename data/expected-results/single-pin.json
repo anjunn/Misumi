@@ -1,0 +1,15 @@
+{
+
+  "quotationCondition": {
+    "material": "SKH51 (58～60HRC)",
+    "surfaceTreatment": "なし",
+    "toleranceGrade": "並級"
+  },
+
+  "numberOfParts": 1,
+
+  "partNames": {
+    "part1": "コアピン"
+  }
+
+}

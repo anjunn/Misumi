@@ -1,0 +1,27 @@
+{
+
+  "quotationCondition": {
+    "material": "SKH51 (58～60HRC)",
+    "surfaceTreatment": "なし",
+    "toleranceGrade": "並級",
+    "productType": "断熱板"
+  },
+
+  "quotationConditionInPartsView": {
+    "quantity": 2
+  },
+
+  "estimateCondition": {
+    "material": "スタンダード（HIPS）ミオレックス PMX573A"
+  },
+
+  "quotationResult": {
+    "minQuantity": "1",
+    "maxQuantity": "5",
+    "pricePerUnitPrice": "1100",
+    "sellingPrice":"1200",
+    "purchasePrice":"900",
+    "deliveryDays":"10"
+  }
+
+}

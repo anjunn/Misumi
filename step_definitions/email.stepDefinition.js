@@ -1,16 +1,16 @@
-let emailPage = require('../functions/mail.js');
+let emailPage = require('../functions/email.js');
 
 module.exports = function () {
 
-  this.Given(/^User opens email$/, () => {
-    browser.url('https://login.microsoftonline.com/');
+  this.Given(/^User decides to check the email$/, () => {
+    emailPage.goToEmail();
   });
 
-  this.When(/^User logins to mail account$/, () => {
-    emailPage.login();
+  this.When(/^User logs in to mail account$/, () => {
+    emailPage.loginToEmail();
   });
 
-  this.Then(/^User verify project details in the mail$/, () => {
+  this.Then(/^User verifies the project details in the mail$/, () => {
     emailPage.selectMail();
     emailPage.validateMail();
   });
