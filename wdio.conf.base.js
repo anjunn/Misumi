@@ -15,12 +15,6 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
 
-  // suites: {
-  //   example: [
-  //     './feature/scenario1_pin.feature',
-
-  //   ]
-  // },
   suites: {
     scenario1: [
       './feature/MZ_001-singlePinUpload.feature'
@@ -35,7 +29,7 @@ exports.config = {
       './feature/MZ_001-singlePinUpload.feature',
       './feature/MZ_002-multiplePinUpload.feature',
       './feature/MZ_003-pinAndPlateUpload.feature',
-      './feature/MZ_003-plateUpload.feature',
+      './feature/MZ_004-plateUpload.feature',
     ]
   },
 
@@ -156,6 +150,42 @@ exports.config = {
     timeout: 500000
   },
 
+  // params for storing global variables
+  params: {
+    projectPageUrl: null,
+    fileName: null,
+    initialPrice: null,
+    totalPrice: null,
+    qtProjectListId: null,
+    pinAndPlatePrice: {
+      part1: null,
+      part2: null
+    }
+  },
+
+  // Gets executed before test execution begins. At this point you can access all global
+  // variables, such as `browser`. It is the perfect place to define custom commands.
+  before: function (capabilities, specs) {
+    /**
+     * Setup the Chai assertion framework
+     */
+     let chai = require('chai');
+     global.expect = chai.expect;
+     global.assert = chai.assert;
+     console.log('Starting Test Case: -', specs[0].replace(/^.*[\\\/]/, ''));
+
+     let utils = require('./utilities/utils');
+     utils.init();
+
+     let size = {
+      width: 1280,
+      height: 600
+    };
+    browser.setViewportSize(size);
+    browser.timeouts('page load', 60000);
+    browser.params = this.params;
+  },
+
   onPrepare: function () {
     let fs = require('fs');
     if (!fs.existsSync(__dirname + '/reports/screenshots')) {
@@ -178,18 +208,6 @@ exports.config = {
 
   afterFeature: function (feature) {
     browser.deleteCookie();
-  },
-
-  // params for storing global variables
-  params: {
-    projectPageUrl: null,
-    fileName: null,
-    initialPrice: null,
-    totalPrice: null,
-    qtProjectListId: null,
-    pinAndPlatePrice: {
-      part1: null,
-      part2: null
-    }
   }
+
 };
