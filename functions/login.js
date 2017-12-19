@@ -2,8 +2,16 @@ let Page = require('./page');
 let data = require('../data/input-data/dataset.json');
 let expectedData = require('../data/expected-results/common.json');
 
+/**
+ * login Page Object
+ *
+ * @class functions/login
+ * @type {Page}
+ */
 let loginPage = {
-
+  /**
+   * define elements
+   */
   startRightAway: { get: function () { return browser.element('//li[@class="loginBtn"]');}},
   userNameField: { get: function () { return browser.element('//input[@id="id"]');}},
   passwordField: { get: function () { return browser.element('//input[@id="pass"]');}},
@@ -19,18 +27,6 @@ let loginPage = {
   goToHomePage: {
     value: function () {
       browser.url('https://prs-origin-tst.meviy.misumi-ec.com/');
-    }
-  },
-
-  /*
-   * Logs out from the website
-   */
-  logout: {
-    value: function() {
-      this.memberMenuButtonButton.waitForEnabled();
-      this.memberMenuButton.click();
-      this.logoutButton.waitForEnabled();
-      this.logoutButton.click();
     }
   },
 
@@ -101,11 +97,23 @@ let loginPage = {
       this.userNameField.setValue(data.loginCredentials.presentation.username);
       this.passwordField.setValue(data.loginCredentials.presentation.password);
       this.loginButton.click();
-      browser.pause(5000);
+      browser.pause(4000);
       if (this.errorMessage.isVisible()) {
         this.loginButton.waitForEnabled();
         this.loginButton.click();
       }
+    }
+  },
+
+  /*
+   * Logs out from the website
+   */
+  logout: {
+    value: function() {
+      this.memberMenuButtonButton.waitForEnabled();
+      this.memberMenuButton.click();
+      this.logoutButton.waitForEnabled();
+      this.logoutButton.click();
     }
   }
 

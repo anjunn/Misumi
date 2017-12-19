@@ -12,8 +12,7 @@ module.exports = function () {
   });
 
   this.Then(/^The correct credentials are given and log in$/, () => {
-    let managementLoginDetails = data.loginManagementCredentials[1];
-    loginPageManagement.login(managementLoginDetails);
+    loginPageManagement.login();
   });
 
 };

@@ -13,15 +13,17 @@
       "password": "Puvo5108"
     }
   },
+
   "url": {
     "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
     "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
     "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi"
   },
+
   "uploadPath": {
-    "singlePin": "./data/cad_drawings/single_pin.x_t",
-    "multiplePin": "./data/cad_drawings/multiple_pins.SLDPRT",
-    "plate": "./data/cad_drawings/Heat_Insulation_Sheet.SLDPRT",
-    "pinPlate": "./data/cad_drawings/pin_and_plate.x_t"
+    "singlePin": "./data/cad-drawings/single-pin.x_t",
+    "multiplePin": "./data/cad-drawings/multiple-pins.SLDPRT",
+    "plate": "./data/cad-drawings/plate.SLDPRT",
+    "pinPlate": "./data/cad-drawings/pin-and-plate.x_t"
   }
 }

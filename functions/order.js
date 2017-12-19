@@ -1,8 +1,15 @@
 let Page = require('./page');
 let order;
-
+/**
+ * order Page Object
+ *
+ * @class functions/order
+ * @type {Page}
+ */
 let  orderPage = {
-
+  /**
+   * define elements
+   */
   cart: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]'); }},
   customerNumberInput: { get: function () { return browser.element('//*[contains(text(),"一括入力") and @class="js-modal notEasescroll"]'); }},
   orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
@@ -22,6 +29,7 @@ let  orderPage = {
       this.cart.click();
     }
   },
+
   orderPageValidation: {
     value: function(heading) {
       this.customerNumberInput.waitForVisible();
@@ -30,6 +38,7 @@ let  orderPage = {
       expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
+
   placeOrder: {
     value: function() {
       browser.pause(1000);
@@ -46,6 +55,7 @@ let  orderPage = {
       this.placeOrderButton.click();
     }
   },
+
   checkTitleThankYou: {
     value: function(heading) {
       this.thankYouHeading.waitForEnabled();
@@ -53,6 +63,7 @@ let  orderPage = {
       expect(title).to.equal(heading);
     }
   },
+
   goToOrderHistory: {
     value: function() {
       this.goToHistory.waitForEnabled();

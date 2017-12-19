@@ -1,6 +1,8 @@
 {
-  "projectName": "Heat_Insulation_Sheet.SLDPRT",
-  "quotationCondition": {
-    "productType": "断熱板"
+
+  "numberOfParts": 1,
+
+  "partNames": {
+    "part1": "断熱板"
   }
 }

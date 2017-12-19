@@ -16,17 +16,15 @@ let  projectPage = {
   thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
   chatBox: { get : function() { return browser.element('//div[@id="aibis-waiting"]/div[@class="titlebar"]'); }},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
-  singlePinPart: { get: function() { return browser.element('//*[@id="lstPartsBuy"]//div/span[@class="class"]'); }},
+  partsName: { value: function (part) { return browser.element(`(//span[@class="class"])[${part}]`); }},
   quantityChange: { get: function () { return browser.element('(//input[@type="number"])[1]'); }},
   priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]'); }},
   partsPriceText: { value: function (n) { return browser.element(`(//p[@class="sum"]/span)[${n}]`); }},
-  multiplePinPart: { value: function(part) { return browser.element(`(//*[@id="lstPartsBuy"]//div/span[@class="class"])[${part}]`); }},
   groupValue: { value: function (n) {return browser.element(`(//span[@class="groupItemCount"])[${n}]`); }},
   groupImage: { value: function (n) { return browser.element(`(//*[@class="group"]//img)[${n}]`);}},
   manualQuotationPinAndPlate: { get: function () { return browser.element('//*[@id="lstPartsBuy"]/div[4]/div[2]/div/p/a'); }},
   materialFieldPartsView: { get: function () { return browser.element('//*[@id="MATERIALTYPE.ARTICLE_TYPE_ID_6.6"]'); }},
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
-  pinAndPlateInPartsview:{ value: function (part) { return browser.element(`(//span[@class="class"])[${part}]`); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
 
   /*
@@ -95,23 +93,14 @@ let  projectPage = {
   /*
    * Verify part names for single pin
    */
-  checkSinglePinName: {
-    value: function(names) {
-      this.singlePinPart.waitForVisible();
-      var partName = this.singlePinPart.getText();
-      expect(partName).to.be.equal(names.part1);
-    }
-  },
-
-  /*
-   * Verify part names for multiple pin
-   */
-  checkMultiplePinName: {
-    value: function(names) {
-      for (var i = 1; i <= 7; i++) {
-        browser.moveToObject(`(//*[@id="lstPartsBuy"]//div/span[@class="class"])[${i}]`);
-        var partName = this.multiplePinPart(i).getText();
-        expect(partName).to.be.equal(names[`part${i}`])
+  validatePartNames: {
+    value: function(names, count) {
+      for (var i = 1; i <= count; i++) {
+        browser.moveToObject(`(//span[@class="class"])[${i}]`);
+        browser.pause(1000);
+        var partName = this.partsName(i).getText();
+        expect(partName).to.be.equal(names[`part${i}`]);
+        if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
       }
     }
   },
@@ -119,7 +108,7 @@ let  projectPage = {
   /*
    * Verify grouping for multiple pin
    */
-  checkGrouping:{
+  checkGrouping: {
     value: function(grouping) {
       for (var i = 1; i <= 4; i++) {
         browser.moveToObject(`(//*[@class="groupItemCount"])[${i}]`);
@@ -131,24 +120,7 @@ let  projectPage = {
   },
 
   /*
-   * Verify part names and store their prices for pin and plate
-   */
-  checkPinAndPlatePartsName: {
-    value: function(names) {
-      for (var i = 1; i <= 3; i++) {
-        browser.pause(1000);
-        browser.moveToObject(`(//span[@class="class"])[${i}]`);
-        browser.pause(1000);
-        if (i !== 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
-        var partName = this.pinAndPlateInPartsview(i).getText();
-        expect(partName).to.be.equal(names[`part${i}`]);
-      }
-    }
-  },
-
-  /*
-   * Request manual quotation by user for pin and pinqburst
-    and plate
+   * Request manual quotation by user for pin and pin and plate
    */
   estimateConditionPartsview: {
     value: function(estimateCondition) {
@@ -164,7 +136,7 @@ let  projectPage = {
       this.closePopUpButton.click();
       browser.pause(2000);
     }
-  },
+  }
 };
 
 module.exports = Object.create(Page, projectPage);

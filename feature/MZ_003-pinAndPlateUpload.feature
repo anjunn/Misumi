@@ -4,35 +4,35 @@ Scenario: User logins to presentation site
 
 Given User goes to Home Page
 Then User validates the webpage header
-Then User validates the Start Right Away button
+And User validates the Start Right Away button
 When User goes to Login Page
 Then User is redirected to Login Page
-Then User validates username field
-Then User validates Password field
-Then User enters credentials and logs in
+And User validates username field
+And User validates Password field
+And User enters credentials and logs in
 
 Scenario: Pin and Plate upload
 
-Given Upload 3D data for pin and plate
-When Verify if upload is successfull for pin and plate
-When User define quotation condition for the pin and plate
-Then Check 3D Thumb nail of pin and plate appears
-When User verify project name and price for pin and plate
+Given User uploads 3D data for pin and plate
+When User verifies whether upload is successful for pin and plate
+And User defines quotation condition for pin and plate
+Then User checks whether thumb nail of 3D appears for pin and plate
+When User verifies project name and price after thumbnail appears
 
 Scenario: Email validation after upload
 
-Given User Open the uploaded project
-When User opens email
-And User logins to mail account
-Then User verify project details in the mail
+Given User opens the uploaded project
+And User decides to check the email
+When User logs in to mail account
+Then User verifies the project details in the mail
 And User goes back to project page
 
 Scenario: User request for manual quotation
 
-When User check feature recognition for pin and plate
-Then Define quotation condition in parts view for pin and plate
-And User check the different parts name in parts view
-And User request for manual quotation in parts view
+When User does Feature Recognition for pin and plate
+Then User defines quotation condition in parts view for pin and plate
+And User verifies part names for pin and plate
+And User request for manual quotation in parts view for pin and plate
 
 Scenario: Operator login to management site
 

@@ -1,8 +1,17 @@
 {
-  "projectName": "Heat_Insulation_Sheet.SLDPRT",
+
   "quotationCondition": {
     "productTypePlate": "断熱板"
   },
+
+  "quotationConditionInPartsView": {
+    "quantity": 2
+  },
+
+  "estimateCondition": {
+    "material": "スタンダード（HIPS）ミオレックス PMX573A"
+  },
+
   "quotationResult": {
     "minQuantity": "1",
     "maxQuantity": "5",
@@ -11,4 +20,5 @@
     "purchasePrice":"900",
     "deliveryDays":"10"
   }
+
 }

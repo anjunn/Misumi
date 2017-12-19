@@ -176,6 +176,10 @@ exports.config = {
     }
   },
 
+  afterFeature: function (feature) {
+    browser.deleteCookie();
+  },
+
   // params for storing global variables
   params: {
     projectPageUrl: null,

@@ -2,27 +2,36 @@ let Page = require('./page');
 let base64Img = require('base64-img');
 let fs = require('fs');
 var path = require('path');
-
+/**
+ * upload Page Object
+ *
+ * @class functions/upload
+ * @type {Page}
+ */
 let  uploadPage = {
-
+  /**
+   * define elements
+   */
   waitForFormComponent: { get: function () { return browser.element('//form[@name="uploadform"]'); }},
   fileUploadProductName: { get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//p[@class="filename displayFileName"]'); }},
-  getEstimate: { get: function () { return browser.element('//*[contains(text(),"見積りに進む")]'); }},
-  quantity: { get: function () { return browser.element('//*[@class="customInput"]//input[@type="number"]'); }},
-  material: { get: function () { return browser.element('//*[@name="materialId"]'); }},
-  surfaceTreatment: { get: function () { return browser.element('//*[@name="surfaceId"]'); }},
-  tolerance:{ get: function () { return browser.element('//*[@name="toleranceClassId"]'); }},
+  proceedToEstimateButton: { get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//a[contains(text(), "見積りに進む")]'); }},
+  nextButton: { get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//a[contains(text(), "次へ")]'); }},
+  quantity: { get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//input[@type="number"]'); }},
+  material: { get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]'); }},
+  surfaceTreatment: { get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]'); }},
+  tolerance:{ get: function () { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="toleranceClassId"]'); }},
   thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
   price: { get: function () { return browser.element('(//div[@class="dataLst clearfix"]/ul/li[1]//*[@class="price"]//span[2])[1]'); }},
   productName: { get: function () { return browser.element('(//*[@class="projectname"]//a)[1]'); }},
-  nextButton: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
   productTypePinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]//dd[@class="customSelect"]/select[@class="textBold"]');}},
   nextButtonPinAndPlate: { get:function() {return browser.element('//form[@name="estimateCondSubmit"]/ul/li[2]/a');}},
   nextButtonPlate: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
   productTypePlate: { get: function () { return browser.element('//select[@name="articleTypeId"]'); }},
   continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
 
-
+  /**
+   * Upload file by triggering drop event
+   */
   upload: {
     value: function(filePath) {
 
@@ -91,21 +100,32 @@ let  uploadPage = {
       }
     }
   },
+
+  /**
+   * Verify project name and button visibilty
+   */
   verifyUpload: {
     value: function() {
+      browser.waitForLoading('//span[@class="percent"]');
+      browser.waitForLoading('//p[@class="situation loading"]/img');
       this.fileUploadProductName.waitForVisible();
       expect(this.fileUploadProductName.getText()).to.be.equal(browser.params.fileName);
-      this.getEstimate.isVisible();
+      var buttonPresence = this.proceedToEstimateButton.isVisible() || this.nextButton.isVisible();
+      expect(buttonPresence).to.be.equal(true);
     }
   },
+
+  /**
+   * Complete quotation condition for single, multiple pins and pin and plate
+   */
   quotationConditionFill: {
     value: function(quotationCondition) {
       this.quantity.waitForEnabled();
       this.material.selectByVisibleText(quotationCondition.material);
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
-      this.tolerance.selectByVisibleText(quotationCondition.ToleranceGrade);
-      if (this.getEstimate.isVisible()) {
-        this.getEstimate.click();
+      this.tolerance.selectByVisibleText(quotationCondition.toleranceGrade);
+      if (this.proceedToEstimateButton.isVisible()) {
+        this.proceedToEstimateButton.click();
       } else {
         this.nextButton.click();
         this.nextButtonPinAndPlate.waitForEnabled();
@@ -114,6 +134,21 @@ let  uploadPage = {
       }
     }
   },
+
+  /**
+   * Complete quotation plate
+   */
+  quotationConditionFillPlate: {
+    value: function(quotationCondition) {
+      this.quantity.waitForEnabled();
+      this.productTypePlate.selectByVisibleText(quotationCondition.productTypePlate);
+      this.nextButtonPlate.click();
+    }
+  },
+
+  /**
+   * Compare thumbnail with expected picture
+   */
   checkThumbNail: {
     value: function(expectedThumbnail) {
       browser.waitForLoading('//span[@class="percent"]');
@@ -123,6 +158,11 @@ let  uploadPage = {
       expect(thumbnailData).to.be.equal(expectedData);
     }
   },
+
+  /**
+   * Check name and price after thumbnail appears
+   * Price in not checked for pin and plate and plate only
+   */
   checkNameAndPrice: {
     value: function() {
       if (this.price.isVisible()) {
@@ -132,14 +172,8 @@ let  uploadPage = {
       expect(this.productName.getText()).to.be.equal(browser.params.fileName);
     }
   },
-  quotationConditionFillPlate: {
-    value: function(quotationCondition) {
-      this.quantity.waitForEnabled();
-      this.productTypePlate.selectByVisibleText(quotationCondition.productTypePlate);
-      this.nextButtonPlate.click();
-    }
-  },
-    goToEstimateCondition: {
+
+  goToEstimateCondition: {
     value: function() {
       this.continueToEstimateConditionButton.waitForEnabled();
       this.continueToEstimateConditionButton.click();

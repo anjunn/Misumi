@@ -20,6 +20,6 @@ module.exports = function () {
   });
 
   this.When(/^User goes to Order History Page$/, () => {
-  	orderPage.goToHistoryPage();
+  	orderPage.goToOrderHistory();
   });
 };

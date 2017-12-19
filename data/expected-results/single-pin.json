@@ -1,16 +1,12 @@
 {
 
-  "projectName": "single_pin.x_t",
-
   "quotationCondition": {
     "material": "SKH51 (58～60HRC)",
     "surfaceTreatment": "なし",
     "toleranceGrade": "並級"
   },
 
-  "quotationConditionInPartsView": {
-    "quantity": 2
-  },
+  "numberOfParts": 1,
 
   "partNames": {
     "part1": "コアピン"

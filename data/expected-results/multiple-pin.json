@@ -1,15 +1,5 @@
 {
-  "projectName": "multiple_pins.SLDPRT",
-
-  "quotationCondition": {
-    "material": "SKH51 (58～60HRC)",
-    "surfaceTreatment": "なし",
-    "toleranceGrade": "並級"
-  },
-
-  "quotationConditionInPartsView": {
-    "quantity": 3
-  },
+  "numberOfParts": 7,
 
   "partNames": {
     "part1": "角エジェクタピン",
