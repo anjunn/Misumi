@@ -54,12 +54,26 @@ module.exports = function () {
     projectPage.checkGrouping(multiplePinExpectedData.grouping);
   });
 
-  this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, () => {
+  this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, (pinType) => {
     if (pinType === 'pin and plate') {
       projectPage.estimateConditionPartsview(pinAndPlateInputData.estimateCondition);
     } else if (pinType === 'plate') {
       projectPage.estimateConditionPartsview(plateInputData.estimateCondition);
     }
+  }); 
+
+  this.When(/^User opens the project after manual quotation is done$/, () => {
+    projectPage.openURLOfProject();
   });
 
+  this.Then(/^User downloads the pdf$/, () => {
+    projectPage.downloadPdf();
+  });
+   this.Then(/^User reads the contents of a pdf$/, () => {
+    projectPage.readContentsPdf();
+  });
+
+  this.Then(/^User downloads the csv$/, () => {
+    projectPage.downloadCsv();
+  });
 };
