@@ -106,6 +106,7 @@ let  uploadPage = {
    */
   verifyUpload: {
     value: function() {
+      browser.scroll();
       browser.waitForLoading('//span[@class="percent"]');
       browser.waitForLoading('//p[@class="situation loading"]/img');
       this.fileUploadProductName.waitForVisible();

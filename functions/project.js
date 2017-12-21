@@ -96,7 +96,8 @@ let  projectPage = {
   validatePartNames: {
     value: function(names, count) {
       for (var i = 1; i <= count; i++) {
-        browser.moveToObject(`(//span[@class="class"])[${i}]`);
+        const partNamePos = browser.elementIdLocation(this.partsName(i).value.ELEMENT);
+        browser.scroll(partNamePos.value.x, partNamePos.value.y);
         browser.pause(1000);
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);

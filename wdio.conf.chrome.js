@@ -11,6 +11,8 @@ exports.config = merge(wdioConfBase.config, {
 
   capabilities: [{
     browserName:   'chrome',
+    chromeOptions: {
+    }
   }],
 
 });

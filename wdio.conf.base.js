@@ -209,7 +209,7 @@ exports.config = {
       let featureName = step.getStep().getScenario().getFeature().getName();
       let screenShot = './reports/screenshots/' + new Date().getTime() + featureName + ' ' + stepName + '.png';
       console.log('Adding screenshot: ' + screenShot);
-      browser.saveScreenshot(screenShot);
+      // browser.saveScreenshot(screenShot);
     }
   },
 
