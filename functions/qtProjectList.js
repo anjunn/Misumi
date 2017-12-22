@@ -68,7 +68,7 @@ let qtProjectListPage = {
     value: function() {
       expect(this.status.getText()).to.be.equal(expectedData.status);
       var color = this.status.getCssProperty('background-color').parsed.hex;
-      expect(expectedData.statusColor).to.be.equal(color);
+      expect(expectedData.qtStatusColor).to.be.equal(color);
     }
   },
 

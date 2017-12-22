@@ -31,11 +31,11 @@ exports.config = {
     scenario3: [
       './feature/MZ_003-pinAndPlateUpload.feature'
     ],
+   
     all: [
       './feature/MZ_001-singlePinUpload.feature',
       './feature/MZ_002-multiplePinUpload.feature',
       './feature/MZ_003-pinAndPlateUpload.feature',
-      './feature/MZ_003-plateUpload.feature',
     ]
   },
 
@@ -148,7 +148,10 @@ exports.config = {
       './step_definitions/email.stepDefinition.js',
       './step_definitions/managementLogin.stepDefinition.js',
       './step_definitions/qtProjectList.stepDefinition.js',
-      './step_definitions/qtProject.stepDefinition.js'
+      './step_definitions/qtProject.stepDefinition.js',
+      './step_definitions/soProjectList.stepDefinition.js',
+      './step_definitions/soProject.stepDefinition.js'
+
     ],
     failFast: true,
     dryRun: false,
