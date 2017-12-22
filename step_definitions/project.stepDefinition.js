@@ -51,18 +51,30 @@ module.exports = function () {
   this.When(/^User checks grouping$/, () => {
     projectPage.checkGrouping(multiplePinExpectedData.grouping);
   });
-  
+
   this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, (pinType) => {
     if (pinType === 'pin and plate') {
       projectPage.estimateConditionPartsview(pinAndPlateInputData.estimateCondition, pinType);
     } else if (pinType === 'plate') {
       projectPage.estimateConditionPartsview(plateInputData.estimateCondition, pinType);
     }
-  });
+  }); 
 
   this.Then(/^User check unit price and icon in parts view$/, () => {
     projectPage.validateManualIconInPartsView();
     projectPage.validatePriceInPartsView();
   });
 
+  this.Then(/^User downloads the pdf$/, () => {
+    projectPage.downloadPdf();
+  });
+
+   this.Then(/^User reads the contents of a pdf$/, () => {
+    projectPage.readContentsPdf();
+  });
+   
+
+  this.Then(/^User downloads the csv$/, () => {
+    projectPage.downloadCsv();
+  });
 };

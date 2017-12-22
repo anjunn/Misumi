@@ -30,8 +30,10 @@ let  projectPage = {
   unitPriceManuallyQuoted: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span');}},
   totalPriceDisplayedInPartsView:  { get: function () { return browser.element('//div[@id="boxAmount"]');}},
   manualQuotationPlate: { get: function () { return browser.element('//div[@class="boxInfomation"]/p/a'); }},
+  downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
+  downloadPdfOption:{ get: function () { return browser.element('//a[contains(text(),"見積書（PDF）")]'); }},
+  downloadCsvOption:{ get: function () { return browser.element('//a[contains(text(),"部品明細一覧（CSV）")]'); }},
   
-
   /*
    * Open project by clicking on thumbnail
    */
@@ -70,10 +72,9 @@ let  projectPage = {
     }
   },
 
-   /*
+  /*
    * Increse quantity of part and verify price increases
    */
-
   quotionConditionInPartsView: {
     value: function(quantity, isPlate = false) {
       this.quantityChange.waitForEnabled();
@@ -100,7 +101,7 @@ let  projectPage = {
     }
   },
 
-   /*
+  /*
    * Verify part names for single pin
    */
   validatePartNames: {
@@ -132,7 +133,6 @@ let  projectPage = {
   /*
   * Request manual quotation by user for pin and pin and plate
   */
-
   estimateConditionPartsview: {
     value: function(estimateCondition, pinType) {
       if (pinType === 'pin and plate'){
@@ -158,7 +158,6 @@ let  projectPage = {
   /*
   * Checks manually estimated icon is present
   */
-
   validateManualIconInPartsView: {
     value: function() {
       this.manualOkIconPartsView.waitForVisible();
@@ -167,15 +166,37 @@ let  projectPage = {
   },
 
   /*
-  * Checks unit price in parts view
-  */
-
+   * Checks unit price in parts view
+   */
   validatePriceInPartsView: {
     value: function() {
       var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
       expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
     }
   },
+
+  /*
+   * Open the project after manual quotation is done and download pdf
+   */
+  downloadPdf: {
+    value: function() {
+      this.downloadButton.waitForVisible();
+      this.downloadButton.click();
+      this.downloadPdfOption.waitForVisible();
+      this.downloadPdfOption.click();
+    }
+  },
+  
+  /*
+   * Open the project after manual quotation is done and download pdf
+   */
+  downloadCsv: {
+    value: function() {
+      this.downloadCsvOption.waitForVisible();
+      this.downloadCsvOption.click();
+    }
+  },
+
 };
   
 module.exports = Object.create(Page, projectPage);
