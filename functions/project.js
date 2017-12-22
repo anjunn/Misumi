@@ -26,7 +26,10 @@ let  projectPage = {
   materialFieldPartsView: { get: function () { return browser.element('//*[@id="MATERIALTYPE.ARTICLE_TYPE_ID_6.6"]'); }},
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
-
+  downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
+  downloadPdfOption:{ get: function () { return browser.element('//a[contains(text(),"見積書（PDF）")]'); }},
+  downloadCsvOption:{ get: function () { return browser.element('//a[contains(text(),"部品明細一覧（CSV）")]'); }},
+  
   /*
    * Open project by clicking on thumbnail
    */
@@ -136,7 +139,37 @@ let  projectPage = {
       this.closePopUpButton.click();
       browser.pause(2000);
     }
-  }
+  },
+  /*
+   * Open the project after manual quotation is done
+   */
+  openURLOfProject: {
+    value: function() {
+      console.log(browser.params.projectPageUrl);
+      browser.url(browser.params.projectPageUrl);
+     // browser.debug();
+    }
+  },
+  /*
+   * Open the project after manual quotation is done and download pdf
+   */
+  downloadPdf: {
+    value: function() {
+      this.downloadButton.waitForVisible();
+      this.downloadButton.click();
+      this.downloadPdfOption.waitForVisible();
+      this.downloadPdfOption.click();
+      }
+    },
+    /*
+   * Open the project after manual quotation is done and download pdf
+   */
+  downloadCsv: {
+    value: function() {
+      this.downloadCsvOption.waitForVisible();
+      this.downloadCsvOption.click();
+      }
+    },
 };
 
 module.exports = Object.create(Page, projectPage);

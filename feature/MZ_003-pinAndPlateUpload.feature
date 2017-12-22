@@ -57,7 +57,11 @@ When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers
 
+Scenario: User views the project and downloads it
 
+When User opens the project after manual quotation is done
+Then User downloads the pdf
+Then User downloads the csv
 
 
 
