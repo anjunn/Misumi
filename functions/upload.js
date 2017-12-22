@@ -1,4 +1,5 @@
 let Page = require('./page');
+let data = require('../data/input-data/dataset.json');
 let base64Img = require('base64-img');
 let fs = require('fs');
 var path = require('path');
@@ -137,7 +138,7 @@ let  uploadPage = {
     }
   },
 
-  /*
+  /* 
    * Complete quotation condition for plate only
    */
   quotationConditionFillPlate: {
@@ -190,7 +191,7 @@ let  uploadPage = {
    */
   goToMyPage: {
     value: function () {
-      browser.url('https://prs-origin-tst.meviy.misumi-ec.com/mypage');
+      browser.url(data.url.myPageUrl);
     }
   },
 
