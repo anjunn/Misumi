@@ -24,7 +24,7 @@ Scenario: Email validation after upload
 Given User opens the uploaded project
 And User decides to check the email
 When User logs in to mail account
-Then User verifies the project details in the mail
+Then User verifies the project details in the estimate mail
 And User goes back to project page
 
 Scenario: User request for manual quotation
@@ -56,8 +56,12 @@ Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers
+And Admin sends mail to customer
 
+Scenario: Email validation after quotation
 
-
+Given User decides to check the email
+When User logs in to mail account
+Then User verifies the project details in the quotation mail
 
 

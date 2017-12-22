@@ -54,7 +54,7 @@ module.exports = function () {
     projectPage.checkGrouping(multiplePinExpectedData.grouping);
   });
 
-  this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, () => {
+  this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, (pinType) => {
     if (pinType === 'pin and plate') {
       projectPage.estimateConditionPartsview(pinAndPlateInputData.estimateCondition);
     } else if (pinType === 'plate') {

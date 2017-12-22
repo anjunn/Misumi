@@ -22,6 +22,7 @@ let  orderPage = {
   thankYouHeading: { get: function () { return browser.element('//*[@id="main"]/div/h1');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
+  priceText: { get: function () { return browser.element('(//table[@class="table06"]/tbody//td)[6]');}},
 
   goToOrderPage: {
     value: function() {
@@ -66,8 +67,10 @@ let  orderPage = {
 
   goToOrderHistory: {
     value: function() {
-      this.goToHistory.waitForEnabled();
+      this.goToHistory.waitForVisible();
       this.goToHistory.click();
+      this.priceText.waitForVisible();
+      browser.params.totalPrice = this.priceText.getText();
     }
   },
 };
