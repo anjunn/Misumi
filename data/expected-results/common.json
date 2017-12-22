@@ -7,5 +7,6 @@
   "status": "未対応",
   "statusColor": "#d9534f",
   "sendEmailDialog": "メール送信",
-  "imageAccuracy": 90
+  "imageAccuracy": 90,
+  "unitPrice":"1,200"
 }

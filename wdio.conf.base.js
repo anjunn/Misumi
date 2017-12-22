@@ -31,11 +31,14 @@ exports.config = {
     scenario3: [
       './feature/MZ_003-pinAndPlateUpload.feature'
     ],
+    scenario4: [
+      './feature/MZ_004-plateUpload.feature'
+    ],
     all: [
       './feature/MZ_001-singlePinUpload.feature',
       './feature/MZ_002-multiplePinUpload.feature',
       './feature/MZ_003-pinAndPlateUpload.feature',
-      './feature/MZ_003-plateUpload.feature',
+      './feature/MZ_004-plateUpload.feature',
     ]
   },
 

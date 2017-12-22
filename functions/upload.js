@@ -28,6 +28,8 @@ let  uploadPage = {
   nextButtonPlate: { get: function () { return browser.element('//form[@name="estimateCondSubmit"]/p[@class="btn"]/a'); }},
   productTypePlate: { get: function () { return browser.element('//select[@name="articleTypeId"]'); }},
   continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
+  priceInList: { get: function () { return browser.element('(//li[@class="dataBox"]//span[2])');}},
+  manualOkIcon: { get: function () { return browser.element(`//div[@class="dataLst clearfix"]//li[@class="status02"]`);}},
 
   /**
    * Upload file by triggering drop event
@@ -135,8 +137,8 @@ let  uploadPage = {
     }
   },
 
-  /**
-   * Complete quotation plate
+  /*
+   * Complete quotation condition for plate only
    */
   quotationConditionFillPlate: {
     value: function(quotationCondition) {
@@ -146,7 +148,7 @@ let  uploadPage = {
     }
   },
 
-  /**
+  /*
    * Compare thumbnail with expected picture
    */
   checkThumbNail: {
@@ -159,9 +161,9 @@ let  uploadPage = {
     }
   },
 
-  /**
+  /*
    * Check name and price after thumbnail appears
-   * Price in not checked for pin and plate and plate only
+   * Price is not checked for pin and plate and plate only
    */
   checkNameAndPrice: {
     value: function() {
@@ -173,11 +175,46 @@ let  uploadPage = {
     }
   },
 
+  /*
+   * Navigates to Estimate condition enter page
+   */
   goToEstimateCondition: {
     value: function() {
       this.continueToEstimateConditionButton.waitForEnabled();
       this.continueToEstimateConditionButton.click();
     }
+  },
+
+  /*
+   * Goes to my page
+   */
+  goToMyPage: {
+    value: function () {
+      browser.url('https://prs-origin-tst.meviy.misumi-ec.com/mypage');
+    }
+  },
+
+  /*
+   * Checks Manual Quotation Okay Icon is present or not
+   */
+  checkManualQuotationIconInList:{
+    value: function() {
+      this.thumbnail.waitForVisible();
+      expect(this.manualOkIcon.isVisible()).to.be.equal(true);
+    }
+  },
+
+  /*
+   * Validates the price in the project listing screen
+   */
+  validatePriceInList:{
+    value: function() {
+      this.thumbnail.waitForVisible();
+      var totalPriceDisplayed = this.priceInList.getText();
+      expect(totalPriceDisplayed).to.not.equal(null);
+    }
   }
+
 };
+
 module.exports = Object.create(Page, uploadPage);
