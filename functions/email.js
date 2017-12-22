@@ -31,7 +31,7 @@ let emailPage = {
    */
   goToEmail: {
     value: function () {
-      browser.url('https://login.microsoftonline.com/');
+      browser.url(inputData.url.mailUrl);
     }
   },
 

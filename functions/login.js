@@ -26,7 +26,7 @@ let loginPage = {
    */
   goToHomePage: {
     value: function () {
-      browser.url('https://prs-origin-tst.meviy.misumi-ec.com/');
+      browser.url(data.url.homePageUrl);
     }
   },
 
