@@ -33,7 +33,7 @@ let emailPage = {
    */
   goToEmail: {
     value: function () {
-      browser.url(inputData.url.mailLogin);
+      browser.url(inputData.url.mailUrl);
     }
   },
 

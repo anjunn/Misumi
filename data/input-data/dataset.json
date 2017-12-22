@@ -15,10 +15,11 @@
   },
 
   "url": {
+    "mailUrl": "https://login.microsoftonline.com/",
     "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
     "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
     "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi",
-    "mailLogin": "https://login.microsoftonline.com/"
+    "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/"
   },
 
   "uploadPath": {

@@ -26,7 +26,14 @@ let  projectPage = {
   materialFieldPartsView: { get: function () { return browser.element('//*[@id="MATERIALTYPE.ARTICLE_TYPE_ID_6.6"]'); }},
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
-
+  manualOkIconPartsView: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]');}},
+  unitPriceManuallyQuoted: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span');}},
+  totalPriceDisplayedInPartsView:  { get: function () { return browser.element('//div[@id="boxAmount"]');}},
+  manualQuotationPlate: { get: function () { return browser.element('//div[@class="boxInfomation"]/p/a'); }},
+  downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
+  downloadPdfOption:{ get: function () { return browser.element('//a[contains(text(),"見積書（PDF）")]'); }},
+  downloadCsvOption:{ get: function () { return browser.element('//a[contains(text(),"部品明細一覧（CSV）")]'); }},
+  
   /*
    * Open project by clicking on thumbnail
    */
@@ -69,10 +76,12 @@ let  projectPage = {
    * Increse quantity of part and verify price increases
    */
   quotionConditionInPartsView: {
-    value: function(quantity) {
+    value: function(quantity, isPlate = false) {
       this.quantityChange.waitForEnabled();
-      var price = parseInt(this.priceText.getText().replace(/,/g, ""));
-      expect(price).to.not.be.null;
+      if (!isPlate) {
+        var price = parseInt(this.priceText.getText().replace(/,/g, ""));
+        expect(price).to.not.be.null;
+      }
       browser.execute(function (quantity) {
         element = document.querySelector('input[type="number"]');
         element.value = quantity;
@@ -85,8 +94,10 @@ let  projectPage = {
         }
       }, quantity);
       browser.pause(3000);
-      var newPrice  = parseInt(this.priceText.getText().replace(/,/g, ""));
-      expect(newPrice).to.be.above(price);
+      if (!isPlate) {
+        var newPrice  = parseInt(this.priceText.getText().replace(/,/g, ""));
+        expect(newPrice).to.be.above(price);
+      }
     }
   },
 
@@ -120,12 +131,18 @@ let  projectPage = {
   },
 
   /*
-   * Request manual quotation by user for pin and pin and plate
-   */
+  * Request manual quotation by user for pin and pin and plate
+  */
   estimateConditionPartsview: {
-    value: function(estimateCondition) {
-      this.manualQuotationPinAndPlate.waitForVisible();
-      this.manualQuotationPinAndPlate.click();
+    value: function(estimateCondition, pinType) {
+      if (pinType === 'pin and plate'){
+        this.manualQuotationPinAndPlate.waitForVisible();
+        this.manualQuotationPinAndPlate.click();
+      } else {
+        browser.pause(5000);
+        this.manualQuotationPlate.waitForVisible();
+        this.manualQuotationPlate.click();
+      }
       this.materialFieldPartsView.waitForVisible();
       this.materialFieldPartsView.selectByVisibleText(estimateCondition.material);
       this.boxButtonpartsview.waitForEnabled();
@@ -136,7 +153,50 @@ let  projectPage = {
       this.closePopUpButton.click();
       browser.pause(2000);
     }
-  }
-};
+  },
 
+  /*
+  * Checks manually estimated icon is present
+  */
+  validateManualIconInPartsView: {
+    value: function() {
+      this.manualOkIconPartsView.waitForVisible();
+      expect(this.manualOkIconPartsView.isVisible()).to.be.equal(true);
+    }
+  },
+
+  /*
+   * Checks unit price in parts view
+   */
+  validatePriceInPartsView: {
+    value: function() {
+      var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
+      expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
+    }
+  },
+
+  /*
+   * Open the project after manual quotation is done and download pdf
+   */
+  downloadPdf: {
+    value: function() {
+      this.downloadButton.waitForVisible();
+      this.downloadButton.click();
+      this.downloadPdfOption.waitForVisible();
+      this.downloadPdfOption.click();
+    }
+  },
+  
+  /*
+   * Open the project after manual quotation is done and download pdf
+   */
+  downloadCsv: {
+    value: function() {
+      this.downloadCsvOption.waitForVisible();
+      this.downloadCsvOption.click();
+    }
+  },
+
+};
+  
 module.exports = Object.create(Page, projectPage);

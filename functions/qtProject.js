@@ -14,6 +14,7 @@ let qtProjectPage = {
   partNames: { value: function (n) {return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[14]`); }},
   partPrice: { value: function (n) {return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[3]`); }},
   sendMail: { get: function () { return browser.element('(//button[@class="btn btn-default mailButton"])[5]');}},
+  sendMailPlate: { get: function () { return browser.element('//button[@class="btn btn-default mailButton"]');}},
   sendButton:{ get: function () { return browser.element('//a[@class="btn btn-success col-sm-3"]');}},
   textArea:{ get: function () { return browser.element('//textarea[@id="email_comment"]');}},
   sendEmailDialog:{ get: function () { return browser.element('(//div[@class="text-center"]//h3)[3]');}},
@@ -22,6 +23,7 @@ let qtProjectPage = {
   okButton: { get: function () { return browser.element('//i[@id="mailResultOk"]');}},
   attach2D: { get: function () { return browser.element('(//button[@class="btn btn-default"])[1]');}},
   editQuotationButton: { get: function () { return browser.element('(//button[@class="btn btn-default editButton"])[3]');}},
+  editQuotationButtonPlate: { get: function () { return browser.element('(//button[@class="btn btn-default editButton"])');}},
   collapseButtonInEditQuotation: { get: function () { return browser.element('//a[@id="slideKbnInfoAccordionBtn"]');}},
   emailSubjectField: { get: function () { return browser.element('//input[@id="email_subject"]');}},
   minQuantity: { get: function () { return browser.element('//input[@id="editSlideStartCount0"]');}},
@@ -36,24 +38,31 @@ let qtProjectPage = {
   editButton:{ get: function () { return browser.element('//button[@id="editFormSend"]');}},
   status:{ get: function () { return browser.element('//select[@id="editStatus"]');}},
   statusChange:{ get: function () { return browser.element('(//option[@value="4"])[1]');}},
-  clearButton: { get: function () { return browser.element('(//button[@class="btn btn-default multiselect-clear-filter"])[1]');}},
+  clearButton:{ get: function () { return browser.element('(//button[@class="btn btn-default multiselect-clear-filter"])[1]');}},
+  itemNamePlate:{ get: function () { return browser.element('//table[@id="detailTable"]/tbody/tr[1]/td[14]');}},
 
   /**
    * Admin validate price and name of each parts
    */
   validateOrderDetails: {
-    value: function(names) {
+    value: function(names, pinType) {
       browser.waitForLoading('//div[@id="loader"]');
-      var position = 1;
-      for (var i = 1; i <= 3; i++) {
-        if (i != 1) position = position + 2;
-        browser.moveToObject(`//table[@id="detailTable"]/tbody/tr[${position}]/td[14]`);
-        var partName = this.partNames(position).getText();
-        expect(partName).to.be.equal(names[`part${i}`])
-        if (i != 3) {
-          var partPrice = this.partPrice(i*2).getText();
-          expect(partPrice).to.be.equal(browser.params.pinAndPlatePrice['part'+ i ] + '円');
+      if (pinType === 'pin and plate'){
+        var position = 1;
+        for (var i = 1; i <= 3; i++) {
+          if (i != 1) position = position + 2;
+          browser.moveToObject(`//table[@id="detailTable"]/tbody/tr[${position}]/td[14]`);
+          var partName = this.partNames(position).getText();
+          expect(partName).to.be.equal(names[`part${i}`])
+          if (i != 3) {
+            var partPrice = this.partPrice(i*2).getText();
+            expect(partPrice).to.be.equal(browser.params.pinAndPlatePrice['part'+ i ] + '円');
+          }
         }
+      } else {
+         this.itemNamePlate.moveToObject();
+         var partName = this.itemNamePlate.getText();
+         expect(partName).to.be.equal(names['part1']);
       }
     }
   },
@@ -63,12 +72,18 @@ let qtProjectPage = {
    * Subject is changed for filtering.
    */
    sendMailFor2DData: {
-    value: function() {
+    value: function(pinType) {
       browser.pause(5000);
       this.waitforLoadingFile.isVisible();
-      this.sendMail.moveToObject();
-      this.sendMail.waitForVisible();
-      this.sendMail.click();
+      if (pinType === 'pin and plate'){
+        this.sendMail.moveToObject();
+        this.sendMail.waitForVisible();
+        this.sendMail.click();
+      } else {
+        this.sendMailPlate.moveToObject();
+        this.sendMailPlate.waitForVisible();
+        this.sendMailPlate.click();
+      }
       this.selectToAdress.waitForVisible();
       browser.selectByValue('//select[@id="mailTypeList"]',"8");
       browser.pause(1000);
@@ -97,10 +112,15 @@ let qtProjectPage = {
    * Admin sends mail to Supplier, by uploading 2D data
    */
   sendMailToSupplier: {
-    value: function() {
+    value: function(pinType) {
       browser.pause(2000);
-      this.sendMail.waitForVisible();
-      this.sendMail.click();
+      if (pinType === 'pin and plate') {
+        this.sendMail.waitForVisible();
+        this.sendMail.click();
+      } else {
+        this.sendMailPlate.waitForVisible();
+        this.sendMailPlate.click();
+      }
       this.selectToAdress.waitForVisible();
       browser.selectByValue('//select[@id="mailTypeList"]', "10");
       browser.chooseFile("#file_input", "../QA_Automation/Data/2D-Data/TJP17AL8GZ02AA.pdf");
@@ -115,11 +135,17 @@ let qtProjectPage = {
    * Admin edits quotation, and reveals price and delivery date
    */
   editQuotation: {
-    value: function(quotationResult) {
+    value: function(quotationResult, pinType) {
       browser.pause(1000);
-      this.editQuotationButton.moveToObject();
-      this.editQuotationButton.waitForVisible();
-      this.editQuotationButton.click();
+      if (pinType === 'pin and plate') {
+        this.editQuotationButton.moveToObject();
+        this.editQuotationButton.waitForVisible();
+        this.editQuotationButton.click();
+      } else {
+        this.editQuotationButtonPlate.moveToObject();
+        this.editQuotationButtonPlate.waitForVisible();
+        this.editQuotationButtonPlate.click();
+      }
       this.status.click();
       this.statusChange.waitForVisible();
       this.statusChange.click();

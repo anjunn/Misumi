@@ -56,4 +56,12 @@ module.exports = function () {
     uploadPage.checkNameAndPrice();
   });
 
+  this.When(/^User goes to my page$/, () => {
+    uploadPage.goToMyPage();
+  });
+
+  this.Given(/^User validates manual quotation icon and price in the listing screen$/, () => {
+    uploadPage.checkManualQuotationIconInList();
+    uploadPage.validatePriceInList();
+  });
  };
