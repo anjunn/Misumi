@@ -14,7 +14,7 @@ module.exports = function () {
     projectPage.openProject();
   });
 
-  this.When(/^User does Feature Recognition for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.When(/^User does Feature Recognition for ((single|multiple) pin|plate|pin and plate|core pin)$/, (pinType) => {
     if (pinType === 'single pin') {
       projectPage.compareImage('single-pin.png', 'single-pin/single-pin.png');
     } else if (pinType === 'multiple pin') {
@@ -23,6 +23,9 @@ module.exports = function () {
       projectPage.compareImage('plate.png', 'plate/plate.png');
     } else if (pinType === 'pin and plate') {
       projectPage.compareImage('pin-and-plate.png', 'pin-and-plate/pin-and-plate.png');
+    }
+    else if (pinType === 'core pin') {
+      projectPage.compareImage('core-pin.png', 'multiple-pin/core-pin.png');
     }
   });
 
@@ -76,5 +79,42 @@ module.exports = function () {
 
   this.Then(/^User downloads the csv$/, () => {
     projectPage.downloadCsv();
+  });
+   this.When(/^User selects a part by product type and selects Core pins$/, () => {
+    projectPage.selectByProductType();
+  });
+    this.Then(/^Check if all core pins are selected and finally deselect$/, () => {
+
+    projectPage.verifyCorePinSelected(multiplePinExpectedData.partNames,7,multiplePinExpectedData.corePinCount)
+  });
+    this.When(/^User selects filter and take CorePin$/, () => {
+    projectPage.selectFilterTakeCorePin();
+  });
+    this.When(/^User verifies if filter has been proper$/, () => {
+    projectPage.verifyFilterCorePin(multiplePinExpectedData.partNames.part2,7,multiplePinExpectedData.corePinCount);
+  });
+     this.When(/^User gives Customer ordering number manually$/, () => {
+    projectPage.customerOrdeingNumberManual(14,multiplePinInputData.customerOrderingNumberPart1,multiplePinInputData.customerOrderingNumberPart2);
+  });
+     this.When(/^User gives Customer ordering number batch input$/, () => {
+    projectPage.customerOrdeingNumberBatchInput();
+  });
+     this.When(/^User verifies Customer ordering number batch input$/, () => {
+    projectPage.verifyBatchInput(multiplePinExpectedData.batchInput,14);
+  });
+     this.Then(/^User resets the batch input$/, () => {
+    projectPage.resetBatchInput();
+  });
+       this.When(/^User gives Customer ordering number using input wizard$/, () => {
+    projectPage.customerOrdeingNumberInputWizard(multiplePinInputData.inputWizardFunction1,multiplePinInputData.inputWizardFunction2);
+  });
+         this.Then(/^User verifies Customer ordering number using input wizard$/, () => {
+    projectPage.verifyInputWizard(multiplePinExpectedData.wizardInput,multiplePinExpectedData.wizardInputprojectName,14);
+  });
+    this.When(/^User selects a part and changes the material$/, () => {
+    projectPage.selectCorePin();
+  });
+     this.Then(/^User updates the quotation and verifies the change$/, () => {
+    projectPage.updateQuotation(multiplePinExpectedData.materialChange);
   });
 };

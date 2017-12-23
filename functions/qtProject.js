@@ -91,6 +91,7 @@ let qtProjectPage = {
       this.emailSubjectField.setValue(subject);
       browser.pause(1000);
       this.textArea.click();
+      expect(this.textArea.getValue()).to.include(browser.params.fileName);
       browser.pause(1000);
       browser.keys('\uE004');
       browser.keys('\uE007');

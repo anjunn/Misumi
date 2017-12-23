@@ -11,7 +11,7 @@ let plateExpectedData = require('../data/expected-results/plate.json');
 
 module.exports = function () {
 
-  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate) from dialog$/, (pinType) => {
   	if (pinType === 'single pin') {
   	  path = data.uploadPath.singlePin;
   	} else if (pinType === 'multiple pin'){
@@ -21,7 +21,20 @@ module.exports = function () {
   	} else if (pinType === 'pin and plate') {
   	  path = data.uploadPath.pinPlate;
   	}
-  	uploadPage.upload(path);
+  	uploadPage.uploadFromDialog(path);
+  });
+
+  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+    if (pinType === 'single pin') {
+      path = data.uploadPath.singlePin;
+    } else if (pinType === 'multiple pin'){
+      path = data.uploadPath.multiplePin;
+    } else if (pinType === 'plate') {
+      path = data.uploadPath.plate;
+    } else if (pinType === 'pin and plate') {
+      path = data.uploadPath.pinPlate;
+    }
+    uploadPage.upload(path);
   });
 
   this.When(/^User verifies whether upload is successful for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {

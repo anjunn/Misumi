@@ -1,6 +1,5 @@
 {
   "numberOfParts": 7,
-
   "partNames": {
     "part1": "角エジェクタピン",
     "part2": "コアピン",
@@ -10,8 +9,61 @@
     "part6": "エジェクタピン",
     "part7": "エジェクタピン"
   },
-
-  "grouping": [ 2, 5, 12,4 ]
-
+  "batchInput": [
+    {
+      "part": "001"
+    },
+    {
+      "part": "003"
+    },
+    {
+      "part": "004"
+    },
+    {
+      "part": "005"
+    },
+    {
+      "part": "010"
+    },
+    {
+      "part": "011"
+    },
+    {
+      "part": "012"
+    }
+  ],
+  "wizardInput": [
+    {
+      "part": "300"
+    },
+    {
+      "part": "302"
+    },
+    {
+      "part": "304"
+    },
+    {
+      "part": "306"
+    },
+    {
+      "part": "308"
+    },
+    {
+      "part": "310"
+    },
+    {
+      "part": "312"
+    }
+  ],
+  "materialChange":"NAK80",
+  "wizardInputprojectName": "MULTIPLE-PINS",
+  "customerOrderingNumberPart1": "ERR",
+  "customerOrderingNumberPart2": "1234",
+  "corePinCount": 2,
+  "grouping": [
+    2,
+    5,
+    12,
+    4
+  ]
 }
-
