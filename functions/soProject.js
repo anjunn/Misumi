@@ -45,6 +45,10 @@ let soProjectPage = {
       this.orderingListOption.click(); 
       browser.pause(1000);
       browser.alertAccept();
+     // if (!emailSubjectField.isVisible())
+     // {
+      browser.alertAccept();
+     // }
       browser.pause(2000);
       this.emailSubjectField.waitForVisible();
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;

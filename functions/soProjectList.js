@@ -40,7 +40,7 @@ let soProjectListPage = {
       browser.waitForLoading('//div[@id="loader"]');
       this.findProjectName.waitForVisible();
       this.findProjectName.clearElement();
-      this.findProjectName.setValue("browser.params.fileName");
+      this.findProjectName.setValue(browser.params.fileName);
       this.searchButton.waitForEnabled();
       this.searchButton.click();
 
@@ -58,7 +58,7 @@ let soProjectListPage = {
      this.soProjectlist.waitForVisible();
      this.soProjectlist.click();
      let handles = browser.windowHandles();
-     browser.switchTab(handles.value[1]);
+     browser.switchTab(handles.value[2]);
 
     }
   },
@@ -112,7 +112,7 @@ let soProjectListPage = {
       this.product.click();
       browser.pause(4000);
       let windowHandles = browser.windowHandles();
-      browser.switchTab(windowHandles.value[2]);
+      browser.switchTab(windowHandles.value[3]);
     }
   },
 };
