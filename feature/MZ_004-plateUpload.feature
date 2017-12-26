@@ -78,3 +78,18 @@ Then User validates the product name and order details in order page
 And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page
+
+
+Scenario: Operator opens the order from SO page
+Given Admin goes to management site
+And Admin navigates to SO section in management site 
+Then Admin searches the uploaded file in SO project list
+And Admin selects the person in charge for the uploaded project in SO page
+Then Admin verifies if the selected person in charge is displayed in SO page
+And Verifies if the status and colour is displayed correctly in SO page 
+And Open the user uploaded file to proceed to manual quotation 
+
+Scenario: Operator opens the user uploaded project
+Given Admin selects the supplier from so page
+Then Admin sends email to the supplier
+And Admin verifies if the send email pop up is shown and clicks ok in SO page

@@ -5,7 +5,8 @@
   "managementLoginPageText": "Please sign in",
   "personInCharge": "CCT村澤",
   "status": "未対応",
-  "statusColor": "#d9534f",
+  "qtStatusColor": "#d9534f",
+  "soStatusColor": "#d9d9d9",
   "sendEmailDialog": "メール送信",
   "imageAccuracy": 90,
   "unitPrice":"1,200"

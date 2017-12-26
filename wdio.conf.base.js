@@ -156,7 +156,10 @@ exports.config = {
       './step_definitions/email.stepDefinition.js',
       './step_definitions/managementLogin.stepDefinition.js',
       './step_definitions/qtProjectList.stepDefinition.js',
-      './step_definitions/qtProject.stepDefinition.js'
+      './step_definitions/qtProject.stepDefinition.js',
+      './step_definitions/soProjectList.stepDefinition.js',
+      './step_definitions/soProject.stepDefinition.js'
+
     ],
     failFast: true,
     dryRun: false,
