@@ -66,6 +66,11 @@ Then User validates manual quotation icon and price in the listing screen
 Then User opens the uploaded project
 Then User check unit price and icon in parts view
 
+Scenario: User downloads and verifies pdf and csv files
+
+Then User downloads the pdf
+And User downloads the csv
+
 Scenario: User places the order
 
 Given User goes to order page

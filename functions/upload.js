@@ -31,6 +31,7 @@ let  uploadPage = {
   continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
   priceInList: { get: function () { return browser.element('(//li[@class="dataBox"]//span[2])');}},
   manualOkIcon: { get: function () { return browser.element(`//div[@class="dataLst clearfix"]//li[@class="status02"]`);}},
+  uploadFileLink: { get: function () { return browser.element('//input[@id="uploadfile"]'); }},
 
   /**
    * Upload file by triggering drop event
@@ -101,6 +102,22 @@ let  uploadPage = {
       } finally {
         fs.rename(newPath, filePath, function() {});
       }
+    }
+  },
+
+   /**
+   * Upload a file by selecting from dialog 
+   */
+   uploadFromDialog: {
+    value: function(filePath) {
+      var date = (new Date()).getTime();
+      var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
+      browser.params.fileName = path.basename(newPath);
+      console.log(newPath);
+      fs.rename(filePath, newPath, function() {});
+      browser.pause(3000);
+      browser.chooseFile('#uploadfile', newPath);
+      fs.rename(newPath, filePath, function() {});
     }
   },
 
@@ -176,8 +193,8 @@ let  uploadPage = {
     }
   },
 
-  /*
-   * Navigates to Estimate condition enter page
+  /**
+   * User clicks on continue to estimate button
    */
   goToEstimateCondition: {
     value: function() {

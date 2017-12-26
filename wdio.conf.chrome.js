@@ -17,7 +17,6 @@
 
       capabilities: [{
         browserName:   'chrome',
-
       }],
 
       // Gets executed before test execution begins. At this point you can access all global
