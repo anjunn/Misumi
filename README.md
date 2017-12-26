@@ -1,10 +1,18 @@
 # Meviy QA Automation
 
-
-
 > OS- Windows 10
-> Chrome- 63.XX
 
+
+## Prerequisite
+
+* Node Version- 8.7
+* Java- 9.X
+* Chrome- 63.XX
+* WebdriverIO (Install using `npm install webdriverio`)
+
+> References: 
+* https://nodejs.org/en/
+* http://webdriver.io/
 
 
 ## Steps for executing the QA Automation test :
