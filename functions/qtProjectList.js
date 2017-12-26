@@ -57,6 +57,7 @@ let qtProjectListPage = {
     value: function() {
       browser.pause(2000);
       this.checkSelectedPerson.moveToObject();
+      console.log(this.checkSelectedPerson.getText());
       expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
     }
   },

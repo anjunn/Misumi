@@ -6,7 +6,10 @@
     "surfaceTreatment": "なし",
     "toleranceGrade": "並級"
   },
-
+  "customerOrderingNumberPart1":"ERR",
+  "customerOrderingNumberPart2":"1234",
+  "inputWizardFunction1":"%PRJ_NAME",
+  "inputWizardFunction2":"#SEQNUMBER(300, 2)",
   "quotationConditionInPartsView": {
     "quantity": "4"
   }

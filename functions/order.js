@@ -10,7 +10,7 @@ let  orderPage = {
   /**
    * define elements
    */
-  cart: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]'); }},
+  proceedToEstimateButton: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]'); }},
   customerNumberInput: { get: function () { return browser.element('//*[contains(text(),"一括入力") and @class="js-modal notEasescroll"]'); }},
   orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
   orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
@@ -22,14 +22,19 @@ let  orderPage = {
   thankYouHeading: { get: function () { return browser.element('//*[@id="main"]/div/h1');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
-
+  
+  /*
+   * User goes to the order page
+   */
   goToOrderPage: {
     value: function() {
-      this.cart.waitForEnabled();
-      this.cart.click();
+      this.proceedToEstimateButton.waitForEnabled();
+      this.proceedToEstimateButton.click();
     }
   },
-
+  /*
+   * Verifies if heading and product name match
+   */
   orderPageValidation: {
     value: function(heading) {
       this.customerNumberInput.waitForVisible();
@@ -38,7 +43,9 @@ let  orderPage = {
       expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
-
+  /*
+   * User places the order
+   */
   placeOrder: {
     value: function() {
       browser.pause(1000);
@@ -55,7 +62,9 @@ let  orderPage = {
       this.placeOrderButton.click();
     }
   },
-
+  /*
+   * User verifies if taken Thankyou page 
+   */
   checkTitleThankYou: {
     value: function(heading) {
       this.thankYouHeading.waitForEnabled();
@@ -63,13 +72,16 @@ let  orderPage = {
       expect(title).to.equal(heading);
     }
   },
-
+  /*
+   * User goes to history page
+   */
   goToOrderHistory: {
     value: function() {
       this.goToHistory.waitForEnabled();
       this.goToHistory.click();
     }
   },
+ 
 };
 
 module.exports = Object.create(Page, orderPage);

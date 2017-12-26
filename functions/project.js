@@ -33,7 +33,32 @@ let  projectPage = {
   downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
   downloadPdfOption:{ get: function () { return browser.element('//a[contains(text(),"見積書（PDF）")]'); }},
   downloadCsvOption:{ get: function () { return browser.element('//a[contains(text(),"部品明細一覧（CSV）")]'); }},
-  
+  mainSelectionInSelectByPart:{ get: function () { return browser.element('//span[@class="multiCheck"]'); }},
+  mainSelectionInSelectByPartDeselect:{ get: function () { return browser.element('//span[@class="multiCheck checked"]'); }},
+  itemName:{ get: function () { return browser.element('(//ul[@class="menuSecond"]//li)[7]'); }},
+  corePin:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[1]'); }},
+  checkPartSelect: { value: function (part) { return browser.element(`(//input[@type="checkbox" and @class="selectedGroup"])[${part}]`); }},
+  customerOrderingNumberField:{ value: function (input) { return browser.element(`(//div[@class="customInput"]//input[@type="text"])[${input}]`);}},
+  listFunctionOpen:{ get: function () { return browser.element('(//li[@class="btnLstFunc"])[3]'); }},
+  closeList:{ get: function () { return browser.element('//li[@class="status01"]'); }},
+  enterCustomerOderInList:{ get: function () { return browser.element('(//a[@class="level"])[5]'); }},
+  batchInput:{ get: function () { return browser.element('//a[contains(text(),"パーツ名を枝番に一括入力")]'); }},
+  closeButtonDialog:{ get: function () { return browser.element('//li[@id="closeBtn"]'); }},
+  partNumberGroup:{ value: function (part) { return browser.element(`(//span[@class="partNameGroup"])[${part}]`); }},
+  undoBatchInput:{ get: function () { return browser.element('//a[contains(text(),"一括入力を元に戻す")]'); }},
+  inputWizardList:{ get: function () { return browser.element('//a[contains(text(),"入力ウィザード")]'); }},
+  inputWizardInput1:{ get: function () { return browser.element('(//p[@class="input"]//input)[1]'); }},
+  inputWizardInput2:{ get: function () { return browser.element('(//p[@class="input"]//input)[2]'); }},
+  collectiveInputButton:{ get: function () { return browser.element('(//li[@class="btn"])[5]'); }},
+  closeButton:{ get: function () { return browser.element('//li[@id="closeBtn"]'); }},
+  corePinMultiplePin:{ get: function () { return browser.element('(//p[@class="model"])[1]//a'); }},
+  changeMaterial:{ get: function () { return browser.element('(//div[@class="customSelect"]//select)[2]'); }},
+  makeAnEstimate:{ get: function () { return browser.element('//a[contains(text(),"見積をする")]'); }},
+  filterOption:{ get: function () { return browser.element('(//li[@class="btnLstFunc"])[2]'); }},
+  itemNameFilter:{ get: function () { return browser.element('(//a[@class="level"])[4]');}},
+  corePinFilter:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[2]');}},
+  corePinList: { value: function (n) {return browser.element(`(//span[@class="class"])[${n}]`); }},
+  showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
   /*
    * Open project by clicking on thumbnail
    */
@@ -172,6 +197,7 @@ let  projectPage = {
     value: function() {
       var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
       expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
+      browser.url(browser.params.projectPageUrl);
     }
   },
 
@@ -197,6 +223,201 @@ let  projectPage = {
     }
   },
 
+  /*
+   * User selects core pin from the available parts, in select by product type
+   */
+    selectByProductType:{
+    value: function() {
+      this.mainSelectionInSelectByPart.waitForVisible();
+      this.mainSelectionInSelectByPart.click();
+      this.itemName.moveToObject();
+      this.corePin.click();     
+      }
+    },
+
+  /*
+   * Verify if all the core pins are selected, finally deselect it
+   */
+    verifyCorePinSelected:{
+    value: function(expectedPartsName,count,expectedCorePinCount) {
+      var countCorePin=0;
+      var countCheckedCheckBox=0;
+      for(var i=1;i<=count;i++)
+       {
+         this.checkPartSelect(i).moveToObject();
+         if(this.partsName(i).getText()==expectedPartsName.part2)
+         { 
+           this.checkPartSelect(i).isSelected();
+           countCorePin= countCorePin +1;
+         } 
+         if(i==count)
+         {
+
+          this.customerOrderingNumberField(14).moveToObject();
+         }
+         if(this.checkPartSelect(i).isSelected())
+         {
+          countCheckedCheckBox=countCheckedCheckBox+1;
+         }
+       }   
+      expect(countCorePin).to.be.equal(expectedCorePinCount);
+      expect(countCheckedCheckBox).to.be.equal(countCorePin);
+      this.mainSelectionInSelectByPartDeselect.moveToObject();
+      this.mainSelectionInSelectByPartDeselect.click();
+      this.closeList.waitForVisible();
+      this.closeList.click();
+      }
+    },
+
+  /*
+   * User inputs Customer ordering number manually
+   */
+    customerOrdeingNumberManual:{
+    value: function(count,part1,part2) {
+      this.filterOption.waitForVisible();
+      this.filterOption.click();
+      this.showAllOption.click();
+      this.customerOrderingNumberField(1).waitForVisible();
+      for(var i=1;i<=count;i++)
+      {  
+       this.customerOrderingNumberField(i).moveToObject(); 
+       if(i%2!=0)
+        this.customerOrderingNumberField(i).setValue(part1);
+       else
+        this.customerOrderingNumberField(i).setValue(part2);
+      }
+    }
+  },
+
+  /*
+   * User inputs Customer ordering number in batch input 
+   */
+  customerOrdeingNumberBatchInput:{
+    value: function() { 
+      browser.url(browser.params.projectPageUrl);  
+      this.listFunctionOpen.waitForVisible();
+      this.listFunctionOpen.click();
+      this.enterCustomerOderInList.moveToObject();
+      this.batchInput.click();
+      this.closeButtonDialog.waitForVisible();
+      this.closeButtonDialog.click();
+      browser.pause(1000);     
+      }
+    },
+
+  /*
+   * User verifies batch input 
+   */
+    verifyBatchInput:{
+    value: function(expected,count) {
+      for(i=2,j=0;i<=count;j++)
+      { 
+        expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
+        i=i+2;
+      }
+      }
+    },
+
+  /*
+   * User resets batch input 
+   */
+    resetBatchInput:{
+    value: function(expected,count) {
+      this.listFunctionOpen.waitForVisible();
+      this.listFunctionOpen.click();
+      this.enterCustomerOderInList.moveToObject();
+      this.undoBatchInput.click();    
+      }
+    },
+
+    /*
+   * User gives customer ordering number by input wizard 
+   */
+    customerOrdeingNumberInputWizard:{
+    value: function(func1,func2) {
+      this.listFunctionOpen.waitForEnabled();
+      this.listFunctionOpen.click();
+      this.enterCustomerOderInList.moveToObject();
+      this.inputWizardList.waitForVisible();
+      this.inputWizardList.click();  
+      this.inputWizardInput1.waitForVisible();
+      this.inputWizardInput1.setValue(func1);
+      this.inputWizardInput2.setValue(func2);
+      this.collectiveInputButton.click();
+      this.closeButton.waitForVisible();
+      this.closeButton.click();
+      this.closeButton.waitForVisible();
+      this.closeButton.click();
+      }
+    },
+  /*
+   * User verifies Wizard input 
+   */
+    verifyInputWizard:{
+    value: function(expected,projectName,count) {
+   
+      for(k=1,i=2,j=0;i<=count;j++)
+      { 
+        expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
+        expect(this.customerOrderingNumberField(k).getValue()).to.include(projectName);
+        i=i+2;
+        k=k+2;
+      }
+      }
+    },
+
+  /*
+   * User selects one of the parts, core pin and changes the material
+   */
+    selectCorePin:{
+    value: function(expected,count) {
+      this.corePinMultiplePin.waitForVisible();
+      this.corePinMultiplePin.click();
+      this.changeMaterial.waitForEnabled();
+      this.changeMaterial.selectByValue("NAK80");
+      }
+    },
+
+  /*
+   * User updates the the quotation
+   */
+    updateQuotation:{
+    value: function(change) {
+      this.makeAnEstimate.waitForEnabled();
+      this.makeAnEstimate.click();
+      expect(this.changeMaterial.getValue()).to.equal(change);
+      }
+    },
+
+  /*
+   * User selects filter and choose CorePin
+   */
+    selectFilterTakeCorePin:{
+    value: function() {
+      this.filterOption.click();
+      this.itemNameFilter.moveToObject();
+      this.corePinFilter.waitForVisible();
+      this.corePinFilter.click();
+      }
+    },
+
+  /*
+   * User verifies if the filter of core pin has been proper
+   */
+    verifyFilterCorePin:{
+    value: function(proj,multiplePinCount,corePinCount) {
+      var count=0;
+      for(i=1;i<=multiplePinCount;i++)
+      {
+         if(proj==this.corePinList(i).getText())
+          {
+           count=count+1;
+          } 
+      }
+      expect(count).to.equal(corePinCount);
+      
+      }
+    },
 };
   
 module.exports = Object.create(Page, projectPage);

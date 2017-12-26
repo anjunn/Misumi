@@ -1,6 +1,5 @@
 let orderPage = require('../functions/order.js');
 let expectedData = require('../data/expected-results/common.json');
-
 module.exports = function () {
 
   this.Given(/^User goes to order page$/, () => {
@@ -22,4 +21,5 @@ module.exports = function () {
   this.When(/^User goes to Order History Page$/, () => {
   	orderPage.goToOrderHistory();
   });
+ 
 };
