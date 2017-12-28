@@ -108,7 +108,6 @@ let soProjectListPage = {
       browser.params.qtProjectListId = browser.getCurrentTabId();
       this.product.waitForEnabled();
       this.product.moveToObject();
-       console.log("test3");
       this.product.click();
       browser.pause(4000);
       let windowHandles = browser.windowHandles();

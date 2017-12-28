@@ -18,4 +18,13 @@ module.exports = function () {
   this.Then(/^User goes back to project page$/, () => {
     emailPage.goToProductPage();
   });
+
+  this.Then(/^User opens the email to check$/, () => {
+    emailPage.selectMail();
+  });
+
+
+  this.Then(/^User checks the contents of the mail$/, () => {
+    emailPage.checkMailContent();
+  });
 };

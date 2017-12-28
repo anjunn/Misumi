@@ -1,5 +1,6 @@
 let Page = require('./page');
 let inputData = require('../data/input-data/dataset.json');
+let expectDataSinglePin = require('../data/expected-results/single-pin.json');
 let projectPageUrlFromMail;
 
 /**
@@ -25,6 +26,10 @@ let emailPage = {
   maildeleteIcon: { get: function () { return browser.element('//button[@title="削除 (Del)"]');} },
   mailLink: { get: function () { return browser.element('//*[@id="Item.MessageNormalizedBody"]/div/div/div/font/span/div/a');} },
   mailPreview: { get: function () { return browser.element('//*[@id="Item.MessageNormalizedBody"]/div/div/div/font/span/div');} },
+  mailBody: { get: function () { return browser.element('//div[@class="PlainText"]');} },
+
+
+
 
   /*
    * Goes to email account home
@@ -89,7 +94,39 @@ let emailPage = {
       }
     }
   },
+    /**
+   * Verify mail body content 
+   */
+  checkMailContent: {
+    value: function() {
+      let fileName = browser.params.fileName;
+      let initialPrice = browser.params.initialPrice;
+      projectPageUrl = browser.params.projectPageUrl;
 
+      if (this.fileNameInMail(fileName).isVisible()) {
+        this.fileNameInMail(fileName).click();
+        this.mailCheckbox(fileName).click();
+        this.mailPreview.waitForVisible();
+        browser.pause(2000);
+        let content=this.mailBody.getText().replace(/\s/g, '');
+        let projectName = (expectDataSinglePin.mailContents.part1+browser.params.fileName);
+        let fileNameMail =(expectDataSinglePin.mailContents.part2+browser.params.fileName);
+        console.log(projectName);
+        console.log(fileNameMail);
+        expect(content).to.include(projectName);
+        expect(content).to.include(fileNameMail);
+        expect(content).to.include(browser.params.modelNumber);
+        if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
+        expect(this.mailPreview.getText()).to.include(browser.params.fileName);
+        expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
+        expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
+        projectPageUrlFromMail = this.mailLink.getText();
+        this.maildeleteIcon.click(); // After validation, delete the mail for avoiding future error.
+        browser.url(projectPageUrlFromMail);
+      }
+    }
+  },
+  
   /**
    * User goes back to product page
    */

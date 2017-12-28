@@ -38,12 +38,17 @@ exports.config = {
     scenario5: [
       './feature/MZ_005-screenOperations.feature'
     ],
+    scenario6: [
+      './feature/MZ_006-contentChecking.feature',
+
+    ],
     all: [
       './feature/MZ_001-singlePinUpload.feature',
       './feature/MZ_002-multiplePinUpload.feature',
       './feature/MZ_003-pinAndPlateUpload.feature',
       './feature/MZ_004-plateUpload.feature',
       './feature/MZ_005-screenOperations.feature',
+      './feature/MZ_006-contentChecking.feature',
     ]
   },
 
@@ -195,12 +200,13 @@ exports.config = {
   params: {
     projectPageUrl: null,
     fileName: null,
+    modelNumber: null,
     initialPrice: null,
     totalPrice: null,
     qtProjectListId: null,
     pinAndPlatePrice: {
       part1: null,
-      part2: null
+      part2: null,
     }
   }
 };
