@@ -19,7 +19,7 @@ let loginPage = {
   errorMessage: { get: function () { return browser.element('//div[@id="error1"]/small');}},
   memberMenuButton:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logoutButton:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
-  homepageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//*[@class="inner"]//h1');}},
+  homePageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//*[@class="inner"]//h1');}},
 
   /*
    * Goes to Home Page
@@ -33,10 +33,10 @@ let loginPage = {
   /*
    * Validates the webpage header
    */
-
   validateWebpageHeader: {
     value: function(){
-      let header = this.homepageHeader.getText();
+      this.homePageHeader.waitForVisible();
+      let header = this.homePageHeader.getText();
       expect(expectedData.homePageTitle).to.equal(header);
     }
   },
@@ -51,24 +51,6 @@ let loginPage = {
   },
 
   /*
-   * Validates the username field in login page
-   */
-  validateUserNameField: {
-    value: function(){
-      expect(this.userNameField.isVisible()).to.equal(true);
-    }
-  },
-
-  /*
-   * Validates the password field in login page
-   */
-  validatePasswordField: {
-    value: function(){
-      expect(this.passwordField.isVisible()).to.equal(true);
-    }
-  },
-
-  /*
    * Goes to login page
    */
   goToLoginPage: {
@@ -79,10 +61,33 @@ let loginPage = {
   },
 
   /*
+   * Validates the username field in login page
+   */
+  validateUserNameField: {
+    value: function() {
+      browser.pause(2000);
+      if (!browser.isLoginPage()) return;
+      expect(this.userNameField.isVisible()).to.equal(true);
+    }
+  },
+
+  /*
+   * Validates the password field in login page
+   */
+  validatePasswordField: {
+    value: function() {
+      if (!browser.isLoginPage()) return;
+      expect(this.passwordField.isVisible()).to.equal(true);
+    }
+  },
+
+
+  /*
    * Validates the login page url
    */
   validateLoginPageUrl: {
     value: function () {
+      if (!browser.isLoginPage()) return;
       this.loginButton.waitForVisible();
       expect(browser.getUrl()).to.equal(data.url.login);
     }
@@ -93,6 +98,7 @@ let loginPage = {
    */
   login: {
     value: function() {
+      if (!browser.isLoginPage()) return;
       this.userNameField.waitForEnabled();
       this.userNameField.setValue(data.loginCredentials.presentation.username);
       this.passwordField.setValue(data.loginCredentials.presentation.password);

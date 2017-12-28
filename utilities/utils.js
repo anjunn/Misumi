@@ -1,8 +1,11 @@
 /*
-Utility functions
+* Utility functions
 */
 
 const commonUtilities = {
+  /*
+  * Wait till given element disappears
+  */
   waitForLoading: function waitForLoading(element, index = 1, waitForExtraLoad = false) {
     waitTime = browser.options.waitforTimeout;
     try {
@@ -22,11 +25,19 @@ const commonUtilities = {
       console.log(`Wait for Loading failed with error: ${err}`);
       throw err
     }
+  },
+
+  /*
+  * Check if browser is at login page
+  */
+  isLoginPage: function(){
+    var currentUrl = browser.getUrl();
+    return currentUrl === "https://prs-origin-tst.meviy.misumi-ec.com/login";
   }
 };
 
 /**
- * Converts the obove object to Custom Command
+ * Converts the above object to Custom Command
  */
 module.exports = {
   init: function () {

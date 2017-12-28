@@ -39,7 +39,8 @@ let  orderPage = {
     value: function(heading) {
       this.customerNumberInput.waitForVisible();
       expect(this.orderPageHeading.getText()).to.be.equal(heading);
-      browser.moveToObject('//*[@class="title"]//span', 0, -80);
+      const productNamePos = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
+      browser.scroll(productNamePos.value.x, productNamePos.value.y);
       expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },

@@ -19,17 +19,8 @@ let soProjectListPage = {
   personInChargeDropdown: { get: function () { return browser.element('((//button[contains(text(), "担当者")])[1])');}},
   personInChargeList: { get: function () { return browser.element('(//ul[@class="dropdown-menu"]//a[contains(text(), "CCT村澤")])');}},
   checkSelectedPerson: { get: function () { return browser.element('(//td[contains(@class,"ellipsis")])[6]');}},
-
-
-
   productName: { value: function (n) {return browser.element(`(//td[contains(@class,"linkColor")][3])[${n}]`);}},
   product: { get: function () { return browser.element('//table[@id="detailTable"]/tbody//td[@class="ellipsis linkColor"][3]/a');}},
- 
-  
-  
- 
- 
-  
   status: { get: function () { return browser.element('//td[@class="text-center"][2]');}},
 
   /**
@@ -51,7 +42,7 @@ let soProjectListPage = {
    * Admin navigates to SO section in management site
    */
    navigateToSo: {
-    value: function() {    
+    value: function() {
      browser.waitForLoading('//div[@id="loader"]');
      this.soButton.waitForVisible();
      this.soButton.click();
@@ -59,12 +50,11 @@ let soProjectListPage = {
      this.soProjectlist.click();
      let handles = browser.windowHandles();
      browser.switchTab(handles.value[2]);
-
     }
   },
 
 
-    /**
+  /**
    * Admin selects a person in charge for the uploaded file
    */
   selectPersonInCharge: {
@@ -108,7 +98,6 @@ let soProjectListPage = {
       browser.params.qtProjectListId = browser.getCurrentTabId();
       this.product.waitForEnabled();
       this.product.moveToObject();
-       console.log("test3");
       this.product.click();
       browser.pause(4000);
       let windowHandles = browser.windowHandles();

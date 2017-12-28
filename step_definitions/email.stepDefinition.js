@@ -10,8 +10,11 @@ module.exports = function () {
     emailPage.loginToEmail();
   });
 
-  this.Then(/^User verifies the project details in the mail$/, () => {
+  this.Then(/^User navigates to inbox$/, () => {
     emailPage.selectMail();
+  });
+
+  this.Then(/^User verifies the project details in the mail$/, { retry: 2 }, () => {
     emailPage.validateMail();
   });
 
