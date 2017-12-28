@@ -212,6 +212,18 @@ exports.config = {
       }
       fs.mkdirSync(__dirname + '/reports/screenshots');
     }
+    const downloadPath = __dirname + '/data/downloads';
+    if( fs.existsSync(downloadPath) ) {
+      fs.readdirSync(downloadPath).forEach(function(file,index){
+        if (file === '.gitignore') return;
+        var curPath = downloadPath + "/" + file;
+        if(fs.lstatSync(curPath).isDirectory()) { // recurse
+          deleteFolderRecursive(curPath);
+        } else { // delete file
+          fs.unlinkSync(curPath);
+        }
+      });
+    }
   },
 
   afterStep: function (step) {

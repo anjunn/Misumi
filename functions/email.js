@@ -89,6 +89,7 @@ let emailPage = {
 
   /*
    * Verify price, name and link in mail
+   * After validation, delete the mail for avoiding future error
    */
   validateEstimationMail: {
     value: function() {
@@ -99,13 +100,14 @@ let emailPage = {
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
       projectPageUrlFromMail = this.mailLink.getText();
-      this.maildeleteIcon.click(); // After validation, delete the mail for avoiding future error.
+      this.maildeleteIcon.click();
     }
   },
 
 
   /*
    * Verify price, name, link nd material in mail
+   * After validation, delete the mail for avoiding future error
    */
   validateQuotationMail: {
     value: function() {

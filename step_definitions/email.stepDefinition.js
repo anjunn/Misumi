@@ -10,10 +10,6 @@ module.exports = function () {
     emailPage.loginToEmail();
   });
 
-  this.Then(/^User navigates to inbox$/, () => {
-    emailPage.selectMail();
-  });
-
   this.Then(/^User verifies the project details in the (estimate|quotation|order) mail$/, (mailType) => {
     emailPage.selectMail(mailType);
     if ( mailType === 'estimate' ) {
