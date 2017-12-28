@@ -178,6 +178,20 @@ let qtProjectPage = {
       this.editButton.click();
     }
   },
+
+  sendMailToCustomer: {
+    value: function() {
+      browser.pause(2000);
+      this.sendMail.waitForVisible();
+      this.sendMail.click();
+      this.selectToAdress.waitForVisible();
+      browser.selectByValue('//select[@id="mailTypeList"]', "2");
+      this.textArea.click();
+      browser.pause(1000);
+      browser.keys('\uE004');
+      browser.keys('\uE007');
+    }
+  },
 };
 
 module.exports = Object.create(Page, qtProjectPage);
