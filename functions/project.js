@@ -2,6 +2,8 @@ let Page = require('./page');
 let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
+let parse = require('csv-parse');
+let pdfreader = require('pdfreader');
 let expectedData = require('../data/expected-results/common.json');
 /**
  * project Page Object
@@ -225,6 +227,39 @@ let  projectPage = {
   },
 
   /*
+   * Validate contents of pdf
+   */
+  validatePdf: {
+    value: function() {
+      browser.pause(3000);
+      var files = fs.readdirSync('data/downloads');
+      var path = require('path');
+      for (var i in files) {
+        if (path.extname(files[i]) === ".pdf") {
+          console.log(files[i]);
+          new pdfreader.PdfReader().parseFileItems(`data/downloads/${files[i]}`, function(err, item){
+            console.log(item.text);
+          });
+        }
+      }
+    }
+  },
+
+  /*
+   * Validate contents of csv
+   */
+  validateCsv: {
+    value: function() {
+      var inputFile =`data/downloads/${browser.params.fileName}.csv`;
+      var parser = parse({delimiter: ','}, function (err, data) {
+        var part3 = data[2];
+        expect(browser.params.fileName).to.be.equal(part3[1]);
+      });
+      fs.createReadStream(inputFile).pipe(parser);
+    }
+  },
+
+  /*
    * User selects core pin from the available parts, in select by product type
    */
   selectByProductType:{
@@ -249,7 +284,7 @@ let  projectPage = {
           this.checkPartSelect(i).isSelected();
           countCorePin= countCorePin +1;
         }
-        if (i==count) { this.customerOrderingNumberField(14).moveToObject(); }
+        if (i == count) { this.customerOrderingNumberField(14).moveToObject(); }
         if (this.checkPartSelect(i).isSelected()) { countCheckedCheckBox=countCheckedCheckBox+1; }
       }
       expect(countCorePin).to.be.equal(expectedCorePinCount);
@@ -302,7 +337,7 @@ let  projectPage = {
    */
   verifyBatchInput:{
     value: function(expected,count) {
-      for (i=2, j=0; i<=count; j++, i+=2) {
+      for (i=2,j=0; i<=count; j++,i+=2) {
         expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
       }
     }
@@ -346,7 +381,7 @@ let  projectPage = {
    */
   verifyInputWizard:{
     value: function(expected,projectName,count) {
-      for (k=1,i=2,j=0; i<=count; j++, i+=2, k+=2;) {
+      for (k=1,i=2,j=0; i<=count; j++,i+=2,k+=2) {
         expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
         expect(this.customerOrderingNumberField(k).getValue()).to.include(projectName);
       }
