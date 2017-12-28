@@ -105,10 +105,10 @@ let  uploadPage = {
     }
   },
 
-   /**
-   * Upload a file by selecting from dialog 
+  /**
+   * Upload a file by selecting from dialog
    */
-   uploadFromDialog: {
+  uploadFromDialog: {
     value: function(filePath) {
       var date = (new Date()).getTime();
       var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
@@ -126,6 +126,7 @@ let  uploadPage = {
    */
   verifyUpload: {
     value: function() {
+      browser.scroll();
       browser.waitForLoading('//span[@class="percent"]');
       browser.waitForLoading('//p[@class="situation loading"]/img');
       this.fileUploadProductName.waitForVisible();
@@ -155,7 +156,7 @@ let  uploadPage = {
     }
   },
 
-  /* 
+  /*
    * Complete quotation condition for plate only
    */
   quotationConditionFillPlate: {

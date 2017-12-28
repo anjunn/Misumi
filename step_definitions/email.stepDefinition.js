@@ -10,9 +10,15 @@ module.exports = function () {
     emailPage.loginToEmail();
   });
 
-  this.Then(/^User verifies the project details in the mail$/, () => {
-    emailPage.selectMail();
-    emailPage.validateMail();
+  this.Then(/^User verifies the project details in the (estimate|quotation|order) mail$/, (mailType) => {
+    emailPage.selectMail(mailType);
+    if ( mailType === 'estimate' ) {
+      emailPage.validateEstimationMail();
+    } else if ( mailType === 'quotation' ) {
+      emailPage.validateQuotationMail();
+    } else if ( mailType === 'order' ) {
+      emailPage.validateOrderMail();
+    }
   });
 
   this.Then(/^User goes back to project page$/, () => {

@@ -176,6 +176,32 @@ let qtProjectPage = {
       this.reflect.click();
       this.editButton.moveToObject();
       this.editButton.click();
+      browser.pause(1000);
+      try {
+        if (browser.alertText()) {
+          browser.alertAccept();
+          browser.pause(1000);
+          browser.refresh();
+        }
+      } catch(e) {
+        console.log(e.message);
+      }
+    }
+  },
+
+  sendMailToCustomer: {
+    value: function() {
+      browser.pause(2000);
+      this.sendMail.waitForVisible();
+      this.sendMail.moveToObject();
+      browser.pause(1000);
+      this.sendMail.click();
+      this.selectToAdress.waitForVisible();
+      browser.selectByValue('//select[@id="mailTypeList"]', "2");
+      this.textArea.click();
+      browser.pause(1000);
+      browser.keys('\uE004');
+      browser.keys('\uE007');
     }
   },
 };

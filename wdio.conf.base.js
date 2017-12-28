@@ -15,12 +15,6 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
 
-  // suites: {
-  //   example: [
-  //     './feature/scenario1_pin.feature',
-
-  //   ]
-  // },
   suites: {
     scenario1: [
       './feature/MZ_001-singlePinUpload.feature'
@@ -172,6 +166,49 @@ exports.config = {
     timeout: 500000
   },
 
+  // params for storing global variables
+  params: {
+    projectPageUrl: null,
+    fileName: null,
+    initialPrice: null,
+    totalPrice: null,
+    qtProjectListId: null,
+    pinAndPlatePrice: {
+      part1: null,
+      part2: null
+    }
+  },
+
+  // Gets executed before test execution begins. At this point you can access all global
+  // variables, such as `browser`. It is the perfect place to define custom commands.
+  before: function (capabilities, specs) {
+    /**
+     * Initilaize global variables
+     */
+    browser.params = this.params;
+    /**
+     * Setup the Chai assertion framework
+     */
+    let chai = require('chai');
+    global.expect = chai.expect;
+    global.assert = chai.assert;
+    /**
+     * Initialize utility functions
+     */
+    let utils = require('./utilities/utils');
+    utils.init();
+     /**
+     * Configure viewport size
+     */
+    let size = {
+      width: 1280,
+      height: 600
+    };
+    browser.setViewportSize(size);
+
+    console.log('Starting Test Case: -', specs[0].replace(/^.*[\\\/]/, ''));
+  },
+
   onPrepare: function () {
     let fs = require('fs');
     if (!fs.existsSync(__dirname + '/reports/screenshots')) {
@@ -179,6 +216,18 @@ exports.config = {
         fs.mkdirSync(__dirname + '/reports');
       }
       fs.mkdirSync(__dirname + '/reports/screenshots');
+    }
+    const downloadPath = __dirname + '/data/downloads';
+    if( fs.existsSync(downloadPath) ) {
+      fs.readdirSync(downloadPath).forEach(function(file,index){
+        if (file === '.gitignore') return;
+        var curPath = downloadPath + "/" + file;
+        if(fs.lstatSync(curPath).isDirectory()) { // recurse
+          deleteFolderRecursive(curPath);
+        } else { // delete file
+          fs.unlinkSync(curPath);
+        }
+      });
     }
   },
 
@@ -209,4 +258,5 @@ exports.config = {
       part2: null,
     }
   }
+
 };

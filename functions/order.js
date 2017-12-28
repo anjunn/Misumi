@@ -22,7 +22,8 @@ let  orderPage = {
   thankYouHeading: { get: function () { return browser.element('//*[@id="main"]/div/h1');}},
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
-  
+  priceText: { get: function () { return browser.element('(//table[@class="table06"]/tbody//td)[6]');}},
+
   /*
    * User goes to the order page
    */
@@ -32,6 +33,7 @@ let  orderPage = {
       this.proceedToEstimateButton.click();
     }
   },
+
   /*
    * Verifies if heading and product name match
    */
@@ -39,10 +41,12 @@ let  orderPage = {
     value: function(heading) {
       this.customerNumberInput.waitForVisible();
       expect(this.orderPageHeading.getText()).to.be.equal(heading);
-      browser.moveToObject('//*[@class="title"]//span', 0, -80);
+      const productNamePos = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
+      browser.scroll(productNamePos.value.x, productNamePos.value.y);
       expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
+
   /*
    * User places the order
    */
@@ -62,8 +66,9 @@ let  orderPage = {
       this.placeOrderButton.click();
     }
   },
+
   /*
-   * User verifies if taken Thankyou page 
+   * User verifies if taken Thankyou page
    */
   checkTitleThankYou: {
     value: function(heading) {
@@ -72,16 +77,19 @@ let  orderPage = {
       expect(title).to.equal(heading);
     }
   },
+
   /*
    * User goes to history page
    */
   goToOrderHistory: {
     value: function() {
-      this.goToHistory.waitForEnabled();
+      this.goToHistory.waitForVisible();
       this.goToHistory.click();
+      this.priceText.waitForVisible();
+      browser.params.totalPrice = this.priceText.getText();
     }
   },
- 
+
 };
 
 module.exports = Object.create(Page, orderPage);
