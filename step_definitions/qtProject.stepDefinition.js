@@ -30,6 +30,10 @@ module.exports = function () {
     qtProjectPage.editQuotation(pinAndPlateInputData.quotationResult, pinType);
   });
 
+  this.Then(/^Admin sends mail to customer$/, () => {
+    qtProjectPage.sendMailToCustomer();
+  });
+
 };
 
 
