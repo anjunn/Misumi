@@ -218,8 +218,6 @@ let qtProjectPage = {
   verifySendMailForOrdering: {
     value: function(type) {
       var n = type == 'plate' ? 1 : 5;
-      console.log(n);
-      console.log("test1");
       browser.waitForLoading('//div[@id="loader"]');
       this.sendMail(n).moveToObject();
       browser.pause(1000);
@@ -228,20 +226,12 @@ let qtProjectPage = {
       browser.selectByVisibleText('//select[@id="mailTypeList"]', "発注");
       this.textArea.click();
       browser.pause(4000);
-      console.log("test"+this.textArea.getValue());
       let mailBody = this.textArea.getValue().replace(/\s/g, '');
-      console.log("++++++++"+mailBody);
-      console.log(this.customerNumber.getText());
-      console.log(this.customerName.getText());
-      console.log(this.itemName.getText());
-      console.log(this.material.getText());
-      console.log(this.quantity.getText());
       expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.itemName.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.material.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.quantity.getText().replace(/\s/g, ''));
-      browser.pause(7000);
       browser.keys('\uE004');
       browser.keys('\uE004');
       browser.keys('\uE004');
