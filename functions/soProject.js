@@ -20,7 +20,9 @@ let soProjectPage = {
   textArea:{ get: function () { return browser.element('//textarea[@id="email_comment"]');}},
   sendEmailDialog:{ get: function () { return browser.element('(//div[@class="text-center"]//h3)[3]');}},
   okButton: { get: function () { return browser.element('//i[@id="mailResultOk"]');}},
-
+  customerNumber:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail4"]');}},
+  customerName:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail5"]');}},
+  
 
 
    /**
@@ -82,6 +84,44 @@ let soProjectPage = {
       this.okButton.click();
     }
   },
+ 
+ sendMailToSupplier: {
+    value: function() {
+      this.orderingButton.click();
+      this.orderingListOption.click();
+      browser.pause(1000);
+      try {
+        if (browser.alertText()) {
+          browser.alertAccept();
+        }
+      } catch(e) {
+        console.log(e.message);
+      }
+      browser.pause(1000);
+      try {
+        if (browser.alertText()) {
+          browser.alertAccept();
+        }
+      } catch(e) {
+        console.log(e.message);
+      }
+      browser.pause(2000);
+      this.emailSubjectField.waitForVisible();
+      var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
+      this.emailSubjectField.setValue(subject);
+      this.textArea.click();
+      console.log("test"+this.textArea.getValue());
+      let mailBody = this.textArea.getValue().replace(/\s/g, '');
+      console.log("++++++++"+mailBody);
+      console.log(this.customerNumber.getText());
+      console.log(this.customerName.getText());
+      expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
+      browser.keys('\uE004');
+      browser.keys('\uE007');
+    }
+  },
+
 
   };
   module.exports = Object.create(Page, soProjectPage);

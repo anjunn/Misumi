@@ -101,6 +101,8 @@ let emailPage = {
       let initialPrice = browser.params.initialPrice;
       projectPageUrl = browser.params.projectPageUrl;
       if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
+      let content=this.mailBody.getText().replace(/\s/g, '');
+      expect(content).to.include(browser.params.modelNumber);
       expect(this.mailPreview.getText()).to.include(browser.params.fileName);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
@@ -118,9 +120,9 @@ let emailPage = {
     value: function() {
       projectPageUrl = browser.params.projectPageUrl;
       expect(this.mailPreview.getText()).to.include(browser.params.fileName);
-      expect(this.mailPreview.getText()).to.include(mailExpectedData.material);
-      expect(this.mailPreview.getText()).to.include(mailExpectedData.price);
-      expect(this.mailPreview.getText()).to.include(mailExpectedData.delivery);
+      expect(this.mailPreview.getText()).to.include(mailExpectedData.quotationMail.material);
+      expect(this.mailPreview.getText()).to.include(mailExpectedData.quotationMail.price);
+      expect(this.mailPreview.getText()).to.include(mailExpectedData.quotationMail.delivery);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
       projectPageUrlFromMail = this.mailLink.getText();
@@ -147,29 +149,22 @@ let emailPage = {
       let fileName = browser.params.fileName;
       let initialPrice = browser.params.initialPrice;
       projectPageUrl = browser.params.projectPageUrl;
-
-
-      if (this.fileNameInMail(fileName).isVisible()) {
-        this.fileNameInMail(fileName).click();
-        this.mailCheckbox(fileName).click();
-        this.mailPreview.waitForVisible();
-        browser.pause(2000);
-        let content=this.mailBody.getText().replace(/\s/g, '');
-        let projectName = (expectDataSinglePin.mailContents.part1+browser.params.fileName);
-        let fileNameMail =(expectDataSinglePin.mailContents.part2+browser.params.fileName);
-        console.log(projectName);
-        console.log(fileNameMail);
-        expect(content).to.include(projectName);
-        expect(content).to.include(fileNameMail);
-        expect(content).to.include(browser.params.modelNumber);
-        if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
-        expect(this.mailPreview.getText()).to.include(browser.params.fileName);
-        expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
-        expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
-        projectPageUrlFromMail = this.mailLink.getText();
-        this.maildeleteIcon.click(); // After validation, delete the mail for avoiding future error.
-        browser.url(projectPageUrlFromMail);
-      }
+      browser.pause(2000);
+      let content=this.mailBody.getText().replace(/\s/g, '');
+      let projectName = (expectDataSinglePin.mailContents.part1+browser.params.fileName);
+      let fileNameMail =(expectDataSinglePin.mailContents.part2+browser.params.fileName);
+      console.log(projectName);
+      console.log(fileNameMail);
+      expect(content).to.include(projectName);
+      expect(content).to.include(fileNameMail);
+      expect(content).to.include(browser.params.modelNumber);
+      if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
+      expect(this.mailPreview.getText()).to.include(browser.params.fileName);
+      expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
+      expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
+      projectPageUrlFromMail = this.mailLink.getText();
+      this.maildeleteIcon.click(); // After validation, delete the mail for avoiding future error.
+      browser.url(projectPageUrlFromMail);
     }
   },
   

@@ -13,7 +13,7 @@ let qtProjectPage = {
   productName: { value: function (n) {return browser.element(`(//td[contains(@class,"linkColor")][3])[${n}]`); }},
   partNames: { value: function (n) {return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[14]`); }},
   partPrice: { value: function (n) {return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[3]`); }},
-  sendMail: { get: function () { return browser.element('(//button[@class="btn btn-default mailButton"])[5]');}},
+  sendMail: { value: function (n) { return browser.element(`(//button[@class="btn btn-default mailButton"])[${n}]`);}},
   sendMailPlate: { get: function () { return browser.element('//button[@class="btn btn-default mailButton"]');}},
   sendButton:{ get: function () { return browser.element('//a[@class="btn btn-success col-sm-3"]');}},
   textArea:{ get: function () { return browser.element('//textarea[@id="email_comment"]');}},
@@ -40,6 +40,13 @@ let qtProjectPage = {
   statusChange:{ get: function () { return browser.element('(//option[@value="4"])[1]');}},
   clearButton:{ get: function () { return browser.element('(//button[@class="btn btn-default multiselect-clear-filter"])[1]');}},
   itemNamePlate:{ get: function () { return browser.element('//table[@id="detailTable"]/tbody/tr[1]/td[14]');}},
+  customerNumber:{ get: function () { return browser.element('//div[@class="form-control no-border"][@id="detail3"]');}},
+  customerName:{ get: function () { return browser.element('//div[@class="form-control no-border"][@id="detail4"]');}},
+  itemName:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[14]');}},
+  material:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[15]');}},
+  quantity:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[17]');}},
+  
+
 
   /**
    * Admin validate price and name of each parts
@@ -190,16 +197,53 @@ let qtProjectPage = {
   },
 
   sendMailToCustomer: {
-    value: function() {
-      browser.pause(2000);
-      this.sendMail.waitForVisible();
-      this.sendMail.moveToObject();
+    value: function(type) {
+      var n = type == 'plate' ? 1 : 5;
+      console.log(n);
+      browser.waitForLoading('//div[@id="loader"]');
+      this.sendMail(n).moveToObject();
       browser.pause(1000);
-      this.sendMail.click();
+      this.sendMail(n).click();
       this.selectToAdress.waitForVisible();
-      browser.selectByValue('//select[@id="mailTypeList"]', "2");
+      browser.selectByVisibleText('//select[@id="mailTypeList"]', "見積完了");
       this.textArea.click();
       browser.pause(1000);
+      browser.keys('\uE004');
+      browser.keys('\uE007');
+    }
+  },
+
+
+
+  verifySendMailForOrdering: {
+    value: function(type) {
+      var n = type == 'plate' ? 1 : 5;
+      console.log(n);
+      console.log("test1");
+      browser.waitForLoading('//div[@id="loader"]');
+      this.sendMail(n).moveToObject();
+      browser.pause(1000);
+      this.sendMail(n).click();
+      this.selectToAdress.waitForVisible();
+      browser.selectByVisibleText('//select[@id="mailTypeList"]', "発注");
+      this.textArea.click();
+      browser.pause(4000);
+      console.log("test"+this.textArea.getValue());
+      let mailBody = this.textArea.getValue().replace(/\s/g, '');
+      console.log("++++++++"+mailBody);
+      console.log(this.customerNumber.getText());
+      console.log(this.customerName.getText());
+      console.log(this.itemName.getText());
+      console.log(this.material.getText());
+      console.log(this.quantity.getText());
+      expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.itemName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.material.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.quantity.getText().replace(/\s/g, ''));
+      browser.pause(7000);
+      browser.keys('\uE004');
+      browser.keys('\uE004');
       browser.keys('\uE004');
       browser.keys('\uE007');
     }

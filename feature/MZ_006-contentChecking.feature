@@ -26,8 +26,9 @@ Given User opens the uploaded project
 And Opens the parts view
 And User decides to check the email
 When User logs in to mail account
-Then User opens the email to check
-And User checks the contents of the mail
+Then User selects the product estimate mail
+And User verifies the product details in estimate mail
+
 
 
 
@@ -66,15 +67,22 @@ And Opens the file uploaded by the user to proceed to manual quotation
 Scenario: Operator does manual quotation
 
 Given Admin verifies product price and part names for plate
+When Admin sends mail for ordering plate
 When Admin sends mail to Tpro to get 2D data for plate
 Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers for plate
+And Admin sends mail to customer for plate
+And Admin verifies if the send email pop up is shown and clicks ok
 
 
+Scenario: Email validation after quotation
 
-
+Given User decides to check the email
+When User logs in to mail account
+Then User selects the product quotation mail
+And User verifies the product details in quotation mail
 
 
 
@@ -106,6 +114,6 @@ Scenario: Email validation after order placing
 
 Given User decides to check the email
 # When User logs in to mail account
-Then User opens the email to check
-And User checks the contents of the mail
+Then User selects the product order mail
+And User verifies the product details in order mail
 
