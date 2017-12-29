@@ -31,12 +31,14 @@ exports.config = {
     scenario3: [
       './feature/MZ_003-pinAndPlateUpload.feature'
     ],
-
     scenario4: [
       './feature/MZ_004-plateUpload.feature'
     ],
     scenario5: [
       './feature/MZ_005-screenOperations.feature'
+    ],
+    scenario7: [
+      './feature/MZ_007-autoQtDrawingAttached.feature'
     ],
     all: [
       './feature/MZ_001-singlePinUpload.feature',
@@ -198,6 +200,21 @@ exports.config = {
     initialPrice: null,
     totalPrice: null,
     qtProjectListId: null,
+    singlePinPrice: {
+      part1: null,
+    },
+    multiplePinPrice: {
+      part1: null,
+      part2: null,
+      part3: null,
+      part4: null,
+      part5: null,
+      part6: null,
+      part7: null,
+    },
+    platePrice: {
+      part1: null,
+    },
     pinAndPlatePrice: {
       part1: null,
       part2: null

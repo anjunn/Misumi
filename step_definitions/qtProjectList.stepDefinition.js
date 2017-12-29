@@ -21,4 +21,8 @@ module.exports = function () {
   this.When(/^Opens the file uploaded by the user to proceed to manual quotation$/, () => {
     qtProjectListPage.openProject();
   });
+
+  this.When(/^Opens the file uploaded by the user$/, () => {
+    qtProjectListPage.openProject();
+  });
 };

@@ -127,16 +127,25 @@ let  projectPage = {
   },
 
   /*
-   * Verify part names for single pin
+   * Verify part names and setting the price to params
    */
-  validatePartNames: {
-    value: function(names, count) {
+  validatePartNamesAndPrice: {
+    value: function(names, count, pinType) {
       for (var i = 1; i <= count; i++) {
         browser.moveToObject(`(//span[@class="class"])[${i}]`);
         browser.pause(1000);
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);
-        if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        if (pinType === 'single pin') {
+          browser.params.singlePinPrice['part1'] = this.partsPriceText(i).getText();
+        } else if (pinType === 'multiple pin') {
+          this.partsPriceText(i).moveToObject();
+          browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
+        } else if (pinType === 'pin and plate') {
+          if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        } else {
+          browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+        }
       }
     }
   },

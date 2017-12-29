@@ -65,5 +65,28 @@
     5,
     12,
     4
+  ],
+  "productPartNumber": [
+    {
+      "part": "ERL2-110.00-P1.5-W0.8-N50"
+    },
+    {
+      "part": "MVCRP-CPX-L1.5-30.00-TJP17CWE8P02AA"
+    },
+    {
+      "part": "MVEPP-EPHE-L1.5-111.00-TJP17CWE8P03AA"
+    },
+    {
+      "part": "MVCRP-CPX-L2.5-30.00-TJP17CWE8P04AA"
+    },
+    {
+      "part": "EHSEL3-110.00-P1-N50"
+    },
+    {
+      "part": "EPHE-L3-110.00"
+    },
+    {
+      "part": "EPHE-L3-109.60-KC1.50"
+    }
   ]
 }
