@@ -44,7 +44,7 @@ let qtProjectPage = {
   partNameFirstRow:{ get: function () { return browser.element('//table[@id="detailTable"]/tbody/tr[1]/td[14]');}},
   partPriceFirstRow:{ get: function (){ return browser.element('//table[@id="detailTable"]/tbody/tr[2]/td[3]');}},
   operationStatusColumn:{ get: function (){return browser.element('//table[@id="detailTable"]/tbody/tr[1]/td[6]');}},
-  productPartNumber: { value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[13]`);}},
+  productPartNumber: { value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[1]/a`);}},
 
   /*
    * Admin validate price and name of each parts
@@ -63,7 +63,7 @@ let qtProjectPage = {
         var position = 1;
         for (var i = 1; i <= 7; i++) {
           if (i != 1) position = position + 2;
-          browser.moveToObject(`//table[@id="detailTable"]/tbody/tr[${position}]/td[14]`);
+          this.partNames(position).moveToObject();
           var partName = this.partNames(position).getText();
           expect(partName).to.be.equal(names[`part${i}`])
           if (i != 7) {
@@ -210,22 +210,27 @@ let qtProjectPage = {
    */
    checkQtOperationStatus: {
     value: function() {
-      var qtOperationStatus = this.operationStatusColumn.getText();
-      expect(qtOperationStatus).to.be.equal(expectedData.qtOperationStatusData);
+       browser.waitForLoading('//div[@id="loader"]');
+     this.operationStatusColumn.moveToObject();
+     this.operationStatusColumn.waitForVisible();
+     var qtOperationStatus = this.operationStatusColumn.getText();
+     expect(qtOperationStatus).to.be.equal(expectedData.qtOperationStatusData);
     }
    },
 
   /*
    * Checks product part number for multiple pin
    */
-   checkProductPartNumber: {
-    value: function(count) {
-      var position = 1;
-      for (var i = 1; i <= count; i++) {
-        if (i != 1)  position = position + 2;
+   checkQtProductPartNumber: {
+    value: function(expected,count) {
+      for (var j = 0, position = 2; j < count; j++, position+=2) {
+        this.productPartNumber(position).moveToObject();
+        this.productPartNumber(position).waitForVisible();
         var qtProductPartNumber = this.productPartNumber(position).getText();
         console.log("qtProductPartNumber"+qtProductPartNumber);
-        // expect(qtProductPartNumber).to.be.equal(multiplePinExpectedData.qtProductPartNumber);
+        console.log(expected[j].part);
+        expect(qtProductPartNumber).to.equal(expected[j].part);
+        console.log("expect true");
       }
     }
    },
@@ -238,11 +243,14 @@ let qtProjectPage = {
       var position = 1;
       for (var i = 1; i <= count; i++) {
         if (i != 1)  position = position + 2;
-        var qtProductPartNumber = this.operationStatusColumn.getText();
+        var qtProductPartNumber = this.operationStatusColumn(position).getText();
         console.log(qtProductPartNumber);
-        var qtRevision = 
-        expect(qtOperationStatus).to.be.equal(multiplePinExpectedData.qtRevision);
+        var qtRevision = qtProductPartNumber.slice(qtProductPartNumber.length-2, qtProductPartNumber.length);
+        console.log(qtRevision);
+        // expect(qtOperationStatus).to.be.equal(multiplePinExpectedData.qtRevision);
+        
     }
+
    }
  }
 

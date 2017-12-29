@@ -140,6 +140,7 @@ let  projectPage = {
           browser.params.singlePinPrice['part1'] = this.partsPriceText(i).getText();
         } else if (pinType === 'multiple pin') {
           this.partsPriceText(i).moveToObject();
+          this.partsPriceText(i).waitForVisible();
           browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
         } else if (pinType === 'pin and plate') {
           if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();

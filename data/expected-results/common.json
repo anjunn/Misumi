@@ -10,5 +10,6 @@
   "sendEmailDialog": "メール送信",
   "imageAccuracy": 90,
   "unitPrice":"1,200",
-  "qtOperationStatusData":"図面作成待ち"
+  "qtOperationStatusData":"図面作成待ち",
+  "soOperationStatusData":"図面作成待ち"
 }

@@ -40,15 +40,15 @@ module.exports = function () {
     qtProjectPage.checkQtOperationStatus();
   });
 
-  this.Then(/^Operator checks product part number for (single pin|multiple pin|plate|pin and plate)$/, (pinType) => {
+  this.Then(/^Operator checks product part number from QT for (single pin|multiple pin|plate|pin and plate)$/, (pinType) => {
     if(pinType === 'single pin') {
-      qtProjectPage.checkProductPartNumber(singlePinExpectedData.numberOfParts);
+      qtProjectPage.checkQtProductPartNumber(singlePinExpectedData.numberOfParts);
     } else if(pinType === 'multiple pin') {
-      qtProjectPage.checkProductPartNumber(multiplePinExpectedData.numberOfParts);
+      qtProjectPage.checkQtProductPartNumber(multiplePinExpectedData.qtPartNumber, multiplePinExpectedData.numberOfParts);
     } else if(pinType === 'pin and plate') {
-      qtProjectPage.checkProductPartNumber(pinAndPlateExpectedData.numberOfParts);
+      qtProjectPage.checkQtProductPartNumber(pinAndPlateExpectedData.numberOfParts);
     } else if(pinType === 'plate'){
-      qtProjectPage.checkProductPartNumber(plateExpectedData.numberOfParts);
+      qtProjectPage.checkQtProductPartNumber(plateExpectedData.numberOfParts);
     }
   });
 

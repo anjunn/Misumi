@@ -20,7 +20,8 @@ let soProjectPage = {
   textArea:{ get: function () { return browser.element('//textarea[@id="email_comment"]');}},
   sendEmailDialog:{ get: function () { return browser.element('(//div[@class="text-center"]//h3)[3]');}},
   okButton: { get: function () { return browser.element('//i[@id="mailResultOk"]');}},
-
+  operationStatusColumn:{ value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[7]`);}},
+  productPartNumber: { value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[2]/a`);}},
 
 
    /**
@@ -72,6 +73,41 @@ let soProjectPage = {
       this.okButton.click();
     }
   },
+
+  /*
+   * Checks SO operation status
+   */
+   checkSoOperationStatus: {
+    value: function(count) {
+      console.log("in Check So operation status");
+      browser.waitForLoading('//div[@id="loader"]');
+      for (var i = 1, j = 1; i <= count; i++, j+=2) {
+        this.operationStatusColumn(j).moveToObject();
+        this.operationStatusColumn(j).waitForVisible();
+        // browser.debug();
+        var soOperationStatus = this.operationStatusColumn(j).getText();
+        console.log(soOperationStatus);
+        expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData);
+        console.log("expect true");
+      }
+    }
+   },
+
+   /*
+   * Checks product part details for multiple pin
+   */
+   checkSoProductPartNumber: {
+    value: function(expected,count) {
+      for (var j = 0, position = 2; j < count; j++, position+=2) {
+        this.productPartNumber(position).moveToObject();
+        this.productPartNumber(position).waitForVisible();
+        var soProductPartNumber = this.productPartNumber(position).getText();
+        console.log("soProductPartNumber"+soProductPartNumber);
+        console.log(expected[j].part);
+        expect(soProductPartNumber).to.equal(expected[j].part);
+      }
+    }
+   },
     
   };
   module.exports = Object.create(Page, soProjectPage);

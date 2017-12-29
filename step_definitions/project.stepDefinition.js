@@ -30,13 +30,13 @@ module.exports = function () {
 
   this.Then(/^User verifies part names for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
   	if (pinType === 'single pin') {
-      projectPage.validatePartNamesAndPrice(singlePinExpectedData.partNames, singlePinExpectedData.numberOfParts);
+      projectPage.validatePartNamesAndPrice(singlePinExpectedData.partNames, singlePinExpectedData.numberOfParts, pinType);
     } else if (pinType === 'multiple pin') {
-      projectPage.validatePartNamesAndPrice(multiplePinExpectedData.partNames,multiplePinExpectedData.numberOfParts);
+      projectPage.validatePartNamesAndPrice(multiplePinExpectedData.partNames, multiplePinExpectedData.numberOfParts, pinType);
     } else if (pinType === 'pin and plate') {
-      projectPage.validatePartNamesAndPrice(pinAndPlateExpectedData.partNames, pinAndPlateExpectedData.numberOfParts);
+      projectPage.validatePartNamesAndPrice(pinAndPlateExpectedData.partNames, pinAndPlateExpectedData.numberOfParts, pinType);
     } else if (pinType === 'plate') {
-      projectPage.validatePartNamesAndPrice(plateExpectedData.partNames, plateExpectedData.numberOfParts);
+      projectPage.validatePartNamesAndPrice(plateExpectedData.partNames, plateExpectedData.numberOfParts, pinType);
     }
   });
 
