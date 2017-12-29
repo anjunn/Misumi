@@ -56,6 +56,26 @@ module.exports = function () {
     qtProjectPage.checkQtRevision();
   });
 
+  this.Then(/^Operator checks 3d view of project from qt page$/, () => {
+    qtProjectPage.checkProjectPage();
+  });
+
+  this.Then(/^Operator verifies that order button is disabled$/, () => {
+    qtProjectPage.checkOrderButton();
+  });
+
+  this.Then(/^Operator checks 3d view of each part from qt page for (single pin|multiple pin|plate|pin and plate)$/, (pinType) => {
+    if(pinType === 'single pin') {
+      qtProjectPage.checkPartsView(singlePinExpectedData.numberOfParts, singlePinExpectedData.partNames);
+    } else if(pinType === 'multiple pin') {
+      qtProjectPage.checkPartsView(multiplePinExpectedData.numberOfParts, multiplePinExpectedData.partNames);
+    } else if(pinType === 'pin and plate') {
+      qtProjectPage.checkPartsView(pinAndPlateExpectedData.numberOfParts, pinAndPlateExpectedData.partNames);
+    } else if(pinType === 'plate'){
+      qtProjectPage.checkPartsView(plateExpectedData.numberOfParts, plateExpectedData.partNames);
+    }
+  });
+
 };
 
 

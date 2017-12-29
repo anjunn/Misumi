@@ -39,45 +39,46 @@ Then Opens the file uploaded by the user
 # Given Admin verifies product price and part names for multiple pin
 
 Scenario: Sending   mail to TPro and Supplier
+
 When Admin sends mail to Tpro to get 2D data for multiple pin
 Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 
-Scenario: QT List and status checking 
+Scenario: QT List and status checking
 
 Then Admin verifies the operation status for the item
 Then Operator checks product part number for multiple pin
-#Then Operator checks QT revision
+# Then Operator checks QT revision
 
-Scenario: 3D Viewer Project view  management QT 
+Scenario: 3D Viewer Project view  management QT
 
-#Parts are shown properly
-#Can't order
-#Change condition and quote(product ordering number update)
+Then Operator checks 3d view of project from qt page
+And Operator verifies that order button is disabled
+And Operator checks 3d view of each part from qt page for multiple pin
 
 Scenario: User places the order
 
-#Given User goes to order page
-#Then User validates the product name and order details in order page
-#And User places the order
-#And The Order is succesfully placed
-#And User goes to Order History Page
+# Given User goes to order page
+# Then User validates the product name and order details in order page
+# And User places the order
+# And The Order is succesfully placed
+# And User goes to Order History Page
 
 Scenario: Operator opens the order from SO page
 
 #Given Admin goes to management site
-#And Admin navigates to SO section in management site 
+#And Admin navigates to SO section in management site
 #Then Admin searches the uploaded file in SO project list
 #SO project status
 #SO project details
 #SO operation status
 #SO parts details
 #SO rivision
-#Send mail (for Order) 
+#Send mail (for Order)
 
-Scenario: 3D Viewer Project view in management SO 
+Scenario: 3D Viewer Project view in management SO
 
-#Parts are shown properly
-#Can't order
-#Change condition and quote(product ordering number update)
+Then Operator checks 3d view of project from qt page
+And Operator verifies that order button is disabled
+And Operator checks 3d view of each part from qt page for multiple pin
