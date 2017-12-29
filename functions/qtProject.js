@@ -244,6 +244,7 @@ let qtProjectPage = {
         expect(qtOperationStatus).to.be.equal(multiplePinExpectedData.qtRevision);
     }
    }
+ }
 
 };
 
