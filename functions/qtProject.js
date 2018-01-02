@@ -1,6 +1,6 @@
 let Page = require('./page');
 let expectedData = require('../data/expected-results/common.json');
-let multiplePinExpectedData = require('../data/expected-results/multiple-pin.json')
+let multiplePinExpectedData = require('../data/expected-results/multiple-pin.json');
 /**
  * Qt project Page Object
  *
@@ -45,6 +45,11 @@ let qtProjectPage = {
   partPriceFirstRow:{ get: function (){ return browser.element('//table[@id="detailTable"]/tbody/tr[2]/td[3]');}},
   operationStatusColumn:{ get: function (){return browser.element('//table[@id="detailTable"]/tbody/tr[1]/td[6]');}},
   productPartNumber: { value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[1]/a`);}},
+  projectPage: { get: function() { return browser.element('//div[@class="panel-body"]//figure/img'); } },
+  orderButton: { get: function() { return browser.element('//span[contains(text(), "注文へ進む")]'); } },
+  partsView: { value: function(n) { return browser.element(`//table/tbody/tr[${n}]/td[2]/a`); } },
+  partName: { get: function() { return browser.element('//select[@id="condArticleType"]/option');} },
+  orderLink: { get: function() { return browser.element('//a[contains(text(), "注文へ進む")]');} },
 
   /*
    * Admin validate price and name of each parts
@@ -243,11 +248,59 @@ let qtProjectPage = {
         var qtProductPartNumber = this.operationStatusColumn(position).getText();
         var qtRevision = qtProductPartNumber.slice(qtProductPartNumber.length-2, qtProductPartNumber.length);
         expect(qtOperationStatus).to.be.equal(multiplePinExpectedData.qtRevision);
-        
+      }
     }
+  },
 
-   }
- },
+  /*
+   * Checks 3d page of project
+   */
+  checkProjectPage: {
+    value: function() {
+      browser.waitForLoading('//div[@id="loader"]');
+      browser.params.qtProjectId = browser.windowHandle();
+      this.projectPage.moveToObject();
+      this.projectPage.click();
+      var windowHandles = browser.windowHandles();
+      browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
+    }
+  },
+
+  /*
+   * Verifies order button is disabled
+   */
+  checkOrderButton: {
+    value: function() {
+      this.orderButton.waitForVisible();
+      var buttonClass = this.orderButton.getAttribute('class');
+      expect(buttonClass).to.be.equal('disable');
+      browser.close(browser.windowHandles().value[1]);
+      browser.pause(1000);
+    }
+  },
+
+  /*
+   * Check parts view of each part
+   */
+  checkPartsView: {
+    value: function(count, parts) {
+      for(i = 1, j = 1; j <= 7; i+=2, j++) {
+        browser.pause(2000);
+        this.projectPage.waitForVisible();
+        this.partsView(i).moveToObject();
+        this.partsView(i).click();
+        browser.pause(2000);
+        browser.switchTab(browser.windowHandles().value[2]);
+        browser.pause(2000);
+        if ( j > 2) {
+          this.partName.waitForVisible();
+          expect(this.partName.getText()).to.equal(parts[`part${j}`]);
+          expect(this.orderLink.isVisible()).to.equal(false);
+        }
+        browser.close(browser.windowHandles().value[1]);
+      }
+    }
+  },
 
 };
 

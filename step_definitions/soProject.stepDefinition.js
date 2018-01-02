@@ -42,4 +42,24 @@ module.exports = function () {
       soProjectPage.checkSoProductPartNumber(plateExpectedData.numberOfParts);
     }
   });
+
+  this.Then(/^Operator checks 3d view of project from SO page$/, () => {
+    soProjectPage.checkProjectPage();
+  });
+
+  this.Then(/^Operator verifies that order button is disabled when viewing from SO page$/, () => {
+    soProjectPage.checkOrderButton();
+  });
+
+  this.Then(/^Operator checks 3d view of each part from SO page for (single pin|multiple pin|plate|pin and plate)$/, (pinType) => {
+    if(pinType === 'single pin') {
+      soProjectPage.checkPartsView(singlePinExpectedData.numberOfParts, singlePinExpectedData.partNames);
+    } else if(pinType === 'multiple pin') {
+      soProjectPage.checkPartsView(multiplePinExpectedData.numberOfParts, multiplePinExpectedData.partNames);
+    } else if(pinType === 'pin and plate') {
+      soProjectPage.checkPartsView(pinAndPlateExpectedData.numberOfParts, pinAndPlateExpectedData.partNames);
+    } else if(pinType === 'plate'){
+      soProjectPage.checkPartsView(plateExpectedData.numberOfParts, plateExpectedData.partNames);
+    }
+  });
 };
