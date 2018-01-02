@@ -297,7 +297,7 @@ let  projectPage = {
   },
 
   /*
-   * User inputs Customer ordering number manually
+   * User inputs Customer ordering number manually and clears it
    */
   customerOrdeingNumberManual:{
     value: function(count,part1,part2) {
@@ -312,6 +312,12 @@ let  projectPage = {
         } else {
           this.customerOrderingNumberField(i).setValue(part2);
         }
+      }
+      browser.url(browser.params.projectPageUrl);
+      this.customerOrderingNumberField(1).waitForVisible();
+      for (var i=1; i<=count; i++) {
+       this.customerOrderingNumberField(i).moveToObject();
+       this.customerOrderingNumberField(i).clearElement();
       }
     }
   },
@@ -344,10 +350,10 @@ let  projectPage = {
   },
 
   /*
-   * User resets batch input
+   * User resets batch input / input wizard
    */
-  resetBatchInput:{
-    value: function(expected,count) {
+  resetInput:{
+    value: function() {
       this.listFunctionOpen.waitForVisible();
       this.listFunctionOpen.click();
       this.enterCustomerOderInList.moveToObject();
@@ -392,7 +398,8 @@ let  projectPage = {
    * User selects one of the parts, core pin and changes the material
    */
   selectCorePin:{
-    value: function(expected,count) {
+    value: function() {
+      this.closeList.click();
       this.corePinMultiplePin.waitForVisible();
       this.corePinMultiplePin.click();
       this.changeMaterial.waitForEnabled();

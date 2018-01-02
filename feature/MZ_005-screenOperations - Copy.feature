@@ -29,13 +29,12 @@ And User does Feature Recognition for core pin
 
 Scenario: User checks customer input number
 
-When User gives Customer ordering number manually and clears it
+When User gives Customer ordering number manually
 When User gives Customer ordering number batch input 
 When User verifies Customer ordering number batch input
 Then User resets the batch input
 When User gives Customer ordering number using input wizard
 Then User verifies Customer ordering number using input wizard
-Then User resets the input wizard
 
 Scenario: Define quotation condition in parts viewe - change material
 
