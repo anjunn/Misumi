@@ -59,6 +59,7 @@ let  projectPage = {
   corePinFilter:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[2]');}},
   corePinList: { value: function (n) {return browser.element(`(//span[@class="class"])[${n}]`); }},
   showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
+  modelNumber:{ value: function (n){return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
   /*
    * Open project by clicking on thumbnail
    */
@@ -340,7 +341,7 @@ let  projectPage = {
       }
     },
 
-    /*
+  /*
    * User gives customer ordering number by input wizard 
    */
     customerOrdeingNumberInputWizard:{
@@ -428,6 +429,24 @@ let  projectPage = {
       
       }
     },
+
+  /*
+   * Sets model numbers to params
+   */
+    takeModelNumber:{
+    value: function(count) {
+      console.log(count);
+      for(let i=1; i<=count; i++)
+      {
+        this.modelNumber(i).moveToObject();
+        this.modelNumber(i).waitForVisible();
+        browser.params.multiplePinModelNumber['part'+ i ] = this.modelNumber(i).getText();
+        console.log(browser.params.multiplePinModelNumber['part'+ i ]);
+      }
+    }
+  },
+
+
 };
   
 module.exports = Object.create(Page, projectPage);

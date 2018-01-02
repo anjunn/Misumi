@@ -223,14 +223,11 @@ let qtProjectPage = {
    */
    checkQtProductPartNumber: {
     value: function(expected,count) {
-      for (var j = 0, position = 2; j < count; j++, position+=2) {
+      for (var j = 0, position = 2, i = j + 1; j < count; j++, i++, position+=2) {
         this.productPartNumber(position).moveToObject();
         this.productPartNumber(position).waitForVisible();
         var qtProductPartNumber = this.productPartNumber(position).getText();
-        console.log("qtProductPartNumber"+qtProductPartNumber);
-        console.log(expected[j].part);
-        expect(qtProductPartNumber).to.equal(expected[j].part);
-        console.log("expect true");
+        expect(qtProductPartNumber).to.equal(browser.params.multiplePinModelNumber[`part${i}`]);
       }
     }
    },
@@ -244,15 +241,13 @@ let qtProjectPage = {
       for (var i = 1; i <= count; i++) {
         if (i != 1)  position = position + 2;
         var qtProductPartNumber = this.operationStatusColumn(position).getText();
-        console.log(qtProductPartNumber);
         var qtRevision = qtProductPartNumber.slice(qtProductPartNumber.length-2, qtProductPartNumber.length);
-        console.log(qtRevision);
-        // expect(qtOperationStatus).to.be.equal(multiplePinExpectedData.qtRevision);
+        expect(qtOperationStatus).to.be.equal(multiplePinExpectedData.qtRevision);
         
     }
 
    }
- }
+ },
 
 };
 

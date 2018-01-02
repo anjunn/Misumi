@@ -10,7 +10,7 @@ let  orderPage = {
   /**
    * define elements
    */
-  proceedToEstimateButton: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]'); }},
+  proceedToOrderButton: { get: function () { return browser.element('//*[@id="boxAmount"]//..//*[@onclick="checkOrderCondition();"]'); }},
   customerNumberInput: { get: function () { return browser.element('//*[contains(text(),"一括入力") and @class="js-modal notEasescroll"]'); }},
   orderPageHeading: { get: function () { return browser.element('//*[@class="heading01"]');}},
   orderPageProductName: { get: function () { return browser.element('//*[@class="title"]//span');}},
@@ -28,8 +28,8 @@ let  orderPage = {
    */
   goToOrderPage: {
     value: function() {
-      this.proceedToEstimateButton.waitForEnabled();
-      this.proceedToEstimateButton.click();
+      this.proceedToOrderButton.waitForEnabled();
+      this.proceedToOrderButton.click();
     }
   },
   /*

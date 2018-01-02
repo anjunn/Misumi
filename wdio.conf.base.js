@@ -218,6 +218,15 @@ exports.config = {
     pinAndPlatePrice: {
       part1: null,
       part2: null
-    }
+    },
+    multiplePinModelNumber: {
+      part1: null,
+      part2: null,
+      part3: null,
+      part4: null,
+      part5: null,
+      part6: null,
+      part7: null,
+    },
   }
 };

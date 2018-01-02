@@ -116,4 +116,8 @@ module.exports = function () {
      this.Then(/^User updates the quotation and verifies the change$/, () => {
     projectPage.updateQuotation(multiplePinExpectedData.materialChange);
   });
+
+     this.Then(/^Takes model number from presentation$/, () => {
+    projectPage.takeModelNumber(multiplePinExpectedData.numberOfParts);
+  });
 };

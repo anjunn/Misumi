@@ -84,11 +84,9 @@ let soProjectPage = {
       for (var i = 1, j = 1; i <= count; i++, j+=2) {
         this.operationStatusColumn(j).moveToObject();
         this.operationStatusColumn(j).waitForVisible();
-        // browser.debug();
         var soOperationStatus = this.operationStatusColumn(j).getText();
         console.log(soOperationStatus);
         expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData);
-        console.log("expect true");
       }
     }
    },
@@ -102,12 +100,11 @@ let soProjectPage = {
         this.productPartNumber(position).moveToObject();
         this.productPartNumber(position).waitForVisible();
         var soProductPartNumber = this.productPartNumber(position).getText();
-        console.log("soProductPartNumber"+soProductPartNumber);
-        console.log(expected[j].part);
-        expect(soProductPartNumber).to.equal(expected[j].part);
+        var i = j + 1;
+        expect(soProductPartNumber).to.equal(browser.params.multiplePinModelNumber[`part${i}`]);
       }
     }
    },
-    
-  };
+
+};
   module.exports = Object.create(Page, soProjectPage);

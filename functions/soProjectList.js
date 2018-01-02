@@ -48,7 +48,7 @@ let soProjectListPage = {
      this.soProjectlist.waitForVisible();
      this.soProjectlist.click();
      let handles = browser.windowHandles();
-     browser.switchTab(handles.value[1]);
+     browser.switchTab(handles.value[handles.value.length - 1]);
 
     }
   },
@@ -101,7 +101,7 @@ let soProjectListPage = {
       this.product.click();
       browser.pause(2000);
       let windowHandles = browser.windowHandles();
-      browser.switchTab(windowHandles.value[2]);
+      browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
     }
   },
 };
