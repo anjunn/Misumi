@@ -41,7 +41,7 @@ let soProjectListPage = {
    * Admin navigates to SO section in management site
    */
    navigateToSo: {
-    value: function() {    
+    value: function() {
      browser.waitForLoading('//div[@id="loader"]');
      this.soButton.waitForVisible();
      this.soButton.click();
@@ -49,12 +49,10 @@ let soProjectListPage = {
      this.soProjectlist.click();
      let handles = browser.windowHandles();
      browser.switchTab(handles.value[handles.value.length - 1]);
-
     }
   },
 
-
-    /**
+  /**
    * Admin selects a person in charge for the uploaded file
    */
   selectPersonInCharge: {

@@ -24,7 +24,7 @@ Scenario: Email validation after upload
 Given User opens the uploaded project
 And User decides to check the email
 When User logs in to mail account
-Then User verifies the project details in the mail
+Then User verifies the project details in the estimate mail
 And User goes back to project page
 
 Scenario: User request for manual quotation
@@ -56,12 +56,19 @@ Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers for pin and plate
+And Admin sends mail to customer
+
+Scenario: Email validation after quotation
+
+Given User decides to check the email
+When User logs in to mail account
+Then User verifies the project details in the quotation mail
 
 Scenario: User goes to presentation site
 
-Given User goes to my page 
+Given User goes to my page
 
-Scenario: User validates manual quotation 
+Scenario: User validates manual quotation
 
 Then User validates manual quotation icon and price in the listing screen
 Then User opens the uploaded project
@@ -71,6 +78,8 @@ Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
+And User validates contents of pdf file
+And User validates contents of csv file
 
 Scenario: User places the order
 
@@ -80,21 +89,23 @@ And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page
 
-
-
 Scenario: Operator opens the order from SO page
+
 Given Admin goes to management site
-And Admin navigates to SO section in management site 
+And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 And Admin selects the person in charge for the uploaded project in SO page
 Then Admin verifies if the selected person in charge is displayed in SO page
 And Verifies if the status and colour is displayed correctly in SO page 
 And Opens the file uploaded by the user from SO project list 
 
+
 Scenario: Operator opens the user uploaded project
+
 Given Admin selects the supplier from so page
 Then Admin sends email to the supplier
 And Admin verifies if the send email pop up is shown and clicks ok in SO page
+
 
 
 

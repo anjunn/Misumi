@@ -74,6 +74,9 @@ module.exports = function () {
     } else if(pinType === 'plate'){
       qtProjectPage.checkPartsView(plateExpectedData.numberOfParts, plateExpectedData.partNames);
     }
+
+  this.Then(/^Admin sends mail to customer$/, () => {
+    qtProjectPage.sendMailToCustomer();
   });
 
 };

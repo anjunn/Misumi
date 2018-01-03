@@ -10,7 +10,7 @@ let soProjectPage = {
   /*
    * define elements
    */
-  
+
   choiceButton:{ get: function () { return browser.element('(//button[@class="btn btn-primary no-tab dropdown-toggle"]/i)[3]');}},
   supplierListOption:{ get: function () { return browser.element('//li[@class="dropup-submenu"]//a[contains(text(), "サプライヤー")]');}},
   toyoeiPrecisiListOption:{ get: function () { return browser.element('(//ul[@class="dropdown-menu"]//a[contains(text() , "豊栄精密(1167)")])[2]');}},
@@ -31,7 +31,7 @@ let soProjectPage = {
 
 
    /**
-   * Admin selects the supplier 
+   * Admin selects the supplier
    */
   selectSupplier: {
     value: function() {
@@ -39,23 +39,33 @@ let soProjectPage = {
       this.choiceButton.moveToObject();
       this.choiceButton.click();
       this.supplierListOption.moveToObject();
-      this.toyoeiPrecisiListOption.click(); 
-        }
-      },
+      this.toyoeiPrecisiListOption.click();
+    }
+  },
 
   /**
    * Admin sends mail to supplier
    */
-   sendMailToSupplier: {
+  sendMailToSupplier: {
     value: function() {
       this.orderingButton.click();
-      this.orderingListOption.click(); 
+      this.orderingListOption.click();
       browser.pause(1000);
-      browser.alertAccept();
-     // if (!emailSubjectField.isVisible())
-     // {
-      browser.alertAccept();
-     // }
+      try {
+        if (browser.alertText()) {
+          browser.alertAccept();
+        }
+      } catch(e) {
+        console.log(e.message);
+      }
+      browser.pause(1000);
+      try {
+        if (browser.alertText()) {
+          browser.alertAccept();
+        }
+      } catch(e) {
+        console.log(e.message);
+      }
       browser.pause(2000);
       this.emailSubjectField.waitForVisible();
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
@@ -67,7 +77,7 @@ let soProjectPage = {
       browser.keys('\uE007');
     }
   },
- 
+
 
   /**
    * Admin verfies if mail has been send
@@ -165,4 +175,4 @@ let soProjectPage = {
   },
 
 };
-  module.exports = Object.create(Page, soProjectPage);
+module.exports = Object.create(Page, soProjectPage);
