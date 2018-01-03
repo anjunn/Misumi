@@ -95,13 +95,11 @@ let soProjectPage = {
    */
    checkSoOperationStatus: {
     value: function(count) {
-      console.log("in Check So operation status");
       browser.waitForLoading('//div[@id="loader"]');
       for (var i = 1, j = 1; i <= count; i++, j+=2) {
         this.operationStatusColumn(j).moveToObject();
         this.operationStatusColumn(j).waitForVisible();
         var soOperationStatus = this.operationStatusColumn(j).getText();
-        console.log(soOperationStatus);
         expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData);
       }
     }

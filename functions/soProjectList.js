@@ -84,8 +84,8 @@ let soProjectListPage = {
     value: function() {
       this.status.waitForVisible();
       expect(this.status.getText()).to.be.equal("未対応");
-      // var color = this.status.getCssProperty('background-color').parsed.hex;
-      // expect(expectedData.soStatusColor).to.be.equal(color);
+      var color = this.status.getCssProperty('background-color').parsed.hex;
+      expect(expectedData.soStatusColor).to.be.equal(color);
     }
   },
 

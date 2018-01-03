@@ -64,7 +64,6 @@ let qtProjectPage = {
           var partPrice = this.partPriceFirstRow.getText();
           expect(partPrice).to.be.equal(browser.params.singlePinPrice['part1'] + '円');
       }else if (pinType === 'multiple pin'){
-        console.log("In qtProject validateOrderDetails");
         var position = 1;
         for (var i = 1; i <= 7; i++) {
           if (i != 1) position = position + 2;

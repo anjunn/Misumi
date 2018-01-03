@@ -138,6 +138,8 @@ let  projectPage = {
         const partNamePos = browser.elementIdLocation(this.partsName(i).value.ELEMENT);
         browser.scroll(partNamePos.value.x, partNamePos.value.y);
         browser.pause(1000);
+        this.partsName(i).moveToObject();
+        this.partsName(i).waitForVisible();
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);
         if (pinType === 'single pin') {
@@ -459,13 +461,11 @@ let  projectPage = {
    */
     takeModelNumber:{
     value: function(count) {
-      console.log(count);
       for(let i=1; i<=count; i++)
       {
         this.modelNumber(i).moveToObject();
         this.modelNumber(i).waitForVisible();
         browser.params.multiplePinModelNumber['part'+ i ] = this.modelNumber(i).getText();
-        console.log(browser.params.multiplePinModelNumber['part'+ i ]);
       }
     }
   },
