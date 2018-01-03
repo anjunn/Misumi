@@ -64,6 +64,9 @@ let  projectPage = {
   corePinFilter:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[2]');}},
   corePinList: { value: function (n) {return browser.element(`(//span[@class="class"])[${n}]`); }},
   showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
+  modelNumber:{ get: function () { return browser.element('//span[@class="modelNum"]');}},
+  zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
+ 
   /*
    * Open project by clicking on thumbnail
    */
@@ -84,8 +87,13 @@ let  projectPage = {
       this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(4000);
+      browser.pause(2000);
+      browser.windowHandleFullscreen();
+      browser.pause(2000);
+      this.zoomOut.click();
+      browser.pause(3000);
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+      browser.windowHandleSize({width: 1280, height: 600});
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
@@ -318,7 +326,7 @@ let  projectPage = {
   },
 
   /*
-   * User inputs Customer ordering number manually
+   * User inputs Customer ordering number manually and clears it
    */
   customerOrdeingNumberManual:{
     value: function(count,part1,part2) {
@@ -333,6 +341,12 @@ let  projectPage = {
         } else {
           this.customerOrderingNumberField(i).setValue(part2);
         }
+      }
+      browser.url(browser.params.projectPageUrl);
+      this.customerOrderingNumberField(1).waitForVisible();
+      for (var i=1; i<=count; i++) {
+       this.customerOrderingNumberField(i).moveToObject();
+       this.customerOrderingNumberField(i).clearElement();
       }
     }
   },
@@ -365,10 +379,10 @@ let  projectPage = {
   },
 
   /*
-   * User resets batch input
+   * User resets batch input / input wizard
    */
-  resetBatchInput:{
-    value: function(expected,count) {
+  resetInput:{
+    value: function() {
       this.listFunctionOpen.waitForVisible();
       this.listFunctionOpen.click();
       this.enterCustomerOderInList.moveToObject();
@@ -413,7 +427,8 @@ let  projectPage = {
    * User selects one of the parts, core pin and changes the material
    */
   selectCorePin:{
-    value: function(expected,count) {
+    value: function() {
+      this.closeList.click();
       this.corePinMultiplePin.waitForVisible();
       this.corePinMultiplePin.click();
       this.changeMaterial.waitForEnabled();
@@ -454,6 +469,19 @@ let  projectPage = {
         if(proj==this.corePinList(i).getText()) { count+=1; }
       }
       expect(count).to.equal(corePinCount);
+      }
+    },
+
+  /*
+   * Obtains modelnumber from parts view
+   */
+  modelNumberPartsView:{
+    value: function() {
+      this.corePinMultiplePin.click();
+      let part1= this.modelNumber.getText();
+      let part2="型番";
+      let modNum= part1.split(part2)[1];
+      browser.params.modelNumber = modNum;
     }
   },
 };

@@ -99,7 +99,7 @@ module.exports = function () {
     projectPage.verifyFilterCorePin(multiplePinExpectedData.partNames.part2,7,multiplePinExpectedData.corePinCount);
   });
 
-  this.When(/^User gives Customer ordering number manually$/, () => {
+  this.When(/^User gives Customer ordering number manually and clears it$/, () => {
     projectPage.customerOrdeingNumberManual(14,multiplePinInputData.customerOrderingNumberPart1,multiplePinInputData.customerOrderingNumberPart2);
   });
 
@@ -111,8 +111,8 @@ module.exports = function () {
     projectPage.verifyBatchInput(multiplePinExpectedData.batchInput,14);
   });
 
-  this.Then(/^User resets the batch input$/, () => {
-    projectPage.resetBatchInput();
+  this.Then(/^User resets the (batch input|input wizard)$/, () => {
+    projectPage.resetInput();
   });
 
   this.When(/^User gives Customer ordering number using input wizard$/, () => {
@@ -130,4 +130,8 @@ module.exports = function () {
   this.Then(/^User updates the quotation and verifies the change$/, () => {
     projectPage.updateQuotation(multiplePinExpectedData.materialChange);
   });
+     this.Then(/^Opens the parts view$/, () => {
+    projectPage.modelNumberPartsView();
+  });
+
 };
