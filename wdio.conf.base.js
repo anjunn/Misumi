@@ -206,28 +206,35 @@ exports.config = {
 
   onPrepare: function () {
     let fs = require('fs');
+
+    // make reports/screenshots directory if it does not exist
     if (!fs.existsSync(__dirname + '/reports/screenshots')) {
       if (!fs.existsSync(__dirname + '/reports')) {
         fs.mkdirSync(__dirname + '/reports');
       }
       fs.mkdirSync(__dirname + '/reports/screenshots');
     }
-    const downloadPath = __dirname + '/data/downloads';
+
+    // delete files in download directory before starting
+    const downloadPath = __dirname + '/data/downloads/';
     if( fs.existsSync(downloadPath) ) {
-      fs.readdirSync(downloadPath).forEach(function(file,index){
+      fs.readdirSync(downloadPath).forEach(function (file, index) {
         if (file === '.gitignore') return;
-        var curPath = downloadPath + "/" + file;
-        if(fs.lstatSync(curPath).isDirectory()) { // recurse
-          deleteFolderRecursive(curPath);
-        } else { // delete file
-          fs.unlinkSync(curPath);
-        }
+        fs.unlinkSync(downloadPath + file)
+      });
+    }
+
+    // delete files in allure directory before starting
+    const allurePath = __dirname + '/allure-results/';
+    if( fs.existsSync(allurePath) ) {
+      fs.readdirSync(allurePath).forEach(function (file, index) {
+        fs.unlinkSync(allurePath + file)
       });
     }
   },
 
   afterStep: function (step) {
-    if (step.getStatus() === 'failed') {
+    if (step.getStatus() === 'failed' && browser.desiredCapabilities.browserName != 'internet explorer') {
       let stepName = step.getStep().getName();
       let featureName = step.getStep().getScenario().getFeature().getName();
       let screenShot = './reports/screenshots/' + new Date().getTime() + featureName + ' ' + stepName + '.png';

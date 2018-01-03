@@ -78,10 +78,9 @@ let emailPage = {
       }
       browser.pause(3000);
       let fileName = browser.params.fileName;
-      this.fileNameInMail(fileName).waitForVisible()
+      this.fileNameInMail(fileName).waitForVisible();
       this.fileNameInMail(fileName).click();
       this.mailCheckbox(fileName).waitForVisible();
-      this.mailCheckbox(fileName).click();
       this.mailPreview.waitForVisible();
       browser.pause(2000);
     }
@@ -100,7 +99,6 @@ let emailPage = {
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
       projectPageUrlFromMail = this.mailLink.getText();
-      this.maildeleteIcon.click();
     }
   },
 
@@ -119,7 +117,6 @@ let emailPage = {
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
       projectPageUrlFromMail = this.mailLink.getText();
-      this.maildeleteIcon.click();
     }
   },
 
@@ -131,7 +128,6 @@ let emailPage = {
     value: function() {
       expect(this.mailPreview.getText()).to.include(browser.params.fileName);
       expect(this.mailPreview.getText()).to.include(browser.params.totalPrice);
-      this.maildeleteIcon.click();
     }
   },
 

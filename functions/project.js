@@ -19,6 +19,9 @@ let  projectPage = {
   chatBox: { get : function() { return browser.element('//div[@id="aibis-waiting"]/div[@class="titlebar"]'); }},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
   partsName: { value: function (part) { return browser.element(`(//span[@class="class"])[${part}]`); }},
+  partsNameSelector: { value: function(part) { return `div#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner  p > a` } },
+  grouping: { value: function (part) { return browser.element(`(//span[@class="groupItemCount"])[${i}]`); }},
+  groupingSelector: { get: function(part) { return 'groupItemCount' } },
   quantityChange: { get: function () { return browser.element('(//input[@type="number"])[1]'); }},
   priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]'); }},
   partsPriceText: { value: function (n) { return browser.element(`(//p[@class="sum"]/span)[${n}]`); }},
@@ -92,9 +95,9 @@ let  projectPage = {
         var diff = new PNG({width: actualImage.width, height: actualImage.height});
         var totalPixels = 768000;
         var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
-        var expectedDiff = ( (100 - expectedData.imageAccuracy) / 100 ) * totalPixels;
-        console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
-        expect(pixelDiff).to.be.below(expectedDiff);
+        var actualAccuracy = ((totalPixels - pixelDiff)/totalPixels) * 100;
+        console.log(`Image Accuracy: ${actualAccuracy}%`);
+        expect(actualAccuracy).to.be.above(expectedData.imageAccuracy);
       }
     }
   },
@@ -130,12 +133,23 @@ let  projectPage = {
 
   /*
    * Verify part names for single pin
+   * Hide error window and use js scroll for ie
    */
   validatePartNames: {
     value: function(names, count) {
+      browser.execute(function() {
+        var error = document.querySelector('.WindowError');
+        error.style.display = 'none';
+      });
       for (var i = 1; i <= count; i++) {
-        const partNamePos = browser.elementIdLocation(this.partsName(i).value.ELEMENT);
-        browser.scroll(partNamePos.value.x, partNamePos.value.y);
+        if (browser.desiredCapabilities.browserName === 'chrome') {
+          this.partsName(i).moveToObject();
+        } else if (i > 3) {
+          browser.execute(function(selector) {
+            var element = document.querySelector(selector);
+            element.scrollIntoView();
+          }, this.partsNameSelector(i+1));
+        }
         browser.pause(1000);
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);
@@ -150,7 +164,14 @@ let  projectPage = {
   checkGrouping: {
     value: function(grouping) {
       for (var i = 1; i <= 4; i++) {
-        browser.moveToObject(`(//*[@class="groupItemCount"])[${i}]`);
+        if (browser.desiredCapabilities.browserName === 'chrome') {
+          this.grouping.moveToObject();
+        } else {
+          browser.execute(function(selector, part) {
+            var element = document.getElementsByClassName(selector)[part - 1];
+            element.scrollIntoView();
+          }, this.groupingSelector, i);
+        }
         var parts = this.groupValue(i).getText();
         expect(parts).to.be.equal(`[${grouping[i-1]}]`);
         this.groupImage(i).isVisible();
