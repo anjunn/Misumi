@@ -130,4 +130,8 @@ module.exports = function () {
   this.Then(/^User updates the quotation and verifies the change$/, () => {
     projectPage.updateQuotation(multiplePinExpectedData.materialChange);
   });
+     this.Then(/^Opens the parts view$/, () => {
+    projectPage.modelNumberPartsView();
+  });
+
 };
