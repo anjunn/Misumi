@@ -2,12 +2,13 @@
   "loginCredentials": {
     "presentation": {
 
-      "username": "QB_QA-Auto02",
-      "password": "915YXXTA"
+      "username": "QB_QA-Auto01",
+      "password": "VRIFBTD9"
+
     },
     "management": {
-      "username": "Unnikrishnan",
-      "password": "Unnikrishnan"
+      "username": "Anju",
+      "password": "Anju"
     },
     "mail": {
       "username": "test.t8zb.meviy@misumi.co.jp",
