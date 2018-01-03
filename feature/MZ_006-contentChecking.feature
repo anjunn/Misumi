@@ -1,4 +1,4 @@
-Feature: Scenario 1
+Feature: Scenario 6
 
 Scenario: User logins to presentation site
 
@@ -10,6 +10,7 @@ Then User is redirected to Login Page
 And User validates username field
 And User validates Password field
 And User enters credentials and logs in
+
 
 Scenario: Single Pin upload
 
@@ -30,8 +31,6 @@ Then User selects the product estimate mail
 And User verifies the product details in estimate mail
 
 
-
-
 Scenario: Plate upload for manual quotation
 
 Given User goes to my page 
@@ -49,6 +48,7 @@ When User does Feature Recognition for plate
 And User verifies part names for plate
 And User request for manual quotation in parts view for plate
 
+
 Scenario: Operator login to management site
 
 Given Admin goes to management site
@@ -64,11 +64,11 @@ Then Admin verifies if the selected person in charge is displayed
 And Verifies if order status and color is displayed correctly
 And Opens the file uploaded by the user to proceed to manual quotation
 
+
 Scenario: Operator does manual quotation
 
 Given Admin verifies product price and part names for plate
 When Admin sends mail for ordering plate
-When Admin sends mail to Tpro to get 2D data for plate
 Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
@@ -85,10 +85,10 @@ Then User selects the product quotation mail
 And User verifies the product details in quotation mail
 
 
-
 Scenario: User goes to presentation site
 
 Given User goes to my page 
+
 
 Scenario: Validating Manual Quotation 
 
@@ -96,10 +96,12 @@ Then User validates manual quotation icon and price in the listing screen
 Then User opens the uploaded project
 Then User check unit price and icon in parts view
 
+
 Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
+
 
 Scenario: User places the order
 
@@ -113,7 +115,6 @@ And User goes to Order History Page
 Scenario: Email validation after order placing 
 
 Given User decides to check the email
-# When User logs in to mail account
 Then User selects the product order mail
 And User verifies the product details in order mail
 

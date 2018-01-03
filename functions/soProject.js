@@ -23,8 +23,6 @@ let soProjectPage = {
   customerNumber:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail4"]');}},
   customerName:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail5"]');}},
   
-
-
    /**
    * Admin selects the supplier
    */
@@ -110,11 +108,7 @@ let soProjectPage = {
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
       this.textArea.click();
-      console.log("test"+this.textArea.getValue());
       let mailBody = this.textArea.getValue().replace(/\s/g, '');
-      console.log("++++++++"+mailBody);
-      console.log(this.customerNumber.getText());
-      console.log(this.customerName.getText());
       expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
       browser.keys('\uE004');

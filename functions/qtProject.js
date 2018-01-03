@@ -1,5 +1,6 @@
 let Page = require('./page');
 let expectedData = require('../data/expected-results/common.json');
+let inputData= require('../data/input-data/dataset.json');
 /**
  * Qt project Page Object
  *
@@ -45,8 +46,7 @@ let qtProjectPage = {
   itemName:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[14]');}},
   material:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[15]');}},
   quantity:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[17]');}},
-  
-
+ 
 
   /**
    * Admin validate price and name of each parts
@@ -92,7 +92,7 @@ let qtProjectPage = {
         this.sendMailPlate.click();
       }
       this.selectToAdress.waitForVisible();
-      browser.selectByValue('//select[@id="mailTypeList"]',"8");
+      this.selectToAdress.selectByValue("8");
       browser.pause(1000);
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
@@ -130,8 +130,8 @@ let qtProjectPage = {
         this.sendMailPlate.click();
       }
       this.selectToAdress.waitForVisible();
-      browser.selectByValue('//select[@id="mailTypeList"]', "10");
-      browser.chooseFile("#file_input", "../QA_Automation/Data/2D-Data/TJP17AL8GZ02AA.pdf");
+      this.selectToAdress.selectByValue("10");
+      browser.chooseFile("#file_input", inputData.uploadPath.tproDrawing);
       this.textArea.click();
       browser.pause(1000);
       browser.keys('\uE004');
@@ -195,27 +195,29 @@ let qtProjectPage = {
       }
     }
   },
+    /**
+   * Admin sends mail to Customer
+   */
 
   sendMailToCustomer: {
     value: function(type) {
       var n = type == 'plate' ? 1 : 5;
-      console.log(n);
       browser.waitForLoading('//div[@id="loader"]');
       this.sendMail(n).moveToObject();
       browser.pause(1000);
       this.sendMail(n).click();
       this.selectToAdress.waitForVisible();
-      browser.selectByVisibleText('//select[@id="mailTypeList"]', "見積完了");
+      this.selectToAdress.selectByVisibleText(inputData.mailList.quotationComplete);
       this.textArea.click();
       browser.pause(1000);
       browser.keys('\uE004');
       browser.keys('\uE007');
     }
   },
-
-
-
-  verifySendMailForOrdering: {
+    /**
+   * Operator verifies 2d Drawing mail with respect to management page
+   */
+  tproMailVerification: {
     value: function(type) {
       var n = type == 'plate' ? 1 : 5;
       browser.waitForLoading('//div[@id="loader"]');
@@ -223,7 +225,9 @@ let qtProjectPage = {
       browser.pause(1000);
       this.sendMail(n).click();
       this.selectToAdress.waitForVisible();
-      browser.selectByVisibleText('//select[@id="mailTypeList"]', "発注");
+      this.selectToAdress.selectByVisibleText(inputData.mailList.drawingCreationRequestTpro);
+      var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
+      this.emailSubjectField.setValue(subject);
       this.textArea.click();
       browser.pause(4000);
       let mailBody = this.textArea.getValue().replace(/\s/g, '');
@@ -232,8 +236,6 @@ let qtProjectPage = {
       expect(mailBody).to.include(this.itemName.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.material.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.quantity.getText().replace(/\s/g, ''));
-      browser.keys('\uE004');
-      browser.keys('\uE004');
       browser.keys('\uE004');
       browser.keys('\uE007');
     }

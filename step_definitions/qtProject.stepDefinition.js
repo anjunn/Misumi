@@ -35,7 +35,7 @@ module.exports = function () {
   });
 
   this.Then(/^Admin sends mail for ordering (plate|pin and plate)$/, (type) => {
-    qtProjectPage.verifySendMailForOrdering(type);
+    qtProjectPage.tproMailVerification(type);
   });
 
 };
