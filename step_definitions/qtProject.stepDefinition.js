@@ -76,8 +76,12 @@ module.exports = function () {
     }
    });
 
-  this.Then(/^Admin sends mail to customer$/, () => {
-    qtProjectPage.sendMailToCustomer();
+  this.Then(/^Admin sends mail to customer for (plate|pin and plate)$/, (type) => {
+    qtProjectPage.sendMailToCustomer(type);
+  });
+
+  this.Then(/^Admin sends mail for ordering (plate|pin and plate)$/, (type) => {
+    qtProjectPage.tproMailVerification(type);
   });
 
 };

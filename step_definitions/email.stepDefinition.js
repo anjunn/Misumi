@@ -10,8 +10,11 @@ module.exports = function () {
     emailPage.loginToEmail();
   });
 
-  this.Then(/^User verifies the project details in the (estimate|quotation|order) mail$/, (mailType) => {
+  this.Then(/^User selects the product (estimate|quotation|order) mail$/, (mailType) => {
     emailPage.selectMail(mailType);
+  });
+
+  this.Then(/^User verifies the product details in (estimate|quotation|order) mail$/, (mailType) => {
     if ( mailType === 'estimate' ) {
       emailPage.validateEstimationMail();
     } else if ( mailType === 'quotation' ) {
@@ -23,5 +26,9 @@ module.exports = function () {
 
   this.Then(/^User goes back to project page$/, () => {
     emailPage.goToProductPage();
+  });
+
+  this.Then(/^User checks the contents of the mail$/, () => {
+    emailPage.checkMailContent();
   });
 };

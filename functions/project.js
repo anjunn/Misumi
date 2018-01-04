@@ -62,6 +62,8 @@ let  projectPage = {
   corePinList: { value: function (n) {return browser.element(`(//span[@class="class"])[${n}]`); }},
   showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
   modelNumber:{ value: function (n){return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
+  zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
+
   /*
    * Open project by clicking on thumbnail
    */
@@ -82,8 +84,13 @@ let  projectPage = {
       this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(4000);
+      browser.pause(2000);
+      browser.windowHandleFullscreen();
+      browser.pause(2000);
+      this.zoomOut.click();
+      browser.pause(5000);
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+      browser.windowHandleSize({width: 1280, height: 600});
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
@@ -96,6 +103,7 @@ let  projectPage = {
         var expectedDiff = ( (100 - expectedData.imageAccuracy) / 100 ) * totalPixels;
         console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
+       
       }
     }
   },
@@ -465,10 +473,10 @@ let  projectPage = {
       {
         this.modelNumber(i).moveToObject();
         this.modelNumber(i).waitForVisible();
-        browser.params.multiplePinModelNumber['part'+ i ] = this.modelNumber(i).getText();
+        browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
       }
     }
-  },
+  }
 };
 
 module.exports = Object.create(Page, projectPage);

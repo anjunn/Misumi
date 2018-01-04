@@ -22,9 +22,11 @@ When User verifies project name and price after thumbnail appears
 Scenario: Email validation after upload
 
 Given User opens the uploaded project
+Then Takes model number from presentation for multiple pin
 And User decides to check the email
 When User logs in to mail account
-Then User verifies the project details in the estimate mail
+Then User selects the product estimate mail
+And User verifies the product details in estimate mail
 And User goes back to project page
 
 Scenario: User checks the uploaded project
@@ -33,7 +35,6 @@ When User does Feature Recognition for multiple pin
 Then User defines quotation condition in parts view for multiple pin
 And User verifies part names for multiple pin
 And User checks grouping
-Then Takes model number from presentation
 
 Scenario: Operator login to management site
 

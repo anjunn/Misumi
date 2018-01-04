@@ -130,7 +130,15 @@ module.exports = function () {
     projectPage.updateQuotation(multiplePinExpectedData.materialChange);
   });
 
-     this.Then(/^Takes model number from presentation$/, () => {
-    projectPage.takeModelNumber(multiplePinExpectedData.numberOfParts);
+  this.Then(/^Takes model number from presentation for ((single|multiple) pin|pin and plate|plate)$/, (pinType) => {
+    if(pinType === 'single pin') {
+      projectPage.takeModelNumber(singlePinExpectedData.numberOfParts);
+    } else if (pinType === 'multiple pin') {
+      projectPage.takeModelNumber(multiplePinExpectedData.numberOfParts);
+    } else if (pinType === 'pin and plate') {
+      projectPage.takeModelNumber(pinAndPlateExpectedData.numberOfParts);
+    } else if (pinType === 'plate') {
+      projectPage.takeModelNumber(plateExpectedData.numberOfParts);
+    }
   });
 };

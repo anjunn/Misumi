@@ -27,8 +27,8 @@ let soProjectPage = {
   partsView: { value: function(n) { return browser.element(`//table/tbody/tr[${n}]/td[2]/a`); } },
   partName: { get: function() { return browser.element('//select[@id="condArticleType"]/option');} },
   orderLink: { get: function() { return browser.element('//a[contains(text(), "注文へ進む")]');} },
-
-
+  customerNumber:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail4"]');}},
+  customerName:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail5"]');}},
 
    /**
    * Admin selects the supplier
@@ -70,17 +70,19 @@ let soProjectPage = {
       this.emailSubjectField.waitForVisible();
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
-      this.textArea.click();
-      // expect(this.textArea.getValue()).to.include('pin-and-plate1513748027550.x_t');
-      // //browser.params.fileName
-      browser.keys('\uE004');
-      browser.keys('\uE007');
+      let mailBody = this.textArea.getValue().replace(/\s/g, '');
+      browser.pause(2000);
+      expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
+      browser.execute(function() {
+        var sendButton = document.querySelector('#makeMailSend');
+        sendButton.click();
+      });
     }
   },
 
-
   /**
-   * Admin verfies if mail has been send
+   * Admin verfies if mail has been sent
    */
   verifySendMail: {
     value: function() {
@@ -115,7 +117,7 @@ let soProjectPage = {
         this.productPartNumber(position).waitForVisible();
         var soProductPartNumber = this.productPartNumber(position).getText();
         var i = j + 1;
-        expect(soProductPartNumber).to.equal(browser.params.multiplePinModelNumber[`part${i}`]);
+        expect(soProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
       }
     }
    },
@@ -133,7 +135,6 @@ let soProjectPage = {
       browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
     }
   },
-
   /*
    * Verifies order button is disabled
    */
@@ -147,7 +148,6 @@ let soProjectPage = {
       browser.pause(1000);
     }
   },
-
   /*
    * Check parts view of each part
    */
@@ -171,6 +171,5 @@ let soProjectPage = {
       }
     }
   },
-
 };
 module.exports = Object.create(Page, soProjectPage);

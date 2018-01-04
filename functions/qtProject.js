@@ -1,6 +1,8 @@
 let Page = require('./page');
 let expectedData = require('../data/expected-results/common.json');
 let multiplePinExpectedData = require('../data/expected-results/multiple-pin.json');
+let inputData= require('../data/input-data/dataset.json');
+
 /**
  * Qt project Page Object
  *
@@ -14,8 +16,7 @@ let qtProjectPage = {
   productName: { value: function (n) {return browser.element(`(//td[contains(@class,"linkColor")][3])[${n}]`); }},
   partNames: { value: function (n) {return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[14]`); }},
   partPrice: { value: function (n) {return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[3]`); }},
-  sendMailPinAndPlate: { get: function () { return browser.element('(//button[@class="btn btn-default mailButton"])[5]');}},
-  sendMail: { get: function () { return browser.element('(//button[@class="btn btn-default mailButton"])');}},
+  sendMail: { value: function (n) { return browser.element(`(//button[@class="btn btn-default mailButton"])[${n}]`);}},
   sendButton:{ get: function () { return browser.element('//a[@class="btn btn-success col-sm-3"]');}},
   textArea:{ get: function () { return browser.element('//textarea[@id="email_comment"]');}},
   sendEmailDialog:{ get: function () { return browser.element('(//div[@class="text-center"]//h3)[3]');}},
@@ -50,7 +51,12 @@ let qtProjectPage = {
   partsView: { value: function(n) { return browser.element(`//table/tbody/tr[${n}]/td[2]/a`); } },
   partName: { get: function() { return browser.element('//select[@id="condArticleType"]/option');} },
   orderLink: { get: function() { return browser.element('//a[contains(text(), "注文へ進む")]');} },
-
+  customerNumber:{ get: function () { return browser.element('//div[@class="form-control no-border"][@id="detail3"]');}},
+  customerName:{ get: function () { return browser.element('//div[@class="form-control no-border"][@id="detail4"]');}},
+  itemName:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[14]');}},
+  material:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[15]');}},
+  quantity:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[17]');}},
+ 
   /*
    * Admin validate price and name of each parts
    */
@@ -100,30 +106,30 @@ let qtProjectPage = {
    * Subject is changed for filtering.
    */
    sendMailFor2DData: {
-    value: function(pinType, count) {
+    value: function(pinType) {
       browser.pause(5000);
       this.waitforLoadingFile.isVisible();
       if (pinType === 'pin and plate'){
-        this.sendMailPinAndPlate.moveToObject();
-        this.sendMailPinAndPlate.waitForVisible();
-        this.sendMailPinAndPlate.click();
+        this.sendMail(5).moveToObject();
+        this.sendMail(5).waitForVisible();
+        this.sendMail(5).click();
       } else {
         browser.scroll();
-        this.sendMail.moveToObject();
-        this.sendMail.waitForVisible();
-        this.sendMail.click();
+        this.sendMail(1).moveToObject();
+        this.sendMail(1).waitForVisible();
+        this.sendMail(1).click();
       }
-        this.selectToAdress.waitForVisible();
-        browser.selectByValue('//select[@id="mailTypeList"]',"8");
-        browser.pause(1000);
-        var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
-        this.emailSubjectField.setValue(subject);
-        browser.pause(1000);
-        this.textArea.click();
-        expect(this.textArea.getValue()).to.include(browser.params.fileName);
-        browser.pause(1000);
-        browser.keys('\uE004');
-        browser.keys('\uE007');
+      this.selectToAdress.waitForVisible();
+      this.selectToAdress.selectByValue("8");
+      browser.pause(1000);
+      var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
+      this.emailSubjectField.setValue(subject);
+      browser.pause(1000);
+      this.textArea.click();
+      expect(this.textArea.getValue()).to.include(browser.params.fileName);
+      browser.pause(1000);
+      browser.keys('\uE004');
+      browser.keys('\uE007');
     }
   },
 
@@ -145,16 +151,16 @@ let qtProjectPage = {
     value: function(pinType) {
       browser.pause(2000);
       if (pinType === 'pin and plate') {
-        this.sendMailPinAndPlate.waitForVisible();
-        this.sendMailPinAndPlate.click();
+        this.sendMail(5).waitForVisible();
+        this.sendMail(5).click();
       } else {
         browser.scroll();
-        this.sendMail.waitForVisible();
-        this.sendMail.click();
+        this.sendMail(1).waitForVisible();
+        this.sendMail(1).click();
       }
       this.selectToAdress.waitForVisible();
-      browser.selectByValue('//select[@id="mailTypeList"]', "10");
-      browser.chooseFile("#file_input", "../QA_Automation/Data/2D-Data/TJP17AL8GZ02AA.pdf");
+      this.selectToAdress.selectByValue("10");
+      browser.chooseFile("#file_input", inputData.uploadPath.tproDrawing);
       this.textArea.click();
       browser.pause(1000);
       browser.keys('\uE004');
@@ -218,16 +224,19 @@ let qtProjectPage = {
       }
     }
   },
+    /**
+   * Admin sends mail to Customer
+   */
 
   sendMailToCustomer: {
-    value: function() {
-      browser.pause(2000);
-      this.sendMail.waitForVisible();
-      this.sendMail.moveToObject();
+    value: function(type) {
+      var n = type == 'plate' ? 1 : 5;
+      browser.waitForLoading('//div[@id="loader"]');
+      this.sendMail(n).moveToObject();
       browser.pause(1000);
-      this.sendMail.click();
+      this.sendMail(n).click();
       this.selectToAdress.waitForVisible();
-      browser.selectByValue('//select[@id="mailTypeList"]', "2");
+      this.selectToAdress.selectByVisibleText(inputData.mailList.quotationComplete);
       this.textArea.click();
       browser.pause(1000);
       browser.keys('\uE004');
@@ -257,7 +266,7 @@ let qtProjectPage = {
         this.productPartNumber(position).moveToObject();
         this.productPartNumber(position).waitForVisible();
         var qtProductPartNumber = this.productPartNumber(position).getText();
-        expect(qtProductPartNumber).to.equal(browser.params.multiplePinModelNumber[`part${i}`]);
+        expect(qtProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
       }
     }
    },
@@ -327,6 +336,32 @@ let qtProjectPage = {
     }
   },
 
+  /**
+   * Operator verifies 2d Drawing mail with respect to management page
+   */
+  tproMailVerification: {
+    value: function(type) {
+      var n = type == 'plate' ? 1 : 5;
+      browser.waitForLoading('//div[@id="loader"]');
+      this.sendMail(n).moveToObject();
+      browser.pause(1000);
+      this.sendMail(n).click();
+      this.selectToAdress.waitForVisible();
+      this.selectToAdress.selectByVisibleText(inputData.mailList.drawingCreationRequestTpro);
+      var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
+      this.emailSubjectField.setValue(subject);
+      this.textArea.click();
+      browser.pause(4000);
+      let mailBody = this.textArea.getValue().replace(/\s/g, '');
+      expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.itemName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.material.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.quantity.getText().replace(/\s/g, ''));
+      browser.keys('\uE004');
+      browser.keys('\uE007');
+    }
+  },
 };
 
 module.exports = Object.create(Page, qtProjectPage);
