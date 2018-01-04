@@ -8,6 +8,8 @@
   "qtStatusColor": "#d9534f",
   "soStatusColor": "#d9d9d9",
   "sendEmailDialog": "メール送信",
-  "imageAccuracy": 50,
-  "unitPrice":"1,200"
+  "imageAccuracy": 90,
+  "unitPrice":"1,200",
+  "qtOperationStatusData":"図面作成待ち",
+  "soOperationStatusData":"図面作成待ち"
 }

@@ -24,7 +24,7 @@ When User verifies project name and price after thumbnail appears
 Scenario: Email validation after upload
 
 Given User opens the uploaded project
-And Opens the parts view
+And Takes model number from presentation for single pin
 And User decides to check the email
 When User logs in to mail account
 Then User selects the product estimate mail

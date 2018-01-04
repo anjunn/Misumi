@@ -61,9 +61,9 @@ let  projectPage = {
   corePinFilter:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[2]');}},
   corePinList: { value: function (n) {return browser.element(`(//span[@class="class"])[${n}]`); }},
   showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
-  modelNumber:{ get: function () { return browser.element('//span[@class="modelNum"]');}},
+  modelNumber:{ value: function (n){return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
- 
+
   /*
    * Open project by clicking on thumbnail
    */
@@ -88,7 +88,7 @@ let  projectPage = {
       browser.windowHandleFullscreen();
       browser.pause(2000);
       this.zoomOut.click();
-      browser.pause(3000);
+      browser.pause(5000);
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
       browser.windowHandleSize({width: 1280, height: 600});
       this.arrow.click();
@@ -103,6 +103,7 @@ let  projectPage = {
         var expectedDiff = ( (100 - expectedData.imageAccuracy) / 100 ) * totalPixels;
         console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
+       
       }
     }
   },
@@ -137,17 +138,29 @@ let  projectPage = {
   },
 
   /*
-   * Verify part names for single pin
+   * Verify part names and setting the price to params
    */
-  validatePartNames: {
-    value: function(names, count) {
+  validatePartNamesAndPrice: {
+    value: function(names, count, pinType) {
       for (var i = 1; i <= count; i++) {
         const partNamePos = browser.elementIdLocation(this.partsName(i).value.ELEMENT);
         browser.scroll(partNamePos.value.x, partNamePos.value.y);
         browser.pause(1000);
+        this.partsName(i).moveToObject();
+        this.partsName(i).waitForVisible();
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);
-        if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        if (pinType === 'single pin') {
+          browser.params.singlePinPrice['part1'] = this.partsPriceText(i).getText();
+        } else if (pinType === 'multiple pin') {
+          this.partsPriceText(i).moveToObject();
+          this.partsPriceText(i).waitForVisible();
+          browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
+        } else if (pinType === 'pin and plate') {
+          if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        } else {
+          browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+        }
       }
     }
   },
@@ -370,7 +383,7 @@ let  projectPage = {
   },
 
   /*
-   * User gives customer ordering number by input wizard
+   * User gives customer ordering number by input wizard 
    */
   customerOrdeingNumberInputWizard:{
     value: function(func1,func2) {
@@ -452,17 +465,18 @@ let  projectPage = {
     },
 
   /*
-   * Obtains modelnumber from parts view
+   * Sets model numbers to params
    */
-  modelNumberPartsView:{
-    value: function() {
-      this.corePinMultiplePin.click();
-      let part1= this.modelNumber.getText();
-      let part2="型番";
-      let modNum= part1.split(part2)[1];
-      browser.params.modelNumber = modNum;
+    takeModelNumber:{
+    value: function(count) {
+      for(let i=1; i<=count; i++)
+      {
+        this.modelNumber(i).moveToObject();
+        this.modelNumber(i).waitForVisible();
+        browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
+      }
     }
-  },
+  }
 };
 
 module.exports = Object.create(Page, projectPage);
