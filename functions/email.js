@@ -88,6 +88,7 @@ let emailPage = {
       this.mailCheckbox(fileName).click();
       this.mailPreview.waitForVisible();
       browser.pause(2000);
+      projectPageUrlFromMail = this.mailLink.getText();
     }
   },
 
