@@ -25,12 +25,17 @@ exports.config = {
     scenario3: [
       './feature/MZ_003-pinAndPlateUpload.feature'
     ],
-
     scenario4: [
       './feature/MZ_004-plateUpload.feature'
     ],
     scenario5: [
       './feature/MZ_005-screenOperations.feature'
+    ],
+    scenario6: [
+      './feature/MZ_006-contentChecking.feature'
+    ],
+    scenario7: [
+      './feature/MZ_007-autoQtDrawingAttached.feature'
     ],
     all: [
       './feature/MZ_001-singlePinUpload.feature',
@@ -38,6 +43,8 @@ exports.config = {
       './feature/MZ_003-pinAndPlateUpload.feature',
       './feature/MZ_004-plateUpload.feature',
       './feature/MZ_005-screenOperations.feature',
+      './feature/MZ_006-contentChecking.feature',
+      './feature/MZ_007-autoQtDrawingAttached.feature'
     ]
   },
 
@@ -162,17 +169,17 @@ exports.config = {
   },
 
   // params for storing global variables
-  params: {
-    projectPageUrl: null,
-    fileName: null,
-    initialPrice: null,
-    totalPrice: null,
-    qtProjectListId: null,
-    pinAndPlatePrice: {
-      part1: null,
-      part2: null
-    }
-  },
+  // params: {
+  //   projectPageUrl: null,
+  //   fileName: null,
+  //   initialPrice: null,
+  //   totalPrice: null,
+  //   qtProjectListId: null,
+  //   pinAndPlatePrice: {
+  //     part1: null,
+  //     part2: null
+  //   }
+  // },
 
   // Gets executed before test execution begins. At this point you can access all global
   // variables, such as `browser`. It is the perfect place to define custom commands.
@@ -238,6 +245,42 @@ exports.config = {
 
   afterFeature: function (feature) {
     browser.deleteCookie();
-  }
+  },
 
+   // params for storing global variables
+  params: {
+    projectPageUrl: null,
+    fileName: null,
+    initialPrice: null,
+    totalPrice: null,
+    qtProjectListId: null,
+    singlePinPrice: {
+      part1: null,
+    },
+    multiplePinPrice: {
+      part1: null,
+      part2: null,
+      part3: null,
+      part4: null,
+      part5: null,
+      part6: null,
+      part7: null,
+    },
+    platePrice: {
+      part1: null,
+    },
+    pinAndPlatePrice: {
+      part1: null,
+      part2: null
+    },
+    modelNumber: {
+      part1: null,
+      part2: null,
+      part3: null,
+      part4: null,
+      part5: null,
+      part6: null,
+      part7: null,
+    },
+  }
 };

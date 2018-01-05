@@ -23,21 +23,20 @@ module.exports = function () {
       projectPage.compareImage('plate.png', 'plate/plate.png');
     } else if (pinType === 'pin and plate') {
       projectPage.compareImage('pin-and-plate.png', 'pin-and-plate/pin-and-plate.png');
-    }
-    else if (pinType === 'core pin') {
+    } else if (pinType === 'core pin') {
       projectPage.compareImage('core-pin.png', 'multiple-pin/core-pin.png');
     }
   });
 
   this.Then(/^User verifies part names for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
   	if (pinType === 'single pin') {
-      projectPage.validatePartNames(singlePinExpectedData.partNames, 1);
+      projectPage.validatePartNamesAndPrice(singlePinExpectedData.partNames, singlePinExpectedData.numberOfParts, pinType);
     } else if (pinType === 'multiple pin') {
-      projectPage.validatePartNames(multiplePinExpectedData.partNames, 7);
-    } else if (pinType === 'plate') {
-      projectPage.validatePartNames(plateExpectedData.partNames, 1);
+      projectPage.validatePartNamesAndPrice(multiplePinExpectedData.partNames, multiplePinExpectedData.numberOfParts, pinType);
     } else if (pinType === 'pin and plate') {
-      projectPage.validatePartNames(pinAndPlateExpectedData.partNames, 3);
+      projectPage.validatePartNamesAndPrice(pinAndPlateExpectedData.partNames, pinAndPlateExpectedData.numberOfParts, pinType);
+    } else if (pinType === 'plate') {
+      projectPage.validatePartNamesAndPrice(plateExpectedData.partNames, plateExpectedData.numberOfParts, pinType);
     }
   });
 
@@ -89,14 +88,14 @@ module.exports = function () {
   });
 
   this.Then(/^Check if all core pins are selected and finally deselect$/, () => {
-    projectPage.verifyCorePinSelected(multiplePinExpectedData.partNames,7,multiplePinExpectedData.corePinCount)
+    projectPage.verifyCorePinSelected(multiplePinExpectedData.partNames,multiplePinExpectedData.numberOfParts,multiplePinExpectedData.corePinCount);
   });
 
   this.When(/^User selects filter and take CorePin$/, () => {
     projectPage.selectFilterTakeCorePin();
   });
     this.When(/^User verifies if filter has been proper$/, () => {
-    projectPage.verifyFilterCorePin(multiplePinExpectedData.partNames.part2,7,multiplePinExpectedData.corePinCount);
+    projectPage.verifyFilterCorePin(multiplePinExpectedData.partNames.part2,multiplePinExpectedData.numberOfParts,multiplePinExpectedData.corePinCount);
   });
 
   this.When(/^User gives Customer ordering number manually and clears it$/, () => {
@@ -129,5 +128,17 @@ module.exports = function () {
 
   this.Then(/^User updates the quotation and verifies the change$/, () => {
     projectPage.updateQuotation(multiplePinExpectedData.materialChange);
+  });
+
+  this.Then(/^Takes model number from presentation for ((single|multiple) pin|pin and plate|plate)$/, (pinType) => {
+    if(pinType === 'single pin') {
+      projectPage.takeModelNumber(singlePinExpectedData.numberOfParts);
+    } else if (pinType === 'multiple pin') {
+      projectPage.takeModelNumber(multiplePinExpectedData.numberOfParts);
+    } else if (pinType === 'pin and plate') {
+      projectPage.takeModelNumber(pinAndPlateExpectedData.numberOfParts);
+    } else if (pinType === 'plate') {
+      projectPage.takeModelNumber(plateExpectedData.numberOfParts);
+    }
   });
 };

@@ -26,13 +26,10 @@ let qtProjectListPage = {
    */
   searchItem: {
     value: function() {
+      browser.waitForLoading('//div[@id="loader"]');
       this.findProjectName.waitForVisible();
-      this.findProjectName.clearElement();
-      browser.pause(2000);
       this.findProjectName.setValue(browser.params.fileName);
-      browser.pause(3000);
       this.searchButton.waitForEnabled();
-      browser.pause(2000);
       this.searchButton.click();
     }
   },
@@ -42,8 +39,9 @@ let qtProjectListPage = {
    */
   selectPersonInCharge: {
     value: function() {
+      browser.waitForLoading('//div[@id="loader"]');
+      browser.pause(2000)
       this.checkboxSelectFile.waitForVisible();
-      browser.pause(2000);
       this.checkboxSelectFile.click();
       this.personInChargeDropdown.click();
       this.personInChargeList.waitForVisible();
@@ -59,8 +57,7 @@ let qtProjectListPage = {
       browser.pause(1000);
       this.checkSelectedPerson.moveToObject();
       this.checkSelectedPerson.waitForVisible();
-      //console.log(this.checkSelectedPerson.getText());
-      //expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
+      expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
     }
   },
 

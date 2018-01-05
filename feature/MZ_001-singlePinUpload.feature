@@ -24,7 +24,7 @@ Scenario: Email validation after upload
 Given User opens the uploaded project
 And User decides to check the email
 When User logs in to mail account
-Then User verifies the project details in the estimate mail
+Then User selects the product estimate mail
 And User goes back to project page
 
 Scenario: User checks the uploaded project
@@ -45,5 +45,5 @@ Scenario: Email validation after ordering
 
 Given User decides to check the email
 When User logs in to mail account
-Then User verifies the project details in the order mail
+Then User selects the product order mail
 

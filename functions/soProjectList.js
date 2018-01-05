@@ -1,6 +1,6 @@
 let Page = require('./page');
 let data = require('../data/input-data/dataset.json');
-expectedData = require('../data/expected-results/common.json');
+let expectedData = require('../data/expected-results/common.json');
 /**
  * Login Page Object
  *
@@ -34,7 +34,6 @@ let soProjectListPage = {
       this.findProjectName.setValue(browser.params.fileName);
       this.searchButton.waitForEnabled();
       this.searchButton.click();
-
     }
   },
 
@@ -49,10 +48,9 @@ let soProjectListPage = {
      this.soProjectlist.waitForVisible();
      this.soProjectlist.click();
      let handles = browser.windowHandles();
-     browser.switchTab(handles.value[2]);
+     browser.switchTab(handles.value[handles.value.length - 1]);
     }
   },
-
 
   /**
    * Admin selects a person in charge for the uploaded file
@@ -84,6 +82,7 @@ let soProjectListPage = {
    */
   verifyStatus: {
     value: function() {
+      this.status.waitForVisible();
       expect(this.status.getText()).to.be.equal("未対応");
       var color = this.status.getCssProperty('background-color').parsed.hex;
       expect(expectedData.soStatusColor).to.be.equal(color);
@@ -95,13 +94,12 @@ let soProjectListPage = {
    */
   openProject: {
     value: function() {
-      browser.params.qtProjectListId = browser.getCurrentTabId();
       this.product.waitForEnabled();
       this.product.moveToObject();
       this.product.click();
-      browser.pause(4000);
+      browser.pause(2000);
       let windowHandles = browser.windowHandles();
-      browser.switchTab(windowHandles.value[3]);
+      browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
     }
   },
 };

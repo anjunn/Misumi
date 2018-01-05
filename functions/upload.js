@@ -174,6 +174,10 @@ let  uploadPage = {
     value: function(expectedThumbnail) {
       browser.waitForLoading('//span[@class="percent"]');
       this.thumbnail.waitForVisible();
+      var thumbnail = this.thumbnail;
+      browser.waitUntil(function(){
+        return thumbnail.getAttribute('src').split(';')[0] == "data:image/png";
+      }, 10000, 'Thumbnail failed to load after 10 seconds')
       var thumbnailData = this.thumbnail.getAttribute('src');
       var expectedData = base64Img.base64Sync('./data/screens/expected-screens/' + expectedThumbnail);
       expect(thumbnailData).to.be.equal(expectedData);

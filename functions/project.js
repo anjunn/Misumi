@@ -73,6 +73,8 @@ let  projectPage = {
   filtermenu:{ get: function () { return browser.element('(//ul[@class="menuSecond"])[1]');}},
   closeButtonIe:{ value: function() { return `#closeBtn > a`} },
   corePinMulitplePinIe: { value: function() { return `#lstPartsBuy>div:nth-child(3) div.boxPartsInner>div>p>a` } },
+  modelNumber:{ value: function (n){return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
+  zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
 
   /*
    * Open project by clicking on thumbnail
@@ -94,8 +96,13 @@ let  projectPage = {
       this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(4000);
+      browser.pause(2000);
+      browser.windowHandleFullscreen();
+      browser.pause(2000);
+      this.zoomOut.click();
+      browser.pause(5000);
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+      browser.windowHandleSize({width: 1280, height: 600});
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
@@ -108,6 +115,7 @@ let  projectPage = {
         var expectedDiff = ( (100 - expectedData.imageAccuracy) / 100 ) * totalPixels;
         console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
         expect(pixelDiff).to.be.below(expectedDiff);
+       
       }
     }
   },
@@ -142,17 +150,29 @@ let  projectPage = {
   },
 
   /*
-   * Verify part names for single pin
+   * Verify part names and setting the price to params
    */
-  validatePartNames: {
-    value: function(names, count) {
+  validatePartNamesAndPrice: {
+    value: function(names, count, pinType) {
       for (var i = 1; i <= count; i++) {
         const partNamePos = browser.elementIdLocation(this.partsName(i).value.ELEMENT);
         browser.scroll(partNamePos.value.x, partNamePos.value.y);
         browser.pause(1000);
+        this.partsName(i).moveToObject();
+        this.partsName(i).waitForVisible();
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);
-        if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        if (pinType === 'single pin') {
+          browser.params.singlePinPrice['part1'] = this.partsPriceText(i).getText();
+        } else if (pinType === 'multiple pin') {
+          this.partsPriceText(i).moveToObject();
+          this.partsPriceText(i).waitForVisible();
+          browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
+        } else if (pinType === 'pin and plate') {
+          if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        } else {
+          browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+        }
       }
     }
   },
@@ -460,7 +480,7 @@ let  projectPage = {
   },
 
   /*
-   * User gives customer ordering number by input wizard
+   * User gives customer ordering number by input wizard 
    */
   customerOrdeingNumberInputWizard:{
     value: function(func1,func2) {
@@ -575,8 +595,22 @@ let  projectPage = {
         if(proj==this.corePinList(i).getText()) { count+=1; }
       }
       expect(count).to.equal(corePinCount);
+      }
+    },
+
+  /*
+   * Sets model numbers to params
+   */
+    takeModelNumber:{
+    value: function(count) {
+      for(let i=1; i<=count; i++)
+      {
+        this.modelNumber(i).moveToObject();
+        this.modelNumber(i).waitForVisible();
+        browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
+      }
     }
-  },
+  }
 };
 
 module.exports = Object.create(Page, projectPage);
