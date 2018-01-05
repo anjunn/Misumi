@@ -15,7 +15,6 @@ And User defines quotation condition for multiple pin
 Then User checks whether thumb nail of 3D appears for multiple pin
 When User verifies project name and price after thumbnail appears
 Given User opens the uploaded project
-
 Scenario: Check Selects a part
 
 When User selects a part by product type and selects Core pins
@@ -25,7 +24,7 @@ Scenario: Check Parts filter
 
 When User selects filter and take CorePin
 Then User verifies if filter has been proper
-And User does Feature Recognition for core pin
+And User does image comparison for core pin
 
 Scenario: User checks customer input number
 

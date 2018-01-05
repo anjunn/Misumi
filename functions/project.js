@@ -120,6 +120,33 @@ let  projectPage = {
     }
   },
 
+
+  /*
+   * Compare expected image with screenshot
+   */
+  compareImageCorePin: {
+    value: function(actualImagePath, expectedImagePath) {
+      this.chatBox.waitForVisible();
+      this.arrow.waitForVisible();
+      this.arrow.click();
+      browser.pause(5000);
+      browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+      this.arrow.click();
+      var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
+      var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
+      var filesRead = 0;
+      function doneReading() {
+        if (++filesRead < 2) return;
+        var diff = new PNG({width: actualImage.width, height: actualImage.height});
+        var totalPixels = 768000;
+        var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
+        var expectedDiff = ( (100 - expectedData.imageAccuracy) / 100 ) * totalPixels;
+        console.log("Expected Diff: " + expectedDiff + ", Actual Diff: " + pixelDiff);
+        expect(pixelDiff).to.be.below(expectedDiff);  
+      }
+    }
+  },
+
   /*
    * Increse quantity of part and verify price increases
    */
