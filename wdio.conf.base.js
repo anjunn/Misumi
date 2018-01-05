@@ -37,6 +37,9 @@ exports.config = {
     scenario7: [
       './feature/MZ_007-autoQtDrawingAttached.feature'
     ],
+    scenario15: [
+      './feature/MZ_015-smokeTest.feature'
+    ],
     all: [
       './feature/MZ_001-singlePinUpload.feature',
       './feature/MZ_002-multiplePinUpload.feature',

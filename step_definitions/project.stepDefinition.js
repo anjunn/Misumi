@@ -62,7 +62,7 @@ module.exports = function () {
     }
   });
 
-  this.Then(/^User check unit price and icon in parts view$/, () => {
+  this.Then(/^User check unit price and icon in parts view$/, {retry: 2}, () => {
     projectPage.validateManualIconInPartsView();
     projectPage.validatePriceInPartsView();
   });
@@ -140,5 +140,9 @@ module.exports = function () {
     } else if (pinType === 'plate') {
       projectPage.takeModelNumber(plateExpectedData.numberOfParts);
     }
+  });
+
+  this.Given(/^User moves to the top of the screen$/, () => {
+    projectPage.moveToTop();
   });
 };

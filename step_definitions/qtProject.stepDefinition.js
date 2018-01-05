@@ -32,7 +32,7 @@ module.exports = function () {
     qtProjectPage.sendMailToSupplier();
   });
 
-  this.Then(/^Admin modifies the quotation after getting data from suppliers for (plate|pin and plate)$/, (pinType) => {
+  this.Then(/^Admin modifies the quotation after getting data from suppliers for (plate|pin and plate)$/, {retry: 2}, (pinType) => {
     qtProjectPage.editQuotation(pinAndPlateInputData.quotationResult, pinType);
   });
 
@@ -64,7 +64,7 @@ module.exports = function () {
     qtProjectPage.checkOrderButton();
   });
 
-  this.Then(/^Operator checks 3d view of each part from QT page for (single pin|multiple pin|plate|pin and plate)$/, (pinType) => {
+  this.Then(/^Operator checks 3d view of each part from QT page for (single pin|multiple pin|plate|pin and plate)$/, {retry: 2}, (pinType) => {
     if(pinType === 'single pin') {
       qtProjectPage.checkPartsView(singlePinExpectedData.numberOfParts, singlePinExpectedData.partNames);
     } else if(pinType === 'multiple pin') {
