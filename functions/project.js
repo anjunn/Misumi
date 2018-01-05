@@ -37,10 +37,18 @@ let  projectPage = {
   downloadCsvOption:{ get: function () { return browser.element('//a[contains(text(),"部品明細一覧（CSV）")]'); }},
   mainSelectionInSelectByPart:{ get: function () { return browser.element('//span[@class="multiCheck"]'); }},
   mainSelectionInSelectByPartDeselect:{ get: function () { return browser.element('//span[@class="multiCheck checked"]'); }},
+  mainSelectionInSelectByPartDeselectIe: { value: function() { return `ul.btnPull.check>li>a>span` } },
   itemName:{ get: function () { return browser.element('(//ul[@class="menuSecond"]//li)[7]'); }},
+  itemNameIe: { value: function() { return `ul.btnPull.check>li>ul>li:nth-child(3)>ul>li:nth-child(2)>a`} },
   corePin:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[1]'); }},
   checkPartSelect: { value: function (part) { return browser.element(`(//input[@type="checkbox" and @class="selectedGroup"])[${part}]`); }},
+  checkPartSelectIe: { value: function(part) { return `#lstPartsBuy>div:nth-child(${part})>div.boxPartsInner>div` } },
   customerOrderingNumberField:{ value: function (input) { return browser.element(`(//div[@class="customInput"]//input[@type="text"])[${input}]`);}},
+  customerOrderingNumberFieldPart1: { value: function(part) { return `div#lstPartsBuy > div:nth-child(${part}) input.oya`} },
+  customerOrderingNumberFieldPart2: { value: function(part) { return `div#lstPartsBuy >div:nth-child(${part}) input.eda`} },
+  batchInputOptionIe:{ value: function() { return `ul.btnPull.other > li > ul > li:nth-child(1) > ul > li:nth-child(1) > a`} },
+  inputWizardOptionIe:{ value: function() { return `ul.btnPull.other > li > ul > li:nth-child(1) > ul > li:nth-child(2) > a`} },
+  resetBatchInputIe:{ value: function() { return `ul.btnPull.other > li > ul > li:nth-child(1) > ul > li:nth-child(3) > a`} },
   listFunctionOpen:{ get: function () { return browser.element('(//li[@class="btnLstFunc"])[3]'); }},
   closeList:{ get: function () { return browser.element('//li[@class="status01"]'); }},
   enterCustomerOderInList:{ get: function () { return browser.element('(//a[@class="level"])[5]'); }},
@@ -58,9 +66,14 @@ let  projectPage = {
   makeAnEstimate:{ get: function () { return browser.element('//a[contains(text(),"見積をする")]'); }},
   filterOption:{ get: function () { return browser.element('(//li[@class="btnLstFunc"])[2]'); }},
   itemNameFilter:{ get: function () { return browser.element('(//a[@class="level"])[4]');}},
+  corePinIe: { value: function() { return `ul.btnPull.filter>li>ul>li:nth-child(3)>ul>li:nth-child(2)>a` } },
   corePinFilter:{ get: function () { return browser.element('(//a[contains(text(),"コアピン")])[2]');}},
   corePinList: { value: function (n) {return browser.element(`(//span[@class="class"])[${n}]`); }},
   showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
+  filtermenu:{ get: function () { return browser.element('(//ul[@class="menuSecond"])[1]');}},
+  closeButtonIe:{ value: function() { return `#closeBtn > a`} },
+  corePinMulitplePinIe: { value: function() { return `#lstPartsBuy>div:nth-child(3) div.boxPartsInner>div>p>a` } },
+
   /*
    * Open project by clicking on thumbnail
    */
@@ -266,8 +279,20 @@ let  projectPage = {
     value: function() {
       this.mainSelectionInSelectByPart.waitForVisible();
       this.mainSelectionInSelectByPart.click();
-      this.itemName.moveToObject();
-      this.corePin.click();
+      var currentBrowser=browser.desiredCapabilities.browserName;
+      if(currentBrowser=="chrome")
+      {
+        this.itemName.moveToObject();
+        this.corePin.click();
+      }
+      else
+      {
+      browser.execute(function (selector) {
+      var element=document.querySelector(selector);
+      element.click();
+       },this.itemNameIe());
+      this.closeList.click();      
+      }
     }
   },
 
@@ -278,18 +303,39 @@ let  projectPage = {
     value: function(expectedPartsName,count,expectedCorePinCount) {
       var countCorePin=0;
       var countCheckedCheckBox=0;
+      var currentBrowser = browser.desiredCapabilities.browserName;
       for (var i=1; i<=count; i++) {
-        this.checkPartSelect(i).moveToObject();
+      if(this.partsName(i).getText()==""){
+      if(currentBrowser=="chrome"){ 
+        this.checkPartSelect(i).moveToObject();}
+      else{
+        browser.execute(function (selector) {
+        var e = document.querySelector('.WindowError')
+        if(e.style.display != 'none') {
+        e.style.display = 'none'}
+        document.querySelector(selector).scrollIntoView()
+       }, this.checkPartSelectIe(i+1));
+      }
+    }   
         if (this.partsName(i).getText() == expectedPartsName.part2) {
           this.checkPartSelect(i).isSelected();
-          countCorePin= countCorePin +1;
-        }
-        if (i == count) { this.customerOrderingNumberField(14).moveToObject(); }
-        if (this.checkPartSelect(i).isSelected()) { countCheckedCheckBox=countCheckedCheckBox+1; }
+          countCorePin= countCorePin +1;}
+        if (i == count) {
+          if(currentBrowser=="chrome") 
+           this.customerOrderingNumberField(14).moveToObject();}
+        if (this.checkPartSelect(i).isSelected()) { 
+          countCheckedCheckBox=countCheckedCheckBox+1;
+           }
       }
       expect(countCorePin).to.be.equal(expectedCorePinCount);
       expect(countCheckedCheckBox).to.be.equal(countCorePin);
-      this.mainSelectionInSelectByPartDeselect.moveToObject();
+      if(currentBrowser=="chrome") 
+       this.mainSelectionInSelectByPartDeselect.moveToObject();
+     else{
+       browser.execute(function (selector) {
+            document.querySelector(selector).scrollIntoView()  
+            },this.mainSelectionInSelectByPartDeselectIe());
+           }
       this.mainSelectionInSelectByPartDeselect.click();
       this.closeList.waitForVisible();
       this.closeList.click();
@@ -300,25 +346,59 @@ let  projectPage = {
    * User inputs Customer ordering number manually and clears it
    */
   customerOrdeingNumberManual:{
-    value: function(count,part1,part2) {
+    value: function(count,part1,part2) { 
       this.filterOption.waitForVisible();
       this.filterOption.click();
       this.showAllOption.click();
       this.customerOrderingNumberField(1).waitForVisible();
-      for (var i=1; i<=count; i++) {
-        this.customerOrderingNumberField(i).moveToObject();
+      var currentBrowser = browser.desiredCapabilities.browserName;
+      for (var i=1,j=2; i<=count; i++) {
+        if (currentBrowser=="chrome") {
+          this.customerOrderingNumberField(i).moveToObject();
+        } else {      
+          browser.execute(function (selector,iCount) {
+          var e = document.querySelector('.WindowError')
+          if(e.style.display != 'none'){
+            e.style.display = 'none'}
+            if(iCount%2!=0)
+            document.querySelector(selector).scrollIntoView();
+          }, this.customerOrderingNumberFieldPart1(j), i);
+          if(i%2==0)
+            j=j+1;
+        }
         if (i%2 != 0) {
           this.customerOrderingNumberField(i).setValue(part1);
         } else {
           this.customerOrderingNumberField(i).setValue(part2);
         }
       }
-      browser.url(browser.params.projectPageUrl);
-      this.customerOrderingNumberField(1).waitForVisible();
-      for (var i=1; i<=count; i++) {
-       this.customerOrderingNumberField(i).moveToObject();
-       this.customerOrderingNumberField(i).clearElement();
+      
+     if(currentBrowser=="chrome")
+       {
+        browser.url(browser.params.projectPageUrl);
+        this.customerOrderingNumberField(1).waitForVisible();
+        for (var i=1; i<=count; i++) {  
+         this.customerOrderingNumberField(i).moveToObject();
+         this.customerOrderingNumberField(i).clearElement();
+       }
+      } 
+     else
+     {
+       browser.url(browser.params.projectPageUrl);
+       this.customerOrderingNumberField(1).waitForVisible();
+     for(var k=2;k<=8;k++)
+      { 
+        console.log(this.customerOrderingNumberFieldPart1(k)+" ++++"+this.customerOrderingNumberFieldPart2(k));
+        browser.execute(function (selector1,selector2) {
+          var e = document.querySelector('.WindowError')
+          if(e.style.display != 'none'){
+            e.style.display = 'none'}
+            document.querySelector(selector1).scrollIntoView();
+            document.querySelector(selector1).value = "";
+            document.querySelector(selector2).value = "";
+          }, this.customerOrderingNumberFieldPart1(k),this.customerOrderingNumberFieldPart2(k));
       }
+     } 
     }
   },
 
@@ -326,12 +406,21 @@ let  projectPage = {
    * User inputs Customer ordering number in batch input
    */
   customerOrdeingNumberBatchInput:{
-    value: function() {
+    value: function() { 
       browser.url(browser.params.projectPageUrl);
+      var currentBrowser = browser.desiredCapabilities.browserName;
       this.listFunctionOpen.waitForVisible();
       this.listFunctionOpen.click();
-      this.enterCustomerOderInList.moveToObject();
-      this.batchInput.click();
+      if(currentBrowser=="chrome"){
+       this.enterCustomerOderInList.moveToObject();
+       this.batchInput.click();}
+      else
+      {
+        browser.execute(function (selector) {
+        var element=document.querySelector(selector);
+        element.click();  
+        },this.batchInputOptionIe());
+      } 
       this.closeButtonDialog.waitForVisible();
       this.closeButtonDialog.click();
       browser.pause(1000);
@@ -356,8 +445,17 @@ let  projectPage = {
     value: function() {
       this.listFunctionOpen.waitForVisible();
       this.listFunctionOpen.click();
-      this.enterCustomerOderInList.moveToObject();
-      this.undoBatchInput.click();
+      var currentBrowser = browser.desiredCapabilities.browserName;
+      if(currentBrowser=="chrome")   {
+       this.enterCustomerOderInList.moveToObject();
+       this.undoBatchInput.click();}
+      else{
+         browser.execute(function (selector) {
+        var element=document.querySelector(selector);
+        element.click();  
+        },this.resetBatchInputIe());
+      } 
+      this.closeList.click();
     }
   },
 
@@ -368,18 +466,36 @@ let  projectPage = {
     value: function(func1,func2) {
       this.listFunctionOpen.waitForEnabled();
       this.listFunctionOpen.click();
+      var currentBrowser = browser.desiredCapabilities.browserName;
+      if(currentBrowser=="chrome")   {
       this.enterCustomerOderInList.moveToObject();
       this.inputWizardList.waitForVisible();
-      this.inputWizardList.click();
+      this.inputWizardList.click();}
+      else{
+         browser.execute(function (selector) {
+          var element=document.querySelector(selector);
+          element.click();  
+        },this.inputWizardOptionIe());
+      } 
       this.inputWizardInput1.waitForVisible();
       this.inputWizardInput1.setValue(func1);
       this.inputWizardInput2.setValue(func2);
       this.collectiveInputButton.click();
+
+      if(currentBrowser=="chrome"){
       this.closeButton.waitForVisible();
-      this.closeButton.click();
+      this.closeButton.click();  
       this.closeButton.waitForVisible();
-      this.closeButton.click();
-    }
+      this.closeButton.click();}
+      else{
+        this.closeButton.waitForVisible();
+        browser.execute(function (selector) {
+          var element=document.querySelector(selector);
+          element.click(); 
+          element.click(); 
+        },this.closeButtonIe());
+      }
+  }
   },
 
   /*
@@ -401,9 +517,15 @@ let  projectPage = {
     value: function() {
       this.closeList.click();
       this.corePinMultiplePin.waitForVisible();
-      this.corePinMultiplePin.click();
-      this.changeMaterial.waitForEnabled();
-      this.changeMaterial.selectByValue("NAK80");
+      var currentBrowser = browser.desiredCapabilities.browserName;
+      if(currentBrowser=="chrome") {
+       this.corePinMultiplePin.click(); }
+      else {
+        browser.execute(function (selector) {
+          var element=document.querySelector(selector);
+          element.click();  
+        },this.corePinMulitplePinIe());
+      }  
     }
   },
 
@@ -412,6 +534,8 @@ let  projectPage = {
    */
   updateQuotation:{
     value: function(change) {
+      this.changeMaterial.waitForEnabled();
+      this.changeMaterial.selectByValue("NAK80");
       this.makeAnEstimate.waitForEnabled();
       this.makeAnEstimate.click();
       expect(this.changeMaterial.getValue()).to.equal(change);
@@ -424,9 +548,20 @@ let  projectPage = {
   selectFilterTakeCorePin:{
     value: function() {
       this.filterOption.click();
-      this.itemNameFilter.moveToObject();
-      this.corePinFilter.waitForVisible();
-      this.corePinFilter.click();
+      var currentBrowser = browser.desiredCapabilities.browserName;
+      if(currentBrowser=="chrome")
+       {
+        this.itemNameFilter.moveToObject();
+        this.corePinFilter.waitForVisible();
+        this.corePinFilter.click();
+       }
+      else
+      {
+        browser.execute(function (selector) {
+        var element=document.querySelector(selector);
+        element.click();  
+        },this.corePinIe());
+      }  
     }
   },
 
