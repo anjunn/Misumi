@@ -97,7 +97,9 @@ module.exports = function () {
     this.When(/^User verifies if filter has been proper$/, () => {
     projectPage.verifyFilterCorePin(multiplePinExpectedData.partNames.part2,multiplePinExpectedData.numberOfParts,multiplePinExpectedData.corePinCount);
   });
-
+    this.Then(/^User does image comparison for core pin$/, () => {
+    projectPage.compareImageCorePin('core-pin.png', 'multiple-pin/core-pin.png');
+  });
   this.When(/^User gives Customer ordering number manually and clears it$/, () => {
     projectPage.customerOrdeingNumberManual(14,multiplePinInputData.customerOrderingNumberPart1,multiplePinInputData.customerOrderingNumberPart2);
   });
