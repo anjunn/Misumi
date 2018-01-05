@@ -93,7 +93,7 @@ let  projectPage = {
       this.zoomOut.click();
       browser.pause(3000);
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
-      browser.windowHandleSize({width: 1280, height: 600});
+      browser.setViewportSize({width: 1280, height: 600});
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
