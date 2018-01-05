@@ -3,7 +3,6 @@ let inputData = require('../data/input-data/dataset.json');
 let expectDataSinglePin = require('../data/expected-results/single-pin.json');
 let mailExpectedData = require('../data/expected-results/email.json');
 
-
 let projectPageUrlFromMail;
 
 /**
@@ -83,11 +82,10 @@ let emailPage = {
       }
       browser.pause(3000);
       let fileName = browser.params.fileName;
-      this.fileNameInMail(fileName).waitForVisible();
+      this.fileNameInMail(fileName).waitForExist();
       this.fileNameInMail(fileName).click();
-      this.mailCheckbox(fileName).waitForVisible();
       this.mailPreview.waitForVisible();
-      browser.pause(2000);
+      projectPageUrlFromMail = this.mailLink.getText();
     }
   },
 
@@ -100,12 +98,11 @@ let emailPage = {
       let initialPrice = browser.params.initialPrice;
       projectPageUrl = browser.params.projectPageUrl;
       if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
-      let content=this.mailBody.getText().replace(/\s/g, '');
+      let content = this.mailBody.getText().replace(/\s/g, '');
       expect(content).to.include(browser.params.modelNumber);
       expect(this.mailPreview.getText()).to.include(browser.params.fileName);
-      expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
-      expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
-      projectPageUrlFromMail = this.mailLink.getText();
+      expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
+      expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
     }
   },
 
@@ -121,9 +118,8 @@ let emailPage = {
       expect(this.mailPreview.getText()).to.include(mailExpectedData.quotationMail.material);
       expect(this.mailPreview.getText()).to.include(mailExpectedData.quotationMail.price);
       expect(this.mailPreview.getText()).to.include(mailExpectedData.quotationMail.delivery);
-      expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
-      expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
-      projectPageUrlFromMail = this.mailLink.getText();
+      expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
+      expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
     }
   },
 
@@ -137,8 +133,9 @@ let emailPage = {
       expect(this.mailPreview.getText()).to.include(browser.params.totalPrice);
     }
   },
-    /**
-   * Verify mail body content 
+
+  /**
+   * Verify mail body content
    */
   checkMailContent: {
     value: function() {
@@ -159,19 +156,17 @@ let emailPage = {
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(this.mailLink.getText()).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
       projectPageUrlFromMail = this.mailLink.getText();
-      this.maildeleteIcon.click(); // After validation, delete the mail for avoiding future error.
+      this.maildeleteIcon.click();
       browser.url(projectPageUrlFromMail);
     }
   },
-  
 
-
-   /**
+  /**
    * User goes back to product page
    */
   goToProductPage: {
     value: function() {
-      browser.url(projectPageUrlFromMail)
+      browser.url(projectPageUrlFromMail);
     }
   }
 }

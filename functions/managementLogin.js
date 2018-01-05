@@ -30,6 +30,7 @@ let managementLoginPage = {
    */
   validateLoginPage: {
     value: function() {
+      if (!browser.isLoginPage()) return;
       this.loginPageTitle.waitForEnabled();
       expect(this.loginPageTitle.getText()).to.be.equal(expectedData.managementLoginPageText);
       this.usernameField.isVisible();
@@ -42,6 +43,7 @@ let managementLoginPage = {
    */
   login: {
     value: function(managementLoginDetails) {
+      if (!browser.isLoginPage()) return;
       this.usernameField.setValue(data.loginCredentials.management.username);
       this.passwordField.setValue(data.loginCredentials.management.password);
       this.loginButton.click();

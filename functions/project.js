@@ -27,8 +27,8 @@ let  projectPage = {
   partsPriceText: { value: function (n) { return browser.element(`(//p[@class="sum"]/span)[${n}]`); }},
   groupValue: { value: function (n) {return browser.element(`(//span[@class="groupItemCount"])[${n}]`); }},
   groupImage: { value: function (n) { return browser.element(`(//*[@class="group"]//img)[${n}]`);}},
-  manualQuotationPinAndPlate: { get: function () { return browser.element('//*[@id="lstPartsBuy"]/div[4]/div[2]/div/p/a'); }},
-  materialFieldPartsView: { get: function () { return browser.element('//*[@id="MATERIALTYPE.ARTICLE_TYPE_ID_6.6"]'); }},
+  manualQuotationPinAndPlate: { get: function () { return browser.element('(//div[@id="lstPartsBuy"]//a[@class="textBold"])[3]'); }},
+  materialFieldPartsView: { get: function () { return browser.element('//select[@id="MATERIALTYPE.ARTICLE_TYPE_ID_6.6"]'); }},
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
   manualOkIconPartsView: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]');}},
@@ -66,7 +66,7 @@ let  projectPage = {
   showAllOption:{ get: function () { return browser.element('//a[@id="displayAll"]');}},
   modelNumber:{ get: function () { return browser.element('//span[@class="modelNum"]');}},
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
- 
+
   /*
    * Open project by clicking on thumbnail
    */
@@ -152,22 +152,20 @@ let  projectPage = {
       for (var i = 1; i <= count; i++) {
         if (browser.desiredCapabilities.browserName === 'chrome') {
           this.partsName(i).moveToObject();
-        } else if (i > 3) {
-          browser.execute(function(selector) {
-            var element = document.querySelector(selector);
-            element.scrollIntoView();
-          }, this.partsNameSelector(i+1));
+        } else if (i > 2) {
+          browser.scrollToElement(this.partsNameSelector(i+1));
         }
         browser.pause(1000);
         var partName = this.partsName(i).getText();
         expect(partName).to.be.equal(names[`part${i}`]);
-        if (count === 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+        if (count === 3 && i != 3) browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
       }
     }
   },
 
   /*
    * Verify grouping for multiple pin
+
    */
   checkGrouping: {
     value: function(grouping) {

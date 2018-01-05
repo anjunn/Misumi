@@ -13,12 +13,14 @@ let qtProjectListPage = {
    */
   productName: { value: function (n) {return browser.element(`(//td[contains(@class,"linkColor")][3])[${n}]`);}},
   product: { get: function () { return browser.element('//table[@id="detailTable"]/tbody//td[9]/a');}},
+  productSelector: { get: function() { return 'table#detailTable  td:nth-child(9) > a'; } },
   checkboxSelectFile: { get: function () { return browser.element('(//input[@type="checkbox"])[9]');}},
   findProjectName: { get: function () { return browser.element('//input[@id="findProjectName"]');}},
   searchButton: { get: function () { return browser.element('(//button[@type="submit"])[1]');}},
   personInChargeDropdown: { get: function () { return browser.element('(//button[@class="btn btn-primary no-tab dropdown-toggle"])[2]');}},
   personInChargeList: { get: function () { return browser.element('//ul[@id="responsiblePerson"]//a[contains(text(),"CCT村澤")]');}},
   checkSelectedPerson: { get: function () { return browser.element('(//td[contains(@class, "ellipsis")])[5]');}},
+  selectedPersonSelector: { get: function() { return 'table#detailTable  td:nth-child(13)'; } },
   status: { get: function () { return browser.element('//span[@class="label label-danger"]');}},
 
   /**
@@ -26,13 +28,11 @@ let qtProjectListPage = {
    */
   searchItem: {
     value: function() {
+      browser.waitForLoading('//div[@id="loader"]')
       this.findProjectName.waitForVisible();
       this.findProjectName.clearElement();
-      browser.pause(2000);
       this.findProjectName.setValue(browser.params.fileName);
-      browser.pause(3000);
       this.searchButton.waitForEnabled();
-      browser.pause(2000);
       this.searchButton.click();
     }
   },
@@ -57,10 +57,9 @@ let qtProjectListPage = {
   verifySelectPersonInCharge: {
     value: function() {
       browser.pause(1000);
-      this.checkSelectedPerson.moveToObject();
+      browser.scrollToElement(this.selectedPersonSelector);
       this.checkSelectedPerson.waitForVisible();
-      //console.log(this.checkSelectedPerson.getText());
-      //expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
+      expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
     }
   },
 
@@ -82,7 +81,7 @@ let qtProjectListPage = {
     value: function() {
       browser.params.qtProjectListId = browser.getCurrentTabId();
       this.product.waitForEnabled();
-      this.product.moveToObject();
+      browser.scrollToElement(this.productSelector);
       this.product.click();
       var windowHandles = browser.windowHandles();
       browser.switchTab(windowHandles.value[1]);

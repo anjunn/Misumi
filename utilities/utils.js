@@ -28,12 +28,23 @@ const commonUtilities = {
   },
 
   /*
-  * Check if browser is at login page
+  * Check if browser is at presentation or management login page
   */
-  isLoginPage: function(){
+  isLoginPage: function() {
     var currentUrl = browser.getUrl();
-    return currentUrl === "https://prs-origin-tst.meviy.misumi-ec.com/login";
-  }
+    return currentUrl.includes("https://prs-origin-tst.meviy.misumi-ec.com/login") ||
+      currentUrl.includes("https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi/login");
+  },
+
+  /*
+  * Scroll to element by executing javascript for working in IE
+  */
+  scrollToElement: function(selector) {
+    browser.execute(function(selector) {
+      var element = document.querySelector(selector);
+      element.scrollIntoView();
+    }, selector);
+  },
 };
 
 /**
