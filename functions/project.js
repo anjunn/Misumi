@@ -248,6 +248,7 @@ let  projectPage = {
   */
   validateManualIconInPartsView: {
     value: function() {
+      this.manualOkIconPartsView.moveToObject();
       this.manualOkIconPartsView.waitForVisible();
       expect(this.manualOkIconPartsView.isVisible()).to.be.equal(true);
     }
@@ -258,6 +259,8 @@ let  projectPage = {
    */
   validatePriceInPartsView: {
     value: function() {
+      this.unitPriceManuallyQuoted.moveToObject();
+      this.manualOkIconPartsView.waitForVisible();
       var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
       expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
       browser.url(browser.params.projectPageUrl);
@@ -324,6 +327,7 @@ let  projectPage = {
    */
   selectByProductType:{
     value: function() {
+      this.mainSelectionInSelectByPart.moveToObject();
       this.mainSelectionInSelectByPart.waitForVisible();
       this.mainSelectionInSelectByPart.click();
       var currentBrowser=browser.desiredCapabilities.browserName;
@@ -480,6 +484,7 @@ let  projectPage = {
   verifyBatchInput:{
     value: function(expected,count) {
       for (i=2,j=0; i<=count; j++,i+=2) {
+        this.customerOrderingNumberField(i).waitForVisible();
         expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
       }
     }
@@ -636,6 +641,15 @@ let  projectPage = {
         this.modelNumber(i).waitForVisible();
         browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
       }
+    }
+  },
+
+  /*
+   * Moves to top of the parts view page
+   */
+  moveToTop: {
+    value: function () {
+      this.filterOption.moveToObject();
     }
   }
 };
