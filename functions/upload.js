@@ -31,7 +31,7 @@ let  uploadPage = {
   continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
   priceInList: { get: function () { return browser.element('(//li[@class="dataBox"]//span[2])');}},
   manualOkIcon: { get: function () { return browser.element(`//div[@class="dataLst clearfix"]//li[@class="status02"]`);}},
-  uploadFileLink: { get: function () { return browser.element('//input[@id="uploadfile"]'); }},
+  uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
 
   /**
    * Upload file by triggering drop event
@@ -113,10 +113,9 @@ let  uploadPage = {
       var date = (new Date()).getTime();
       var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
       browser.params.fileName = path.basename(newPath);
-      console.log(newPath);
       fs.rename(filePath, newPath, function() {});
       browser.pause(3000);
-      browser.chooseFile('#uploadfile', newPath);
+      browser.chooseFile('#masonryArea > form > ul > li > label>input', newPath);
       fs.rename(newPath, filePath, function() {});
     }
   },
@@ -141,9 +140,11 @@ let  uploadPage = {
    */
   quotationConditionFill: {
     value: function(quotationCondition) {
-      this.quantity.waitForEnabled();
+      this.material.waitForEnabled();
       this.material.selectByVisibleText(quotationCondition.material);
+      this.surfaceTreatment.waitForEnabled();
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
+      this.tolerance.waitForEnabled();
       this.tolerance.selectByVisibleText(quotationCondition.toleranceGrade);
       if (this.proceedToEstimateButton.isVisible()) {
         this.proceedToEstimateButton.click();

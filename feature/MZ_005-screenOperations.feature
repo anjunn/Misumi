@@ -15,12 +15,13 @@ And User defines quotation condition for multiple pin
 Then User checks whether thumb nail of 3D appears for multiple pin
 When User verifies project name and price after thumbnail appears
 Given User opens the uploaded project
+
 Scenario: Check Selects a part
 
 When User selects a part by product type and selects Core pins
 Then Check if all core pins are selected and finally deselect
 
-Scenario: Check Parts filter 
+Scenario: Check Parts filter
 
 When User selects filter and take CorePin
 Then User verifies if filter has been proper
@@ -29,7 +30,7 @@ And User does image comparison for core pin
 Scenario: User checks customer input number
 
 When User gives Customer ordering number manually and clears it
-When User gives Customer ordering number batch input 
+When User gives Customer ordering number batch input
 When User verifies Customer ordering number batch input
 Then User resets the batch input
 When User gives Customer ordering number using input wizard

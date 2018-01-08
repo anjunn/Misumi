@@ -5,7 +5,7 @@
  *
  */
 let merge = require('deepmerge');
-var path = require('path');
+let path = require('path');
 let wdioConfBase = require('./wdio.conf.base.js');
 
 const pathToDownload = path.resolve('data/downloads');
