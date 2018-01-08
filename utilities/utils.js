@@ -26,6 +26,24 @@ const commonUtilities = {
       throw err
     }
   },
+  /*
+  * Scroll to element by executing javascript for working in IE
+  */
+  scrollToElement: function (selector) {
+    browser.execute(function (selector) {
+      var element = document.querySelector(selector);
+      element.scrollIntoView();
+    }, selector);
+  },
+  /*
+  * Click element by executing javascript for working in IE
+  */
+  clickElement: function (selector) {
+    browser.execute(function (selector) {
+      var element = document.querySelector(selector);
+      element.click();
+    }, selector);
+  },
 
   /*
   * Check if browser is at login page
