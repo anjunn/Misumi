@@ -31,7 +31,6 @@ let emailPage = {
   mailLink: { get: function () { return browser.element('//div[@class="PlainText"]/a');} },
   mailPreview: { get: function () { return browser.element('//div[@class="PlainText"]');} },
 
-
   /*
    * Goes to email account home
    */
@@ -85,7 +84,6 @@ let emailPage = {
       this.fileNameInMail(fileName).waitForExist();
       this.fileNameInMail(fileName).click();
       this.mailPreview.waitForVisible();
-      projectPageUrlFromMail = this.mailLink.getText();
     }
   },
 
@@ -99,7 +97,7 @@ let emailPage = {
       projectPageUrl = browser.params.projectPageUrl;
       if (browser.params.initialPrice) expect(this.mailPreview.getText()).to.include(browser.params.initialPrice);
       let content = this.mailBody.getText().replace(/\s/g, '');
-      expect(content).to.include(browser.params.modelNumber);
+      expect(content).to.include(browser.params.modelNumber.part1);
       expect(this.mailPreview.getText()).to.include(browser.params.fileName);
       expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/^[^?]*/)[0]);
       expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
@@ -122,8 +120,6 @@ let emailPage = {
       expect(projectPageUrlFromMail).to.include(browser.params.projectPageUrl.match(/qtId=([^&]*)/)[0]);
     }
   },
-
-
   /*
    * Verify price and name in mail
    */
@@ -146,8 +142,7 @@ let emailPage = {
       let content=this.mailBody.getText().replace(/\s/g, '');
       let projectName = (expectDataSinglePin.mailContents.part1+browser.params.fileName);
       let fileNameMail =(expectDataSinglePin.mailContents.part2+browser.params.fileName);
-      console.log(projectName);
-      console.log(fileNameMail);
+      expect(content).to.include(browser.params.fileName);
       expect(content).to.include(projectName);
       expect(content).to.include(fileNameMail);
       expect(content).to.include(browser.params.modelNumber);
@@ -169,6 +164,6 @@ let emailPage = {
       browser.url(projectPageUrlFromMail);
     }
   }
-}
+};
 
 module.exports = Object.create(Page, emailPage);

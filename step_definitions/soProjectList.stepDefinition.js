@@ -22,7 +22,11 @@ module.exports = function () {
       soProjectListPage.verifyStatus();
   });
 
-  this.When(/^Open the user uploaded file to proceed to manual quotation$/, () => {
+  // this.When(/^Open the user uploaded file to proceed to manual quotation$/, () => {
+  //     soProjectListPage.openProject();
+  // });
+
+  this.When(/^Opens the file uploaded by the user from SO project list$/, () => {
       soProjectListPage.openProject();
   });
  

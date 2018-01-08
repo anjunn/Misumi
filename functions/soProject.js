@@ -20,9 +20,16 @@ let soProjectPage = {
   textArea:{ get: function () { return browser.element('//textarea[@id="email_comment"]');}},
   sendEmailDialog:{ get: function () { return browser.element('(//div[@class="text-center"]//h3)[3]');}},
   okButton: { get: function () { return browser.element('//i[@id="mailResultOk"]');}},
+  operationStatusColumn:{ value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[7]`);}},
+  productPartNumber: { value: function (n){return browser.element(`//table[@id="detailTable"]/tbody/tr[${n}]/td[2]/a`);}},
+  projectPage: { get: function() { return browser.element('//div[@class="panel-body"]//figure/img'); } },
+  orderButton: { get: function() { return browser.element('//span[contains(text(), "注文へ進む")]'); } },
+  partsView: { value: function(n) { return browser.element(`//table/tbody/tr[${n}]/td[2]/a`); } },
+  partName: { get: function() { return browser.element('//select[@id="condArticleType"]/option');} },
+  orderLink: { get: function() { return browser.element('//a[contains(text(), "注文へ進む")]');} },
   customerNumber:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail4"]');}},
   customerName:{ get: function () { return browser.element('//div[@class="form-control no-border ellipsis"][@id="detail5"]');}},
-  
+
    /**
    * Admin selects the supplier
    */
@@ -63,17 +70,19 @@ let soProjectPage = {
       this.emailSubjectField.waitForVisible();
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
-      this.textArea.click();
-      // expect(this.textArea.getValue()).to.include('pin-and-plate1513748027550.x_t');
-      // //browser.params.fileName
-      browser.keys('\uE004');
-      browser.keys('\uE007');
+      let mailBody = this.textArea.getValue().replace(/\s/g, '');
+      browser.pause(2000);
+      expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
+      expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
+      browser.execute(function() {
+        var sendButton = document.querySelector('#makeMailSend');
+        sendButton.click();
+      });
     }
   },
 
-
   /**
-   * Admin verfies if mail has been send
+   * Admin verfies if mail has been sent
    */
   verifySendMail: {
     value: function() {
@@ -82,40 +91,85 @@ let soProjectPage = {
       this.okButton.click();
     }
   },
- 
- sendMailToSupplier: {
+
+  /*
+   * Checks SO operation status
+   */
+   checkSoOperationStatus: {
+    value: function(count) {
+      browser.waitForLoading('//div[@id="loader"]');
+      for (var i = 1, j = 1; i <= count; i++, j+=2) {
+        this.operationStatusColumn(j).moveToObject();
+        this.operationStatusColumn(j).waitForVisible();
+        var soOperationStatus = this.operationStatusColumn(j).getText();
+        expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData);
+      }
+    }
+   },
+
+   /*
+   * Checks product part details for multiple pin
+   */
+   checkSoProductPartNumber: {
+    value: function(expected,count) {
+      for (var j = 0, position = 2; j < count; j++, position+=2) {
+        this.productPartNumber(position).moveToObject();
+        this.productPartNumber(position).waitForVisible();
+        var soProductPartNumber = this.productPartNumber(position).getText();
+        var i = j + 1;
+        expect(soProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
+      }
+    }
+   },
+
+   /*
+   * Checks 3d page of project
+   */
+  checkProjectPage: {
     value: function() {
-      this.orderingButton.click();
-      this.orderingListOption.click();
-      browser.pause(1000);
-      try {
-        if (browser.alertText()) {
-          browser.alertAccept();
-        }
-      } catch(e) {
-        console.log(e.message);
-      }
-      browser.pause(1000);
-      try {
-        if (browser.alertText()) {
-          browser.alertAccept();
-        }
-      } catch(e) {
-        console.log(e.message);
-      }
-      browser.pause(2000);
-      this.emailSubjectField.waitForVisible();
-      var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
-      this.emailSubjectField.setValue(subject);
-      this.textArea.click();
-      let mailBody = this.textArea.getValue().replace(/\s/g, '');
-      expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
-      expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
-      browser.keys('\uE004');
-      browser.keys('\uE007');
+      browser.waitForLoading('//div[@id="loader"]');
+      browser.params.qtProjectId = browser.windowHandle();
+      this.projectPage.moveToObject();
+      this.projectPage.click();
+      var windowHandles = browser.windowHandles();
+      browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
     }
   },
-
-
-  };
-  module.exports = Object.create(Page, soProjectPage);
+  /*
+   * Verifies order button is disabled
+   */
+  checkOrderButton: {
+    value: function() {
+      this.orderButton.waitForVisible();
+      var buttonClass = this.orderButton.getAttribute('class');
+      expect(buttonClass).to.be.equal('disable');
+      var windowHandles = browser.windowHandles();
+      browser.close(windowHandles.value[windowHandles.value.length - 2]);
+      browser.pause(1000);
+    }
+  },
+  /*
+   * Check parts view of each part
+   */
+  checkPartsView: {
+    value: function(count, parts) {
+      for(i = 1, j = 1; j <= 7; i+=2, j++) {
+        browser.pause(2000);
+        this.projectPage.waitForVisible();
+        this.partsView(i).moveToObject();
+        this.partsView(i).click();
+        browser.pause(2000);
+        var windowHandles = browser.windowHandles();
+        browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
+        browser.pause(2000);
+        if ( j > 2) {
+          this.partName.waitForVisible();
+          expect(this.partName.getText()).to.equal(parts[`part${j}`]);
+          expect(this.orderLink.isVisible()).to.equal(false);
+        }
+        browser.close(windowHandles.value[windowHandles.value.length - 2]);
+      }
+    }
+  },
+};
+module.exports = Object.create(Page, soProjectPage);

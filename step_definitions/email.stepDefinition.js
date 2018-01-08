@@ -14,9 +14,7 @@ module.exports = function () {
     emailPage.selectMail(mailType);
   });
 
-
-   this.Then(/^User verifies the product details in (estimate|quotation|order) mail$/, (mailType) => {
-   
+  this.Then(/^User verifies the product details in (estimate|quotation|order) mail$/, (mailType) => {
     if ( mailType === 'estimate' ) {
       emailPage.validateEstimationMail();
     } else if ( mailType === 'quotation' ) {
@@ -29,11 +27,6 @@ module.exports = function () {
   this.Then(/^User goes back to project page$/, () => {
     emailPage.goToProductPage();
   });
-
-  this.Then(/^User opens the email to check$/, () => {
-    emailPage.selectMail();
-  });
-
 
   this.Then(/^User checks the contents of the mail$/, () => {
     emailPage.checkMailContent();

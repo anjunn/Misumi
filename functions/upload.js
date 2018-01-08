@@ -31,7 +31,7 @@ let  uploadPage = {
   continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
   priceInList: { get: function () { return browser.element('(//li[@class="dataBox"]//span[2])');}},
   manualOkIcon: { get: function () { return browser.element(`//div[@class="dataLst clearfix"]//li[@class="status02"]`);}},
-  uploadFileLink: { get: function () { return browser.element('//input[@id="uploadfile"]'); }},
+  uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
 
   /**
    * Upload file by triggering drop event
@@ -115,7 +115,7 @@ let  uploadPage = {
       browser.params.fileName = path.basename(newPath);
       fs.rename(filePath, newPath, function() {});
       browser.pause(3000);
-      browser.chooseFile('#uploadfile', newPath);
+      browser.chooseFile('#masonryArea > form > ul > li > label>input', newPath);
       fs.rename(newPath, filePath, function() {});
     }
   },

@@ -28,9 +28,8 @@ let qtProjectListPage = {
    */
   searchItem: {
     value: function() {
-      browser.waitForLoading('//div[@id="loader"]')
+      browser.waitForLoading('//div[@id="loader"]');
       this.findProjectName.waitForVisible();
-      this.findProjectName.clearElement();
       this.findProjectName.setValue(browser.params.fileName);
       this.searchButton.waitForEnabled();
       this.searchButton.click();
@@ -42,8 +41,9 @@ let qtProjectListPage = {
    */
   selectPersonInCharge: {
     value: function() {
+      browser.waitForLoading('//div[@id="loader"]');
+      browser.pause(2000)
       this.checkboxSelectFile.waitForVisible();
-      browser.pause(2000);
       this.checkboxSelectFile.click();
       this.personInChargeDropdown.click();
       this.personInChargeList.waitForVisible();
