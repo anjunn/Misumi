@@ -37,7 +37,7 @@ exports.config = {
     scenario7: [
       './feature/MZ_007-autoQtDrawingAttached.feature'
     ],
-    scenario15: [
+    smokeTest: [
       './feature/MZ_015-smokeTest.feature'
     ],
     all: [
