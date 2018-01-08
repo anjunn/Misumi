@@ -11,7 +11,7 @@ module.exports = function () {
     soProjectPage.selectSupplier();
   });
 
-    this.Given(/^Admin sends email to the supplier$/, () => {
+    this.Given(/^Admin sends email to the supplier$/, {retry: 2}, () => {
     soProjectPage.sendMailToSupplier();
   });
     

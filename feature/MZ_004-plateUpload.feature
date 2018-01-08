@@ -55,6 +55,7 @@ Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers for plate
+And Admin sends mail to customer for plate
 
 Scenario: User goes to presentation site
 

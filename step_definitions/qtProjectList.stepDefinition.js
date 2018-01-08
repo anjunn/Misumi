@@ -10,7 +10,7 @@ module.exports = function () {
     qtProjectListPage.selectPersonInCharge();
   });
 
-  this.Then(/^Admin verifies if the selected person in charge is displayed$/, () => {
+  this.Then(/^Admin verifies if the selected person in charge is displayed$/, {retry: 2}, () => {
     qtProjectListPage.verifySelectPersonInCharge();
   });
 

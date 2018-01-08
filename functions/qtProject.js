@@ -69,7 +69,7 @@ let qtProjectPage = {
           expect(partName).to.be.equal(names['part1']);
           var partPrice = this.partPriceFirstRow.getText();
           expect(partPrice).to.be.equal(browser.params.singlePinPrice['part1'] + '円');
-      }else if (pinType === 'multiple pin'){
+      } else if (pinType === 'multiple pin'){
         var position = 1;
         for (var i = 1; i <= 7; i++) {
           if (i != 1) position = position + 2;
@@ -81,7 +81,7 @@ let qtProjectPage = {
             expect(partPrice).to.be.equal(browser.params.multiplePinPrice['part'+ i ] + '円');
           }
         }
-      }else if (pinType === 'pin and plate'){
+      } else if (pinType === 'pin and plate'){
         var position = 1;
         for (var i = 1; i <= 3; i++) {
           if (i != 1) position = position + 2;
@@ -93,7 +93,7 @@ let qtProjectPage = {
             expect(partPrice).to.be.equal(browser.params.pinAndPlatePrice['part'+ i ] + '円');
           }
         }
-      } else {
+      } else if (pinType === 'plate'){
          this.itemNamePlate.moveToObject();
          var partName = this.itemNamePlate.getText();
          expect(partName).to.be.equal(names['part1']);

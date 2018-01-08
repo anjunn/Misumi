@@ -56,7 +56,7 @@ Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier
 Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers for pin and plate
-And Admin sends mail to customer
+And Admin sends mail to customer for pin and plate
 
 Scenario: Email validation after quotation
 
@@ -105,8 +105,3 @@ Scenario: Operator opens the user uploaded project
 Given Admin selects the supplier from so page
 Then Admin sends email to the supplier
 And Admin verifies if the send email pop up is shown and clicks ok in SO page
-
-
-
-
-

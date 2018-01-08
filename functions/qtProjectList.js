@@ -84,7 +84,7 @@ let qtProjectListPage = {
       browser.scrollToElement(this.productSelector);
       this.product.click();
       var windowHandles = browser.windowHandles();
-      browser.switchTab(windowHandles.value[1]);
+      browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
     }
   },
 };
