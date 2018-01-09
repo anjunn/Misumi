@@ -84,6 +84,7 @@ let emailPage = {
       this.fileNameInMail(fileName).waitForExist();
       this.fileNameInMail(fileName).click();
       this.mailPreview.waitForVisible();
+      projectPageUrlFromMail = this.mailLink.getText();
     }
   },
 

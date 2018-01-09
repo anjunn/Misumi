@@ -182,7 +182,7 @@ let  projectPage = {
    * Verify part names for single pin
    * Hide error window and use js scroll for ie
    */
-  validatePartNames: {
+  validatePartNamesAndPrice: {
     value: function(names, count, pinType) {
       browser.execute(function() {
         var error = document.querySelector('.WindowError');
@@ -345,18 +345,13 @@ let  projectPage = {
   selectByProductType:{
     value: function() {
       var currentBrowser = browser.desiredCapabilities.browserName;
+      this.mainSelectionInSelectByPart.waitForVisible();
+      this.mainSelectionInSelectByPart.click();
       if (currentBrowser == "chrome"){
-        this.mainSelectionInSelectByPart.waitForVisible();
-        this.mainSelectionInSelectByPart.moveToObject();
-        this.mainSelectionInSelectByPart.click();
         this.itemName.moveToObject();
         this.corePin.click();
       } else {
-        browser.execute(function (selector) {
-          var element =document.querySelector(selector);
-          element.click();
-        }, this.corePinCheckSelector);
-        this.closeList.click();
+        browser.clickElement(this.corePinCheckSelector)
       }
     }
   },
@@ -415,10 +410,8 @@ let  projectPage = {
         if (currentBrowser=="chrome") {
           this.customerOrderingNumberField(i).moveToObject();
         } else {
-          browser.execute(function (selector,iCount) {
-            document.querySelector(selector).scrollIntoView();
-          }, this.customerOrderingNumberFieldPart1(j), i);
-          if (i%2==0) j=j+1;
+          browser.scrollToElement(this.customerOrderingNumberFieldPart1(j));
+          if (i%2 == 0) j=j+1;
         }
         if (i%2 != 0) {
           this.customerOrderingNumberField(i).setValue(part1);
@@ -435,16 +428,25 @@ let  projectPage = {
        }
       } else {
         for (var k=2; k<=8; k++) {
-        browser.execute(function (selector1,selector2) {
-          var e = document.querySelector('.WindowError')
-          if (e.style.display != 'none') { e.style.display = 'none' ;}
-          document.querySelector(selector1).scrollIntoView();
-          document.querySelector(selector1).value = "";
-          document.querySelector(selector2).value = "";
-        }, this.customerOrderingNumberFieldPart1(k), this.customerOrderingNumberFieldPart2(k));
-        browser.pause(2000);
+          browser.execute(function (selector1,selector2) {
+            var e = document.querySelector('.WindowError')
+            if (e.style.display != 'none') e.style.display = 'none';
+            document.querySelector(selector1).scrollIntoView();
+            document.querySelector(selector1).value = "";
+            document.querySelector(selector2).value = "";
+            if ("createEvent" in document) {
+              var evt = document.createEvent("HTMLEvents");
+              evt.initEvent("change", false, true);
+              document.querySelector(selector1).dispatchEvent(evt);
+              document.querySelector(selector2).dispatchEvent(evt);
+            } else {
+              document.querySelector(selector1).fireEvent("onchange");
+              document.querySelector(selector2).fireEvent("onchange");
+            }
+          }, this.customerOrderingNumberFieldPart1(k), this.customerOrderingNumberFieldPart2(k));
+          browser.pause(2000);
+        }
       }
-     }
     }
   },
 
@@ -454,9 +456,12 @@ let  projectPage = {
   customerOrdeingNumberBatchInput:{
     value: function() {
       browser.url(browser.params.projectPageUrl);
-      var currentBrowser = browser.desiredCapabilities.browserName;
+      browser.execute(function () {
+        document.querySelector('.WindowError').style.display = 'none';
+      });
       this.listFunctionOpen.waitForVisible();
       this.listFunctionOpen.click();
+      var currentBrowser = browser.desiredCapabilities.browserName;
       if (currentBrowser == "chrome") {
         this.enterCustomerOderInList.moveToObject();
         this.batchInput.click();
@@ -476,20 +481,16 @@ let  projectPage = {
    */
   verifyBatchInput:{
     value: function(expected,count) {
-      // browser.pause(2000);
-      // for (i=2,j=0; j<7; j++,i+=2) {
-      //   browser.url(browser.params.projectPageUrl);
-      //   var currentBrowser = browser.desiredCapabilities.browserName;
-      //   if (currentBrowser == "chrome") {
-      //   this.customerOrderingNumberField(i).moveToObject();
-      // }
-      // else{
-      //    browser.scrollToElement(this.customerOrderingNumberFieldPart2(i));
-      // }
-
-        // console.log(this.customerOrderingNumberField(i).getValue());
-        // expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
-      //}
+      browser.pause(2000);
+      for (i=2,j=0; j<7; j++,i+=2) {
+        if (browser.desiredCapabilities.browserName == "chrome") {
+          this.customerOrderingNumberField(i).moveToObject();
+        } else {
+          browser.scrollToElement(this.customerOrderingNumberFieldPart2(j+2));
+        }
+        this.customerOrderingNumberField(i).waitForVisible();
+        expect(this.customerOrderingNumberField(i).getValue()).to.equal(expected[j].part);
+      }
     }
   },
 
@@ -498,13 +499,13 @@ let  projectPage = {
    */
   resetInput:{
     value: function() {
-      // var currentBrowser = browser.desiredCapabilities.browserName;
-      //   if (currentBrowser == "chrome") {
-      //    this.listFunctionOpen.moveToObject();
-      // }
-      // else{
-      //    browser.scrollToElement(this.resetBatchInputSelector);
-      // }
+      var currentBrowser = browser.desiredCapabilities.browserName;
+      if (currentBrowser == "chrome") {
+        this.listFunctionOpen.moveToObject();
+      }
+      else {
+        browser.scrollToElement(this.resetBatchInputSelector);
+      }
       this.listFunctionOpen.waitForVisible();
       this.listFunctionOpen.click();
       var currentBrowser = browser.desiredCapabilities.browserName;
