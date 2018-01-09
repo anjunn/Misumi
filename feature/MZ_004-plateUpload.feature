@@ -57,11 +57,17 @@ Then Admin verifies if the send email pop up is shown and clicks ok
 And Admin modifies the quotation after getting data from suppliers for plate
 And Admin sends mail to customer for plate
 
+Scenario: Email validation after quotation
+
+Given User decides to check the email
+When User logs in to mail account
+Then User selects the product quotation mail
+
 Scenario: User goes to presentation site
 
-Given User goes to my page 
+Given User goes to my page
 
-Scenario: Validating Manual Quotation 
+Scenario: Validating Manual Quotation
 
 Then User validates manual quotation icon and price in the listing screen
 Then User opens the uploaded project
@@ -83,12 +89,12 @@ And User goes to Order History Page
 
 Scenario: Operator opens the order from SO page
 Given Admin goes to management site
-And Admin navigates to SO section in management site 
+And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 And Admin selects the person in charge for the uploaded project in SO page
 Then Admin verifies if the selected person in charge is displayed in SO page
-And Verifies if the status and colour is displayed correctly in SO page 
-And Opens the file uploaded by the user from SO project list 
+And Verifies if the status and colour is displayed correctly in SO page
+And Opens the file uploaded by the user from SO project list
 
 Scenario: Operator sends mail to supplier
 Given Admin selects the supplier from so page

@@ -30,7 +30,8 @@ let  uploadPage = {
   productTypePlate: { get: function () { return browser.element('//select[@name="articleTypeId"]'); }},
   continueToEstimateConditionButton: { get: function () { return browser.element('//a[@class="linkEstimate"]'); }},
   priceInList: { get: function () { return browser.element('(//li[@class="dataBox"]//span[2])');}},
-  manualOkIcon: { get: function () { return browser.element(`//div[@class="dataLst clearfix"]//li[@class="status02"]`);}},
+  autoOkIcon: { get: function () { return browser.element('//div[@class="dataLst clearfix"]//li[@class="status01"]');}},
+  manualOkIcon: { get: function () { return browser.element('//div[@class="dataLst clearfix"]//li[@class="status02"]');}},
   uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
 
   /**
@@ -178,7 +179,7 @@ let  uploadPage = {
       var thumbnail = this.thumbnail;
       browser.waitUntil(function(){
         return thumbnail.getAttribute('src').split(';')[0] == "data:image/png";
-      }, 10000, 'Thumbnail failed to load after 10 seconds')
+      }, 30000, 'Thumbnail failed to load after 30 seconds')
       var thumbnailData = this.thumbnail.getAttribute('src');
       var expectedData = base64Img.base64Sync('./data/screens/expected-screens/' + expectedThumbnail);
       expect(thumbnailData).to.be.equal(expectedData);
@@ -186,7 +187,7 @@ let  uploadPage = {
   },
 
   /*
-   * Check name and price after thumbnail appears
+   * Check name and price and icon after thumbnail appears
    * Price is not checked for pin and plate and plate only
    */
   checkNameAndPrice: {
@@ -196,6 +197,7 @@ let  uploadPage = {
         expect(this.price.getText()).to.not.be.null;
       }
       expect(this.productName.getText()).to.be.equal(browser.params.fileName);
+      expect(this.autoOkIcon.isVisible()).to.be.equal(true)
     }
   },
 
