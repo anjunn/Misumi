@@ -294,6 +294,7 @@ let qtProjectPage = {
       browser.waitForLoading('//div[@id="loader"]');
       browser.params.qtProjectId = browser.windowHandle();
       this.projectPage.moveToObject();
+      this.projectPage.waitForVisible();
       this.projectPage.click();
       var windowHandles = browser.windowHandles();
       browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
@@ -320,6 +321,7 @@ let qtProjectPage = {
     value: function(count, parts) {
       for(i = 1, j = 1; j <= 7; i+=2, j++) {
         browser.pause(2000);
+        this.projectPage.moveToObject();
         this.projectPage.waitForVisible();
         this.partsView(i).moveToObject();
         this.partsView(i).click();
