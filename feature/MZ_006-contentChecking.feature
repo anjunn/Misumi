@@ -12,28 +12,28 @@ And User validates Password field
 And User enters credentials and logs in
 
 
-Scenario: Single Pin upload
+# Scenario: Single Pin upload
 
-Given User uploads 3D data for single pin
-When User verifies whether upload is successful for single pin
-And User defines quotation condition for single pin
-Then User checks whether thumb nail of 3D appears for single pin
-When User verifies project name and price after thumbnail appears
+# Given User uploads 3D data for single pin
+# When User verifies whether upload is successful for single pin
+# And User defines quotation condition for single pin
+# Then User checks whether thumb nail of 3D appears for single pin
+# When User verifies project name and price after thumbnail appears
 
 
-Scenario: Email validation after upload
+# Scenario: Email validation after upload
 
-Given User opens the uploaded project
-And Takes model number from presentation for single pin
-And User decides to check the email
-When User logs in to mail account
-Then User selects the product estimate mail
-And User verifies the product details in estimate mail
+# Given User opens the uploaded project
+# And Takes model number from presentation for single pin
+# And User decides to check the email
+# When User logs in to mail account
+# Then User selects the product estimate mail
+# And User verifies the product details in estimate mail
 
 
 Scenario: Plate upload for manual quotation
 
-Given User goes to my page 
+# Given User goes to my page 
 Given User uploads 3D data for plate
 When User verifies whether upload is successful for plate
 And User defines quotation condition for plate

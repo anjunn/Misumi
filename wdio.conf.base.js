@@ -210,9 +210,21 @@ exports.config = {
       height: 600
     };
     browser.setViewportSize(size);
-
     console.log('Starting Test Case: -', specs[0].replace(/^.*[\\\/]/, ''));
-  },
+    var webdriverio = require('webdriverio');
+    var browser = webdriverio.multiremote({
+    myChromeBrowser: {
+        desiredCapabilities: {
+            browserName: 'chrome'
+        }
+    },
+    myFirefoxBrowser: {
+        desiredCapabilities: {
+            browserName: 'firefox'
+        }
+    }
+});
+},
 
   onPrepare: function () {
     let fs = require('fs');

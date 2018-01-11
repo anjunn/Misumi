@@ -21,6 +21,9 @@ let managementLoginPage = {
    */
   goToLoginPage: {
     value: function() {
+      if(browser.desiredCapabilities.browserName != "chrome"){
+        browser=chromeBrowser;
+      }
       browser.url(data.url.managementUrl);
     }
   },

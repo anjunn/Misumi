@@ -5,6 +5,7 @@ let pixelmatch = require('pixelmatch');
 let parse = require('csv-parse');
 let pdfreader = require('pdfreader');
 let expectedData = require('../data/expected-results/common.json');
+
 /**
  * project Page Object
  *
@@ -67,6 +68,7 @@ let  projectPage = {
   changeMaterial:{ get: function () { return browser.element('(//div[@class="customSelect"]//select)[2]'); }},
   makeAnEstimate:{ get: function () { return browser.element('//a[contains(text(),"見積をする")]'); }},
   filterOption:{ get: function () { return browser.element('(//li[@class="btnLstFunc"])[2]'); }},
+  filterOptionSelector:{ get: function() { return `ul.btnPull.filter > li`} },
   itemNameFilter:{ get: function () { return browser.element('(//a[@class="level"])[4]');}},
   corePinSelector: { get: function() { return `ul.btnPull.filter>li>ul>li:nth-child(3)>ul>li:nth-child(2)>a` } },
   corePinCheckSelector: { get: function() { return `ul.btnPull.check > li > ul > li:nth-child(3) > ul > li:nth-child(2) > a` } },
@@ -77,6 +79,7 @@ let  projectPage = {
   closeButtonSelector:{ get: function() { return `#closeBtn > a`} },
   corePinMulitplePinSelector: { get: function() { return `#lstPartsBuy>div:nth-child(3) div.boxPartsInner>div>p>a` } },
   modelNumber:{ value: function (n) {return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
+  modelNumberSelector: { value: function (part) {return `div.modelNum > span:nth-child(${part})`; }},
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
 
   /*
@@ -626,8 +629,16 @@ let  projectPage = {
    */
   takeModelNumber:{
     value: function (count) {
+      browser.execute(function (selector) {
+        var e = document.querySelector('.WindowError');
+        e.style.display = 'none';
+      });
       for(let i=1; i<=count; i++) {
-        this.modelNumber(i).moveToObject();
+        if(browser.desiredCapabilities.browserName=="chrome"){
+          this.modelNumber(i).moveToObject(); }
+        else{
+          console.log(this.modelNumberSelector(i+1)); 
+          browser.scrollToElement(this.modelNumberSelector(i+1)); }  
         this.modelNumber(i).waitForVisible();
         browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
       }
@@ -639,7 +650,10 @@ let  projectPage = {
    */
   moveToTop: {
     value: function () {
-      this.filterOption.moveToObject();
+      if(browser.desiredCapabilities.browserName=="chrome"){
+        this.filterOption.moveToObject();}
+      else{
+        browser.scrollToElement(this.filterOptionSelector);}
     }
   }
 };
