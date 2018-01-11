@@ -17,7 +17,7 @@ Given User uploads 3D data for plate
 When User verifies whether upload is successful for plate
 And User defines quotation condition for plate
 Then User checks whether thumb nail of 3D appears for plate
-When User verifies project name and price after thumbnail appears
+And User verifies project details for plate
 
 Scenario: Email validation after upload
 
@@ -77,6 +77,8 @@ Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
+And User validates contents of pdf file for plate
+And User validates contents of csv file
 
 Scenario: User places the order
 
@@ -86,6 +88,11 @@ And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page
 
+Scenario: Email validation after ordering
+
+Given User decides to check the email
+When User logs in to mail account
+Then User selects the product order mail
 
 Scenario: Operator opens the order from SO page
 Given Admin goes to management site
