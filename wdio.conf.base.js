@@ -206,7 +206,7 @@ exports.config = {
       part6: null,
       part7: null,
     }
-  }
+  },
 
   // Gets executed before test execution begins. At this point you can access all global
   // variables, such as `browser`. It is the perfect place to define custom commands.
