@@ -122,7 +122,7 @@ let soProjectPage = {
     }
    },
 
-   /*
+  /*
    * Checks 3d page of project
    */
   checkProjectPage: {
@@ -135,6 +135,7 @@ let soProjectPage = {
       browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
     }
   },
+
   /*
    * Verifies order button is disabled
    */
@@ -148,6 +149,7 @@ let soProjectPage = {
       browser.pause(1000);
     }
   },
+
   /*
    * Check parts view of each part
    */
