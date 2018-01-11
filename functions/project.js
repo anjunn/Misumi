@@ -204,7 +204,11 @@ let  projectPage = {
         if (pinType === 'single pin') {
           browser.params.singlePinPrice[`part${i}`] = this.partsPriceText(i).getText();
         } else if (pinType === 'multiple pin') {
-          browser.scrollToElement(this.partsPriceText(i));
+            if (browser.desiredCapabilities.browserName === 'chrome') {
+            this.partsPriceText(i).moveToObject();
+          } else {
+            browser.scrollToElement(this.partsPriceText(i));
+          }
           this.partsPriceText(i).waitForVisible();
           browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
         } else if (pinType === 'pin and plate') {
@@ -224,7 +228,7 @@ let  projectPage = {
     value: function(grouping) {
       for (var i = 1; i <= 4; i++) {
         if (browser.desiredCapabilities.browserName === 'chrome') {
-          this.grouping.moveToObject();
+          browser.moveToObject(`(//*[@class="groupItemCount"])[${i}]`);
         } else {
           browser.execute(function(selector, part) {
             var element = document.getElementsByClassName(selector)[part - 1];

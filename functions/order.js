@@ -43,6 +43,7 @@ let  orderPage = {
       expect(this.orderPageHeading.getText()).to.be.equal(heading);
       const productNamePos = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
       browser.scroll(productNamePos.value.x, productNamePos.value.y);
+      this.orderPageProductName.waitForVisible();
       expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
     }
   },
