@@ -57,6 +57,8 @@ let soProjectListPage = {
    */
   selectPersonInCharge: {
     value: function() {
+      browser.waitForLoading('//div[@id="loader"]');
+      browser.pause(2000)
       this.checkboxSelectFile.waitForVisible();
       browser.pause(2000);
       this.checkboxSelectFile.click();
@@ -73,6 +75,7 @@ let soProjectListPage = {
     value: function() {
       browser.pause(2000);
       this.checkSelectedPerson.moveToObject();
+      this.checkSelectedPerson.waitForVisible()
       expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
     }
   },

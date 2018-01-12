@@ -65,8 +65,8 @@ module.exports = function () {
   	}
   });
 
-  this.When(/^User verifies project name and price after thumbnail appears$/, () => {
-    uploadPage.checkNameAndPrice();
+  this.Then(/^User verifies project details for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+    uploadPage.checkNameAndPrice(pinType);
   });
 
   this.When(/^User goes to my page$/, () => {

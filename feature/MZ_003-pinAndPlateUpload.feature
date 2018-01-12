@@ -1,3 +1,4 @@
+
 Feature: Scenario 3
 
 Scenario: User logins to presentation site
@@ -17,7 +18,7 @@ Given User uploads 3D data for pin and plate
 When User verifies whether upload is successful for pin and plate
 And User defines quotation condition for pin and plate
 Then User checks whether thumb nail of 3D appears for pin and plate
-When User verifies project name and price after thumbnail appears
+And User verifies project details for pin and plate
 
 Scenario: Email validation after upload
 
@@ -78,7 +79,7 @@ Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
-And User validates contents of pdf file
+And User validates contents of pdf file for pin and plate
 And User validates contents of csv file
 
 Scenario: User places the order
@@ -89,6 +90,12 @@ And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page
 
+Scenario: Email validation after ordering
+
+Given User decides to check the email
+When User logs in to mail account
+Then User selects the product order mail
+
 Scenario: Operator opens the order from SO page
 
 Given Admin goes to management site
@@ -96,8 +103,8 @@ And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 And Admin selects the person in charge for the uploaded project in SO page
 Then Admin verifies if the selected person in charge is displayed in SO page
-And Verifies if the status and colour is displayed correctly in SO page 
-And Opens the file uploaded by the user from SO project list 
+And Verifies if the status and colour is displayed correctly in SO page
+And Opens the file uploaded by the user from SO project list
 
 
 Scenario: Operator opens the user uploaded project

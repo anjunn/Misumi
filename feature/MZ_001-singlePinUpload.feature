@@ -17,7 +17,7 @@ Given User uploads 3D data for single pin
 When User verifies whether upload is successful for single pin
 And User defines quotation condition for single pin
 Then User checks whether thumb nail of 3D appears for single pin
-When User verifies project name and price after thumbnail appears
+And User verifies project details for single pin
 
 Scenario: Email validation after upload
 

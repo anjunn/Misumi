@@ -56,7 +56,7 @@ let qtProjectPage = {
   itemName:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[14]');}},
   material:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[15]');}},
   quantity:{ get: function () { return browser.element('//table[@class="table table-hover tablesorter tablesorter-blue"]//td[17]');}},
- 
+
   /*
    * Admin validate price and name of each parts
    */
@@ -124,7 +124,7 @@ let qtProjectPage = {
       browser.pause(1000);
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
-      browser.pause(1000);
+      browser.pause(2000);
       this.textArea.click();
       expect(this.textArea.getValue()).to.include(browser.params.fileName);
       browser.pause(1000);
