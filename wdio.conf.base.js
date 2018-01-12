@@ -172,17 +172,41 @@ exports.config = {
   },
 
   // params for storing global variables
-  // params: {
-  //   projectPageUrl: null,
-  //   fileName: null,
-  //   initialPrice: null,
-  //   totalPrice: null,
-  //   qtProjectListId: null,
-  //   pinAndPlatePrice: {
-  //     part1: null,
-  //     part2: null
-  //   }
-  // },
+  params: {
+    projectPageUrl: null,
+    fileName: null,
+    initialPrice: null,
+    totalPrice: null,
+    qtProjectListId: null,
+    singlePinPrice: {
+      part1: null,
+    },
+    multiplePinPrice: {
+      part1: null,
+      part2: null,
+      part3: null,
+      part4: null,
+      part5: null,
+      part6: null,
+      part7: null,
+    },
+    platePrice: {
+      part1: null,
+    },
+    pinAndPlatePrice: {
+      part1: null,
+      part2: null
+    },
+    modelNumber: {
+      part1: null,
+      part2: null,
+      part3: null,
+      part4: null,
+      part5: null,
+      part6: null,
+      part7: null,
+    }
+  },
 
   // Gets executed before test execution begins. At this point you can access all global
   // variables, such as `browser`. It is the perfect place to define custom commands.
@@ -267,42 +291,5 @@ exports.config = {
 
   afterFeature: function (feature) {
     browser.deleteCookie();
-  },
-
-   // params for storing global variables
-  params: {
-    projectPageUrl: null,
-    fileName: null,
-    initialPrice: null,
-    totalPrice: null,
-    qtProjectListId: null,
-    singlePinPrice: {
-      part1: null,
-    },
-    multiplePinPrice: {
-      part1: null,
-      part2: null,
-      part3: null,
-      part4: null,
-      part5: null,
-      part6: null,
-      part7: null,
-    },
-    platePrice: {
-      part1: null,
-    },
-    pinAndPlatePrice: {
-      part1: null,
-      part2: null
-    },
-    modelNumber: {
-      part1: null,
-      part2: null,
-      part3: null,
-      part4: null,
-      part5: null,
-      part6: null,
-      part7: null,
-    },
   }
 };

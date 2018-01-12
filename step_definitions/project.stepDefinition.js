@@ -71,8 +71,16 @@ module.exports = function () {
     projectPage.downloadPdf();
   });
 
-  this.Then(/^User validates contents of pdf file$/, () => {
-    projectPage.validatePdf();
+  this.Then(/^User validates contents of pdf file for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+    if (pinType === 'single pin') {
+      projectPage.validatePdf(singlePinExpectedData.partNames, pinType);
+    } else if (pinType === 'multiple pin') {
+      projectPage.validatePdf(multilePinExpectedData.partNames, pinType);
+    } else if (pinType === 'pin and plate') {
+      projectPage.validatePdf(pinAndPlateExpectedData.partNames, pinType);
+    } else if (pinType === 'plate') {
+      projectPage.validatePdf(plateExpectedData.partNames, pinType);
+    }
   });
 
   this.Then(/^User downloads the csv$/, () => {

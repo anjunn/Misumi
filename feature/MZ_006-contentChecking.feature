@@ -18,7 +18,7 @@ Given User uploads 3D data for single pin
 When User verifies whether upload is successful for single pin
 And User defines quotation condition for single pin
 Then User checks whether thumb nail of 3D appears for single pin
-When User verifies project name and price after thumbnail appears
+And User verifies project details for single pin
 
 
 Scenario: Email validation after upload
@@ -33,12 +33,12 @@ And User verifies the product details in estimate mail
 
 Scenario: Plate upload for manual quotation
 
-Given User goes to my page 
+Given User goes to my page
 Given User uploads 3D data for plate
 When User verifies whether upload is successful for plate
 And User defines quotation condition for plate
 Then User checks whether thumb nail of 3D appears for plate
-When User verifies project name and price after thumbnail appears
+And User verifies project details for single pin
 
 
 Scenario: User request for manual quotation
@@ -87,10 +87,10 @@ And User verifies the product details in quotation mail
 
 Scenario: User goes to presentation site
 
-Given User goes to my page 
+Given User goes to my page
 
 
-Scenario: Validating Manual Quotation 
+Scenario: Validating Manual Quotation
 
 Then User validates manual quotation icon and price in the listing screen
 Then User opens the uploaded project
@@ -101,7 +101,8 @@ Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
-
+And User validates contents of pdf file for plate
+And User validates contents of csv file
 
 Scenario: User places the order
 
@@ -111,8 +112,7 @@ And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page
 
-
-Scenario: Email validation after order placing 
+Scenario: Email validation after order placing
 
 Given User decides to check the email
 Then User selects the product order mail

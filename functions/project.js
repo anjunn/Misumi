@@ -3,7 +3,7 @@ let fs = require('fs');
 let PNG = require('pngjs').PNG;
 let pixelmatch = require('pixelmatch');
 let parse = require('csv-parse');
-let pdfreader = require('pdfreader');
+let pdfText = require('pdf-text');
 let expectedData = require('../data/expected-results/common.json');
 // if (browser.desiredCapabilities.browserName != 'chrome')
 // {
@@ -260,7 +260,7 @@ let  projectPage = {
         this.manualQuotationPlate.waitForVisible();
         this.manualQuotationPlate.click();
       }
-      this.materialFieldPartsView.waitForVisible();
+      this.materialFieldPartsView.waitForEnabled();
       this.materialFieldPartsView.selectByVisibleText(estimateCondition.material);
       this.boxButtonpartsview.waitForEnabled();
       browser.pause(2000);
@@ -301,6 +301,7 @@ let  projectPage = {
    */
   downloadPdf: {
     value: function() {
+      browser.pause(3000);
       this.downloadButton.waitForVisible();
       this.downloadButton.click();
       this.downloadPdfOption.waitForVisible();
@@ -322,16 +323,22 @@ let  projectPage = {
    * Validate contents of pdf
    */
   validatePdf: {
-    value: function() {
+    value: function(parts, pinType) {
       browser.pause(3000);
       var files = fs.readdirSync('data/downloads');
       var path = require('path');
       for (var i in files) {
         if (path.extname(files[i]) === ".pdf") {
-          console.log(files[i]);
-          new pdfreader.PdfReader().parseFileItems(`data/downloads/${files[i]}`, function(err, item){
-            console.log(item.text);
-          });
+          var buffer = fs.readFileSync(`data/downloads/${files[i]}`);
+          pdfText(buffer, function(err, chunks) {
+            console.log(pinType);
+            if (pinType != 'pin and plate' && pinType != 'single pin') {
+              expect(chunks.includes(browser.params.fileName), 'Pdf Validation failed').to.be.equal(true);
+            }
+            Object.values(parts).forEach((part) => {
+              expect(chunks.includes(part), 'Pdf Validation failed').to.be.equal(true);
+            });
+          })
         }
       }
     }
@@ -344,8 +351,8 @@ let  projectPage = {
     value: function() {
       var inputFile =`data/downloads/${browser.params.fileName}.csv`;
       var parser = parse({delimiter: ','}, function (err, data) {
-        var part3 = data[2];
-        expect(browser.params.fileName).to.be.equal(part3[1]);
+        var part = data[1];
+        expect(browser.params.fileName, 'Csv Validation failed').to.be.equal(part[1]);
       });
       fs.createReadStream(inputFile).pipe(parser);
     }
