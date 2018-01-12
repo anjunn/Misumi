@@ -14,6 +14,7 @@
     "test-ci-s6": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario6",
     "test-ci-s7": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario7",
     "test-ci-s15": "node_modules/.bin/wdio wdio.conf.chrome.js --suite smokeTest",
+    "test-ci-selected": "node_modules/.bin/wdio wdio.conf.selected.js --suite selected",
     "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
     "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0"
   },
