@@ -5,7 +5,10 @@ let pixelmatch = require('pixelmatch');
 let parse = require('csv-parse');
 let pdfreader = require('pdfreader');
 let expectedData = require('../data/expected-results/common.json');
-
+// if (browser.desiredCapabilities.browserName != 'chrome')
+// {
+//   browser = "ieBrowser";
+// }
 /**
  * project Page Object
  *
@@ -26,6 +29,7 @@ let  projectPage = {
   quantityChange: { get: function () { return browser.element('(//input[@type="number"])[1]'); }},
   priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]'); }},
   partsPriceText: { value: function (n) { return browser.element(`(//p[@class="sum"]/span)[${n}]`); }},
+  partsPriceTextSelector: { value: function (part) {return `#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner > div > div.order > ul > div > p.sum > span`; }},
   groupValue: { value: function (n) {return browser.element(`(//span[@class="groupItemCount"])[${n}]`); }},
   groupImage: { value: function (n) { return browser.element(`(//*[@class="group"]//img)[${n}]`);}},
   manualQuotationPinAndPlate: { get: function () { return browser.element('(//div[@id="lstPartsBuy"]//a[@class="textBold"])[3]'); }},
@@ -79,7 +83,7 @@ let  projectPage = {
   closeButtonSelector:{ get: function() { return `#closeBtn > a`} },
   corePinMulitplePinSelector: { get: function() { return `#lstPartsBuy>div:nth-child(3) div.boxPartsInner>div>p>a` } },
   modelNumber:{ value: function (n) {return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
-  modelNumberSelector: { value: function (part) {return `div.modelNum > span:nth-child(${part})`; }},
+  modelNumberSelector: { value: function (part) {return `#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner > div > div.modelNum > span:nth-child(2)`; }},
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
 
   /*
@@ -187,6 +191,7 @@ let  projectPage = {
    */
   validatePartNamesAndPrice: {
     value: function(names, count, pinType) {
+      this.partsName(1).waitForEnabled();
       browser.execute(function() {
         var error = document.querySelector('.WindowError');
         error.style.display = 'none';
@@ -207,7 +212,7 @@ let  projectPage = {
             if (browser.desiredCapabilities.browserName === 'chrome') {
             this.partsPriceText(i).moveToObject();
           } else {
-            browser.scrollToElement(this.partsPriceText(i));
+            browser.scrollToElement(this.partsPriceTextSelector(i+1));
           }
           this.partsPriceText(i).waitForVisible();
           browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
@@ -633,16 +638,18 @@ let  projectPage = {
    */
   takeModelNumber:{
     value: function (count) {
+      this.modelNumber(1).waitForEnabled();
       browser.execute(function (selector) {
         var e = document.querySelector('.WindowError');
         e.style.display = 'none';
       });
-      for(let i=1; i<=count; i++) {
+      for(var i=1; i<=count; i++) {
         if(browser.desiredCapabilities.browserName=="chrome"){
           this.modelNumber(i).moveToObject(); }
         else{
-          console.log(this.modelNumberSelector(i+1)); 
-          browser.scrollToElement(this.modelNumberSelector(i+1)); }  
+          if(i>2){
+            browser.scrollToElement(this.modelNumberSelector(i+1)); }
+           }  
         this.modelNumber(i).waitForVisible();
         browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
       }

@@ -14,7 +14,9 @@
     "test-ci-s6": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario6",
     "test-ci-s6-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite scenario6",
     "test-ci-s7": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario7",
+    "test-ci-s7-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite scenario7",
     "test-ci-s15": "node_modules/.bin/wdio wdio.conf.chrome.js --suite smokeTest",
+    "test-ci-delete": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario8",
     "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
     "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0"
   },
