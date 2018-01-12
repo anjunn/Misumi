@@ -1,4 +1,4 @@
-Feature: 001
+Feature: Scenario 1
 
 Scenario: User logins to presentation site
 
