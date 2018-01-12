@@ -11,12 +11,14 @@ let  deleteProduct = {
   okButton: { get: function () { return browser.element('//li[@id="okBtn"]'); }},
   deleteButton: { get: function () { return browser.element('(//li[@class="dataBox"])[1]//p[@class="deleteBtn"]//a'); }},
   waitFirstItem: { get: function () { return browser.element('(//li[@class="dataBox"])[1]'); }},
-  
+  siteLoad: { get: function () { return browser.element('//p[contains(text(),"3D CAD")]'); }},
+
   /*
    * Delete elements one by one
    */
   deleteProduct: {
     value: function() {
+      this.siteLoad.waitForVisible();
       for(var i=1;;i++){
         if(!(this.waitFirstItem).isVisible())
           break;
