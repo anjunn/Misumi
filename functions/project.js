@@ -93,6 +93,7 @@ let  projectPage = {
     value: function() {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
+      browser.pause(3000);
       this.arrow.waitForVisible();
       browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
     }
