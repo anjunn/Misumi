@@ -50,7 +50,7 @@ exports.config = {
       './feature/MZ_005-screenOperations.feature',
       './feature/MZ_006-contentChecking.feature',
       './feature/MZ_007-autoQtDrawingAttached.feature'
-    ]
+    ],
   },
   //
   // ============

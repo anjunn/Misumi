@@ -25,12 +25,14 @@
 
 >  Open another terminal for executing the test, commands are listed below
 
-* For running all Scenarios :`npm run test-ci`
-* For running scenario 1  :  `npm run test-s1`
-* For running scenario 2  :  `npm run test-s2`
-* For running scenario 3  :  `npm run test-s3`
-* For running scenario 4  :  `npm run test-s4`
-* For running scenario 5  :  `npm run test-s5`
+* For running all Scenarios: npm run test-ci-chrome
+* For running scenario 1: npm run test-ci-s1
+* For running scenario 2: npm run test-ci-s2
+* For running scenario 3: npm run test-ci-s3
+* For running scenario 4: npm run test-ci-s4
+* For running scenario 5: npm run test-ci-s5 
+* For running scenario 6: npm run test-ci-s6
+* For running scenario 7: npm run test-ci-s7
 
 ## Reports using allure: :
 

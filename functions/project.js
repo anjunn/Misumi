@@ -5,10 +5,6 @@ let pixelmatch = require('pixelmatch');
 let parse = require('csv-parse');
 let pdfText = require('pdf-text');
 let expectedData = require('../data/expected-results/common.json');
-// if (browser.desiredCapabilities.browserName != 'chrome')
-// {
-//   browser = "ieBrowser";
-// }
 /**
  * project Page Object
  *

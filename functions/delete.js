@@ -23,7 +23,6 @@ let  deleteProduct = {
         if(!(this.waitFirstItem).isVisible())
           break;
         this.waitFirstItem.waitForEnabled();
-        console.log(typeof(this.productTile));
         if(this.menu.isVisible()){
           this.menu.waitForVisible();
           this.menu.click();
@@ -45,7 +44,6 @@ let  deleteProduct = {
           this.okButton.click();
           browser.pause(2000);
           }
-          console.log(i);
           browser.waitForLoading('//p[@class="listLoading"]//img');    
       }
     }
