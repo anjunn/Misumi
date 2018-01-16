@@ -30,7 +30,8 @@ let qtProjectListPage = {
     value: function() {
       browser.waitForLoading('//div[@id="loader"]');
       this.findProjectName.waitForVisible();
-      this.findProjectName.setValue(browser.params.fileName);
+      var fileName = browser.params.fileName || require('../data/cad-drawings/filename.json').fileName;
+      this.findProjectName.setValue(fileName);
       this.searchButton.waitForEnabled();
       this.searchButton.click();
     }

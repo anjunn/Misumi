@@ -48,6 +48,18 @@ exports.config = {
       './feature/MZ_005-screenOperations.feature',
       './feature/MZ_006-contentChecking.feature',
       './feature/MZ_007-autoQtDrawingAttached.feature'
+    ],
+    s3Iepart1: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart1.feature',
+    ],
+    s3Iepart2: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart2.feature',
+    ],
+    s3Iepart3: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart3.feature',
+    ],
+    s3Iepart4: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart4.feature',
     ]
   },
 
@@ -177,7 +189,6 @@ exports.config = {
     fileName: null,
     initialPrice: null,
     totalPrice: null,
-    qtProjectListId: null,
     singlePinPrice: {
       part1: null,
     },

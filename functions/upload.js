@@ -40,12 +40,21 @@ let  uploadPage = {
   upload: {
     value: function(filePath) {
 
+      this.waitForFormComponent.waitForVisible();
+
       var date = (new Date()).getTime();
       var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
       browser.params.fileName = path.basename(newPath);
       fs.rename(filePath, newPath, function() {});
 
-      this.waitForFormComponent.waitForVisible();
+      if (browser.desiredCapabilities.browserName != "chrome") {
+        var data = JSON.stringify({fileName: browser.params.fileName});
+        const writePath = './data/cad-drawings/filename.json';
+        fs.writeFile(writePath, data, function(err) {
+          if (err) return console.log(err);
+        });
+      }
+
       try {
         browser.execute(function () {
           var inputElement = document.createElement('input');

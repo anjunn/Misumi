@@ -95,7 +95,7 @@ let soProjectPage = {
   /*
    * Checks SO operation status
    */
-   checkSoOperationStatus: {
+  checkSoOperationStatus: {
     value: function(count) {
       browser.waitForLoading('//div[@id="loader"]');
       for (var i = 1, j = 1; i <= count; i++, j+=2) {
@@ -105,22 +105,24 @@ let soProjectPage = {
         expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData);
       }
     }
-   },
+  },
 
    /*
    * Checks product part details for multiple pin
    */
-   checkSoProductPartNumber: {
+  checkSoProductPartNumber: {
     value: function(expected,count) {
-      for (var j = 0, position = 2; j < count; j++, position+=2) {
-        this.productPartNumber(position).moveToObject();
-        this.productPartNumber(position).waitForVisible();
-        var soProductPartNumber = this.productPartNumber(position).getText();
-        var i = j + 1;
-        expect(soProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
+      if (browser.params.modelNumber) {
+        for (var j = 0, position = 2; j < count; j++, position+=2) {
+          this.productPartNumber(position).moveToObject();
+          this.productPartNumber(position).waitForVisible();
+          var soProductPartNumber = this.productPartNumber(position).getText();
+          var i = j + 1;
+          expect(soProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
+        }
       }
     }
-   },
+  },
 
   /*
    * Checks 3d page of project
