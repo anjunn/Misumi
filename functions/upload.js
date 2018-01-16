@@ -33,7 +33,9 @@ let  uploadPage = {
   autoOkIcon: { get: function () { return browser.element('//div[@class="dataLst clearfix"]//li[@class="status01"]');}},
   manualOkIcon: { get: function () { return browser.element('//div[@class="dataLst clearfix"]//li[@class="status02"]');}},
   uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
-
+  closeButton: { get: function () { return browser.element('//li[@id="closeBtn"]'); }},
+  previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
+ 
   /**
    * Upload file by triggering drop event
    */
@@ -163,6 +165,14 @@ let  uploadPage = {
         this.nextButtonPinAndPlate.waitForEnabled();
         this.productTypePinAndPlate.selectByVisibleText(quotationCondition.productType);
         this.nextButtonPinAndPlate.click();
+      }
+      if(this.closeButton.isVisible()){
+        this.closeButton.click();
+        if(this.previous.isVisible())
+        {
+          this.previous.click();
+        }
+        this.quotationConditionFill();
       }
     }
   },

@@ -25,6 +25,7 @@ let  projectPage = {
   quantityChange: { get: function () { return browser.element('(//input[@type="number"])[1]'); }},
   priceText: { get: function () { return browser.element('//*[@id="boxAmount"]//span[@class="textBold"]'); }},
   partsPriceText: { value: function (n) { return browser.element(`(//p[@class="sum"]/span)[${n}]`); }},
+  partsPriceTextSelector: { value: function (part) {return `#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner > div > div.order > ul > div > p.sum > span`; }},
   groupValue: { value: function (n) {return browser.element(`(//span[@class="groupItemCount"])[${n}]`); }},
   groupImage: { value: function (n) { return browser.element(`(//*[@class="group"]//img)[${n}]`);}},
   manualQuotationPinAndPlate: { get: function () { return browser.element('(//div[@id="lstPartsBuy"]//a[@class="textBold"])[3]'); }},
@@ -67,6 +68,7 @@ let  projectPage = {
   changeMaterial:{ get: function () { return browser.element('(//div[@class="customSelect"]//select)[2]'); }},
   makeAnEstimate:{ get: function () { return browser.element('//a[contains(text(),"見積をする")]'); }},
   filterOption:{ get: function () { return browser.element('(//li[@class="btnLstFunc"])[2]'); }},
+  filterOptionSelector:{ get: function() { return `ul.btnPull.filter > li`} },
   itemNameFilter:{ get: function () { return browser.element('(//a[@class="level"])[4]');}},
   corePinSelector: { get: function() { return `ul.btnPull.filter>li>ul>li:nth-child(3)>ul>li:nth-child(2)>a` } },
   corePinCheckSelector: { get: function() { return `ul.btnPull.check > li > ul > li:nth-child(3) > ul > li:nth-child(2) > a` } },
@@ -77,6 +79,7 @@ let  projectPage = {
   closeButtonSelector:{ get: function() { return `#closeBtn > a`} },
   corePinMulitplePinSelector: { get: function() { return `#lstPartsBuy>div:nth-child(3) div.boxPartsInner>div>p>a` } },
   modelNumber:{ value: function (n) {return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
+  modelNumberSelector: { value: function (part) {return `#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner > div > div.modelNum > span:nth-child(2)`; }},
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
 
   /*
@@ -86,6 +89,7 @@ let  projectPage = {
     value: function() {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
+      browser.pause(3000);
       this.arrow.waitForVisible();
       browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
     }
@@ -184,6 +188,7 @@ let  projectPage = {
    */
   validatePartNamesAndPrice: {
     value: function(names, count, pinType) {
+      this.partsName(1).waitForEnabled();
       browser.execute(function() {
         var error = document.querySelector('.WindowError');
         error.style.display = 'none';
@@ -204,7 +209,7 @@ let  projectPage = {
             if (browser.desiredCapabilities.browserName === 'chrome') {
             this.partsPriceText(i).moveToObject();
           } else {
-            browser.scrollToElement(this.partsPriceText(i));
+            browser.scrollToElement(this.partsPriceTextSelector(i+1));
           }
           this.partsPriceText(i).waitForVisible();
           browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
@@ -638,8 +643,18 @@ let  projectPage = {
    */
   takeModelNumber:{
     value: function (count) {
-      for(let i=1; i<=count; i++) {
-        this.modelNumber(i).moveToObject();
+      this.modelNumber(1).waitForEnabled();
+      browser.execute(function (selector) {
+        var e = document.querySelector('.WindowError');
+        e.style.display = 'none';
+      });
+      for(var i=1; i<=count; i++) {
+        if(browser.desiredCapabilities.browserName=="chrome"){
+          this.modelNumber(i).moveToObject(); }
+        else{
+          if(i>2){
+            browser.scrollToElement(this.modelNumberSelector(i+1)); }
+           }  
         this.modelNumber(i).waitForVisible();
         browser.params.modelNumber['part'+ i ] = this.modelNumber(i).getText();
       }
@@ -651,7 +666,10 @@ let  projectPage = {
    */
   moveToTop: {
     value: function () {
-      this.filterOption.moveToObject();
+      if(browser.desiredCapabilities.browserName=="chrome"){
+        this.filterOption.moveToObject();}
+      else{
+        browser.scrollToElement(this.filterOptionSelector);}
     }
   }
 };

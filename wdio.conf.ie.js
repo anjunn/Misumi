@@ -7,11 +7,8 @@
 let merge = require('deepmerge');
 let path = require('path');
 let wdioConfBase = require('./wdio.conf.base.js');
-
 const pathToDownload = path.resolve('data/downloads');
-
 exports.config = merge(wdioConfBase.config, {
-
   capabilities: [{
     browserName: 'internet explorer',
     version:'11.0',
@@ -24,7 +21,4 @@ exports.config = merge(wdioConfBase.config, {
       }
     }
   }],
-
 });
-
-
