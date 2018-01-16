@@ -33,7 +33,9 @@ let  uploadPage = {
   autoOkIcon: { get: function () { return browser.element('//div[@class="dataLst clearfix"]//li[@class="status01"]');}},
   manualOkIcon: { get: function () { return browser.element('//div[@class="dataLst clearfix"]//li[@class="status02"]');}},
   uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
-
+  closeButton: { get: function () { return browser.element('//li[@id="closeBtn"]'); }},
+  previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
+ 
   /**
    * Upload file by triggering drop event
    */
@@ -155,6 +157,14 @@ let  uploadPage = {
         this.productTypePinAndPlate.selectByVisibleText(quotationCondition.productType);
         this.nextButtonPinAndPlate.click();
       }
+      if(this.closeButton.isVisible()){
+        this.closeButton.click();
+        if(this.previous.isVisible())
+        {
+          this.previous.click();
+        }
+        this.quotationConditionFill();
+      }
     }
   },
 
@@ -191,13 +201,15 @@ let  uploadPage = {
    * Price is not checked for pin and plate and plate only
    */
   checkNameAndPrice: {
-    value: function() {
+    value: function(pinType) {
       if (this.price.isVisible()) {
         browser.params.initialPrice = this.price.getText();
         expect(this.price.getText()).to.not.be.null;
       }
       expect(this.productName.getText()).to.be.equal(browser.params.fileName);
-      expect(this.autoOkIcon.isVisible()).to.be.equal(true)
+      if (pinType === 'single pin' || pinType === 'multiple pin') {
+        expect(this.autoOkIcon.isVisible(), 'Automatic estimation failed').to.be.equal(true);
+      }
     }
   },
 

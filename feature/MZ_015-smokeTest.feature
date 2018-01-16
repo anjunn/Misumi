@@ -17,7 +17,7 @@ Given User uploads 3D data for multiple pin
 When User verifies whether upload is successful for multiple pin
 And User defines quotation condition for multiple pin
 Then User checks whether thumb nail of 3D appears for multiple pin
-When User verifies project name and price after thumbnail appears
+And User verifies project details for multiple pin
 Given User opens the uploaded project
 And Takes model number from presentation for multiple pin
 
@@ -63,13 +63,13 @@ Then Operator checks product part number from QT for multiple pin
 
 Scenario: 3D Viewer Project view  management QT
 
-Then Operator checks 3d view of project from QT page 
+Then Operator checks 3d view of project from QT page
 And Operator verifies that order button is disabled when viewing from QT page
 And Operator checks 3d view of each part from QT page for multiple pin
 
 Scenario: User places the order
 
-Given User goes to my page 
+Given User goes to my page
 Then User opens the uploaded project
 Given User goes to order page
 Then User validates the product name and order details in order page
@@ -86,7 +86,7 @@ Then User selects the product order mail
 Scenario: Operator opens the order from SO page
 
 Given Admin goes to management site
-And Admin navigates to SO section in management site 
+And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 Then Opens the file uploaded by the user from SO project list
 Then Operator verifies the operation status for multiple pin
@@ -98,13 +98,12 @@ Given Admin selects the supplier from so page
 Then Admin sends email to the supplier
 And Admin verifies if the send email pop up is shown and clicks ok in SO page
 
-Scenario: 3D Viewer Project view in management SO 
+Scenario: 3D Viewer Project view in management SO
 
-Then Operator checks 3d view of project from SO page  
+Then Operator checks 3d view of project from SO page
 And Operator verifies that order button is disabled when viewing from SO page
-And Operator checks 3d view of each part from SO page for multiple pin
 
-Scenario: ***Pin and Plate upload for checking manual quotation process
+Scenario: Pin and Plate upload for checking manual quotation process
 
 Given User goes to my page
 Given User uploads 3D data for pin and plate
@@ -159,7 +158,7 @@ Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
-And User validates contents of pdf file
+And User validates contents of pdf file for pin and plate
 And User validates contents of csv file
 
 Scenario: User places the order
@@ -168,12 +167,12 @@ Given User goes to order page
 And User places the order
 And The Order is succesfully placed
 
-Scenario: Operator opens the order from SO page 
+Scenario: Operator opens the order from SO page
 
 Given Admin goes to management site
 And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 And Admin selects the person in charge for the uploaded project in SO page
 Then Admin verifies if the selected person in charge is displayed in SO page
-And Verifies if the status and colour is displayed correctly in SO page 
+And Verifies if the status and colour is displayed correctly in SO page
 

@@ -17,7 +17,7 @@ Given User uploads 3D data for multiple pin
 When User verifies whether upload is successful for multiple pin
 And User defines quotation condition for multiple pin
 Then User checks whether thumb nail of 3D appears for multiple pin
-When User verifies project name and price after thumbnail appears
+And User verifies project details for multiple pin
 
 Scenario: Email validation after upload
 
