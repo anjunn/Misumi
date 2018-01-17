@@ -12,7 +12,8 @@
     "test-ci-selected": "node_modules/.bin/wdio wdio.conf.selected.js --suite selected",
     "test-ci-delete": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario8",
     "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
-    "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0"
+    "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0",
+    "test-ci-s3-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s3Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s3Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s3Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s3Iepart4"
   },
   "dependencies": {
     "base64-img": "^1.0.3",

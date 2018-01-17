@@ -224,7 +224,6 @@ let  projectPage = {
 
   /*
    * Verify grouping for multiple pin
-
    */
   checkGrouping: {
     value: function(grouping) {
@@ -324,13 +323,14 @@ let  projectPage = {
       browser.pause(3000);
       var files = fs.readdirSync('data/downloads');
       var path = require('path');
+      var fileName = browser.params.fileName || require('../data/2D-Dta/filename.json').fileName;
       for (var i in files) {
         if (path.extname(files[i]) === ".pdf") {
           var buffer = fs.readFileSync(`data/downloads/${files[i]}`);
           pdfText(buffer, function(err, chunks) {
             console.log(pinType);
             if (pinType != 'pin and plate' && pinType != 'single pin') {
-              expect(chunks.includes(browser.params.fileName), 'Pdf Validation failed').to.be.equal(true);
+              expect(chunks.includes(fileName), 'Pdf Validation failed').to.be.equal(true);
             }
             Object.values(parts).forEach((part) => {
               expect(chunks.includes(part), 'Pdf Validation failed').to.be.equal(true);
@@ -347,9 +347,10 @@ let  projectPage = {
   validateCsv: {
     value: function() {
       var inputFile =`data/downloads/${browser.params.fileName}.csv`;
+      var fileName = browser.params.fileName || require('../data/2D-Dta/filename.json').fileName;
       var parser = parse({delimiter: ','}, function (err, data) {
         var part = data[1];
-        expect(browser.params.fileName, 'Csv Validation failed').to.be.equal(part[1]);
+        expect(fileName, 'Csv Validation failed').to.be.equal(part[1]);
       });
       fs.createReadStream(inputFile).pipe(parser);
     }
@@ -631,7 +632,7 @@ let  projectPage = {
     value: function(proj,multiplePinCount,corePinCount) {
       var count = 0;
       for (i=1; i<=multiplePinCount; i++) {
-        if (proj==this.corePinList(i).getText()) { count+=1; }
+        if (proj == this.corePinList(i).getText()) { count+=1; }
       }
       expect(count).to.equal(corePinCount);
     }
