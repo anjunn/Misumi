@@ -19,7 +19,7 @@ let emailPage = {
   emailButton: {  get: function () { return browser.element('(//div[@class="table-row"]/div[@class="table-cell text-left content"])[1]');} },
   passwordField: { get: function () { return browser.element('//input[@type="password"]');} },
   menuIcon: { get: function () { return browser.element('//button[@id="O365_MainLink_NavMenu"]');} },
-  mailIcon: { get: function () { return browser.element('//a[@id="O365_AppTile_Mail"]/..');} },
+  mailIcon: { get: function () { return browser.element('//a[@id="O365_AppTile_Mail"]/.');} },
   submitButton: { get: function () { return browser.element('//input[@type="submit"]');} },
   openMail: { get: function () { return browser.element('//div[@autoid="_lvv_9"]');} },
   mailEstimateFolder: { get: function () { return browser.element('//div[@id="MailFolderPane.FavoritesFolders"]//span[@title="見積り"]');} },
