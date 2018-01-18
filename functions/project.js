@@ -33,7 +33,9 @@ let  projectPage = {
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
   manualOkIconPartsView: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]');}},
+  manualOkIconPartsViewSelector: { get: function () { return '#lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > ul > li:nth-child(3) > span > img';}},
   unitPriceManuallyQuoted: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span');}},
+  unitPriceManuallyQuotedSelector: { get: function () { return '//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span';}},
   totalPriceDisplayedInPartsView:  { get: function () { return browser.element('//div[@id="boxAmount"]');}},
   manualQuotationPlate: { get: function () { return browser.element('//div[@class="boxInfomation"]/p/a'); }},
   downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
@@ -273,7 +275,11 @@ let  projectPage = {
   */
   validateManualIconInPartsView: {
     value: function() {
-      this.manualOkIconPartsView.moveToObject();
+      if (browser.desiredCapabilities.browserName === 'chrome') {
+        this.manualOkIconPartsView.moveToObject();
+      } else {
+        browser.scrollToElement(this.manualOkIconPartsViewSelector);
+      }
       this.manualOkIconPartsView.waitForVisible();
       expect(this.manualOkIconPartsView.isVisible()).to.be.equal(true);
     }
@@ -284,7 +290,11 @@ let  projectPage = {
    */
   validatePriceInPartsView: {
     value: function() {
-      this.unitPriceManuallyQuoted.moveToObject();
+      if (browser.desiredCapabilities.browserName === 'chrome') {
+          this.unitPriceManuallyQuoted.moveToObject();
+        } else {
+            browser.scrollToElement(this.unitPriceManuallyQuotedSelector);
+          }
       this.manualOkIconPartsView.waitForVisible();
       var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
       expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
