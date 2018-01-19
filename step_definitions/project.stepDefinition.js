@@ -62,7 +62,7 @@ module.exports = function () {
     }
   });
 
-  this.Then(/^User check unit price and icon in parts view$/, {retry: 2}, () => {
+  this.Then(/^User check unit price and icon in parts view$/, () => {
     projectPage.validateManualIconInPartsView();
     projectPage.validatePriceInPartsView();
   });

@@ -34,8 +34,7 @@ let  projectPage = {
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
   manualOkIconPartsView: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]');}},
   manualOkIconPartsViewSelector: { get: function() { return `  #lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > ul > li:nth-child(3) > span > img` } },
-  unitPriceManuallyQuoted: { get: function () { return browser.element('(//p[contains(@class, "amount")]//span)[3]');}},
-  unitPriceManuallyQuotedSelector: { get: function() { return `#lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > div.order > ul > div > p.amount > span:nth-child(1)` } },
+  unitPriceManuallyQuoted: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span');}},
   totalPriceDisplayedInPartsView:  { get: function () { return browser.element('//div[@id="boxAmount"]');}},
   manualQuotationPlate: { get: function () { return browser.element('//div[@class="boxInfomation"]/p/a'); }},
   downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
@@ -276,10 +275,10 @@ let  projectPage = {
   validateManualIconInPartsView: {
     value: function() {
       if (browser.desiredCapabilities.browserName === 'chrome') {
-      this.manualOkIconPartsView.moveToObject();
-    } else {
-      browser.scrollToElement(this.manualOkIconPartsViewSelector);
-    }
+        this.manualOkIconPartsView.moveToObject();
+      } else {
+        browser.scrollToElement(this.manualOkIconPartsViewSelector);
+      }
       this.manualOkIconPartsView.waitForVisible();
       expect(this.manualOkIconPartsView.isVisible()).to.be.equal(true);
     }
@@ -290,7 +289,7 @@ let  projectPage = {
    */
   validatePriceInPartsView: {
     value: function() {
-      var url = browser.getUrl();
+     var url = browser.getUrl();
       if (browser.desiredCapabilities.browserName === 'chrome') {
        this.unitPriceManuallyQuoted.moveToObject();
      } 

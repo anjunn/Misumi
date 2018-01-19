@@ -59,6 +59,7 @@ let qtProjectListPage = {
     value: function() {
       browser.pause(1000);
       browser.scrollToElement(this.selectedPersonSelector);
+      browser.pause(2000);
       this.checkSelectedPerson.waitForVisible();
       expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
     }
