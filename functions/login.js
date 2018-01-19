@@ -30,7 +30,7 @@ let loginPage = {
   goToHomePage: {
     value: function () {
       browser.url(data.url.homePageUrl);
-      if this.systemCheckPopup.isVisible() {
+      if (this.systemCheckPopup.isVisible()) {
         this.systemCheckBox.click();
         this.systemCheckButton.click();
       }
