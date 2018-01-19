@@ -10,11 +10,11 @@ let pinAndPlateInputData = require('../data/input-data/pin-and-plate.json');
 
 module.exports = function () {
 
-  this.Given(/^User opens the uploaded project$/, () => {
+  this.Given(/^User opens the uploaded project$/,  {retry: 2},() => {
     projectPage.openProject();
   });
 
-  this.When(/^User does Feature Recognition for ((single|multiple) pin|plate|pin and plate|core pin)$/, (pinType) => {
+  this.When(/^User does Feature Recognition for ((single|multiple) pin|plate|pin and plate|core pin)$/, {retry: 2}, (pinType) => {
     if (pinType === 'single pin') {
       projectPage.compareImage('single-pin.png', 'single-pin/single-pin.png');
     } else if (pinType === 'multiple pin') {
@@ -28,7 +28,7 @@ module.exports = function () {
     }
   });
 
-  this.Then(/^User verifies part names for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.Then(/^User verifies part names for ((single|multiple) pin|plate|pin and plate)$/,  {retry: 2},(pinType) => {
   	if (pinType === 'single pin') {
       projectPage.validatePartNamesAndPrice(singlePinExpectedData.partNames, singlePinExpectedData.numberOfParts, pinType);
     } else if (pinType === 'multiple pin') {
@@ -40,7 +40,7 @@ module.exports = function () {
     }
   });
 
-  this.Then(/^User defines quotation condition in parts view for ((single|multiple) pin|pin and plate)$/, (pinType) => {
+  this.Then(/^User defines quotation condition in parts view for ((single|multiple) pin|pin and plate)$/, {retry: 2}, (pinType) => {
   	if(pinType === 'single') {
       projectPage.quotionConditionInPartsView(singlePinInputData.quotationConditionInPartsView.quantity);
   	} else if (pinType === 'multiple pin') {
@@ -54,7 +54,7 @@ module.exports = function () {
     projectPage.checkGrouping(multiplePinExpectedData.grouping);
   });
 
-  this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, (pinType) => {
+  this.Then(/^User request for manual quotation in parts view for (plate|pin and plate)$/, {retry: 2}, (pinType) => {
     if (pinType === 'pin and plate') {
       projectPage.estimateConditionPartsview(pinAndPlateInputData.estimateCondition, pinType);
     } else if (pinType === 'plate') {
