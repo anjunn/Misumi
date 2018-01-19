@@ -3,7 +3,7 @@
 > OS- Windows 10
 
 ## Prerequisite
-
+Download the following:
 * Node Version- 8.7
   > https://nodejs.org/en/
   > https://nodejs.org/download/release/v8.7.0/node-v8.7.0-x64.msi
@@ -42,9 +42,14 @@
 
 ## Running the test cases in ie
 
-* For running scenario 1: npm run test-ci-s1-ie
-* For running scenario 2: npm run test-ci-s2-ie
-* For running scenario 5: npm run test-ci-s5-ie
+* Setup security settings in IE:
+    => Take Tools of IE > Select Internet options > Take security tab > Enable protected mode for all zones.
+* Also need to enable ‘64 bit processes for Enhanced Protected Mode’:
+    => Take Tools of IE > Select Internet options > Take advanced  tab > Check the checkbox for “64 bit processes for Enhanced Protected Mode” under Security
+* Run commands for IE
+  * For running scenario 1: npm run test-ci-s1-ie
+  * For running scenario 2: npm run test-ci-s2-ie
+  * For running scenario 5: npm run test-ci-s5-ie
 
 ## Reports using allure: :
 
