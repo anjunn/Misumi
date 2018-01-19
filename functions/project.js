@@ -33,7 +33,9 @@ let  projectPage = {
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
   manualOkIconPartsView: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]');}},
-  unitPriceManuallyQuoted: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span');}},
+  manualOkIconPartsViewSelector: { get: function() { return `  #lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > ul > li:nth-child(3) > span > img` } },
+  unitPriceManuallyQuoted: { get: function () { return browser.element('(//p[contains(@class, "amount")]//span)[3]');}},
+  unitPriceManuallyQuotedSelector: { get: function() { return `#lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > div.order > ul > div > p.amount > span:nth-child(1)` } },
   totalPriceDisplayedInPartsView:  { get: function () { return browser.element('//div[@id="boxAmount"]');}},
   manualQuotationPlate: { get: function () { return browser.element('//div[@class="boxInfomation"]/p/a'); }},
   downloadButton:{ get: function () { return browser.element('//li[@class="btnDownload"]'); }},
@@ -224,7 +226,6 @@ let  projectPage = {
 
   /*
    * Verify grouping for multiple pin
-
    */
   checkGrouping: {
     value: function(grouping) {
@@ -274,7 +275,11 @@ let  projectPage = {
   */
   validateManualIconInPartsView: {
     value: function() {
+      if (browser.desiredCapabilities.browserName === 'chrome') {
       this.manualOkIconPartsView.moveToObject();
+    } else {
+      browser.scrollToElement(this.manualOkIconPartsViewSelector);
+    }
       this.manualOkIconPartsView.waitForVisible();
       expect(this.manualOkIconPartsView.isVisible()).to.be.equal(true);
     }
@@ -285,11 +290,14 @@ let  projectPage = {
    */
   validatePriceInPartsView: {
     value: function() {
-      this.unitPriceManuallyQuoted.moveToObject();
+      var url = browser.getUrl();
+      if (browser.desiredCapabilities.browserName === 'chrome') {
+       this.unitPriceManuallyQuoted.moveToObject();
+     } 
       this.manualOkIconPartsView.waitForVisible();
       var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
       expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
-      browser.url(browser.params.projectPageUrl);
+      browser.url(url);
     }
   },
 
@@ -298,11 +306,12 @@ let  projectPage = {
    */
   downloadPdf: {
     value: function() {
-      browser.pause(3000);
-      this.downloadButton.waitForVisible();
-      this.downloadButton.click();
-      this.downloadPdfOption.waitForVisible();
-      this.downloadPdfOption.click();
+      if (browser.desiredCapabilities.browserName === 'chrome') {     
+       browser.pause(3000);
+       this.downloadButton.waitForVisible();
+       this.downloadButton.click();
+       this.downloadPdfOption.waitForVisible();
+       this.downloadPdfOption.click(); }
     }
   },
 
@@ -311,8 +320,9 @@ let  projectPage = {
    */
   downloadCsv: {
     value: function() {
-      this.downloadCsvOption.waitForVisible();
-      this.downloadCsvOption.click();
+      if (browser.desiredCapabilities.browserName === 'chrome') {
+       this.downloadCsvOption.waitForVisible();
+       this.downloadCsvOption.click(); }
     }
   },
 
@@ -321,16 +331,18 @@ let  projectPage = {
    */
   validatePdf: {
     value: function(parts, pinType) {
+      if (browser.desiredCapabilities.browserName === 'chrome') {
       browser.pause(3000);
       var files = fs.readdirSync('data/downloads');
       var path = require('path');
+      var fileName = browser.params.fileName || require('../data/2D-Dta/filename.json').fileName;
       for (var i in files) {
         if (path.extname(files[i]) === ".pdf") {
           var buffer = fs.readFileSync(`data/downloads/${files[i]}`);
           pdfText(buffer, function(err, chunks) {
             console.log(pinType);
             if (pinType != 'pin and plate' && pinType != 'single pin') {
-              expect(chunks.includes(browser.params.fileName), 'Pdf Validation failed').to.be.equal(true);
+              expect(chunks.includes(fileName), 'Pdf Validation failed').to.be.equal(true);
             }
             Object.values(parts).forEach((part) => {
               expect(chunks.includes(part), 'Pdf Validation failed').to.be.equal(true);
@@ -339,6 +351,7 @@ let  projectPage = {
         }
       }
     }
+    }
   },
 
   /*
@@ -346,12 +359,15 @@ let  projectPage = {
    */
   validateCsv: {
     value: function() {
+      if (browser.desiredCapabilities.browserName === 'chrome') {
       var inputFile =`data/downloads/${browser.params.fileName}.csv`;
+      var fileName = browser.params.fileName || require('../data/2D-Dta/filename.json').fileName;
       var parser = parse({delimiter: ','}, function (err, data) {
         var part = data[1];
-        expect(browser.params.fileName, 'Csv Validation failed').to.be.equal(part[1]);
+        expect(fileName, 'Csv Validation failed').to.be.equal(part[1]);
       });
       fs.createReadStream(inputFile).pipe(parser);
+    }
     }
   },
 
@@ -631,7 +647,7 @@ let  projectPage = {
     value: function(proj,multiplePinCount,corePinCount) {
       var count = 0;
       for (i=1; i<=multiplePinCount; i++) {
-        if (proj==this.corePinList(i).getText()) { count+=1; }
+        if (proj == this.corePinList(i).getText()) { count+=1; }
       }
       expect(count).to.equal(corePinCount);
     }
