@@ -30,7 +30,8 @@ let qtProjectListPage = {
     value: function() {
       browser.waitForLoading('//div[@id="loader"]');
       this.findProjectName.waitForVisible();
-      this.findProjectName.setValue(browser.params.fileName);
+      var fileName = browser.params.fileName || require('../data/cad-drawings/filename.json').fileName;
+      this.findProjectName.setValue(fileName);
       this.searchButton.waitForEnabled();
       this.searchButton.click();
     }
@@ -58,6 +59,7 @@ let qtProjectListPage = {
     value: function() {
       browser.pause(1000);
       browser.scrollToElement(this.selectedPersonSelector);
+      browser.pause(2000);
       this.checkSelectedPerson.waitForVisible();
       expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);
     }
@@ -79,7 +81,14 @@ let qtProjectListPage = {
    */
   openProject: {
     value: function() {
-      browser.params.qtProjectListId = browser.getCurrentTabId();
+      //browser.params.qtProjectListId = browser.getCurrentTabId();
+      if (browser.desiredCapabilities.browserName != "chrome") {
+        var data = JSON.stringify({fileName: browser.params.fileName});
+        const writePath = './data/cad-drawings/filename.json';
+        fs.writeFile(writePath, data, function(err) {
+          if (err) return console.log(err);
+        });
+      }
       this.product.waitForEnabled();
       browser.scrollToElement(this.productSelector);
       this.product.click();

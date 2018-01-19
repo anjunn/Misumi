@@ -3,6 +3,8 @@ Feature: Scenario 7 Part 4
 Scenario: Operator opens the order from SO page
 
 Given Admin goes to management site
+When Check if the login page of management site is shown
+Then The correct credentials are given and log in
 And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 Then Opens the file uploaded by the user from SO project list

@@ -63,40 +63,42 @@ let qtProjectPage = {
   validateOrderDetails: {
     value: function(names, pinType) {
       browser.waitForLoading('//div[@id="loader"]');
-      if (pinType === 'single pin'){
-          this.partNameFirstRow.moveToObject();
-          var partName = this.partNameFirstRow.getText();
-          expect(partName).to.be.equal(names['part1']);
-          var partPrice = this.partPriceFirstRow.getText();
-          expect(partPrice).to.be.equal(browser.params.singlePinPrice['part1'] + '円');
-      } else if (pinType === 'multiple pin'){
-        var position = 1;
-        for (var i = 1; i <= 7; i++) {
-          if (i != 1) position = position + 2;
-          this.partNames(position).moveToObject();
-          var partName = this.partNames(position).getText();
-          expect(partName).to.be.equal(names[`part${i}`])
-          if (i != 7) {
-            var partPrice = this.partPrice(i*2).getText();
-            expect(partPrice).to.be.equal(browser.params.multiplePinPrice['part'+ i ] + '円');
+      if (browser.params.singlePinPrice.part1 || browser.params.multiplePinPrice.part1 || browser.params.pinAndPlatePrice.part1) {
+        if (pinType === 'single pin'){
+            this.partNameFirstRow.moveToObject();
+            var partName = this.partNameFirstRow.getText();
+            expect(partName).to.be.equal(names['part1']);
+            var partPrice = this.partPriceFirstRow.getText();
+            expect(partPrice).to.be.equal(browser.params.singlePinPrice['part1'] + '円');
+        } else if (pinType === 'multiple pin'){
+          var position = 1;
+          for (var i = 1; i <= 7; i++) {
+            if (i != 1) position = position + 2;
+            this.partNames(position).moveToObject();
+            var partName = this.partNames(position).getText();
+            expect(partName).to.be.equal(names[`part${i}`])
+            if (i != 7) {
+              var partPrice = this.partPrice(i*2).getText();
+              expect(partPrice).to.be.equal(browser.params.multiplePinPrice['part'+ i ] + '円');
+            }
           }
-        }
-      } else if (pinType === 'pin and plate'){
-        var position = 1;
-        for (var i = 1; i <= 3; i++) {
-          if (i != 1) position = position + 2;
-          browser.moveToObject(`//table[@id="detailTable"]/tbody/tr[${position}]/td[14]`);
-          var partName = this.partNames(position).getText();
-          expect(partName).to.be.equal(names[`part${i}`])
-          if (i != 3) {
-            var partPrice = this.partPrice(i*2).getText();
-            expect(partPrice).to.be.equal(browser.params.pinAndPlatePrice['part'+ i ] + '円');
+        } else if (pinType === 'pin and plate'){
+          var position = 1;
+          for (var i = 1; i <= 3; i++) {
+            if (i != 1) position = position + 2;
+            browser.moveToObject(`//table[@id="detailTable"]/tbody/tr[${position}]/td[14]`);
+            var partName = this.partNames(position).getText();
+            expect(partName).to.be.equal(names[`part${i}`])
+            if (i != 3) {
+              var partPrice = this.partPrice(i*2).getText();
+              expect(partPrice).to.be.equal(browser.params.pinAndPlatePrice['part'+ i ] + '円');
+            }
           }
+        } else if (pinType === 'plate'){
+            this.itemNamePlate.moveToObject();
+            var partName = this.itemNamePlate.getText();
+            expect(partName).to.be.equal(names['part1']);
         }
-      } else if (pinType === 'plate'){
-         this.itemNamePlate.moveToObject();
-         var partName = this.itemNamePlate.getText();
-         expect(partName).to.be.equal(names['part1']);
       }
     }
   },
@@ -126,7 +128,7 @@ let qtProjectPage = {
       this.emailSubjectField.setValue(subject);
       browser.pause(2000);
       this.textArea.click();
-      expect(this.textArea.getValue()).to.include(browser.params.fileName);
+      if (browser.params.fileName) expect(this.textArea.getValue()).to.include(browser.params.fileName);
       browser.pause(1000);
       browser.keys('\uE004');
       browser.keys('\uE007');
@@ -247,29 +249,31 @@ let qtProjectPage = {
   /*
    * Checks QT operation status after sending mail to TPro for multiple pin
    */
-   checkQtOperationStatus: {
+  checkQtOperationStatus: {
     value: function() {
-       browser.waitForLoading('//div[@id="loader"]');
-     this.operationStatusColumn.moveToObject();
-     this.operationStatusColumn.waitForVisible();
-     var qtOperationStatus = this.operationStatusColumn.getText();
-     expect(qtOperationStatus).to.be.equal(expectedData.qtOperationStatusData);
+      browser.waitForLoading('//div[@id="loader"]');
+      this.operationStatusColumn.moveToObject();
+      this.operationStatusColumn.waitForVisible();
+      var qtOperationStatus = this.operationStatusColumn.getText();
+      expect(qtOperationStatus).to.be.equal(expectedData.qtOperationStatusData);
     }
-   },
+  },
 
   /*
    * Checks product part number for multiple pin
    */
-   checkQtProductPartNumber: {
+  checkQtProductPartNumber: {
     value: function(expected,count) {
-      for (var j = 0, position = 2, i = j + 1; j < count; j++, i++, position+=2) {
-        this.productPartNumber(position).moveToObject();
-        this.productPartNumber(position).waitForVisible();
-        var qtProductPartNumber = this.productPartNumber(position).getText();
-        expect(qtProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
+      if (browser.params.modelNumber.part1) {
+        for (var j = 0, position = 2, i = j + 1; j < count; j++, i++, position+=2) {
+          this.productPartNumber(position).moveToObject();
+          this.productPartNumber(position).waitForVisible();
+          var qtProductPartNumber = this.productPartNumber(position).getText();
+          expect(qtProductPartNumber).to.equal(browser.params.modelNumber[`part${i}`]);
+        }
       }
     }
-   },
+  },
 
    /*
     * Checks QT Revision for the parts
@@ -292,7 +296,6 @@ let qtProjectPage = {
   checkProjectPage: {
     value: function() {
       browser.waitForLoading('//div[@id="loader"]');
-      browser.params.qtProjectId = browser.windowHandle();
       this.projectPage.moveToObject();
       this.projectPage.waitForVisible();
       this.projectPage.click();

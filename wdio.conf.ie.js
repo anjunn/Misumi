@@ -10,7 +10,7 @@ let wdioConfBase = require('./wdio.conf.base.js');
 const pathToDownload = path.resolve('data/downloads');
 exports.config = merge(wdioConfBase.config, {
   capabilities: [{
-    browserName:   'internet explorer',
+    browserName: 'internet explorer',
     version:'11.0',
     ignoreProtectedModeSettings: true,
     unexpectedAlertBehaviour: "accept",

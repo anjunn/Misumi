@@ -21,6 +21,7 @@ And User verifies project details for single pin
 
 Scenario: User checks the uploaded project
 
+When User opens the uploaded project
 When User does Feature Recognition for multiple pin
 Then User defines quotation condition in parts view for multiple pin
 And User verifies part names for multiple pin

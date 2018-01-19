@@ -102,7 +102,6 @@ Scenario: 3D Viewer Project view in management SO
 
 Then Operator checks 3d view of project from SO page
 And Operator verifies that order button is disabled when viewing from SO page
-And Operator checks 3d view of each part from SO page for multiple pin
 
 Scenario: Pin and Plate upload for checking manual quotation process
 
@@ -159,7 +158,7 @@ Scenario: User downloads and verifies pdf and csv files
 
 Then User downloads the pdf
 And User downloads the csv
-And User validates contents of pdf file
+And User validates contents of pdf file for pin and plate
 And User validates contents of csv file
 
 Scenario: User places the order
