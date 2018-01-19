@@ -1,4 +1,4 @@
-Feature: Scenario 3 Part 3
+Feature: Scenario 4 Part 3
 
 Scenario: User logins to presentation site
 
@@ -11,7 +11,7 @@ And User validates username field
 And User validates Password field
 And User enters credentials and logs in
 
-Scenario: User validates manual quotation
+Scenario: Validating Manual Quotation
 
 Then User validates manual quotation icon and price in the listing screen
 Then User opens the uploaded project
@@ -20,7 +20,6 @@ Then User check unit price and icon in parts view
 Scenario: User places the order
 
 Given User goes to order page
-Then User validates the product name and order details in order page
 And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page

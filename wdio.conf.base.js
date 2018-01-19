@@ -62,6 +62,18 @@ exports.config = {
     ],
     s3Iepart4: [
       './feature/ie/MZ_003-pinAndPlateUploadIePart4.feature',
+    ],
+    s4Iepart1: [
+      './feature/ie/MZ_004-plateUploadIePart1.feature',
+    ],
+    s4Iepart2: [
+      './feature/ie/MZ_004-plateUploadIePart2.feature',
+    ],
+    s4Iepart3: [
+      './feature/ie/MZ_004-plateUploadIePart3.feature',
+    ],
+    s4Iepart4: [
+      './feature/ie/MZ_004-plateUploadIePart4.feature',
     ]
   },
   //
