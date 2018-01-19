@@ -2,7 +2,10 @@ Feature: Scenario 3 Part 4
 
 Scenario: Operator opens the order from SO page
 
+
 Given Admin goes to management site
+When Check if the login page of management site is shown
+Then The correct credentials are given and log in
 And Admin navigates to SO section in management site
 Then Admin searches the uploaded file in SO project list
 And Admin selects the person in charge for the uploaded project in SO page

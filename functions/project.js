@@ -33,7 +33,7 @@ let  projectPage = {
   boxButtonpartsview: { get: function () { return browser.element('//ul[@id="boxButton"]/li[4]/a'); }},
   closePopUpButton:{ get: function () { return browser.element('//li[@id="closeBtn"]/a'); }},
   manualOkIconPartsView: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]');}},
-  manualOkIconPartsViewSelector: { get: function () { return '#lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > ul > li:nth-child(3) > span > img'}},
+  manualOkIconPartsViewSelector: { get: function() { return `  #lstPartsBuy > div.boxParts.read.clickable > div.boxPartsInner > div > ul > li:nth-child(3) > span > img` } },
   unitPriceManuallyQuoted: { get: function () { return browser.element('//span[@class="status"]//img[@src="pres/img/com_status_ic02.png"]/../../../../div//p[contains(@class, "amount")]//span');}},
   totalPriceDisplayedInPartsView:  { get: function () { return browser.element('//div[@id="boxAmount"]');}},
   manualQuotationPlate: { get: function () { return browser.element('//div[@class="boxInfomation"]/p/a'); }},
@@ -277,13 +277,10 @@ let  projectPage = {
       if (browser.desiredCapabilities.browserName === 'chrome') {
         this.manualOkIconPartsView.moveToObject();
       } else {
-        console.log(this.manualOkIconPartsViewSelector+"  &&&&&&&&&&&& ");
-        // browser.debug();
-        // browser.scrollToElement(this.manualOkIconPartsViewSelector);
+        browser.scrollToElement(this.manualOkIconPartsViewSelector);
       }
       this.manualOkIconPartsView.waitForVisible();
       expect(this.manualOkIconPartsView.isVisible()).to.be.equal(true);
-      console.log("after expect");
     }
   },
 
@@ -292,21 +289,14 @@ let  projectPage = {
    */
   validatePriceInPartsView: {
     value: function() {
+     var url = browser.getUrl();
       if (browser.desiredCapabilities.browserName === 'chrome') {
-        this.unitPriceManuallyQuoted.moveToObject();
-        this.manualOkIconPartsView.waitForVisible();
-        var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
-        expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
-        browser.url(browser.params.projectPageUrl);
-      } else {
-        browser.execute(function(){
-          var prices = document.querySelectorAll('p.sum');
-          console.log("prices:" +prices);
-          var lastPrice = prices[prices.length - 1];
-          lastPrice.scrollIntoView();
-          expect(lastPrice).to.not.be.null;
-        });
-      }
+       this.unitPriceManuallyQuoted.moveToObject();
+     } 
+      this.manualOkIconPartsView.waitForVisible();
+      var unitPriceDisplayed = this.unitPriceManuallyQuoted.getText().match(/\d+/g).join(",");
+      expect(unitPriceDisplayed).to.be.equal(expectedData.unitPrice);
+      browser.url(url);
     }
   },
 
@@ -315,11 +305,12 @@ let  projectPage = {
    */
   downloadPdf: {
     value: function() {
-      browser.pause(3000);
-      this.downloadButton.waitForVisible();
-      this.downloadButton.click();
-      this.downloadPdfOption.waitForVisible();
-      this.downloadPdfOption.click();
+      if (browser.desiredCapabilities.browserName === 'chrome') {     
+       browser.pause(3000);
+       this.downloadButton.waitForVisible();
+       this.downloadButton.click();
+       this.downloadPdfOption.waitForVisible();
+       this.downloadPdfOption.click(); }
     }
   },
 
@@ -328,8 +319,9 @@ let  projectPage = {
    */
   downloadCsv: {
     value: function() {
-      this.downloadCsvOption.waitForVisible();
-      this.downloadCsvOption.click();
+      if (browser.desiredCapabilities.browserName === 'chrome') {
+       this.downloadCsvOption.waitForVisible();
+       this.downloadCsvOption.click(); }
     }
   },
 
@@ -338,6 +330,7 @@ let  projectPage = {
    */
   validatePdf: {
     value: function(parts, pinType) {
+      if (browser.desiredCapabilities.browserName === 'chrome') {
       browser.pause(3000);
       var files = fs.readdirSync('data/downloads');
       var path = require('path');
@@ -357,6 +350,7 @@ let  projectPage = {
         }
       }
     }
+    }
   },
 
   /*
@@ -364,6 +358,7 @@ let  projectPage = {
    */
   validateCsv: {
     value: function() {
+      if (browser.desiredCapabilities.browserName === 'chrome') {
       var inputFile =`data/downloads/${browser.params.fileName}.csv`;
       var fileName = browser.params.fileName || require('../data/2D-Dta/filename.json').fileName;
       var parser = parse({delimiter: ','}, function (err, data) {
@@ -371,6 +366,7 @@ let  projectPage = {
         expect(fileName, 'Csv Validation failed').to.be.equal(part[1]);
       });
       fs.createReadStream(inputFile).pipe(parser);
+    }
     }
   },
 

@@ -16,7 +16,6 @@ And Opens the file uploaded by the user to proceed to manual quotation
 
 Scenario: Operator does manual quotation
 
-Given Admin verifies product price and part names for pin and plate
 When Admin sends mail to Tpro to get 2D data for pin and plate
 Then Admin verifies if the send email pop up is shown and clicks ok
 When Admin requests for quotation to supplier

@@ -44,7 +44,8 @@ let  orderPage = {
       const productNamePos = browser.elementIdLocation(this.orderPageProductName.value.ELEMENT);
       browser.scroll(productNamePos.value.x, productNamePos.value.y);
       this.orderPageProductName.waitForVisible();
-      expect(this.orderPageProductName.getText()).to.be.equal(browser.params.fileName);
+      var fileName= browser.params.fileName || require('../data/cad-drawings/filename.json').fileName
+      expect(this.orderPageProductName.getText()).to.be.equal(fileName);
     }
   },
 
