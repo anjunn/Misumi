@@ -43,7 +43,7 @@ let qtProjectListPage = {
   selectPersonInCharge: {
     value: function() {
       browser.waitForLoading('//div[@id="loader"]');
-      browser.pause(2000)
+      browser.mediumWait();
       this.checkboxSelectFile.waitForVisible();
       this.checkboxSelectFile.click();
       this.personInChargeDropdown.click();
@@ -57,7 +57,7 @@ let qtProjectListPage = {
    */
   verifySelectPersonInCharge: {
     value: function() {
-      browser.pause(1000);
+      browser.smallWait();
       browser.scrollToElement(this.selectedPersonSelector);
       this.checkSelectedPerson.waitForVisible();
       expect(this.checkSelectedPerson.getText()).to.be.equal(expectedData.personInCharge);

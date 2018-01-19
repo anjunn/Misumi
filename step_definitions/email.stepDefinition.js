@@ -10,11 +10,11 @@ module.exports = function () {
     emailPage.loginToEmail();
   });
 
-  this.Then(/^User selects the product (estimate|quotation|order) mail$/, (mailType) => {
+  this.Then(/^User selects the product (estimate|quotation|order) mail$/, {retry: 2}, (mailType) => {
     emailPage.selectMail(mailType);
   });
 
-  this.Then(/^User verifies the product details in (estimate|quotation|order) mail$/, (mailType) => {
+  this.Then(/^User verifies the product details in (estimate|quotation|order) mail$/, {retry: 2}, (mailType) => {
     if ( mailType === 'estimate' ) {
       emailPage.validateEstimationMail();
     } else if ( mailType === 'quotation' ) {

@@ -109,7 +109,7 @@ let qtProjectPage = {
    */
    sendMailFor2DData: {
     value: function(pinType) {
-      browser.pause(5000);
+      browser.extraLongWait();
       this.waitforLoadingFile.isVisible();
       if (pinType === 'pin and plate'){
         this.sendMail(5).moveToObject();
@@ -123,13 +123,13 @@ let qtProjectPage = {
       }
       this.selectToAdress.waitForVisible();
       this.selectToAdress.selectByValue("8");
-      browser.pause(1000);
+      browser.smallWait();
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
-      browser.pause(2000);
+      browser.mediumWait();
       this.textArea.click();
       if (browser.params.fileName) expect(this.textArea.getValue()).to.include(browser.params.fileName);
-      browser.pause(1000);
+      browser.smallWait();
       browser.keys('\uE004');
       browser.keys('\uE007');
     }
@@ -151,7 +151,7 @@ let qtProjectPage = {
    */
   sendMailToSupplier: {
     value: function(pinType) {
-      browser.pause(2000);
+      browser.mediumWait();
       if (pinType === 'pin and plate') {
         this.sendMail(5).waitForVisible();
         this.sendMail(5).click();
@@ -164,7 +164,7 @@ let qtProjectPage = {
       this.selectToAdress.selectByValue("10");
       browser.chooseFile("#file_input", inputData.uploadPath.tproDrawing);
       this.textArea.click();
-      browser.pause(1000);
+      browser.smallWait();
       browser.keys('\uE004');
       browser.keys('\uE007');
     }
@@ -175,7 +175,7 @@ let qtProjectPage = {
    */
   editQuotation: {
     value: function(quotationResult, pinType) {
-      browser.pause(1000);
+      browser.smallWait();
       if (pinType === 'pin and plate') {
         this.editQuotationButton.moveToObject();
         this.editQuotationButton.waitForVisible();
@@ -214,11 +214,11 @@ let qtProjectPage = {
       this.reflect.click();
       this.editButton.moveToObject();
       this.editButton.click();
-      browser.pause(1000);
+      browser.smallWait();
       try {
         if (browser.alertText()) {
           browser.alertAccept();
-          browser.pause(1000);
+          browser.smallWait();
           browser.refresh();
         }
       } catch(e) {
@@ -235,12 +235,12 @@ let qtProjectPage = {
       var n = type == 'plate' ? 1 : 5;
       browser.waitForLoading('//div[@id="loader"]');
       this.sendMail(n).moveToObject();
-      browser.pause(1000);
+      browser.smallWait();
       this.sendMail(n).click();
       this.selectToAdress.waitForVisible();
       this.selectToAdress.selectByVisibleText(inputData.mailList.quotationComplete);
       this.textArea.click();
-      browser.pause(1000);
+      browser.smallWait();
       browser.keys('\uE004');
       browser.keys('\uE007');
     }
@@ -313,7 +313,7 @@ let qtProjectPage = {
       var buttonClass = this.orderButton.getAttribute('class');
       expect(buttonClass).to.be.equal('disable');
       browser.close(browser.windowHandles().value[1]);
-      browser.pause(1000);
+      browser.smallWait();
     }
   },
 
@@ -328,9 +328,9 @@ let qtProjectPage = {
         this.projectPage.waitForVisible();
         this.partsView(i).moveToObject();
         this.partsView(i).click();
-        browser.pause(2000);
+        browser.mediumWait();
         browser.switchTab(browser.windowHandles().value[2]);
-        browser.pause(2000);
+        browser.mediumWait();
         if ( j > 2) {
           this.partName.waitForVisible();
           expect(this.partName.getText()).to.equal(parts[`part${j}`]);
@@ -349,14 +349,14 @@ let qtProjectPage = {
       var n = type == 'plate' ? 1 : 5;
       browser.waitForLoading('//div[@id="loader"]');
       this.sendMail(n).moveToObject();
-      browser.pause(1000);
+      browser.smallWait();
       this.sendMail(n).click();
       this.selectToAdress.waitForVisible();
       this.selectToAdress.selectByVisibleText(inputData.mailList.drawingCreationRequestTpro);
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
       this.textArea.click();
-      browser.pause(4000);
+      browser.veryLongWait();
       let mailBody = this.textArea.getValue().replace(/\s/g, '');
       expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));

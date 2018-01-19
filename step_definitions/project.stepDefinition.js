@@ -67,11 +67,11 @@ module.exports = function () {
     projectPage.validatePriceInPartsView();
   });
 
-  this.Then(/^User downloads the pdf$/, () => {
+  this.Then(/^User downloads the pdf$/, {retry: 2}, () => {
     projectPage.downloadPdf();
   });
 
-  this.Then(/^User validates contents of pdf file for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.Then(/^User validates contents of pdf file for ((single|multiple) pin|plate|pin and plate)$/, {retry: 2}, (pinType) => {
     if (pinType === 'single pin') {
       projectPage.validatePdf(singlePinExpectedData.partNames, pinType);
     } else if (pinType === 'multiple pin') {
@@ -83,11 +83,11 @@ module.exports = function () {
     }
   });
 
-  this.Then(/^User downloads the csv$/, () => {
+  this.Then(/^User downloads the csv$/, {retry: 2}, () => {
     projectPage.downloadCsv();
   });
 
-  this.Then(/^User validates contents of csv file$/, () => {
+  this.Then(/^User validates contents of csv file$/, {retry: 2}, () => {
     projectPage.validateCsv();
   });
 

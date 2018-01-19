@@ -79,22 +79,22 @@ let  uploadPage = {
             this.files = [file];
           };
 
-          var fakeDropEvent;
-          var fakeDragEvent;
+          var dropEvent;
+          var dragEvent;
 
           if (document.createEvent) {
-            fakeDragEvent = document.createEvent("HTMLEvents");
-            fakeDragEvent.initEvent("dragenter", true, true);
-            fakeDropEvent = document.createEvent("HTMLEvents");
-            fakeDropEvent.initEvent("drop", true, true);
+            dragEvent = document.createEvent("HTMLEvents");
+            dragEvent.initEvent("dragenter", true, true);
+            dropEvent = document.createEvent("HTMLEvents");
+            dropEvent.initEvent("drop", true, true);
           } else {
-            fakeDragEvent = document.createEventObject();
-            fakeDragEvent.eventType = "DragEvent";
-            fakeDropEvent = document.createEventObject();
-            fakeDropEvent.eventType = "DragEvent";
+            dragEvent = document.createEventObject();
+            dragEvent.eventType = "DragEvent";
+            dropEvent = document.createEventObject();
+            dropEvent.eventType = "DragEvent";
           }
 
-          Object.defineProperty(fakeDropEvent, 'dataTransfer', {
+          Object.defineProperty(dropEvent, 'dataTransfer', {
             value: new FakeDataTransfer(document.getElementById('inputFileDragHandler').files[0])
           });
 
@@ -108,8 +108,8 @@ let  uploadPage = {
             }
           }
 
-          dispatchEvent(fakeDragEvent);
-          window.setTimeout(function() { dispatchEvent(fakeDropEvent) }, 1500);
+          dispatchEvent(dragEvent);
+          window.setTimeout(function() { dispatchEvent(dropEvent) }, 1500);
         });
       } finally {
         fs.rename(newPath, filePath, function() {});
@@ -126,7 +126,7 @@ let  uploadPage = {
       var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
       browser.params.fileName = path.basename(newPath);
       fs.rename(filePath, newPath, function() {});
-      browser.pause(3000);
+      browser.longWait();
       browser.chooseFile('#masonryArea > form > ul > li > label>input', newPath);
       fs.rename(newPath, filePath, function() {});
     }
