@@ -50,6 +50,42 @@ exports.config = {
       './feature/MZ_005-screenOperations.feature',
       './feature/MZ_006-contentChecking.feature',
       './feature/MZ_007-autoQtDrawingAttached.feature'
+    ],
+    s3Iepart1: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart1.feature',
+    ],
+    s3Iepart2: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart2.feature',
+    ],
+    s3Iepart3: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart3.feature',
+    ],
+    s3Iepart4: [
+      './feature/ie/MZ_003-pinAndPlateUploadIePart4.feature',
+    ],
+    s4Iepart1: [
+      './feature/ie/MZ_004-plateUploadIePart1.feature',
+    ],
+    s4Iepart2: [
+      './feature/ie/MZ_004-plateUploadIePart2.feature',
+    ],
+    s4Iepart3: [
+      './feature/ie/MZ_004-plateUploadIePart3.feature',
+    ],
+    s4Iepart4: [
+      './feature/ie/MZ_004-plateUploadIePart4.feature',
+    ],
+    s7Iepart1: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart1.feature',
+    ],
+    s7Iepart2: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart2.feature',
+    ],
+    s7Iepart3: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart3.feature',
+    ],
+    s7Iepart4: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart4.feature',
     ]
   },
   //
