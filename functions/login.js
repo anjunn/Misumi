@@ -12,6 +12,9 @@ let loginPage = {
   /**
    * define elements
    */
+  systemCheckPopup: {get: function() { return  browser.element('//div[@id="syscheck"]');}},
+  systemCheckBox: {get: function() { return  browser.element('//input[@id="disableAutoClientCheck"]');}},
+  systemCheckButton: {get: function() { return  browser.element('//div[@id="syscheck"]/p[2]/a');}},
   startRightAway: { get: function () { return browser.element('//li[@class="loginBtn"]');}},
   userNameField: { get: function () { return browser.element('//input[@id="id"]');}},
   passwordField: { get: function () { return browser.element('//input[@id="pass"]');}},
@@ -27,6 +30,10 @@ let loginPage = {
   goToHomePage: {
     value: function () {
       browser.url(data.url.homePageUrl);
+      if (this.systemCheckPopup.isVisible()) {
+        this.systemCheckBox.click();
+        this.systemCheckButton.click();
+      }
     }
   },
 
