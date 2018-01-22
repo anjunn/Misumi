@@ -50,7 +50,7 @@ let soProjectPage = {
     value: function() {
       this.orderingButton.click();
       this.orderingListOption.click();
-      browser.pause(1000);
+      browser.smallWait();
       try {
         if (browser.alertText()) {
           browser.alertAccept();
@@ -58,7 +58,7 @@ let soProjectPage = {
       } catch(e) {
         console.log(e.message);
       }
-      browser.pause(1000);
+      browser.smallWait();
       try {
         if (browser.alertText()) {
           browser.alertAccept();
@@ -66,12 +66,12 @@ let soProjectPage = {
       } catch(e) {
         console.log(e.message);
       }
-      browser.pause(2000);
+      browser.mediumWait();
       this.emailSubjectField.waitForVisible();
       var subject = `[QA-TEST] ${this.emailSubjectField.getValue()}`;
       this.emailSubjectField.setValue(subject);
       let mailBody = this.textArea.getValue().replace(/\s/g, '');
-      browser.pause(2000);
+      browser.mediumWait();
       expect(mailBody).to.include(this.customerName.getText().replace(/\s/g, ''));
       expect(mailBody).to.include(this.customerNumber.getText().replace(/\s/g, ''));
       browser.execute(function() {
@@ -148,7 +148,7 @@ let soProjectPage = {
       expect(buttonClass).to.be.equal('disable');
       var windowHandles = browser.windowHandles();
       browser.close(windowHandles.value[windowHandles.value.length - 2]);
-      browser.pause(1000);
+      browser.smallWait();
     }
   },
 
@@ -158,14 +158,14 @@ let soProjectPage = {
   checkPartsView: {
     value: function(count, parts) {
       for(i = 1, j = 1; j <= 7; i+=2, j++) {
-        browser.pause(2000);
+        browser.mediumWait();
         this.projectPage.waitForVisible();
         this.partsView(i).moveToObject();
         this.partsView(i).click();
-        browser.pause(2000);
+        browser.mediumWait();
         var windowHandles = browser.windowHandles();
         browser.switchTab(windowHandles.value[windowHandles.value.length - 1]);
-        browser.pause(2000);
+        browser.mediumWait();
         if ( j > 2) {
           this.partName.waitForVisible();
           expect(this.partName.getText()).to.equal(parts[`part${j}`]);

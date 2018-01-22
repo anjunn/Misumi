@@ -51,7 +51,7 @@ let emailPage = {
       } else if (this.emailButton.isVisible()) {
         this.emailButton.click();
       }
-      browser.pause(3000);
+      browser.longWait();
       if (this.passwordField.isVisible()) {
         this.passwordField.setValue(inputData.loginCredentials.mail.password);
         this.submitButton.click();
@@ -65,12 +65,12 @@ let emailPage = {
   selectMail: {
     value: function(type) {
       this.menuIcon.waitForVisible();
-      browser.pause(2000);
+      browser.mediumWait();
       this.menuIcon.click();
-      browser.pause(2000);
+      browser.mediumWait();
       this.mailIcon.waitForVisible();
       this.mailIcon.click();
-      browser.pause(3000);
+      browser.longWait();
       browser.refresh();
       if ( type === 'estimate' || type  === 'quotation' ) {
         this.mailEstimateFolder.waitForVisible();
@@ -79,7 +79,7 @@ let emailPage = {
         this.mailOrderFolder.waitForVisible();
         this.mailOrderFolder.click();
       }
-      browser.pause(3000);
+      browser.longWait();
       let fileName = browser.params.fileName;
       this.fileNameInMail(fileName).waitForExist();
       this.fileNameInMail(fileName).click();
@@ -139,7 +139,7 @@ let emailPage = {
       let fileName = browser.params.fileName;
       let initialPrice = browser.params.initialPrice;
       projectPageUrl = browser.params.projectPageUrl;
-      browser.pause(2000);
+      browser.mediumWait();
       let content=this.mailBody.getText().replace(/\s/g, '');
       let projectName = (expectDataSinglePin.mailContents.part1+browser.params.fileName);
       let fileNameMail =(expectDataSinglePin.mailContents.part2+browser.params.fileName);
