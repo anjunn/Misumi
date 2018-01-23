@@ -81,7 +81,14 @@ let qtProjectListPage = {
    */
   openProject: {
     value: function() {
-      browser.params.qtProjectListId = browser.getCurrentTabId();
+      //browser.params.qtProjectListId = browser.getCurrentTabId();
+      if (browser.desiredCapabilities.browserName != "chrome") {
+        var data = JSON.stringify({fileName: browser.params.fileName});
+        const writePath = './data/cad-drawings/filename.json';
+        fs.writeFile(writePath, data, function(err) {
+          if (err) return console.log(err);
+        });
+      }
       this.product.waitForEnabled();
       browser.scrollToElement(this.productSelector);
       this.product.click();

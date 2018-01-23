@@ -14,9 +14,10 @@
     "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
     "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0",
     "test-ci-s3-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s3Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s3Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s3Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s3Iepart4",
-    "test-ci-s4-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s4Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s4Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s4Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s4Iepart4"
-    },
-  "dependencies": {
+    "test-ci-s4-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s4Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s4Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s4Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s4Iepart4",
+    "test-ci-s7-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s7Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s7Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s7Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s7Iepart4"
+  },
+ "dependencies": {
     "base64-img": "^1.0.3",
     "chai": "^3.5.0",
     "csv-parse": "^2.0.0",

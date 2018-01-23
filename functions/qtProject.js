@@ -63,7 +63,7 @@ let qtProjectPage = {
   validateOrderDetails: {
     value: function(names, pinType) {
       browser.waitForLoading('//div[@id="loader"]');
-      if (browser.params.singlePinPrice || browser.params.multiplePinPrice || browser.params.pinAndPlatePrice) {
+      if (browser.params.singlePinPrice.part1 || browser.params.multiplePinPrice.part1 || browser.params.pinAndPlatePrice.part1) {
         if (pinType === 'single pin'){
             this.partNameFirstRow.moveToObject();
             var partName = this.partNameFirstRow.getText();
@@ -264,7 +264,7 @@ let qtProjectPage = {
    */
   checkQtProductPartNumber: {
     value: function(expected,count) {
-      if (browser.params.modelNumber) {
+      if (browser.params.modelNumber.part1) {
         for (var j = 0, position = 2, i = j + 1; j < count; j++, i++, position+=2) {
           this.productPartNumber(position).moveToObject();
           this.productPartNumber(position).waitForVisible();

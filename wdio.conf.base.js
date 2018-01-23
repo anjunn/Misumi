@@ -74,6 +74,18 @@ exports.config = {
     ],
     s4Iepart4: [
       './feature/ie/MZ_004-plateUploadIePart4.feature',
+    ],
+    s7Iepart1: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart1.feature',
+    ],
+    s7Iepart2: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart2.feature',
+    ],
+    s7Iepart3: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart3.feature',
+    ],
+    s7Iepart4: [
+      './feature/ie/MZ_007-autoQtDrawingAttachedPart4.feature',
     ]
   },
   //
@@ -183,6 +195,7 @@ exports.config = {
     fileName: null,
     initialPrice: null,
     totalPrice: null,
+    qtProjectListId: null,
     singlePinPrice: {
       part1: null,
     },

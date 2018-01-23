@@ -112,7 +112,7 @@ let soProjectPage = {
    */
   checkSoProductPartNumber: {
     value: function(expected,count) {
-      if (browser.params.modelNumber) {
+      if (browser.params.modelNumber.part1) {
         for (var j = 0, position = 2; j < count; j++, position+=2) {
           this.productPartNumber(position).moveToObject();
           this.productPartNumber(position).waitForVisible();

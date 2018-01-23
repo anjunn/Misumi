@@ -16,7 +16,6 @@ let  projectPage = {
    * define elements
    */
   thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
-  chatBox: { get : function() { return browser.element('//div[@id="aibis-waiting"]/div[@class="titlebar"]'); }},
   arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
   partsName: { value: function (part) { return browser.element(`(//span[@class="class"])[${part}]`); }},
   partsNameSelector: { value: function(part) { return `div#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner  p > a` } },
