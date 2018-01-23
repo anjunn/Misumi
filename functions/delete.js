@@ -28,21 +28,21 @@ let  deleteProduct = {
           this.menu.click();
           this.deleteOption.waitForVisible();
           this.deleteOption.click(); 
-          browser.pause(1000);
+          browser.smallWait();
           if(!(this.okButton.isVisible()))
             continue;
           this.okButton.waitForEnabled();
           this.okButton.click();
-          browser.pause(2000); 
+          browser.mediumWait();
       } else{
           if(!(this.deleteButton.isVisible()))
             continue;
           this.deleteButton.waitForVisible();
           this.deleteButton.click();
-          browser.pause(1000);
+           browser.smallWait();
           this.okButton.waitForVisible();
           this.okButton.click();
-          browser.pause(2000);
+          browser.mediumWait();
           }
           browser.waitForLoading('//p[@class="listLoading"]//img');    
       }

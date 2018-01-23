@@ -43,13 +43,13 @@ exports.config = {
       './feature/MZ_015-smokeTest.feature'
     ],
     all: [
-      './feature/MZ_001-singlePinUpload.feature',
-      './feature/MZ_002-multiplePinUpload.feature',
-      './feature/MZ_003-pinAndPlateUpload.feature',
-      './feature/MZ_004-plateUpload.feature',
-      './feature/MZ_005-screenOperations.feature',
-      './feature/MZ_006-contentChecking.feature',
-      './feature/MZ_007-autoQtDrawingAttached.feature'
+     './feature/MZ_001-singlePinUpload.feature',
+     './feature/MZ_002-multiplePinUpload.feature',
+     './feature/MZ_003-pinAndPlateUpload.feature',
+     './feature/MZ_004-plateUpload.feature',
+     './feature/MZ_005-screenOperations.feature',
+     './feature/MZ_006-contentChecking.feature',
+     './feature/MZ_007-autoQtDrawingAttached.feature',  
     ],
     s3Iepart1: [
       './feature/ie/MZ_003-pinAndPlateUploadIePart1.feature',
@@ -228,6 +228,15 @@ exports.config = {
   // Gets executed before test execution begins. At this point you can access all global
   // variables, such as `browser`. It is the perfect place to define custom commands.
   before: function (capabilities, specs) {
+    let fs = require('fs');
+    // delete files in download directory before starting
+    const downloadPath = __dirname + '/data/downloads/';
+    if( fs.existsSync(downloadPath) ) {
+      fs.readdirSync(downloadPath).forEach(function (file, index) {
+        if (file === '.gitignore') return;
+        fs.unlinkSync(downloadPath + file)
+      });
+    }
     /**
      * Initilaize global variables
      */
@@ -262,14 +271,7 @@ exports.config = {
       }
       fs.mkdirSync(__dirname + '/reports/screenshots');
     }
-    // delete files in download directory before starting
-    const downloadPath = __dirname + '/data/downloads/';
-    if( fs.existsSync(downloadPath) ) {
-      fs.readdirSync(downloadPath).forEach(function (file, index) {
-        if (file === '.gitignore') return;
-        fs.unlinkSync(downloadPath + file)
-      });
-    }
+    
     // delete files in allure directory before starting
     const allurePath = __dirname + '/allure-results/';
     if( fs.existsSync(allurePath) ) {

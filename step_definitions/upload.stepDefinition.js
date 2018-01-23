@@ -37,7 +37,7 @@ module.exports = function () {
     uploadPage.upload(path);
   });
 
-  this.When(/^User verifies whether upload is successful for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.When(/^User verifies whether upload is successful for ((single|multiple) pin|plate|pin and plate)$/, {retry: 2},(pinType) => {
     uploadPage.verifyUpload();
   });
 

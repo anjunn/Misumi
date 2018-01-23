@@ -72,7 +72,7 @@ let loginPage = {
    */
   validateUserNameField: {
     value: function() {
-      browser.pause(4000);
+      browser.veryLongWait();
       if (!browser.isLoginPage()) return;
       expect(this.userNameField.isVisible()).to.equal(true);
     }
@@ -110,7 +110,7 @@ let loginPage = {
       this.userNameField.setValue(data.loginCredentials.presentation.username);
       this.passwordField.setValue(data.loginCredentials.presentation.password);
       this.loginButton.click();
-      browser.pause(4000);
+      browser.veryLongWait();
       if (this.errorMessage.isVisible()) {
         this.loginButton.waitForEnabled();
         this.loginButton.click();

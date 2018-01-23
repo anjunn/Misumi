@@ -89,7 +89,7 @@ let  projectPage = {
     value: function() {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
-      browser.pause(3000);
+      browser.longWait();
       this.arrow.waitForVisible();
       browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
     }
@@ -100,14 +100,13 @@ let  projectPage = {
    */
   compareImage: {
     value: function(actualImagePath, expectedImagePath) {
-      //this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(2000);
+      browser.mediumWait();
       browser.windowHandleFullscreen();
-      browser.pause(2000);
+      browser.mediumWait();
       this.zoomOut.click();
-      browser.pause(5000);
+      browser.extraLongWait();
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
       browser.setViewportSize({width: 1280, height: 600});
       this.arrow.click();
@@ -132,10 +131,9 @@ let  projectPage = {
    */
   compareImageCorePin: {
     value: function(actualImagePath, expectedImagePath) {
-      this.chatBox.waitForVisible();
       this.arrow.waitForVisible();
       this.arrow.click();
-      browser.pause(5000);
+      browser.extraLongWait();
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
@@ -174,7 +172,7 @@ let  projectPage = {
           element.fireEvent("onchange");
         }
       }, quantity);
-      browser.pause(3000);
+      browser.longWait();
       if (!isPlate) {
         var newPrice  = parseInt(this.priceText.getText().replace(/,/g, ""));
         expect(newPrice).to.be.above(price);
@@ -194,7 +192,7 @@ let  projectPage = {
         error.style.display = 'none';
       });
       for (var i = 1; i <= count; i++) {
-        browser.pause(1000);
+        browser.smallWait();
         if (browser.desiredCapabilities.browserName === 'chrome') {
           this.partsName(i).moveToObject();
         } else if (i > 2) {
@@ -252,19 +250,19 @@ let  projectPage = {
         this.manualQuotationPinAndPlate.waitForVisible();
         this.manualQuotationPinAndPlate.click();
       } else {
-        browser.pause(5000);
+        browser.extraLongWait();
         this.manualQuotationPlate.waitForVisible();
         this.manualQuotationPlate.click();
       }
       this.materialFieldPartsView.waitForEnabled();
       this.materialFieldPartsView.selectByVisibleText(estimateCondition.material);
       this.boxButtonpartsview.waitForEnabled();
-      browser.pause(2000);
+      browser.mediumWait();
       this.boxButtonpartsview.click();
-      browser.pause(2000);
+      browser.mediumWait();
       this.closePopUpButton.waitForVisible();
       this.closePopUpButton.click();
-      browser.pause(2000);
+      browser.mediumWait();
     }
   },
 
@@ -305,7 +303,7 @@ let  projectPage = {
   downloadPdf: {
     value: function() {
       if (browser.desiredCapabilities.browserName === 'chrome') {     
-       browser.pause(3000);
+       browser.longWait();
        this.downloadButton.waitForVisible();
        this.downloadButton.click();
        this.downloadPdfOption.waitForVisible();
@@ -330,10 +328,10 @@ let  projectPage = {
   validatePdf: {
     value: function(parts, pinType) {
       if (browser.desiredCapabilities.browserName === 'chrome') {
-      browser.pause(3000);
+      browser.longWait();
       var files = fs.readdirSync('data/downloads');
       var path = require('path');
-      var fileName = browser.params.fileName || require('../data/2D-Dta/filename.json').fileName;
+      var fileName = browser.params.fileName || require('../data/cad-drawings/filename.json').fileName;
       for (var i in files) {
         if (path.extname(files[i]) === ".pdf") {
           var buffer = fs.readFileSync(`data/downloads/${files[i]}`);
@@ -474,7 +472,7 @@ let  projectPage = {
               document.querySelector(selector2).fireEvent("onchange");
             }
           }, this.customerOrderingNumberFieldPart1(k), this.customerOrderingNumberFieldPart2(k));
-          browser.pause(2000);
+          browser.mediumWait();
         }
       }
     }
@@ -511,7 +509,7 @@ let  projectPage = {
    */
   verifyBatchInput:{
     value: function(expected,count) {
-      browser.pause(2000);
+      browser.mediumWait();
       for (i=2,j=0; j<7; j++,i+=2) {
         if (browser.desiredCapabilities.browserName == "chrome") {
           this.customerOrderingNumberField(i).moveToObject();

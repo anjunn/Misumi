@@ -54,7 +54,7 @@ let  orderPage = {
    */
   placeOrder: {
     value: function() {
-      browser.pause(1000);
+      browser.smallWait();
       this.customerNumberInput.waitForVisible();
       const searchButtonPos = browser.elementIdLocation(this.customerNumberInput.value.ELEMENT);
       browser.scroll(searchButtonPos.value.x, searchButtonPos.value.y-80);

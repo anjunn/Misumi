@@ -55,6 +55,42 @@ const commonUtilities = {
       element.click();
     }, selector);
   },
+
+  /*
+  * Wait for elements for a small period
+  */
+  smallWait: function () {
+  browser.pause(1000);
+  },
+
+  /*
+  * Wait for elements for a medium period
+  */
+  mediumWait: function () {
+  browser.pause(2000);
+  },
+
+  /*
+  * Wait for elements for a Long period
+  */
+  longWait: function () {
+  browser.pause(3000);
+  },
+
+  /*
+  * Wait for elements for a Long period
+  */
+  veryLongWait: function () {
+  browser.pause(4000);
+  },
+
+  /*
+  * Wait for elements for a Long period
+  */
+  extraLongWait: function () {
+  browser.pause(5000);
+  },
+
 };
 
 /**

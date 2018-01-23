@@ -22,7 +22,7 @@ module.exports = function () {
     qtProjectListPage.openProject();
   });
 
-  this.When(/^Opens the file uploaded by the user from QT project list$/, () => {
+  this.When(/^Opens the file uploaded by the user from QT project list$/, {retry: 2}, () => {
     qtProjectListPage.openProject();
   });
 };
