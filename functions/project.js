@@ -81,6 +81,7 @@ let  projectPage = {
   modelNumber:{ value: function (n) {return browser.element(`(//div[@class="modelNum"]//span[@data-bind="text: qtOpt.productPartNumber"])[${n}]`);}},
   modelNumberSelector: { value: function (part) {return `#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner > div > div.modelNum > span:nth-child(2)`; }},
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
+  backButton: { get : function() { return browser.element('//p[@class="backBtn"]/a'); }},
 
   /*
    * Open project by clicking on thumbnail
@@ -101,6 +102,10 @@ let  projectPage = {
   compareImage: {
     value: function(actualImagePath, expectedImagePath) {
       this.arrow.waitForVisible();
+      if (this.backButton.isVisible()) {
+        this.backButton.click();
+        browser.mediumWait();
+      }
       this.arrow.click();
       browser.mediumWait();
       browser.windowHandleFullscreen();
@@ -189,7 +194,7 @@ let  projectPage = {
       this.partsName(1).waitForEnabled();
       browser.execute(function() {
         var error = document.querySelector('.WindowError');
-        error.style.display = 'none';
+        if (error) error.style.display = 'none';
       });
       for (var i = 1; i <= count; i++) {
         browser.smallWait();
