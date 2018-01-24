@@ -39,6 +39,9 @@ exports.config = {
     scenario8: [
       './feature/MZ_008-delete.feature'
     ],
+    scenario9: [
+      './feature/MZ_009-jenkinsDemo.feature'
+    ],
     smokeTest: [
       './feature/MZ_015-smokeTest.feature'
     ],
