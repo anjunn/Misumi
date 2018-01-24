@@ -161,6 +161,10 @@ let  projectPage = {
    */
   quotionConditionInPartsView: {
     value: function(quantity, isPlate = false) {
+      if (this.backButton.isVisible()) {
+        this.backButton.click();
+        browser.mediumWait();
+      }
       this.quantityChange.waitForEnabled();
       if (!isPlate) {
         var price = parseInt(this.priceText.getText().replace(/,/g, ""));
