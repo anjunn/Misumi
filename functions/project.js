@@ -102,6 +102,7 @@ let  projectPage = {
   compareImage: {
     value: function(actualImagePath, expectedImagePath) {
       this.arrow.waitForVisible();
+      browser.extraLongWait();
       if (this.backButton.isVisible()) {
         this.backButton.click();
         browser.mediumWait();
@@ -137,6 +138,11 @@ let  projectPage = {
   compareImageCorePin: {
     value: function(actualImagePath, expectedImagePath) {
       this.arrow.waitForVisible();
+      browser.extraLongWait();
+      if (this.backButton.isVisible()) {
+        this.backButton.click();
+        browser.mediumWait();
+      }
       this.arrow.click();
       browser.extraLongWait();
       browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
@@ -161,6 +167,7 @@ let  projectPage = {
    */
   quotionConditionInPartsView: {
     value: function(quantity, isPlate = false) {
+      browser.extraLongWait();
       if (this.backButton.isVisible()) {
         this.backButton.click();
         browser.mediumWait();
