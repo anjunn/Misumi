@@ -5,6 +5,7 @@ let pixelmatch = require('pixelmatch');
 let parse = require('csv-parse');
 let pdfText = require('pdf-text');
 let expectedData = require('../data/expected-results/common.json');
+let sharp =require('sharp');
 /**
  * project Page Object
  *
@@ -121,6 +122,7 @@ let  projectPage = {
       var filesRead = 0;
       function doneReading() {
         if (++filesRead < 2) return;
+        sharp('./data/screens/actual-screens/actualImagePath').resize(1366, 768).toFile('./data/screens/actual-screens/actualImagePath', (err, info) => {});
         var diff = new PNG({width: actualImage.width, height: actualImage.height});
         var totalPixels = 768000;
         var pixelDiff = pixelmatch(actualImage.data, expectedImage.data, diff.data, actualImage.width, actualImage.height, {threshold: 0.1});
