@@ -113,7 +113,18 @@ let  projectPage = {
       browser.mediumWait();
       this.zoomOut.click();
       browser.extraLongWait();
-      browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+      var expectedImage = './data/screens/expected-screens/' + expectedImagePath;
+      if (fs.existsSync(expectedImage)) {
+        browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+        console.log("saved to actual");
+      }
+      else {
+        browser.saveScreenshot('./data/screens/expected-screens/' + expectedImagePath);
+        browser.setViewportSize({width: 1280, height: 600});
+        this.arrow.click();
+        console.log("saved to expected");
+        return;
+      }
       browser.setViewportSize({width: 1280, height: 600});
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
@@ -145,7 +156,17 @@ let  projectPage = {
       }
       this.arrow.click();
       browser.extraLongWait();
-      browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+      var expectedImage = './data/screens/expected-screens/' + expectedImagePath;
+      if (fs.existsSync(expectedImage)) {
+        browser.saveScreenshot('./data/screens/actual-screens/' + actualImagePath);
+        console.log("corepin saved to actual");
+      }
+      else {
+        browser.saveScreenshot('./data/screens/expected-screens/' + expectedImagePath);
+        this.arrow.click();
+        console.log("corepin saved to expected");
+        return;
+      }
       this.arrow.click();
       var actualImage = fs.createReadStream('./data/screens/actual-screens/' + actualImagePath).pipe(new PNG()).on('parsed', doneReading);
       var expectedImage = fs.createReadStream('./data/screens/expected-screens/' + expectedImagePath).pipe(new PNG()).on('parsed', doneReading);
