@@ -19,17 +19,16 @@ And User defines quotation condition for single pin
 Then User checks whether thumb nail of 3D appears for single pin
 And User verifies project details for single pin
 
-# Scenario: Email validation after upload
+Scenario: Email validation after upload
 
 
-# And User decides to check the email
-# When User logs in to mail account
-# Then User selects the product estimate mail
-# And User goes back to project page
+And User decides to check the email
+When User logs in to mail account
+Then User selects the product estimate mail
+And User goes back to project page
 
 Scenario: User checks the uploaded project
 
-Given User opens the uploaded project
 When User does Feature Recognition for single pin
 Then User verifies part names for single pin
 And User defines quotation condition in parts view for single pin
@@ -42,9 +41,9 @@ And User places the order
 And The Order is succesfully placed
 And User goes to Order History Page
 
-# Scenario: Email validation after ordering
+Scenario: Email validation after ordering
 
-# Given User decides to check the email
-# When User logs in to mail account
-# Then User selects the product order mail
+Given User decides to check the email
+When User logs in to mail account
+Then User selects the product order mail
 
