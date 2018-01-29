@@ -93,6 +93,12 @@ let  projectPage = {
       browser.longWait();
       this.arrow.waitForVisible();
       browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
+      this.arrow.waitForVisible();
+      browser.extraLongWait();
+      if (this.backButton.isVisible()) {
+        this.backButton.click();
+        browser.mediumWait();
+      }
     }
   },
 
