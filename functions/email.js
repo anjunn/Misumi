@@ -30,6 +30,7 @@ let emailPage = {
   mailBody: { get: function () { return browser.element('//div[@class="PlainText"]');} },
   mailLink: { get: function () { return browser.element('//div[@class="PlainText"]/a');} },
   mailPreview: { get: function () { return browser.element('//div[@class="PlainText"]');} },
+  staySignedInNobutton: { get: function () { return browser.element('//input[@id="idBtn_Back"]');} },
 
   /*
    * Goes to email account home
@@ -64,6 +65,10 @@ let emailPage = {
    */
   selectMail: {
     value: function(type) {
+      browser.smallWait();
+      if(this.staySignedInNobutton.isVisible()){
+        this.staySignedInNobutton.click();
+      }
       this.menuIcon.waitForVisible();
       browser.mediumWait();
       this.menuIcon.click();
