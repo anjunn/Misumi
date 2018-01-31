@@ -64,6 +64,7 @@ let loginPage = {
     value: function(){
       this.startRightAway.waitForVisible();
       this.startRightAway.click();
+      browser.veryLongWait();
     }
   },
 
