@@ -125,10 +125,14 @@ let  uploadPage = {
       var date = (new Date()).getTime();
       var newPath = filePath.replace(/(\.[\w\d_-]+)$/i, `${date}$1`);
       browser.params.fileName = path.basename(newPath);
-      fs.rename(filePath, newPath, function() {});
-      browser.longWait();
-      browser.chooseFile('#masonryArea > form > ul > li > label>input', newPath);
-      fs.rename(newPath, filePath, function() {});
+      try{
+        fs.rename(filePath, newPath, function() {});
+        browser.longWait();
+        browser.chooseFile('#masonryArea > form > ul > li > label > input', newPath);
+      }
+      finally { 
+        fs.rename(newPath, filePath, function() {}); 
+      }
     }
   },
 

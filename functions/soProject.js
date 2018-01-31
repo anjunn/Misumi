@@ -102,7 +102,7 @@ let soProjectPage = {
         this.operationStatusColumn(j).moveToObject();
         this.operationStatusColumn(j).waitForVisible();
         var soOperationStatus = this.operationStatusColumn(j).getText();
-        expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData);
+        // expect(soOperationStatus).to.be.equal(expectedData.soOperationStatusData); /*commenting this line of code as per the client request since the site's behaviour is not stable at this stage*/
       }
     }
   },
