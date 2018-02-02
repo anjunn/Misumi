@@ -42,6 +42,9 @@ exports.config = {
     scenario9: [
       './feature/MZ_009-jenkinsDemo.feature'
     ],
+    scenario10: [
+      './feature/MZ_010-labSiteCombinationCheck.feature'
+    ],
     smokeTest: [
       './feature/MZ_015-smokeTest.feature'
     ],

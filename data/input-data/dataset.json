@@ -19,7 +19,8 @@
     "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
     "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
     "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi",
-    "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/"
+    "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/",
+    "homePageUrlLabSite": "https://prs-origin-lab.meviy.misumi-ec.com/"
   },
 
   "uploadPath": {

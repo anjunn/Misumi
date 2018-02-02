@@ -38,4 +38,8 @@ module.exports = function () {
   this.When(/^User logs out$/, () => {
     loginPage.logout();
   });
+
+  this.Given(/^User goes to Home Page of lab site$/, () => {
+    loginPage.goToHomePageLabSite();
+  });
 };
