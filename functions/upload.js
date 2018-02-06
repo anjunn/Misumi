@@ -264,8 +264,16 @@ let  uploadPage = {
       var totalPriceDisplayed = this.priceInList.getText();
       expect(totalPriceDisplayed).to.not.equal(null);
     }
-  }
+  },
 
+  /*
+   * Call Excel
+   */
+  callExcel:{
+    value: function() {
+      browser.excelParsing();
+    }
+  },
 };
 
 module.exports = Object.create(Page, uploadPage);

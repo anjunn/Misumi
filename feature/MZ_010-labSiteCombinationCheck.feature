@@ -15,4 +15,4 @@ Scenario: User checks the uploaded project
 Given User opens the uploaded project
 Then User verifies part names for single pin
 And User defines quotation condition in parts view for single pin
-# Then check different combination of quotations
+Then Check different combination of quotations

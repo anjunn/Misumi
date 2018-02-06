@@ -77,4 +77,8 @@ module.exports = function () {
     uploadPage.checkManualQuotationIconInList();
     uploadPage.validatePriceInList();
   });
+
+    this.Given(/^Check different combination of quotations$/, () => {
+    uploadPage.callExcel();
+  });
  };
