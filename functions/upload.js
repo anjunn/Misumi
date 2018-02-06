@@ -267,11 +267,14 @@ let  uploadPage = {
   },
 
   /*
-   * Call Excel
-   */
-  callExcel:{
-    value: function() {
-      browser.excelParsing();
+  * Read excel data
+  */
+  excelParsing:{
+    value: function(){
+      var xlsx = require('node-xlsx');
+      var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_defines.xlsx');
+      var first_sheet = sheets[0];
+      console.log(first_sheet.data);
     }
   },
 };
