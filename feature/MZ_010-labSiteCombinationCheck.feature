@@ -12,7 +12,6 @@ And User enters credentials and logs in
 
 Scenario: User checks the uploaded project
 
-Given User opens the uploaded project
-Then User verifies part names for single pin
-And User defines quotation condition in parts view for single pin
+# Given User uploads 3D data for single pin
+# When User verifies whether upload is successful for single pin
 Then Check different combination of quotations

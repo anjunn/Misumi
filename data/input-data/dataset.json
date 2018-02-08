@@ -39,5 +39,18 @@
     "shortDeliveryRequest":"納短依頼",
     "quotationComplete":"見積完了",
     "ordering":"発注"
+  },
+
+  "combinationTable": {
+    "estimationSheet" : 1,
+    "quotationConditionSheet" : 2,
+    "estimationSheetArgValueColumn": 7,
+    "estimationSheetStatusColumn": 12
+  },
+
+  "conversionTable": {
+    "conversionSheet" : 0,
+    "dispayNameColumn": 0,
+    "internalNameColumn": 1
   }
 }

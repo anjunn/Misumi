@@ -3,6 +3,7 @@ let data = require('../data/input-data/dataset.json');
 let base64Img = require('base64-img');
 let fs = require('fs');
 var path = require('path');
+var xlsx = require('node-xlsx');
 /**
  * upload Page Object
  *
@@ -266,17 +267,55 @@ let  uploadPage = {
     }
   },
 
-  /*
+ /*
   * Read excel data
   */
   excelParsing:{
     value: function(){
-      var xlsx = require('node-xlsx');
       var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_defines.xlsx');
       var first_sheet = sheets[0];
       console.log(first_sheet.data);
     }
   },
+  /*
+   * Check combination on uploading 
+   */
+  checkCombination:{
+    value: function(){
+      var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_defines.xlsx');
+      var referenceSheet = xlsx.parse('./data/input-data/conversion_table.xlsx');
+      var estimationSheetData = sheets[data.combinationTable.estimationSheet].data;
+      //-------------take the material name from the site--------------
+      this.material.waitForEnabled();
+      var materialArray = this.material.getText().split('\n');
+      for(var i = 1; i < materialArray.length ; i++){  //---i starts from 1 as 0th option is please select----
+        var selectedMaterial = materialArray[i];
+        // -------------store the column values from sheet 2 in the material range in an array---------
+        for(var c = 5 ; c <= 16; c++ ){
+          var materialColumnEstimationSheet = estimationSheetData[c][data.combinationTable.estimationSheetArgValueColumn];
+          for (var j = 2; j < materialArray.length ; j++) {
+            var internalName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn];
+            if(materialColumnEstimationSheet == internalName) {
+              var displayName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn];
+              if (selectedMaterial == displayName){
+                console.log("selectedMaterial: "+selectedMaterial);
+                console.log("materialColumnEstimationSheet: "+materialColumnEstimationSheet);
+                console.log("internalName:"+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn]);
+                console.log("displayName: "+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn]);
+                console.log("check:true");
+                //-----------------checking corresponding status column---------------------
+                var materialStatus=estimationSheetData[c][data.combinationTable.estimationSheetStatusColumn];
+                if(materialStatus=="Advanced"){
+                  console.log(materialStatus);
+                }
+                break;  
+              }
+            }
+          }  
+        }
+      }
+    }
+  }  
 };
 
 module.exports = Object.create(Page, uploadPage);
