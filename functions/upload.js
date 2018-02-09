@@ -36,6 +36,8 @@ let  uploadPage = {
   uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
   closeButton: { get: function () { return browser.element('//li[@id="closeBtn"]'); }},
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
+  surfaceTypeId: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//@value[${n}]`); }},
+
  
   /**
    * Upload file by triggering drop event
@@ -283,36 +285,70 @@ let  uploadPage = {
   checkCombination:{
     value: function(){
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
-      var referenceSheet = xlsx.parse(data.conversionTableData.conversionTable);
-      var estimationSheetData = sheets[data.combinationTableData.estimationSheet].data;
+      var refSheet = xlsx.parse(data.conversionTableData.conversionTable);
+      var estSheetData = sheets[data.combinationTableData.estimationSheet].data;
+      var refSheetData = refSheet[data.conversionTableData.conversionSheet].data;
+      this.surfaceTreatment.waitForVisible();
+      var surfaceTypeArray = this.surfaceTreatment.getText().split('/n');
+      console.log("surfaceTypeArray: "+surfaceTypeArray);                 
       //-------------take the material name from the site--------------
       this.material.waitForEnabled();
       var materialArray = this.material.getText().split('\n');
-      for(var i = 1; i < materialArray.length ; i++){  //---i starts from 1 as 0th option is please select----
+      var length = materialArray.length;
+      for(var i = 1; i < length ; i++){  //---i starts from 1 as 0th option is please select----
         var selectedMaterial = materialArray[i];
-        // -------------Take display name and compare---------
-        for (var j = 2; j < materialArray.length ; j++) {
-          var displayName = referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.dispayNameColumn];
-          if (selectedMaterial == displayName){
-            // -----------Take corresponding internal name----------
-            var internalName = referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.internalNameColumn];
+        // -------------Take display name, internal name and compare---------
+        for (var j = 2; j < length ; j++) {
+          var displayNameMaterial = refSheetData[j][data.conversionTableData.dispayNameColumn];
+          var internalNameMaterial = refSheetData[j][data.conversionTableData.internalNameColumn];
+          if (selectedMaterial == displayNameMaterial){
             for(var c = 5 ; c <= 16; c++ ){
-              // -------------store the column values from sheet 2 in the material range in an array---------
-              var materialColumnEstimationSheet = estimationSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
-              // -------------compare column value and internal name------------------
-              if(materialColumnEstimationSheet == internalName) {
-                console.log("SelectedMaterial from site: "+selectedMaterial);
-                console.log("DisplayName in combination table: "+referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.dispayNameColumn]);
-                console.log("Corresponging InternalName: "+referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.internalNameColumn]);
-                console.log("MaterialColumn from EstimationSheet: "+materialColumnEstimationSheet);
-                console.log("Check: True");
+              // -------------store the column values and compare with internal name---------
+              var materialColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
+              if(materialColumnEstSheet === internalNameMaterial) {
                 //-----------------checking corresponding status column---------------------
-                var materialStatus=estimationSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
+                var materialStatus=estSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
                 if(materialStatus=="Advanced"){
+                  console.log("-----------------------------------------------------------------");
+                  console.log("SelectedMaterial from site: "+selectedMaterial);
+                  console.log("DisplayNameMaterial in combination table: "+displayNameMaterial);
+                  console.log("Corresponging InternalNameMaterial: "+internalNameMaterial);
+                  console.log("MaterialColumn from EstimationSheet: "+materialColumnEstSheet);
+                  console.log("Check: True");
                   console.log("Corresponging status: "+materialStatus);
                   // ------------------Take quotation condition sheet values------------------
                   // -------------------Implementing Case 1 for all material types-------------------------
+                  var qtSheetData=sheets[data.combinationTableData.qtSheet].data;
+                  var rowLength = qtSheetData.length;
+                  for(var row = 5; row < rowLength; row++){
+                    var articleTypeId = qtSheetData[row][data.combinationTableData.qtSheetArticleTypeIdColumn];
+                    var nameColumn = qtSheetData[row][data.combinationTableData.nameColumn];
+                    var materialType = qtSheetData[row][data.combinationTableData.materialType];
+                    var surfaceType = qtSheetData[row][data.combinationTableData.surfaceType];
+                    var conditional = qtSheetData[row][data.combinationTableData.conditional]
+                    if(articleTypeId === data.combinationTableData.articleTypeOther){
+                      if(nameColumn === selectedMaterial && materialType === "ANY" && surfaceType && !conditional) {
+                        var qtSheetStatus = qtSheetData[row][data.combinationTableData.status];
+                        console.log("articletypeid: "+articleTypeId);
+                        console.log("nameColumn: "+nameColumn);
+                        console.log("materialType: "+materialType);
+                        console.log("surfaceType: "+surfaceType);
+                        console.log("conditional: "+conditional);
+                        console.log("status: "+qtSheetStatus);
+                        console.log("=============================================");
+                        // ----------------check the drop down list in the site-------------------
+                        var flagRecommended=0;
+                        var flagNotRecommended=0;
+                        var flagNotSupported=0;
+                        // if(qtSheetStatus === 'Recommended') {
+                          for (var k = 1; k < surfaceTypeArray.length; k++) {
+                            console.log("surfaceTypeId"+this.surfaceTypeId(k).getValue());
+                          }
+                        // }
+                      }
+                    }
                   }
+                }
                 break;  
               }
             }

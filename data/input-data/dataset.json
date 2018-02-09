@@ -46,7 +46,14 @@
     "estimationSheet" : 1,
     "qtSheet" : 2,
     "estimationSheetArgValueColumn": 7,
-    "estimationSheetStatusColumn": 12
+    "estimationSheetStatusColumn": 12,
+    "qtSheetArticleTypeIdColumn": 0,
+    "articleTypeOther": -1,
+    "nameColumn": 9,
+    "materialType":11,
+    "surfaceType": 12,
+    "conditional":13,
+    "status":14
   },
 
   "conversionTableData": {
