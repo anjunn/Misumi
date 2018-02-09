@@ -282,9 +282,9 @@ let  uploadPage = {
    */
   checkCombination:{
     value: function(){
-      var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_defines.xlsx');
-      var referenceSheet = xlsx.parse('./data/input-data/conversion_table.xlsx');
-      var estimationSheetData = sheets[data.combinationTable.estimationSheet].data;
+      var sheets = xlsx.parse(data.combinationTableData.combinationTable);
+      var referenceSheet = xlsx.parse(data.conversionTableData.conversionTable);
+      var estimationSheetData = sheets[data.combinationTableData.estimationSheet].data;
       //-------------take the material name from the site--------------
       this.material.waitForEnabled();
       var materialArray = this.material.getText().split('\n');
@@ -292,25 +292,27 @@ let  uploadPage = {
         var selectedMaterial = materialArray[i];
         // -------------Take display name and compare---------
         for (var j = 2; j < materialArray.length ; j++) {
-          var displayName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn];
+          var displayName = referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.dispayNameColumn];
           if (selectedMaterial == displayName){
             // -----------Take corresponding internal name----------
-            var internalName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn];
+            var internalName = referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.internalNameColumn];
             for(var c = 5 ; c <= 16; c++ ){
               // -------------store the column values from sheet 2 in the material range in an array---------
-              var materialColumnEstimationSheet = estimationSheetData[c][data.combinationTable.estimationSheetArgValueColumn];
+              var materialColumnEstimationSheet = estimationSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
               // -------------compare column value and internal name------------------
               if(materialColumnEstimationSheet == internalName) {
                 console.log("SelectedMaterial from site: "+selectedMaterial);
-                console.log("DisplayName in combination table: "+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn]);
-                console.log("Corresponging InternalName: "+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn]);
+                console.log("DisplayName in combination table: "+referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.dispayNameColumn]);
+                console.log("Corresponging InternalName: "+referenceSheet[data.conversionTableData.conversionSheet].data[j][data.conversionTableData.internalNameColumn]);
                 console.log("MaterialColumn from EstimationSheet: "+materialColumnEstimationSheet);
                 console.log("Check: True");
                 //-----------------checking corresponding status column---------------------
-                var materialStatus=estimationSheetData[c][data.combinationTable.estimationSheetStatusColumn];
+                var materialStatus=estimationSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
                 if(materialStatus=="Advanced"){
                   console.log("Corresponging status: "+materialStatus);
-                }
+                  // ------------------Take quotation condition sheet values------------------
+                  // -------------------Implementing Case 1 for all material types-------------------------
+                  }
                 break;  
               }
             }

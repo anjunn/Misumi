@@ -41,14 +41,16 @@
     "ordering":"発注"
   },
 
-  "combinationTable": {
+  "combinationTableData": {
+    "combinationTable": "./data/input-data/mst_qt_condition_type_defines.xlsx",
     "estimationSheet" : 1,
-    "quotationConditionSheet" : 2,
+    "qtSheet" : 2,
     "estimationSheetArgValueColumn": 7,
     "estimationSheetStatusColumn": 12
   },
 
-  "conversionTable": {
+  "conversionTableData": {
+    "conversionTable": "./data/input-data/conversion_table.xlsx",
     "conversionSheet" : 0,
     "dispayNameColumn": 0,
     "internalNameColumn": 1
