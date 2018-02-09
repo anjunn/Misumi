@@ -83,6 +83,16 @@ let  projectPage = {
   zoomOut:{ get: function () { return browser.element('//div[@class="WindowFunction"]//a[@onclick="viewer.camera.fit()"]');}},
   backButton: { get : function() { return browser.element('//p[@class="backBtn"]/a'); }},
 
+  label: { get: function () { return browser.element('//label[contains(text(),"表面処理")]'); }},
+  partDropdown: { get: function () { return browser.element('//select[@id="condArticleType"]'); }},
+  surfaceTensionDropdown: { value: function (n) { return browser.element(`(//select[@id="SURFACETYPE.ARTICLE_TYPE_ID_0.0"]//option)[${n}]`); }},
+  selectPart:  { get: function () { return browser.element('(//p[@class="model"])[1]//a'); }},
+  materialDropdown: { value: function (n) { return browser.element(`(//select[@id="MATERIALTYPE.ARTICLE_TYPE_ID_0.0"]//option)[${n}]`); }},
+  materialDropdownclick: { get: function () { return browser.element('//select[@id="MATERIALTYPE.ARTICLE_TYPE_ID_0.0"]'); }},
+
+  stension: { get: function () { return browser.element('(//div[@class="customSelect"])[4]'); }},
+  materialArray: {get: function () { return browser.element('(//div[@class="customSelect"])[2]'); }},
+
   /*
    * Open project by clicking on thumbnail
    */
@@ -704,7 +714,91 @@ let  projectPage = {
       else{
         browser.scrollToElement(this.filterOptionSelector);}
     }
-  }
+  },
+
+  /*
+  * Read excel data
+  */
+  excelParsingInPartsViewPage:{
+    value: function(){
+      this.thumbnail.waitForVisible();
+      this.thumbnail.click();
+      browser.longWait();
+      this.label.waitForVisible();
+      var status, materialType, surfaceType,displayedSurfaceType,materialFromPartsView,z,s=1;
+      var xlsx = require('node-xlsx');
+      var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_define.xlsx');
+      var third_sheet = sheets[2];
+      var materialVariable = this.materialArray.getText().split('\n');
+      materialLength=materialVariable.length;
+      for(z=1;z<=materialLength;z++){
+        this.materialDropdownclick.click();
+        browser.smallWait();
+        console.log("===============>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<==============");
+        console.log("z="+z);
+        this.materialDropdown(z).click();
+        materialFromPartsView=this.materialDropdown(z).getValue();
+        for(i=50;i<=250;i++){
+          if(third_sheet.data[i][1]=="コアピン") {
+            if(third_sheet.data[i][3]=="材質") {   
+                if(third_sheet.data[i][7]==materialFromPartsView) {
+                  materialType= third_sheet.data[i][11];
+                  if(materialType.includes(materialFromPartsView)||third_sheet.data[i][11]=="ANY") {
+                   if(typeof(third_sheet.data[i][12])!="undefined" && typeof(third_sheet.data[i][13])=="undefined") {
+                      status=third_sheet.data[i][14];
+                      console.log(i);
+                      console.log(materialFromPartsView+" **** "+ third_sheet.data[i][12]+" **** "+status);
+                      if (status=="Recommended" || status=="NotRecommended") {
+                        surfaceType=third_sheet.data[i][12];
+                        browser.mediumWait();    
+                        var abcd = this.stension.getText().split('\n');
+                        var len= abcd.length;
+                        var flagRecommended=0;
+                        var flagNotRecommended=0;
+                        var flagNotSupported=0;
+                        if(status=="Recommended")
+                        {
+                          for(k=1;k<=len;k++){
+                            if(this.surfaceTensionDropdown(k).getValue()=="-999")
+                              break;
+                            if(this.surfaceTensionDropdown(k).getValue()==third_sheet.data[i][12])
+                              flagRecommended=1;
+                          console.log("surfaceT: rec "+this.surfaceTensionDropdown(k).getValue()); }  
+                        console.log("flagRecommended "+flagRecommended);
+                        expect(flagRecommended).to.equal(1); }
+                        else if(status=="NotRecommended")
+                        {
+                          for(k=1;k<=len;k++){
+                            
+                            if(this.surfaceTensionDropdown(k).getValue()!="-999") 
+                              continue; 
+                            if(this.surfaceTensionDropdown(k).getValue()=="-999")
+                              var y=k+1; break;}
+                            console.log("y="+y);
+                          for(;y<=len;y++){
+                            if(this.surfaceTensionDropdown(y).getValue()==third_sheet.data[i][12])
+                              flagNotRecommended=1;
+                          console.log("surfaceT: Not rec "+this.surfaceTensionDropdown(y).getValue()); }  
+                        console.log("Not rec flag"+flagNotRecommended);
+                        //expect(flagNotRecommended).to.equal(1); 
+                      }
+                        else if(status=="NotSupported")
+                        {
+                          for(w=1;w<=len;w++){
+                            if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][12])
+                              flagNotSupported=1 }  
+                        console.log("flagNotSupported"+flagNotSupported);
+                        expect(flagNotSupported).to.equal(0); }
+                      }  
+                    }
+                  }
+                }
+              }
+            }
+          }
+        } 
+      } 
+  },
 };
 
 module.exports = Object.create(Page, projectPage);

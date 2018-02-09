@@ -78,7 +78,4 @@ module.exports = function () {
     uploadPage.validatePriceInList();
   });
 
-    this.Given(/^Check different combination of quotations$/, () => {
-    uploadPage.excelParsing();
-  });
  };

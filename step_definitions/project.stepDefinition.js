@@ -155,4 +155,8 @@ module.exports = function () {
   this.Given(/^User moves to the top of the screen$/, () => {
     projectPage.moveToTop();
   });
+
+  this.Given(/^Check different combination of quotations in parts view page$/, () => {
+     projectPage.excelParsingInPartsViewPage();
+  });
 };

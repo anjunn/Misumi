@@ -35,7 +35,7 @@ let  uploadPage = {
   uploadFileLink: { get: function () { return browser.element('//form[@name="uploadform"]//input[@id="uploadfile"]'); }},
   closeButton: { get: function () { return browser.element('//li[@id="closeBtn"]'); }},
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
- 
+
   /**
    * Upload file by triggering drop event
    */
@@ -266,17 +266,8 @@ let  uploadPage = {
     }
   },
 
-  /*
-  * Read excel data
-  */
-  excelParsing:{
-    value: function(){
-      var xlsx = require('node-xlsx');
-      var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_defines.xlsx');
-      var first_sheet = sheets[0];
-      console.log(first_sheet.data);
-    }
-  },
+
+
 };
 
 module.exports = Object.create(Page, uploadPage);

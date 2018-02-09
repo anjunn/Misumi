@@ -10,9 +10,12 @@ And User validates username field
 And User validates Password field
 And User enters credentials and logs in
 
+# Scenario: Single Pin upload
+
+# Given User uploads 3D data for single pin
+# When User verifies whether upload is successful for single pin
+# And User defines quotation condition for single pin
+
 Scenario: User checks the uploaded project
 
-Given User opens the uploaded project
-Then User verifies part names for single pin
-And User defines quotation condition in parts view for single pin
-Then Check different combination of quotations
+Given Check different combination of quotations in parts view page
