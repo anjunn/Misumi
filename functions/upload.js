@@ -290,23 +290,26 @@ let  uploadPage = {
       var materialArray = this.material.getText().split('\n');
       for(var i = 1; i < materialArray.length ; i++){  //---i starts from 1 as 0th option is please select----
         var selectedMaterial = materialArray[i];
-        // -------------store the column values from sheet 2 in the material range in an array---------
-        for(var c = 5 ; c <= 16; c++ ){
-          var materialColumnEstimationSheet = estimationSheetData[c][data.combinationTable.estimationSheetArgValueColumn];
-          for (var j = 2; j < materialArray.length ; j++) {
+        // -------------Take display name and compare---------
+        for (var j = 2; j < materialArray.length ; j++) {
+          var displayName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn];
+          if (selectedMaterial == displayName){
+            // -----------Take corresponding internal name----------
             var internalName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn];
-            if(materialColumnEstimationSheet == internalName) {
-              var displayName = referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn];
-              if (selectedMaterial == displayName){
-                console.log("selectedMaterial: "+selectedMaterial);
-                console.log("materialColumnEstimationSheet: "+materialColumnEstimationSheet);
-                console.log("internalName:"+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn]);
-                console.log("displayName: "+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn]);
-                console.log("check:true");
+            for(var c = 5 ; c <= 16; c++ ){
+              // -------------store the column values from sheet 2 in the material range in an array---------
+              var materialColumnEstimationSheet = estimationSheetData[c][data.combinationTable.estimationSheetArgValueColumn];
+              // -------------compare column value and internal name------------------
+              if(materialColumnEstimationSheet == internalName) {
+                console.log("SelectedMaterial from site: "+selectedMaterial);
+                console.log("DisplayName in combination table: "+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.dispayNameColumn]);
+                console.log("Corresponging InternalName: "+referenceSheet[data.conversionTable.conversionSheet].data[j][data.conversionTable.internalNameColumn]);
+                console.log("MaterialColumn from EstimationSheet: "+materialColumnEstimationSheet);
+                console.log("Check: True");
                 //-----------------checking corresponding status column---------------------
                 var materialStatus=estimationSheetData[c][data.combinationTable.estimationSheetStatusColumn];
                 if(materialStatus=="Advanced"){
-                  console.log(materialStatus);
+                  console.log("Corresponging status: "+materialStatus);
                 }
                 break;  
               }
