@@ -729,16 +729,16 @@ let  projectPage = {
       var xlsx = require('node-xlsx');
       var sheets = xlsx.parse('./data/input-data/mst_qt_condition_type_define.xlsx');
       var third_sheet = sheets[2];
+      var totalLengthSheet3=third_sheet.data.length;
       var materialVariable = this.materialArray.getText().split('\n');
       materialLength=materialVariable.length;
       for(z=1;z<=materialLength;z++){
         this.materialDropdownclick.click();
         browser.smallWait();
         console.log("===============>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<==============");
-        console.log("z="+z);
         this.materialDropdown(z).click();
         materialFromPartsView=this.materialDropdown(z).getValue();
-        for(i=50;i<=250;i++){
+        for(i=0;i<totalLengthSheet3;i++){
           if(third_sheet.data[i][1]=="コアピン") {
             if(third_sheet.data[i][3]=="材質") {   
                 if(third_sheet.data[i][7]==materialFromPartsView) {
@@ -746,9 +746,7 @@ let  projectPage = {
                   if(materialType.includes(materialFromPartsView)||third_sheet.data[i][11]=="ANY") {
                    if(typeof(third_sheet.data[i][12])!="undefined" && typeof(third_sheet.data[i][13])=="undefined") {
                       status=third_sheet.data[i][14];
-                      console.log(i);
                       console.log(materialFromPartsView+" **** "+ third_sheet.data[i][12]+" **** "+status);
-                      if (status=="Recommended" || status=="NotRecommended") {
                         surfaceType=third_sheet.data[i][12];
                         browser.mediumWait();    
                         var abcd = this.stension.getText().split('\n');
@@ -762,9 +760,8 @@ let  projectPage = {
                             if(this.surfaceTensionDropdown(k).getValue()=="-999")
                               break;
                             if(this.surfaceTensionDropdown(k).getValue()==third_sheet.data[i][12])
-                              flagRecommended=1;
-                          console.log("surfaceT: rec "+this.surfaceTensionDropdown(k).getValue()); }  
-                        console.log("flagRecommended "+flagRecommended);
+                              flagRecommended=1; }
+                        console.log("Recommended status"+flagRecommended);
                         expect(flagRecommended).to.equal(1); }
                         else if(status=="NotRecommended")
                         {
@@ -774,22 +771,19 @@ let  projectPage = {
                               continue; 
                             if(this.surfaceTensionDropdown(k).getValue()=="-999")
                               var y=k+1; break;}
-                            console.log("y="+y);
                           for(;y<=len;y++){
                             if(this.surfaceTensionDropdown(y).getValue()==third_sheet.data[i][12])
                               flagNotRecommended=1;
-                          console.log("surfaceT: Not rec "+this.surfaceTensionDropdown(y).getValue()); }  
-                        console.log("Not rec flag"+flagNotRecommended);
+                        console.log("Not Recommended status"+flagNotRecommended);
                         //expect(flagNotRecommended).to.equal(1); 
-                      }
+                      } }
                         else if(status=="NotSupported")
                         {
                           for(w=1;w<=len;w++){
                             if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][12])
                               flagNotSupported=1 }  
-                        console.log("flagNotSupported"+flagNotSupported);
+                        console.log("Not Supported status"+flagNotSupported);
                         expect(flagNotSupported).to.equal(0); }
-                      }  
                     }
                   }
                 }
