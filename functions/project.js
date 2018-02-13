@@ -719,8 +719,8 @@ let  projectPage = {
   /*
   * Read excel data
   */
-  excelParsingInPartsViewPage:{
-    value: function(){
+  excelParsingInPartsViewPage: {
+    value: function() {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
       browser.longWait();
@@ -735,7 +735,7 @@ let  projectPage = {
       for(z=1;z<=materialLength;z++){
         this.materialDropdownclick.click();
         browser.smallWait();
-        console.log("===============>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<==============");
+        console.log("...........................................................");
         this.materialDropdown(z).click();
         materialFromPartsView=this.materialDropdown(z).getValue();
         for(i=0;i<totalLengthSheet3;i++){
@@ -761,7 +761,10 @@ let  projectPage = {
                               break;
                             if(this.surfaceTensionDropdown(k).getValue()==third_sheet.data[i][12])
                               flagRecommended=1; }
-                        console.log("Recommended status"+flagRecommended);
+                            if(flagRecommended==1)
+                              console.log("Recommended status Pass");
+                            else
+                              console.log("Recommended status Fail");
                         expect(flagRecommended).to.equal(1); }
                         else if(status=="NotRecommended")
                         {
@@ -773,16 +776,22 @@ let  projectPage = {
                               var y=k+1; break;}
                           for(;y<=len;y++){
                             if(this.surfaceTensionDropdown(y).getValue()==third_sheet.data[i][12])
-                              flagNotRecommended=1;
-                        console.log("Not Recommended status"+flagNotRecommended);
+                              flagNotRecommended=1; }
+                            if(flagNotRecommended==1)
+                              console.log("Not Recommended status Pass");
+                            else
+                              console.log("Not Recommended status Fail");
                         //expect(flagNotRecommended).to.equal(1); 
-                      } }
+                       }
                         else if(status=="NotSupported")
                         {
                           for(w=1;w<=len;w++){
                             if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][12])
                               flagNotSupported=1 }  
-                        console.log("Not Supported status"+flagNotSupported);
+                        if(flagNotSupported==0)
+                              console.log("Not Supported status Pass");
+                            else
+                              console.log("Not Supported status Fail");
                         expect(flagNotSupported).to.equal(0); }
                     }
                   }
@@ -791,7 +800,7 @@ let  projectPage = {
             }
           }
         } 
-      } 
+    }
   },
 };
 
