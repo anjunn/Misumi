@@ -55,7 +55,12 @@ const commonUtilities = {
       element.click();
     }, selector);
   },
-
+  /*
+  * Wait for elements for a small period
+  */
+  tinyWait: function () {
+    browser.pause(100);
+  },
   /*
   * Wait for elements for a small period
   */

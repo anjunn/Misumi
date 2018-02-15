@@ -18,4 +18,5 @@ And User enters credentials and logs in
 
 Scenario: User checks the uploaded project
 
-Given Check different combination of quotations in parts view page
+Given User checks if the surface tension listed matches with the material selected
+Then User checks if the material listed matches with the surface tension selected

@@ -39,5 +39,9 @@
     "shortDeliveryRequest":"納短依頼",
     "quotationComplete":"見積完了",
     "ordering":"発注"
+  },
+  "excel": {
+    "mainSheet":"./data/input-data/mst_qt_condition_type_defines.xlsx",
+    "referenceSheet":"./data/input-data/conversion_table.xlsx"
   }
 }

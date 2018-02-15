@@ -7,6 +7,7 @@ let singlePinInputData = require('../data/input-data/single-pin.json');
 let multiplePinInputData = require('../data/input-data/multiple-pin.json');
 let plateInputData = require('../data/input-data/plate.json');
 let pinAndPlateInputData = require('../data/input-data/pin-and-plate.json');
+let data = require('../data/input-data/dataset.json');
 
 module.exports = function () {
 
@@ -156,7 +157,10 @@ module.exports = function () {
     projectPage.moveToTop();
   });
 
-  this.Given(/^Check different combination of quotations in parts view page$/, () => {
-     projectPage.excelParsingInPartsViewPage();
+  this.Given(/^User checks if the surface tension listed matches with the material selected$/, () => {
+     projectPage.excelParsingInPartsViewPageSelectMaterial(data.excel.mainSheet,data.excel.referenceSheet);
+  });
+  this.Then(/^User checks if the material listed matches with the surface tension selected$/, () => {
+     projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.excel.mainSheet,data.excel.referenceSheet);
   });
 };
