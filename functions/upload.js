@@ -4,6 +4,8 @@ let base64Img = require('base64-img');
 let fs = require('fs');
 var path = require('path');
 var xlsx = require('node-xlsx');
+const resultPath = './Data/output/uploadExcelComparison.txt';
+      
 
 /**
  * upload Page Object
@@ -288,9 +290,9 @@ let  uploadPage = {
     value: function(){
       console.log("Checking Combination: Material To Surfacetreatment");
       console.log("----------------------------------------------");
-      fs.writeFile(writePath1,"\nChecking Combination: Material To Surfacetreatment\n", function(err) {
-      if (err) return console.log(err); });
-      }
+      fs.writeFile(resultPath,"Checking Combination: Material To Surfacetreatment\n"+"***************************************************************\n", function(err) {
+        if (err) return console.log(err);
+      });
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
       var estSheetData = sheets[data.combinationTableData.estimationSheet].data;
       this.material.waitForEnabled();
@@ -352,7 +354,7 @@ let  uploadPage = {
                           console.log("Recommended displayed");
                         } else {
                           console.log("Recommended failed");
-                          fs.appendFile(writePath,"\nItem Selected "+surfaceIN+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                          fs.appendFile(resultPath,"\nRecommended failed"+"\nSelected Material: "+selectedMaterial+" Material: "+materialType+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                           }
                         }
@@ -380,6 +382,9 @@ let  uploadPage = {
                           console.log("NotRecommended properlydisplayed");
                         } else{
                           console.log("NotRecommended failed");
+                          fs.appendFile(resultPath,"\nNotRecommended failed"+"\nSelected Material: "+selectedMaterial+" Material: "+materialType+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                          }
                         }
                       } else if (qtSheetStatus === "NotSupported"){
                         console.log("-------------------------------");
@@ -397,6 +402,9 @@ let  uploadPage = {
                           console.log("NotSupported passed");
                         } else {
                           console.log("NotSupported failed");
+                          fs.appendFile(resultPath,"\nNotSupported failed"+"\nSelected Material: "+selectedMaterial+" Material: "+materialType+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                          }
                         }
                       }
                     }
@@ -418,6 +426,9 @@ let  uploadPage = {
     value: function(){
       console.log("check Combination Surfacetreatment To Material");
       console.log("----------------------------------------------");
+      fs.appendFile(resultPath,"Checking Combination: Surfacetreatment To Material\n"+"***************************************************************\n", function(err) {
+        if (err) return console.log(err);
+      });
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
       var estSheetData = sheets[data.combinationTableData.estimationSheet].data;
       browser.refresh();
@@ -473,6 +484,9 @@ let  uploadPage = {
                   console.log("Recommended passed");
                 } else {
                   console.log("Recommended failed to display!!!");
+                  fs.appendFile(resultPath,"\nRecommended failed: "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" SurfaceTreatment: "+surfaceType+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                  if (err) return console.log(err); });
+                  }
                 }
               } else if(qtSheetStatus === "NotRecommended"){
                 console.log("-------------------------------");
@@ -499,7 +513,7 @@ let  uploadPage = {
                   console.log("NotRecommended properlydisplayed");
                 } else{
                   console.log("NotRecommended failed to display!!!");
-                  fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                  fs.appendFile(resultPath,"\nNotRecommended failed: "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" SurfaceTreatment: "+surfaceType+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                   if (err) return console.log(err); });
                   }
                 }
@@ -519,6 +533,9 @@ let  uploadPage = {
                   console.log("NotSupported passed");
                 } else {
                   console.log("NotSupported displayed!!!");
+                  fs.appendFile(resultPath,"\nNotSupported failed: "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" SurfaceTreatment: "+surfaceType+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                  if (err) return console.log(err); });
+                  }
                 }
               }
             }
