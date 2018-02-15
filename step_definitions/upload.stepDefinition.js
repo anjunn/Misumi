@@ -79,6 +79,6 @@ module.exports = function () {
   });
 
     this.Given(/^Check different combination of quotations$/, () => {
-    uploadPage.checkCombination();
+    uploadPage.checkCombinationMaterialToSurfacetreatment();
   });
 };
