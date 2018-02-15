@@ -80,5 +80,6 @@ module.exports = function () {
 
     this.Given(/^Check different combination of quotations$/, () => {
     uploadPage.checkCombinationMaterialToSurfacetreatment();
+    uploadPage.checkCombinationSurfacetreatmentToMaterial();
   });
 };
