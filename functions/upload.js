@@ -332,6 +332,9 @@ let  uploadPage = {
                       if(materialType === "ANY" && typeof(surfaceType)!="undefined" && typeof(conditional)==="undefined") {
                         var qtSheetStatus = qtSheetData[row][data.combinationTableData.status];
                       }
+                      if(materialType === "ANY" && surfaceType === "ANY"){
+                        continue;
+                      }
                       if(qtSheetStatus === "Recommended"){
                         console.log("-------------------------------");
                         console.log("Recommended surfaceType: "+surfaceType);
@@ -460,6 +463,9 @@ let  uploadPage = {
               if(surfaceType === "ANY" && typeof(materialType)!="undefined" && typeof(conditional)==="undefined") {
                 var qtSheetStatus = qtSheetData[row][data.combinationTableData.status];
               }
+              if(materialType === "ANY" && surfaceType === "ANY"){
+                  continue;
+                }
               if(qtSheetStatus === "Recommended"){
                 console.log("-------------------------------");
                 console.log("Recommended material: "+materialType);
