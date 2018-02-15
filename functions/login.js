@@ -64,7 +64,7 @@ let loginPage = {
     value: function(){
       this.startRightAway.waitForVisible();
       this.startRightAway.click();
-      browser.veryLongWait();
+      browser.smallWait();
     }
   },
 
@@ -73,8 +73,8 @@ let loginPage = {
    */
   validateUserNameField: {
     value: function() {
-      browser.veryLongWait();
-      if (!browser.isLoginPage()) return;
+      browser.smallWait();
+      // if (!browser.isLoginPage()) return;
       expect(this.userNameField.isVisible()).to.equal(true);
     }
   },
@@ -84,7 +84,7 @@ let loginPage = {
    */
   validatePasswordField: {
     value: function() {
-      if (!browser.isLoginPage()) return;
+      // if (!browser.isLoginPage()) return;
       expect(this.passwordField.isVisible()).to.equal(true);
     }
   },
@@ -95,7 +95,7 @@ let loginPage = {
    */
   validateLoginPageUrl: {
     value: function () {
-      if (!browser.isLoginPage()) return;
+      // if (!browser.isLoginPage()) return;
       this.loginButton.waitForVisible();
       expect(browser.getUrl()).to.equal(data.url.login);
     }
@@ -106,7 +106,7 @@ let loginPage = {
    */
   login: {
     value: function() {
-      if (!browser.isLoginPage()) return;
+      // if (!browser.isLoginPage()) return;
       this.userNameField.waitForEnabled();
       this.userNameField.setValue(data.loginCredentials.presentation.username);
       this.passwordField.setValue(data.loginCredentials.presentation.password);
@@ -129,7 +129,20 @@ let loginPage = {
       this.logoutButton.waitForEnabled();
       this.logoutButton.click();
     }
-  }
+  },
+
+  /*
+   * Goes to Home Page of lab site
+   */
+  goToHomePageLabSite: {
+    value: function () {
+      browser.url(data.url.homePageUrlLabSite);
+      if (this.systemCheckPopup.isVisible()) {
+        this.systemCheckBox.click();
+        this.systemCheckButton.click();
+      }
+    }
+  },
 
 };
 

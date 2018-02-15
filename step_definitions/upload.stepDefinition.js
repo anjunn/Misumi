@@ -77,4 +77,13 @@ module.exports = function () {
     uploadPage.checkManualQuotationIconInList();
     uploadPage.validatePriceInList();
   });
- };
+
+  this.Given(/^Check Material To Surfacetreatment combinations in site with the same from the Excel sheet$/, () => {
+    uploadPage.checkCombinationMaterialToSurfacetreatment();
+  });
+
+  this.Given(/^Check Surfacetreatment To Material combinations in site with the same from the Excel sheet$/, () => {
+    uploadPage.checkCombinationSurfacetreatmentToMaterial();
+  });
+};
+

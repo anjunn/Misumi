@@ -19,7 +19,8 @@
     "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
     "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
     "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi",
-    "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/"
+    "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/",
+    "homePageUrlLabSite": "https://prs-origin-lab.meviy.misumi-ec.com/"
   },
 
   "uploadPath": {
@@ -38,5 +39,35 @@
     "shortDeliveryRequest":"納短依頼",
     "quotationComplete":"見積完了",
     "ordering":"発注"
+  },
+
+  "combinationTableData": {
+    "combinationTable": "./data/input-data/新見積条件マスタ(mst_qt_condition_type_defines)_まだ開発中.xlsx",
+    "estimationSheet" : 1,
+    "qtSheet" : 2,
+    "estimationSheetQuotationColumn":3,
+    "estimationSheetArgValueColumn": 7,
+    "estimationSheetNameColumn": 9,
+    "estimationSheetStatusColumn": 12,
+    "qtSheetArticleTypeIdColumn": 0,
+    "nameColumn": 9,
+    "materialType":11,
+    "surfaceType": 12,
+    "conditional":13,
+    "status":14
+  },
+
+  "tableContent":{
+    "articleTypeOther": -1,
+    "material":"材質",
+    "surfaceTreatment":"表面処理"
+  },
+
+  "conversionTableData": {
+    "conversionTable": "./data/input-data/conversion_table.xlsx",
+    "conversionSheet" : 0,
+    "displayNameColumn": 0,
+    "internalNameColumn": 1
   }
+  
 }
