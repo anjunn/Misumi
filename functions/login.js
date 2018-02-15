@@ -64,7 +64,7 @@ let loginPage = {
     value: function(){
       this.startRightAway.waitForVisible();
       this.startRightAway.click();
-      browser.veryLongWait();
+      browser.smallWait();
     }
   },
 
@@ -73,7 +73,7 @@ let loginPage = {
    */
   validateUserNameField: {
     value: function() {
-      browser.veryLongWait();
+      browser.smallWait();
       // if (!browser.isLoginPage()) return;
       expect(this.userNameField.isVisible()).to.equal(true);
     }

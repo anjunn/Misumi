@@ -4,6 +4,7 @@ let base64Img = require('base64-img');
 let fs = require('fs');
 var path = require('path');
 var xlsx = require('node-xlsx');
+
 /**
  * upload Page Object
  *
@@ -39,6 +40,7 @@ let  uploadPage = {
   surfaceItems: { value: function (n) { return browser.element(`(//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//option)[${n}]`); }},
   materialItems: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]//option[${n}]`); }},
     
+  
   /**
    * Upload file by triggering drop event
    */
@@ -284,8 +286,11 @@ let  uploadPage = {
    */
   checkCombinationMaterialToSurfacetreatment:{
     value: function(){
-      console.log("check Combination Material To Surfacetreatment");
+      console.log("Checking Combination: Material To Surfacetreatment");
       console.log("----------------------------------------------");
+      fs.writeFile(writePath1,"\nChecking Combination: Material To Surfacetreatment\n", function(err) {
+      if (err) return console.log(err); });
+      }
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
       var estSheetData = sheets[data.combinationTableData.estimationSheet].data;
       this.material.waitForEnabled();
@@ -347,6 +352,9 @@ let  uploadPage = {
                           console.log("Recommended displayed");
                         } else {
                           console.log("Recommended failed");
+                          fs.appendFile(writePath,"\nItem Selected "+surfaceIN+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                          }
                         }
                       } else if(qtSheetStatus === "NotRecommended"){
                         console.log("-------------------------------");
@@ -491,6 +499,9 @@ let  uploadPage = {
                   console.log("NotRecommended properlydisplayed");
                 } else{
                   console.log("NotRecommended failed to display!!!");
+                  fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                  if (err) return console.log(err); });
+                  }
                 }
               } else if (qtSheetStatus === "NotSupported"){
                 console.log("-------------------------------");
@@ -551,14 +562,6 @@ let  uploadPage = {
       }
     }
   }
-
-// console.log: { 
-//   value: function(d) {
-//     var fs = require('fs');
-//     var util = require('util');
-//     var log_file = fs.createWriteStream('../reports' + '/debug.log', {flags : 'w'});
-//     log_file.write(util.format(d) + '\n');
-//   }
 };
 
 module.exports = Object.create(Page, uploadPage);
