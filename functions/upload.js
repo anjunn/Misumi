@@ -302,10 +302,8 @@ let  uploadPage = {
         var surfaceTypeArray = this.surfaceTreatment.getText().split('\n');
         console.log("surfaceTypeArray: "+surfaceTypeArray);
         var internalNameMaterial = this.findInternalName(selectedMaterial);
-        for(var c = 5 ; c <= estSheetData.length; c++ ){ // material from combination sheet
+        for(var c = 5 ; c <= estSheetData.length; c++ ){ 
           if(estSheetData[c][data.combinationTableData.estimationSheetQuotationColumn]===data.tableContent.material) {
-            // var materialColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
-            // if(materialColumnEstSheet.includes(internalNameMaterial)) {
             var materialColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetNameColumn];
             if(materialColumnEstSheet.includes(selectedMaterial)) {
               var materialStatus=estSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
@@ -393,7 +391,6 @@ let  uploadPage = {
                           console.log("NotSupported displayed");
                         }
                       }
-                      // break;
                     }
                   }
                 }
@@ -402,7 +399,6 @@ let  uploadPage = {
             }
           }
         }
-        // break;
         console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
       }
     }
