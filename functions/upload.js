@@ -408,7 +408,7 @@ let  uploadPage = {
     }
   },
   /*
-   * Check combination on uploading 
+   * Finds internal name of display name 
    */
   findInternalName:{
     value: function(name){
