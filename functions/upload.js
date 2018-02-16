@@ -290,7 +290,7 @@ let  uploadPage = {
     value: function(){
       console.log("Checking Combination: Material To Surfacetreatment");
       console.log("----------------------------------------------");
-      fs.writeFile(resultPath,"Checking Combination: Material To Surfacetreatment\n"+"***************************************************************\n", function(err) {
+      fs.writeFile(resultPath,"Failed Cases:\n"+"\nChecking Combination: Material To Surfacetreatment\n"+"**************************************************\n", function(err) {
         if (err) return console.log(err);
       });
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
@@ -328,7 +328,7 @@ let  uploadPage = {
                   conditional = qtSheetData[row][data.combinationTableData.conditional],
                   surfaceId, surfaceName, surfaceNameDN, surfaceIN;
                   if(articleTypeId === data.tableContent.articleTypeOther && quotationCondition === data.tableContent.material){
-                    if(nameColumn.includes(selectedMaterial)) { 
+                    if(nameColumn === selectedMaterial) { 
                       if(materialType === "ANY" && typeof(surfaceType)!="undefined" && typeof(conditional)==="undefined") {
                         var qtSheetStatus = qtSheetData[row][data.combinationTableData.status];
                       }
@@ -342,7 +342,6 @@ let  uploadPage = {
                         for (var z = 1; z <= surfaceTypeArray.length; z++) {
                           surfaceId = this.surfaceItems(z).getValue();
                           if(surfaceId === '-999'){
-                            console.log("surfaceTypeId: "+surfaceId);
                             break;
                           } else {
                             surfaceName = this.surfaceItems(z).getText();
@@ -356,8 +355,8 @@ let  uploadPage = {
                         if(recommended === 1){
                           console.log("Recommended displayed");
                         } else {
-                          console.log("Recommended failed");
-                          fs.appendFile(resultPath,"\nRecommended failed"+"\nSelected Material: "+selectedMaterial+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          console.log("Recommended failed!!!");
+                          fs.appendFile(resultPath,"\nRecommended failed!"+"\nSelected Material: "+selectedMaterial+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                         }
                       } else if(qtSheetStatus === "NotRecommended"){
@@ -383,8 +382,8 @@ let  uploadPage = {
                         if(notRecommended === 1){
                           console.log("NotRecommended properlydisplayed");
                         } else{
-                          console.log("NotRecommended failed");
-                          fs.appendFile(resultPath,"\nNotRecommended failed"+"\nSelected Material: "+selectedMaterial+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          console.log("NotRecommended failed!!!");
+                          fs.appendFile(resultPath,"\nNotRecommended failed!"+"\nSelected Material: "+selectedMaterial+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                         }
                       } else if (qtSheetStatus === "NotSupported"){
@@ -402,8 +401,8 @@ let  uploadPage = {
                         if(notSupported === 0){
                           console.log("NotSupported passed");
                         } else {
-                          console.log("NotSupported failed");
-                          fs.appendFile(resultPath,"\nNotSupported failed"+"\nSelected Material: "+selectedMaterial+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          console.log("NotSupported failed!!!");
+                          fs.appendFile(resultPath,"\nNotSupported failed!"+"\nSelected Material: "+selectedMaterial+" Surface Treatment: "+surfaceType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                         }
                       }
@@ -426,7 +425,7 @@ let  uploadPage = {
     value: function(){
       console.log("check Combination Surfacetreatment To Material");
       console.log("----------------------------------------------");
-      fs.appendFile(resultPath,"Checking Combination: Surfacetreatment To Material\n"+"***************************************************************\n", function(err) {
+      fs.appendFile(resultPath,"Checking Combination: Surfacetreatment To Material\n"+"**************************************************\n", function(err) {
         if (err) return console.log(err);
       });
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
@@ -487,7 +486,7 @@ let  uploadPage = {
                   console.log("Recommended passed");
                 } else {
                   console.log("Recommended failed to display!!!");
-                  fs.appendFile(resultPath,"\nRecommended failed: "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                  fs.appendFile(resultPath,"\nRecommended failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                   if (err) return console.log(err); });
                 }
               } else if(qtSheetStatus === "NotRecommended"){
@@ -515,7 +514,7 @@ let  uploadPage = {
                   console.log("NotRecommended properlydisplayed");
                 } else{
                   console.log("NotRecommended failed to display!!!");
-                  fs.appendFile(resultPath,"\nNotRecommended failed: "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                  fs.appendFile(resultPath,"\nNotRecommended failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                   if (err) return console.log(err); });
                 }
               } else if (qtSheetStatus === "NotSupported"){
@@ -534,7 +533,7 @@ let  uploadPage = {
                   console.log("NotSupported passed");
                 } else {
                   console.log("NotSupported displayed!!!");
-                  fs.appendFile(resultPath,"\nNotSupported failed: "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                  fs.appendFile(resultPath,"\nNotSupported failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
                   if (err) return console.log(err); });
                 }
               }
