@@ -85,5 +85,9 @@ module.exports = function () {
   this.Given(/^Check Surfacetreatment To Material combinations in site with the same from the Excel sheet$/, () => {
     uploadPage.checkCombinationSurfacetreatmentToMaterial();
   });
+
+  this.Given(/^Refresh the page$/, () => {
+    uploadPage.pageRefresh();
+  });
 };
 

@@ -158,9 +158,9 @@ module.exports = function () {
   });
 
   this.Given(/^User checks if the surface tension listed matches with the material selected$/, () => {
-     projectPage.excelParsingInPartsViewPageSelectMaterial(data.excel.mainSheet,data.excel.referenceSheet);
+     projectPage.excelParsingInPartsViewPageSelectMaterial(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
   this.Then(/^User checks if the material listed matches with the surface tension selected$/, () => {
-     projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.excel.mainSheet,data.excel.referenceSheet);
+     projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
 };

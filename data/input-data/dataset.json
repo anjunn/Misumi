@@ -68,6 +68,8 @@
     "conversionSheet" : 0,
     "displayNameColumn": 0,
     "internalNameColumn": 1
-  }
+  },
+
+  "dropdownDisabledState" :"-999"
   
 }
