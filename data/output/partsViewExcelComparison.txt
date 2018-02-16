@@ -1,2 +1,38 @@
+Failed Cases:
 Compare by taking material first, then surface tension
 ***************************************************************
+Recommended failed
+Item Selected エジェクタピン Material Selected  SKH51   Surface tension NO_TREATMENT   Status Recommended
+Row Number 182
+
+Recommended failed
+Item Selected エジェクタピン Material Selected  SKD61_PRE   Surface tension NO_TREATMENT   Status Recommended
+Row Number 185
+
+***************************************************************
+Compare by taking surfaceTension first, then Material
+***************************************************************
+
+Item Selected コアピン Material Selected  SKH51   Surface tension 窒化処理   Status NotRecommended
+Row Number 144
+
+
+Item Selected コアピン Material Selected  SKD61   Surface tension 窒化処理   Status NotRecommended
+Row Number 145
+
+
+Item Selected コアピン Material Selected  NAK80   Surface tension 窒化処理   Status NotRecommended
+Row Number 146
+
+
+Item Selected コアピン Material Selected  DH2F   Surface tension 窒化処理   Status NotRecommended
+Row Number 147
+
+
+Item Selected コアピン Material Selected  STAVAX   Surface tension 窒化処理   Status NotRecommended
+Row Number 148
+
+
+Item Selected コアピン Material Selected  C1720   Surface tension 窒化処理   Status NotRecommended
+Row Number 149
+

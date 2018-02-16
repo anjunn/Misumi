@@ -10,17 +10,14 @@ And User validates username field
 And User validates Password field
 And User enters credentials and logs in
 
-# Scenario: Single Pin upload
-
-# Given User uploads 3D data for single pin
-# When User verifies whether upload is successful for single pin
-# And User defines quotation condition for single pin
-
 Scenario: User checks the uploaded project
 
-# Given User uploads 3D data for single pin
+Given User uploads 3D data for single pin
+When User verifies whether upload is successful for single pin
 When Check Material To Surfacetreatment combinations in site with the same from the Excel sheet
 Then Check Surfacetreatment To Material combinations in site with the same from the Excel sheet
+Then Refresh the page
+Given User uploads 3D data for single pin
+And User defines quotation condition for single pin
 Given User checks if the surface tension listed matches with the material selected
 Then User checks if the material listed matches with the surface tension selected
-

@@ -727,7 +727,7 @@ let  projectPage = {
       console.log("            MATERIAL ---> SURFACE TENSION");
       console.log("**********************************************************");
       const writePath = './Data/output/partsViewExcelComparison.txt';
-      fs.writeFile(writePath,"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
+      fs.writeFile(writePath,"Failed Cases:"+"\n\n"+"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
           if (err) return console.log(err);
         });
       this.thumbnail.waitForVisible();
@@ -785,7 +785,7 @@ let  projectPage = {
                           else{
                             console.log("Row:"+(i+1));
                             console.log("Recommended status Fail");
-                            fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                            fs.appendFile(writePath,"Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                             if (err) return console.log(err); });
                           }
 
@@ -807,7 +807,7 @@ let  projectPage = {
                           else{
                             console.log("Row:"+(i+1));
                             console.log("Not Recommended status Fail");
-                            fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                            fs.appendFile(writePath,"Not Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                             if (err) return console.log(err); });
                           }
                       //expect(flagNotRecommended).to.equal(1); 
@@ -822,7 +822,7 @@ let  projectPage = {
                           else{
                             console.log("Row:"+(i+1));
                             console.log("Not Supported status Fail");
-                            fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                            fs.appendFile(writePath,"Not Supported failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                             if (err) return console.log(err); });
                           }
                       // expect(flagNotSupported).to.equal(0);
