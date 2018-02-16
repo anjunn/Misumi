@@ -163,7 +163,9 @@ let  uploadPage = {
    */
   quotationConditionFill: {
     value: function(quotationCondition) {
-      this.material.waitForEnabled();
+      // this.material.waitForEnabled();
+      browser.extraLongWait();
+      this.material.click();
       this.material.selectByVisibleText(quotationCondition.material);
       this.surfaceTreatment.waitForEnabled();
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
@@ -437,7 +439,7 @@ let  uploadPage = {
       var fullMaterialArray = this.material.getText().split('\n');
       console.log("fullMaterialArray: "+fullMaterialArray+"\n"+"fullMaterialArrayLength: "+fullMaterialArray.length);
       console.log("surfaceTypeArray: "+surfaceTypeArray+"\n"+"surfaceTypeArrayLength: "+surfaceTypeArrayLength);
-      for(var i = 2; i < surfaceTypeArrayLength ; i++){
+      for(var i = 2; i <= surfaceTypeArrayLength ; i++){
         console.log("#########################################################"); 
         this.surfaceTreatment.click();
         this.surfaceItems(i).click();
@@ -544,6 +546,7 @@ let  uploadPage = {
       }
     }
   },
+
   /*
    * Finds internal name of display name 
    */
@@ -576,6 +579,19 @@ let  uploadPage = {
           break;
         }
       }
+    }
+  },
+  /*
+   * Finds internal name of display name 
+   */
+  pageRefresh:{
+    value: function(){    
+      this.surfaceTreatment.click();
+      browser.extraLongWait();
+      this.surfaceItems(1).click();
+      browser.refresh();
+      browser.extraLongWait();
+
     }
   }
 };
