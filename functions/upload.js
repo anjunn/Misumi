@@ -341,7 +341,7 @@ let  uploadPage = {
                         var recommended = 0;
                         for (var z = 1; z <= surfaceTypeArray.length; z++) {
                           surfaceId = this.surfaceItems(z).getValue();
-                          if(surfaceId === '-999'){
+                          if(surfaceId === data.dropdownDisabledState){
                             break;
                           } else {
                             surfaceName = this.surfaceItems(z).getText();
@@ -365,9 +365,9 @@ let  uploadPage = {
                         var notRecommended=0;
                         for (var w = 2; w <= surfaceTypeArray.length; w++) {
                           surfaceId = this.surfaceItems(w).getValue();
-                          if(surfaceId != '-999'){
+                          if(surfaceId != data.dropdownDisabledState){
                             continue;
-                          } else if(surfaceId === '-999') {
+                          } else if(surfaceId === data.dropdownDisabledState) {
                             var y = w+1; 
                           }
                           for (; y <= surfaceTypeArray.length; y++){
@@ -471,7 +471,7 @@ let  uploadPage = {
                 var recommended = 0;
                 for (var z = 1; z <= materialArray.length; z++) {
                   materialId = this.materialItems(z).getValue();
-                  if(materialId === '-999'){
+                  if(materialId === data.dropdownDisabledState){
                     break;
                   } else {
                     materialName = this.materialItems(z).getText();
@@ -495,9 +495,9 @@ let  uploadPage = {
                 var notRecommended=0;
                 for (var w = 2; w <= materialArray.length; w++) {
                   materialId = this.materialItems(w).getValue();
-                  if(materialId != '-999'){
+                  if(materialId != data.dropdownDisabledState){
                     continue;
-                  } else if(materialId === '-999') {
+                  } else if(materialId === data.dropdownDisabledState) {
                     var y = w+1; 
                   }
                   for (; y <= materialArray.length; y++){
