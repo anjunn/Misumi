@@ -163,8 +163,8 @@ let  uploadPage = {
    */
   quotationConditionFill: {
     value: function(quotationCondition) {
-      // this.material.waitForEnabled();
       browser.extraLongWait();
+      this.material.waitForEnabled();
       this.material.click();
       this.material.selectByVisibleText(quotationCondition.material);
       this.surfaceTreatment.waitForEnabled();
