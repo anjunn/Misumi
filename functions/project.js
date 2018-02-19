@@ -883,7 +883,7 @@ let  projectPage = {
         this.itemDropDownClick.waitForVisible();
         this.itemDropDownClick.click();
         this.itemDropDown(w).click();
-        browser.smallWait();
+        browser.mediumWait();
         var surfaceTensionVariable = this.surfaceTensionArray.getText().split('\n');
         for(s=0;s<totalLengthSheet3;s++) {
             if(third_sheet.data[s][1]==(this.itemDropDown(w).getText())){
