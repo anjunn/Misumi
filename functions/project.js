@@ -880,8 +880,12 @@ let  projectPage = {
         this.materialDropdownClick.click();
         browser.tinyWait();
         this.materialDropdown(6).click();
-        this.itemDropDownClick.waitForVisible();
+        //browser.mediumWait();
+        this.itemDropDownClick.waitForEnabled();
         this.itemDropDownClick.click();
+        browser.tinyWait();
+        // browser.debug();
+        this.itemDropDown(w).waitForEnabled();
         this.itemDropDown(w).click();
         browser.mediumWait();
         var surfaceTensionVariable = this.surfaceTensionArray.getText().split('\n');
@@ -940,7 +944,8 @@ let  projectPage = {
                         }
                     }
                    else if(status=="NotRecommended")
-                      { var materialVariable = this.materialArray.getText().split('\n');
+                      { browser.tinyWait();
+                        var materialVariable = this.materialArray.getText().split('\n');
                         materialLength=materialVariable.length;
                         for(k=1;k<=materialLength;k++){
                           if(this.materialDropdown(k).getValue()!="-999") 

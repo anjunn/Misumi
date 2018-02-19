@@ -157,10 +157,10 @@ module.exports = function () {
     projectPage.moveToTop();
   });
 
-  this.Given(/^User checks if the surface tension listed matches with the material selected$/, () => {
+  this.Given(/^User checks if the surface tension listed matches with the material selected$/,{retry: 2}, () => {
      projectPage.excelParsingInPartsViewPageSelectMaterial(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
-  this.Then(/^User checks if the material listed matches with the surface tension selected$/, () => {
+  this.Then(/^User checks if the material listed matches with the surface tension selected$/,{retry: 2} , () => {
      projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
 };

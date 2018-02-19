@@ -318,7 +318,7 @@ let  uploadPage = {
             if(materialColumnEstSheet.includes(selectedMaterial)) {
               var materialStatus=estSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
               console.log("==================================================");
-              if(materialStatus=="Advanced"){
+              if(materialStatus==="Advanced"){
                 var qtSheetData=sheets[data.combinationTableData.qtSheet].data;
                 var rowLength = qtSheetData.length;
                 for(var row = 5; row < rowLength; row++){
