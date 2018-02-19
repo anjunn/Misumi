@@ -727,7 +727,7 @@ let  projectPage = {
       console.log("            MATERIAL ---> SURFACE TENSION");
       console.log("**********************************************************");
       const writePath = './Data/output/partsViewExcelComparison.txt';
-      fs.writeFile(writePath,"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
+      fs.writeFile(writePath,"Failed Cases:"+"\n\n"+"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
           if (err) return console.log(err);
         });
       this.thumbnail.waitForVisible();
@@ -745,91 +745,109 @@ let  projectPage = {
       for(w=1;w<=2;w++){
         this.itemDropDownClick.click();
         this.itemDropDown(w).click();
-        browser.tinyWait();
+        this.materialDropdownClick.waitForEnabled();
+        for(s=0;s<totalLengthSheet3;s++) {
+            if(third_sheet.data[s][1]==(this.itemDropDown(w).getText())){
+              var start=s;
+              break;
+            }
+          }
+        for(t=start;t<totalLengthSheet3;t++) {
+           if(third_sheet.data[t][1]==(this.itemDropDown(w).getText()))
+              continue;
+           if(third_sheet.data[t][1]!=(this.itemDropDown(w).getText())){
+              var end=t;
+              break;
+           }
+          }
+        this.materialDropdownClick.waitForEnabled();
+        this.materialDropdownClick.click();
+        this.materialDropdown(2).waitForEnabled();
+        this.materialDropdown(2).click();
         for(z=1;z<=materialLength;z++) {
+          this.materialDropdownClick.waitForEnabled();
           this.materialDropdownClick.click();
           var materialVariable = this.materialArray.getText().split('\n');
           materialLength=materialVariable.length;
-          browser.tinyWait();
+          this.materialDropdown(z).waitForEnabled();
           console.log("...........................................................");
           this.materialDropdown(z).click();
           materialFromPartsView=this.materialDropdown(z).getValue();
           materialDisplayName=this.materialDropdown(z).getText();
-          for(i=0;i<totalLengthSheet3;i++){
-            if(third_sheet.data[i][1]==(this.itemDropDown(w).getText())) {
-              if(third_sheet.data[i][3]=="材質") {  
-                if(third_sheet.data[i][7]==materialFromPartsView) {
-                  materialType= third_sheet.data[i][11];
-                  if(materialType.includes(materialFromPartsView)||third_sheet.data[i][11]=="ANY") {
-                   if(typeof(third_sheet.data[i][12])!="undefined" && typeof(third_sheet.data[i][13])=="undefined") {
-                      status=third_sheet.data[i][14];
-                      surfaceType=third_sheet.data[i][12];
-                      browser.mediumWait();    
-                      var abcd = this.stension.getText().split('\n');
-                      var len= abcd.length;
-                      var flagRecommended=0;
-                      var flagNotRecommended=0;
-                      var flagNotSupported=0;
-                      if(third_sheet.data[i][11]=="ANY" && third_sheet.data[i][12]=="ANY")
-                        continue;
-                      console.log(this.itemDropDown(w).getText()+" ***** "+materialFromPartsView+" **** "+ third_sheet.data[i][12]+" **** "+status);
-                      if(status=="Recommended")
-                      {
-                        for(k=1;k<=len;k++){
-                          if(this.surfaceTensionDropdown(k).getValue()=="-999")
-                            break;
-                          if(this.surfaceTensionDropdown(k).getValue()==third_sheet.data[i][12])
-                            flagRecommended=1; }
-                          if(flagRecommended==1)
-                            console.log("Recommended status Pass");
-                          else{
-                            console.log("Row:"+(i+1));
-                            console.log("Recommended status Fail");
-                            fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
-                            if (err) return console.log(err); });
-                          }
+          for(i=start;i<end;i++){
+            if(third_sheet.data[i][3]=="材質") {  
+              if(third_sheet.data[i][7]==materialFromPartsView) {
+                materialType= third_sheet.data[i][11];
+                if(materialType.includes(materialFromPartsView)||third_sheet.data[i][11]=="ANY") {
+                 if(typeof(third_sheet.data[i][12])!="undefined" && typeof(third_sheet.data[i][13])=="undefined") {
+                    status=third_sheet.data[i][14];
+                    surfaceType=third_sheet.data[i][12];
+                    this.stension.waitForEnabled();  
+                    browser.tinyWait(); 
+                    var abcd = this.stension.getText().split('\n');
+                    var len= abcd.length;
+                    var flagRecommended=0;
+                    var flagNotRecommended=0;
+                    var flagNotSupported=0;
+                    if(third_sheet.data[i][11]=="ANY" && third_sheet.data[i][12]=="ANY")
+                      continue;
+                    console.log(this.itemDropDown(w).getText()+" ***** "+materialFromPartsView+" **** "+ third_sheet.data[i][12]+" **** "+status);
+                    if(status=="Recommended")
+                    {
+                      for(k=1;k<=len;k++){
+                        if(this.surfaceTensionDropdown(k).getValue()=="-999")
+                          break;
+                        if(this.surfaceTensionDropdown(k).getValue()==third_sheet.data[i][12])
+                          flagRecommended=1; }
+                        if(flagRecommended==1)
+                          console.log("Recommended status Pass");
+                        else{
+                          console.log("Row:"+(i+1));
+                          console.log("Recommended status Fail");
+                          fs.appendFile(writePath,"Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                        }
 
-                      // expect(flagRecommended).to.equal(1);
-                      }
-                      else if(status=="NotRecommended")
-                      {
-                        for(k=1;k<=len;k++){
-                          
-                          if(this.surfaceTensionDropdown(k).getValue()!="-999") 
-                            continue; 
-                          if(this.surfaceTensionDropdown(k).getValue()=="-999")
-                            var y=k+1; break;}
-                        for(;y<=len;y++){
-                          if(this.surfaceTensionDropdown(y).getValue()==third_sheet.data[i][12])
-                            flagNotRecommended=1; }
-                          if(flagNotRecommended==1)
-                            console.log("Not Recommended status Pass");
-                          else{
-                            console.log("Row:"+(i+1));
-                            console.log("Not Recommended status Fail");
-                            fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
-                            if (err) return console.log(err); });
-                          }
-                      //expect(flagNotRecommended).to.equal(1); 
-                     }
-                      else if(status=="NotSupported")
-                      {
-                        for(w=1;w<=len;w++){
-                          if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][12])
-                            flagNotSupported=1 }  
-                      if(flagNotSupported==0)
-                            console.log("Not Supported status Pass");
-                          else{
-                            console.log("Row:"+(i+1));
-                            console.log("Not Supported status Fail");
-                            fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
-                            if (err) return console.log(err); });
-                          }
-                      // expect(flagNotSupported).to.equal(0);
-                      }     
+                    // expect(flagRecommended).to.equal(1);
                     }
-                  }           
-                }
+                    else if(status=="NotRecommended")
+                    {
+                      for(k=1;k<=len;k++){
+                        
+                        if(this.surfaceTensionDropdown(k).getValue()!="-999") 
+                          continue; 
+                        if(this.surfaceTensionDropdown(k).getValue()=="-999")
+                          var y=k+1; break;}
+                      for(;y<=len;y++){
+                        if(this.surfaceTensionDropdown(y).getValue()==third_sheet.data[i][12])
+                          flagNotRecommended=1; }
+                        if(flagNotRecommended==1)
+                          console.log("Not Recommended status Pass");
+                        else{
+                          console.log("Row:"+(i+1));
+                          console.log("Not Recommended status Fail");
+                          fs.appendFile(writePath,"Not Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                        }
+                    //expect(flagNotRecommended).to.equal(1); 
+                   }
+                    else if(status=="NotSupported")
+                    {
+                      for(w=1;w<=len;w++){
+                        if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][12])
+                          flagNotSupported=1 }  
+                    if(flagNotSupported==0)
+                          console.log("Not Supported status Pass");
+                        else{
+                          console.log("Row:"+(i+1));
+                          console.log("Not Supported status Fail");
+                          fs.appendFile(writePath,"Not Supported failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                        }
+                    // expect(flagNotSupported).to.equal(0);
+                    }     
+                  }
+                }           
               }
             }
           }
@@ -854,27 +872,41 @@ let  projectPage = {
       fs.appendFile(writePath,"***************************************************************\n"+"Compare by taking surfaceTension first, then Material\n"+"***************************************************************\n", function(err) {
           if (err) return console.log(err);
         });
-      this.itemDropDownClick.click();
-      this.itemSteelPlate.waitForVisible();
-      this.itemSteelPlate.click();
-      this.materialDropdownClick.waitForVisible();
-      this.materialDropdownClick.click();
-      browser.tinyWait();
-      this.materialDropdown(6).click();
-      this.itemDropDownClick.waitForVisible();
       for(w=1;w<=2;w++) {
+        this.itemDropDownClick.click();
+        this.itemSteelPlate.waitForVisible();
+        this.itemSteelPlate.click();
+        this.materialDropdownClick.waitForVisible();
+        this.materialDropdownClick.click();
+        browser.tinyWait();
+        this.materialDropdown(6).click();
+        this.itemDropDownClick.waitForVisible();
         this.itemDropDownClick.click();
         this.itemDropDown(w).click();
         browser.smallWait();
         var surfaceTensionVariable = this.surfaceTensionArray.getText().split('\n');
-        var surfaceTensionLength=surfaceTensionVariable.length;
+        for(s=0;s<totalLengthSheet3;s++) {
+            if(third_sheet.data[s][1]==(this.itemDropDown(w).getText())){
+              var start=s;
+              break;
+            }
+          }
+        for(t=start;t<totalLengthSheet3;t++) {
+           if(third_sheet.data[t][1]==(this.itemDropDown(w).getText()))
+              continue;
+           if(third_sheet.data[t][1]!=(this.itemDropDown(w).getText())){
+              var end=t;
+              break;
+           }
+          }
+        var surfaceTensionLength=surfaceTensionVariable.length;  
         for(z=1;z<=surfaceTensionLength;z++) {
+          this.surfaceTensionClick.waitForEnabled();
           this.surfaceTensionClick.click();
           this.surfaceTensionDropdown(z).waitForVisible();
           this.surfaceTensionDropdown(z).click();
           console.log("...........................................................");
-          for(i=0;i<totalLengthSheet3;i++){
-            if(third_sheet.data[i][1]==(this.itemDropDown(w).getText())) {
+          for(i=start;i<end;i++){
               if(third_sheet.data[i][3]=="表面処理") {  
                 if(third_sheet.data[i][9]==this.surfaceTensionDropdown(z).getText()) {
                  materialType= third_sheet.data[i][11];
@@ -883,6 +915,8 @@ let  projectPage = {
                     var flagRecommended=0;
                     var flagNotRecommended=0;
                     var flagNotSupported=0;
+                    this.materialArray.waitForEnabled();
+                    browser.tinyWait();
                     var materialVariable = this.materialArray.getText().split('\n');
                     materialLength=materialVariable.length;
                     if(third_sheet.data[i][11]=="ANY" && third_sheet.data[i][12]=="ANY")
@@ -946,7 +980,7 @@ let  projectPage = {
                   }
                 }             
               } 
-            }
+            //}
           }
         }   
       }
