@@ -915,6 +915,8 @@ let  projectPage = {
                     var flagRecommended=0;
                     var flagNotRecommended=0;
                     var flagNotSupported=0;
+                    this.materialArray.waitForEnabled();
+                    browser.tinyWait();
                     var materialVariable = this.materialArray.getText().split('\n');
                     materialLength=materialVariable.length;
                     if(third_sheet.data[i][11]=="ANY" && third_sheet.data[i][12]=="ANY")
