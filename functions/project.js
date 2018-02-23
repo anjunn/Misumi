@@ -16,7 +16,7 @@ let  projectPage = {
    * define elements
    */
   thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
-  arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
+  arrow: { get: function() { return browser.element('//p[@class="btnWin"]//a'); }},
   partsName: { value: function (part) { return browser.element(`(//span[@class="class"])[${part}]`); }},
   partsNameSelector: { value: function(part) { return `div#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner  p > a` } },
   grouping: { value: function (part) { return browser.element(`(//span[@class="groupItemCount"])[${i}]`); }},
@@ -106,7 +106,7 @@ let  projectPage = {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
       browser.longWait();
-      this.arrow.waitForVisible();
+      this.arrow.waitForEnabled();
       browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
       this.arrow.waitForVisible();
       browser.extraLongWait();
