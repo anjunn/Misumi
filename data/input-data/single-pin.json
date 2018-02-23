@@ -2,7 +2,7 @@
 
   "quotationCondition": {
     "quantity": "2",
-    "material": "SKH51",
+    "material": 1,
     "surfaceTreatment": "なし",
     "toleranceGrade": "並級"
   },

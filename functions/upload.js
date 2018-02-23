@@ -166,7 +166,7 @@ let  uploadPage = {
       browser.extraLongWait();
       this.material.waitForEnabled();
       this.material.click();
-      this.material.selectByVisibleText(quotationCondition.material);
+      this.material.selectByValue(quotationCondition.material);
       this.surfaceTreatment.waitForEnabled();
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
       this.tolerance.waitForEnabled();

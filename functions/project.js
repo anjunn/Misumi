@@ -16,7 +16,7 @@ let  projectPage = {
    * define elements
    */
   thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
-  arrow: { get: function() { return browser.element('//*[@id="wrapper"]/div[4]/p/a'); }},
+  arrow: { get: function() { return browser.element('//p[@class="btnWin"]//a'); }},
   partsName: { value: function (part) { return browser.element(`(//span[@class="class"])[${part}]`); }},
   partsNameSelector: { value: function(part) { return `div#lstPartsBuy > div:nth-child(${part}) > div.boxPartsInner  p > a` } },
   grouping: { value: function (part) { return browser.element(`(//span[@class="groupItemCount"])[${i}]`); }},
@@ -95,6 +95,9 @@ let  projectPage = {
   itemSteelPlate: {get: function () { return browser.element('(//select[@id="condArticleType"]//option)[14]'); }},
   surfaceTensionClick: { get: function () { return browser.element('((//div[@class="customSelect"]//select)[4])'); }},
   surfaceTensionArray: { get: function () { return browser.element('(//div[@class="customSelect"])[4]'); }},
+  popUpChangesTitle: { get: function () { return browser.element('//p[@id="titleDialog"]'); }},
+  okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
+
 
   /*
    * Open project by clicking on thumbnail
@@ -104,12 +107,16 @@ let  projectPage = {
       this.thumbnail.waitForVisible();
       this.thumbnail.click();
       browser.longWait();
-      this.arrow.waitForVisible();
+      this.arrow.waitForEnabled();
       browser.params.projectPageUrl = browser.getUrl().match(/^[^&]*/)[0];
       this.arrow.waitForVisible();
       browser.extraLongWait();
       if (this.backButton.isVisible()) {
         this.backButton.click();
+        if(this.popUpChangesTitle.isVisible()) { 
+          this.okButton.waitForEnabled();
+          this.okButton.click();
+        }
         browser.mediumWait();
       }
     }
@@ -127,6 +134,10 @@ let  projectPage = {
         browser.mediumWait();
       }
       this.arrow.click();
+      if(this.popUpChangesTitle.isVisible()) { 
+        this.okButton.waitForEnabled();
+        this.okButton.click();
+      }
       browser.mediumWait();
       browser.windowHandleFullscreen();
       browser.mediumWait();
