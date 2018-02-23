@@ -783,7 +783,7 @@ let  projectPage = {
                     status=third_sheet.data[i][14];
                     surfaceType=third_sheet.data[i][12];
                     this.stension.waitForEnabled();  
-                    browser.tinyWait(); 
+                    browser.mediumWait(); 
                     var abcd = this.stension.getText().split('\n');
                     var len= abcd.length;
                     var flagRecommended=0;
@@ -829,7 +829,6 @@ let  projectPage = {
                           fs.appendFile(writePath,"Not Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                         }
-                    //expect(flagNotRecommended).to.equal(1); 
                    }
                     else if(status=="NotSupported")
                     {
@@ -843,8 +842,7 @@ let  projectPage = {
                           console.log("Not Supported status Fail");
                           fs.appendFile(writePath,"Not Supported failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
-                        }
-                    // expect(flagNotSupported).to.equal(0);
+                        };
                     }     
                   }
                 }           
@@ -883,7 +881,7 @@ let  projectPage = {
         this.itemDropDownClick.waitForVisible();
         this.itemDropDownClick.click();
         this.itemDropDown(w).click();
-        browser.mediumWait();
+        browser.longWait();
         var surfaceTensionVariable = this.surfaceTensionArray.getText().split('\n');
         for(s=0;s<totalLengthSheet3;s++) {
             if(third_sheet.data[s][1]==(this.itemDropDown(w).getText())){
@@ -966,8 +964,9 @@ let  projectPage = {
                     else if(status=="NotSupported")
                     {
                       for(w=1;w<=len;w++){
-                      if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][11])
-                        flagNotSupported=1 }  
+                        if(this.surfaceTensionDropdown(w).getValue()==third_sheet.data[i][11])
+                          flagNotSupported=1 
+                      }  
                       if(flagNotSupported==0)
                         console.log("Not Supported status Pass");
                       else{
@@ -976,14 +975,12 @@ let  projectPage = {
                         fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                             if (err) return console.log(err); });
                       }
-                  // expect(flagNotSupported).to.equal(0);
-                  }
-                }             
-              } 
-            //}
+                    }
+                  }             
+                }  
+              }
+            }   
           }
-        }   
-      }
         browser.tinyWait();
       }  
     }
