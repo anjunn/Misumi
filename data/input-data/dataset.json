@@ -3,7 +3,7 @@
     "presentation": {
       "username": "QB_QA-Auto01",
       "password": "VRIFBTD9"
-  },
+    },
     "management": {
       "username": "Anju",
       "password": "Anju"
@@ -49,7 +49,9 @@
     "estimationSheetArgValueColumn": 7,
     "estimationSheetNameColumn": 9,
     "estimationSheetStatusColumn": 12,
+    "estimationSheetArticleTypeIdColumn": 0,
     "qtSheetArticleTypeIdColumn": 0,
+    "qtSheetQuotationColumn":3,
     "nameColumn": 9,
     "materialType":11,
     "surfaceType": 12,
