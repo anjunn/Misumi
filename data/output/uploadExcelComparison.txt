@@ -9,18 +9,3 @@ Row Number: 7
 
 Checking Combination: Surfacetreatment To Material
 **************************************************
-
-Recommended failed! 
-Selected surfaceType: 窒化処理 Material: SKD61_PRE Status: Recommended
-Row Number: 71
-
-
-NotRecommended failed! 
-Selected surfaceType: 窒化処理 Material: SKD61_EPP Status: NotRecommended
-Row Number: 72
-
-
-Recommended failed! 
-Selected surfaceType: 窒化処理 Material: SKD61_ESV Status: Recommended
-Row Number: 73
-

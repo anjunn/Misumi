@@ -166,7 +166,7 @@ let  uploadPage = {
       browser.extraLongWait();
       this.material.waitForEnabled();
       this.material.click();
-      this.material.selectByVisibleText(quotationCondition.material);
+      this.material.selectByValue(quotationCondition.material);
       this.surfaceTreatment.waitForEnabled();
       this.surfaceTreatment.selectByVisibleText(quotationCondition.surfaceTreatment);
       this.tolerance.waitForEnabled();
@@ -312,7 +312,7 @@ let  uploadPage = {
         var surfaceTypeArray = this.surfaceTreatment.getText().split('\n');
         console.log("surfaceTypeArray: "+surfaceTypeArray);
         var internalNameMaterial = this.findInternalName(selectedMaterial);
-        for(var c = 5 ; c <= estSheetData.length; c++ ){ 
+        for(var c = 5 ; c < estSheetData.length; c++ ){
           if(estSheetData[c][data.combinationTableData.estimationSheetQuotationColumn]===data.tableContent.material) {
             var materialColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetNameColumn];
             if(materialColumnEstSheet.includes(selectedMaterial)) {
@@ -323,7 +323,7 @@ let  uploadPage = {
                 var rowLength = qtSheetData.length;
                 for(var row = 5; row < rowLength; row++){
                   var articleTypeId = qtSheetData[row][data.combinationTableData.qtSheetArticleTypeIdColumn], 
-                  quotationCondition = qtSheetData[row][data.combinationTableData.estimationSheetQuotationColumn],
+                  quotationCondition = qtSheetData[row][data.combinationTableData.qtSheetQuotationColumn],
                   nameColumn = qtSheetData[row][data.combinationTableData.nameColumn], 
                   materialType = qtSheetData[row][data.combinationTableData.materialType],
                   surfaceType = qtSheetData[row][data.combinationTableData.surfaceType],
@@ -432,6 +432,8 @@ let  uploadPage = {
       });
       var sheets = xlsx.parse(data.combinationTableData.combinationTable);
       var estSheetData = sheets[data.combinationTableData.estimationSheet].data;
+      var qtSheetData=sheets[data.combinationTableData.qtSheet].data;
+      var rowLength = qtSheetData.length;
       browser.refresh();
       this.surfaceTreatment.waitForEnabled();
       var surfaceTypeArray = this.surfaceTreatment.getText().split('\n');
@@ -445,15 +447,13 @@ let  uploadPage = {
         this.surfaceItems(i).click();
         browser.smallWait();
         var selectedSurfaceTreatment = this.surfaceItems(i).getText();
-        console.log("No:"+i+"Selected SurfaceTreatment: "+ selectedSurfaceTreatment);
+        console.log("No: "+i+" Selected SurfaceTreatment: "+ selectedSurfaceTreatment,": " ,this.findInternalName(selectedSurfaceTreatment));
         var materialArray = this.material.getText().split('\n');
         console.log("materialArray: "+materialArray);
         console.log("materialArray.length: "+materialArray.length);
-        var qtSheetData=sheets[data.combinationTableData.qtSheet].data;
-        var rowLength = qtSheetData.length;
         for(var row = 5; row < rowLength; row++){
           var articleTypeId = qtSheetData[row][data.combinationTableData.qtSheetArticleTypeIdColumn], 
-          quotationCondition = qtSheetData[row][data.combinationTableData.estimationSheetQuotationColumn],
+          quotationCondition = qtSheetData[row][data.combinationTableData.qtSheetQuotationColumn],
           nameColumn = qtSheetData[row][data.combinationTableData.nameColumn], 
           materialType = qtSheetData[row][data.combinationTableData.materialType],
           surfaceType = qtSheetData[row][data.combinationTableData.surfaceType],
@@ -465,78 +465,124 @@ let  uploadPage = {
                 var qtSheetStatus = qtSheetData[row][data.combinationTableData.status];
               }
               if(materialType === "ANY" && surfaceType === "ANY"){
-                  continue;
-                }
+                continue;
+              } 
               if(qtSheetStatus === "Recommended"){
-                console.log("-------------------------------");
-                console.log("Recommended material: "+materialType);
-                var recommended = 0;
-                for (var z = 1; z <= materialArray.length; z++) {
-                  materialId = this.materialItems(z).getValue();
-                  if(materialId === data.dropdownDisabledState){
-                    break;
-                  } else {
-                    materialName = this.materialItems(z).getText();
-                    materialIN = this.findInternalName(materialName);
-                    if(materialIN === materialType){
-                      console.log("materialName from site: "+materialIN);
-                      recommended = 1;
+                for(var c = 5 ; c < estSheetData.length; c++ ){ 
+                  if(estSheetData[c][data.combinationTableData.estimationSheetArticleTypeIdColumn]===data.tableContent.articleTypeOther){
+                    if(estSheetData[c][data.combinationTableData.estimationSheetQuotationColumn]===data.tableContent.material) {
+                      var argColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
+                      if(argColumnEstSheet===materialType) {
+                        var materialStatus=estSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
+                        if(materialStatus==="Advanced"){
+                          console.log("-------------------------------");
+                          console.log("Recommended material: "+materialType);
+                          var recommended = 0;
+                          for (var z = 2; z <= materialArray.length; z++) {
+                            materialId = this.materialItems(z).getValue();
+                            if(materialId === data.dropdownDisabledState){
+                              break;
+                            } else {
+                              materialName = this.materialItems(z).getText();
+                              materialIN = this.findInternalName(materialName);
+                              if(materialIN === materialType){
+                                console.log("materialName from site: "+materialIN);
+                                recommended = 1;
+                              }
+                            }
+                          }
+                          if(recommended === 1){
+                            console.log("Recommended passed");
+                          } else {
+                            console.log("Recommended failed to display!!!");
+                            fs.appendFile(resultPath,"\nRecommended failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                            if (err) return console.log(err); });
+                          } 
+                          break;
+                        } else{
+                          console.log("Material: ", materialType,"- Status: ",materialStatus, "- Row: ", row, "- c: ",c);
+                        }
+                      }
                     }
                   }
-                }
-                if(recommended === 1){
-                  console.log("Recommended passed");
-                } else {
-                  console.log("Recommended failed to display!!!");
-                  fs.appendFile(resultPath,"\nRecommended failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
-                  if (err) return console.log(err); });
                 }
               } else if(qtSheetStatus === "NotRecommended"){
-                console.log("-------------------------------");
-                console.log("NotRecommended material: "+materialType);
-                var notRecommended=0;
-                for (var w = 2; w <= materialArray.length; w++) {
-                  materialId = this.materialItems(w).getValue();
-                  if(materialId != data.dropdownDisabledState){
-                    continue;
-                  } else if(materialId === data.dropdownDisabledState) {
-                    var y = w+1; 
-                  }
-                  for (; y <= materialArray.length; y++){
-                    materialName1 = this.materialItems(y).getText();
-                    materialIN1 = this.findInternalName(materialName1);
-                    if(materialIN1 === materialType){
-                      console.log("materialType from sheet: "+materialType);
-                      notRecommended = 1;
-                      break;
+                for(var c = 5 ; c < estSheetData.length; c++ ){ 
+                  var estArticleType = estSheetData[c][data.combinationTableData.estimationSheetArticleTypeIdColumn],
+                  estQuotation = estSheetData[c][data.combinationTableData.estimationSheetQuotationColumn];
+                  if(estArticleType===data.tableContent.articleTypeOther && estQuotation===data.tableContent.material){
+                    var argColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
+                    if(argColumnEstSheet===materialType) {
+                      var materialStatus=estSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
+                      if(materialStatus==="Advanced"){
+                        console.log("-------------------------------");
+                        console.log("NotRecommended material: "+materialType);
+                        var notRecommended=0;
+                        for (var w = 2; w <= materialArray.length; w++) {
+                          materialId = this.materialItems(w).getValue();
+                          if(materialId != data.dropdownDisabledState){
+                            continue;
+                          } else if(materialId === data.dropdownDisabledState) {
+                            var y = w+1; 
+                          }
+                          for (; y <= materialArray.length; y++){
+                            materialName1 = this.materialItems(y).getText();
+                            materialIN1 = this.findInternalName(materialName1);
+                            if(materialIN1 === materialType){
+                              console.log("materialType from sheet: "+materialType);
+                              notRecommended = 1;
+                              break;
+                            }
+                          } 
+                        }
+                        if(notRecommended === 1){
+                          console.log("NotRecommended properlydisplayed");
+                        } else{
+                          console.log("NotRecommended failed to display!!!");
+                          fs.appendFile(resultPath,"\nNotRecommended failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                        }
+                        break;
+                      } else {
+                        console.log("Material: ", materialType,"- Status: ",materialStatus, "- Row: ", row+1 , "- c: ",c+1);
+                        break;
+                      }
                     }
-                  } 
-                }
-                if(notRecommended === 1){
-                  console.log("NotRecommended properlydisplayed");
-                } else{
-                  console.log("NotRecommended failed to display!!!");
-                  fs.appendFile(resultPath,"\nNotRecommended failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
-                  if (err) return console.log(err); });
+                  }
                 }
               } else if (qtSheetStatus === "NotSupported"){
-                console.log("-------------------------------");
-                console.log("NotSupported material: "+materialType);
-                var notSupported=0;
-                for (var q = 2; q <= materialArray.length; q++) {
-                  materialName2 = this.materialItems(q).getText();
-                  materialIN2 = this.findInternalName(materialName2);
-                  if(materialIN2 === materialType){
-                    console.log("materialType from sheet: "+materialType);
-                    notSupported = 1;
-                  } 
-                }
-                if(notSupported === 0){
-                  console.log("NotSupported passed");
-                } else {
-                  console.log("NotSupported displayed!!!");
-                  fs.appendFile(resultPath,"\nNotSupported failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
-                  if (err) return console.log(err); });
+                for(var c = 5 ; c < estSheetData.length; c++ ){ 
+                  var estArticleType = estSheetData[c][data.combinationTableData.estimationSheetArticleTypeIdColumn],
+                  estQuotation = estSheetData[c][data.combinationTableData.estimationSheetQuotationColumn];
+                  if(estArticleType===data.tableContent.articleTypeOther && estQuotation===data.tableContent.material){
+                    var argColumnEstSheet = estSheetData[c][data.combinationTableData.estimationSheetArgValueColumn];
+                    if(argColumnEstSheet===materialType) {
+                      var materialStatus=estSheetData[c][data.combinationTableData.estimationSheetStatusColumn];
+                      if(materialStatus==="Advanced"){
+                        console.log("-------------------------------");
+                        console.log("NotSupported material: "+materialType);
+                        var notSupported=0;
+                        for (var q = 2; q <= materialArray.length; q++) {
+                          materialName2 = this.materialItems(q).getText();
+                          materialIN2 = this.findInternalName(materialName2);
+                          if(materialIN2 === materialType){
+                            console.log("materialType from sheet: "+materialType);
+                            notSupported = 1;
+                          } 
+                        }
+                        if(notSupported === 0){
+                          console.log("NotSupported passed");
+                        } else {
+                          console.log("NotSupported displayed!!!");
+                          fs.appendFile(resultPath,"\nNotSupported failed! "+"\nSelected surfaceType: "+selectedSurfaceTreatment+" Material: "+materialType+" Status: "+qtSheetStatus+"\n"+"Row Number: "+(row+1)+"\n\n", function(err) {
+                          if (err) return console.log(err); });
+                        }
+                      } else{
+                        console.log("Material: ", materialType,"- Status: ",materialStatus, "- Row: ", row+1 , "- c: ",c+1);
+                        break;
+                      }
+                    }
+                  }
                 }
               }
             }

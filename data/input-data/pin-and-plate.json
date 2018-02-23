@@ -1,7 +1,7 @@
 {
 
   "quotationCondition": {
-    "material": "SKH51 (58～60HRC)",
+    "material": 1,
     "surfaceTreatment": "なし",
     "toleranceGrade": "並級",
     "productType": "断熱板"
