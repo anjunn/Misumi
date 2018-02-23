@@ -6,7 +6,7 @@ module.exports = function () {
     orderPage.goToOrderPage();
   });
 
-  this.Then(/^User validates the product name and order details in order page$/, () => {
+  this.Then(/^User validates the product name and order details in order page$/,  {retry: 2},() => {
     orderPage.orderPageValidation(expectedData.orderPageHeading);
   });
 
