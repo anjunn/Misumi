@@ -2,7 +2,7 @@
 
   "quotationCondition": {
     "quantity": "1",
-    "material": "SKH51 (58～60HRC)",
+    "material": 1,
     "surfaceTreatment": "なし",
     "toleranceGrade": "並級"
   },

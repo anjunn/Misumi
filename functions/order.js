@@ -23,6 +23,8 @@ let  orderPage = {
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
   priceText: { get: function () { return browser.element('(//table[@class="table06"]/tbody//td)[6]');}},
+  popUpChangesTitle: { get: function () { return browser.element('//p[@id="titleDialog"]'); }},
+  okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
 
   /*
    * User goes to the order page
@@ -31,6 +33,10 @@ let  orderPage = {
     value: function() {
       this.proceedToOrderButton.waitForEnabled();
       this.proceedToOrderButton.click();
+      if(this.popUpChangesTitle.isVisible()) { 
+        this.okButton.waitForEnabled();
+        this.okButton.click();
+      }
     }
   },
 

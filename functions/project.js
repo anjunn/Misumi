@@ -95,6 +95,8 @@ let  projectPage = {
   itemSteelPlate: {get: function () { return browser.element('(//select[@id="condArticleType"]//option)[14]'); }},
   surfaceTensionClick: { get: function () { return browser.element('((//div[@class="customSelect"]//select)[4])'); }},
   surfaceTensionArray: { get: function () { return browser.element('(//div[@class="customSelect"])[4]'); }},
+  popUpChangesTitle: { get: function () { return browser.element('//p[@id="titleDialog"]'); }},
+  okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
 
   /*
    * Open project by clicking on thumbnail
@@ -110,6 +112,10 @@ let  projectPage = {
       browser.extraLongWait();
       if (this.backButton.isVisible()) {
         this.backButton.click();
+        if(this.popUpChangesTitle.isVisible()) { 
+          this.okButton.waitForEnabled();
+          this.okButton.click();
+        }
         browser.mediumWait();
       }
     }
@@ -127,6 +133,10 @@ let  projectPage = {
         browser.mediumWait();
       }
       this.arrow.click();
+      if(this.popUpChangesTitle.isVisible()) { 
+        this.okButton.waitForEnabled();
+        this.okButton.click();
+      }
       browser.mediumWait();
       browser.windowHandleFullscreen();
       browser.mediumWait();
