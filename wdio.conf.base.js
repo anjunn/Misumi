@@ -56,7 +56,6 @@ exports.config = {
      './feature/MZ_005-screenOperations.feature',
      './feature/MZ_006-contentChecking.feature',
      './feature/MZ_007-autoQtDrawingAttached.feature',
-     './feature/MZ_010-labSiteCombinationCheck.feature',  
     ],
     s3Iepart1: [
       './feature/ie/MZ_003-pinAndPlateUploadIePart1.feature',

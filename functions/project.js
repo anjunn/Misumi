@@ -729,6 +729,16 @@ let  projectPage = {
         browser.scrollToElement(this.filterOptionSelector);}
     }
   },
+  /*
+  * Function to click thumbnail of a project
+  */
+  ClickThumbnail:{
+    value: function() {
+      this.thumbnail.waitForVisible();
+      this.thumbnail.click();
+      browser.longWait();
+    }
+  },
 
   /*
   * Selects a material and check the corresponding status of surface tension 
@@ -741,11 +751,6 @@ let  projectPage = {
       fs.writeFile(writePath,"Failed Cases:"+"\n\n"+"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
           if (err) return console.log(err);
         });
-      if(this.thumbnail.isVisible()){
-        this.thumbnail.waitForVisible();
-        this.thumbnail.click();
-      }
-      browser.longWait();
       this.label.waitForVisible();
       var status, materialType, surfaceType,displayedSurfaceType,materialFromPartsView,z,s=1;
       var xlsx = require('node-xlsx');
@@ -825,8 +830,6 @@ let  projectPage = {
                           fs.appendFile(writePath,"Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                         }
-
-                    // expect(flagRecommended).to.equal(1);
                     }
                     else if(status=="NotRecommended")
                     {
