@@ -903,7 +903,6 @@ let  projectPage = {
         this.itemDropDownClick.waitForEnabled();
         this.itemDropDownClick.click();
         browser.tinyWait();
-        // browser.debug();
         this.itemDropDown(w).waitForEnabled();
         this.itemDropDown(w).click();
         browser.longWait();
@@ -989,7 +988,6 @@ let  projectPage = {
                             fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                             if (err) return console.log(err); });
                           }
-                      //expect(flagNotRecommended).to.equal(1); 
                      }
                     else if(status=="NotSupported")
                     {
