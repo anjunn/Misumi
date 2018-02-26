@@ -741,8 +741,10 @@ let  projectPage = {
       fs.writeFile(writePath,"Failed Cases:"+"\n\n"+"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
           if (err) return console.log(err);
         });
-      this.thumbnail.waitForVisible();
-      this.thumbnail.click();
+      if(this.thumbnail.isVisible()){
+        this.thumbnail.waitForVisible();
+        this.thumbnail.click();
+      }
       browser.longWait();
       this.label.waitForVisible();
       var status, materialType, surfaceType,displayedSurfaceType,materialFromPartsView,z,s=1;
@@ -778,6 +780,9 @@ let  projectPage = {
         for(z=1;z<=materialLength;z++) {
           this.materialDropdownClick.waitForEnabled();
           this.materialDropdownClick.click();
+           materialFromPartsView=this.materialDropdown(z).getValue();
+          if(materialFromPartsView=="-999")
+            continue;
           var materialVariable = this.materialArray.getText().split('\n');
           materialLength=materialVariable.length;
           materialFromPartsView=this.materialDropdown(z).getValue();
@@ -891,7 +896,7 @@ let  projectPage = {
         this.materialDropdownClick.click();
         browser.tinyWait();
         this.materialDropdown(6).click();
-        //browser.mediumWait();
+        browser.mediumWait();
         this.itemDropDownClick.waitForEnabled();
         this.itemDropDownClick.click();
         browser.tinyWait();
@@ -918,6 +923,8 @@ let  projectPage = {
         for(z=1;z<=surfaceTensionLength;z++) {
           this.surfaceTensionClick.waitForEnabled();
           this.surfaceTensionClick.click();
+          if(this.surfaceTensionDropdown(z).getText()=="-999")
+            continue;
           this.surfaceTensionDropdown(z).waitForVisible();
           this.surfaceTensionDropdown(z).click();
           if(this.surfaceTensionDropdown(z).getText()=="-999")
@@ -933,7 +940,7 @@ let  projectPage = {
                     var flagNotRecommended=0;
                     var flagNotSupported=0;
                     this.materialArray.waitForEnabled();
-                    browser.tinyWait();
+                    browser.mediumWait();
                     var materialVariable = this.materialArray.getText().split('\n');
                     materialLength=materialVariable.length;
                     if(third_sheet.data[i][11]=="ANY" && third_sheet.data[i][12]=="ANY")
