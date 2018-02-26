@@ -19,5 +19,6 @@ Then Check Surfacetreatment To Material combinations in site with the same from 
 Then Refresh the page
 Given User uploads 3D data for single pin
 And User defines quotation condition for single pin
+Then User clicks on the thumbnail after uploading
 Given User checks if the surface tension listed matches with the material selected
 Then User checks if the material listed matches with the surface tension selected

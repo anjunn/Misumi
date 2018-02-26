@@ -729,6 +729,16 @@ let  projectPage = {
         browser.scrollToElement(this.filterOptionSelector);}
     }
   },
+  /*
+  * Function to click thumbnail of a project
+  */
+  ClickThumbnail:{
+    value: function() {
+      this.thumbnail.waitForVisible();
+      this.thumbnail.click();
+      browser.longWait();
+    }
+  },
 
   /*
   * Selects a material and check the corresponding status of surface tension 
@@ -741,11 +751,6 @@ let  projectPage = {
       fs.writeFile(writePath,"Failed Cases:"+"\n\n"+"Compare by taking material first, then surface tension\n"+"***************************************************************\n", function(err) {
           if (err) return console.log(err);
         });
-      if(this.thumbnail.isVisible()){
-        this.thumbnail.waitForVisible();
-        this.thumbnail.click();
-      }
-      browser.longWait();
       this.label.waitForVisible();
       var status, materialType, surfaceType,displayedSurfaceType,materialFromPartsView,z,s=1;
       var xlsx = require('node-xlsx');
@@ -785,6 +790,9 @@ let  projectPage = {
             continue;
           var materialVariable = this.materialArray.getText().split('\n');
           materialLength=materialVariable.length;
+          materialFromPartsView=this.materialDropdown(z).getValue();
+          if(materialFromPartsView=="-999")
+            continue;
           this.materialDropdown(z).waitForEnabled();
           console.log("...........................................................");
           this.materialDropdown(z).click();
@@ -822,8 +830,6 @@ let  projectPage = {
                           fs.appendFile(writePath,"Recommended failed\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+materialFromPartsView+"   Surface tension "+third_sheet.data[i][12]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                           if (err) return console.log(err); });
                         }
-
-                    // expect(flagRecommended).to.equal(1);
                     }
                     else if(status=="NotRecommended")
                     {
@@ -894,8 +900,10 @@ let  projectPage = {
         browser.tinyWait();
         this.materialDropdown(6).click();
         browser.mediumWait();
-        this.itemDropDownClick.waitForVisible();
+        this.itemDropDownClick.waitForEnabled();
         this.itemDropDownClick.click();
+        browser.tinyWait();
+        this.itemDropDown(w).waitForEnabled();
         this.itemDropDown(w).click();
         browser.longWait();
         var surfaceTensionVariable = this.surfaceTensionArray.getText().split('\n');
@@ -921,6 +929,8 @@ let  projectPage = {
             continue;
           this.surfaceTensionDropdown(z).waitForVisible();
           this.surfaceTensionDropdown(z).click();
+          if(this.surfaceTensionDropdown(z).getText()=="-999")
+            continue;
           console.log("...........................................................");
           for(i=start;i<end;i++){
               if(third_sheet.data[i][3]=="表面処理") {  
@@ -956,7 +966,8 @@ let  projectPage = {
                         }
                     }
                    else if(status=="NotRecommended")
-                      { var materialVariable = this.materialArray.getText().split('\n');
+                      { browser.tinyWait();
+                        var materialVariable = this.materialArray.getText().split('\n');
                         materialLength=materialVariable.length;
                         for(k=1;k<=materialLength;k++){
                           if(this.materialDropdown(k).getValue()!="-999") 
@@ -977,7 +988,6 @@ let  projectPage = {
                             fs.appendFile(writePath,"\nItem Selected "+this.itemDropDown(w).getText()+" Material Selected  "+third_sheet.data[i][11]+"   Surface tension "+third_sheet.data[i][9]+"   Status "+status+"\n"+"Row Number "+(i+1)+"\n\n", function(err) {
                             if (err) return console.log(err); });
                           }
-                      //expect(flagNotRecommended).to.equal(1); 
                      }
                     else if(status=="NotSupported")
                     {
