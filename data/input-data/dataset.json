@@ -1,4 +1,5 @@
 {
+  
   "loginCredentials": {
     "presentation": {
       "username": "QB_QA-Auto02",
@@ -13,15 +14,43 @@
       "password": "Puvo5108"
     }
   },
+  "url": [
+    {
+      "mailUrl": "https://login.microsoftonline.com/",
+      "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
+      "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
+      "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi",
+      "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/",
+      "usedBy":"tst"
+    },
 
-  "url": {
-    "mailUrl": "https://login.microsoftonline.com/",
-    "myPageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/mypage",
-    "login": "https://prs-origin-tst.meviy.misumi-ec.com/login",
-    "managementUrl": "https://mng-origin-tst.meviy-admin.misumi-ec.com/misumi",
-    "homePageUrl": "https://prs-origin-tst.meviy.misumi-ec.com/",
-    "homePageUrlLabSite": "https://prs-origin-lab.meviy.misumi-ec.com/"
-  },
+    {
+      "mailUrl": "https://login.microsoftonline.com/",
+      "myPageUrl": "https://prs-origin-lab.meviy.misumi-ec.com/mypage",
+      "login": "https://prs-origin-lab.meviy.misumi-ec.com/login",
+      "managementUrl": "https://mng-origin-lab.meviy-admin.misumi-ec.com/misumi",
+      "homePageUrl": "https://prs-origin-lab.meviy.misumi-ec.com/",
+      "usedBy":"lab"
+    },
+  
+    {
+      "mailUrl": "https://login.microsoftonline.com/",
+      "myPageUrl": "https://prs-origin-dvl.meviy.misumi-ec.com/mypage",
+      "login": "https://prs-origin-dvl.meviy.misumi-ec.com/login",
+      "managementUrl": "https://mng-origin-dvl.meviy-admin.misumi-ec.com/misumi",
+      "homePageUrl": "https://prs-origin-dvl.meviy.misumi-ec.com/",
+      "usedBy":"dvl"
+    },
+   
+    {
+      "mailUrl": "https://login.microsoftonline.com/",
+      "myPageUrl": "https://prs-origin-stg.meviy.misumi-ec.com/mypage",
+      "login": "https://prs-origin-stg.meviy.misumi-ec.com/login",
+      "managementUrl": "https://mng-origin-stg.meviy-admin.misumi-ec.com/misumi",
+      "homePageUrl": "https://prs-origin-stg.meviy.misumi-ec.com/",
+      "usedBy":"stg"
+    }
+  ],
 
   "uploadPath": {
     "singlePin": "./data/cad-drawings/single-pin.x_t",
@@ -73,5 +102,5 @@
   },
 
   "dropdownDisabledState" :"-999"
-  
+ 
 }
