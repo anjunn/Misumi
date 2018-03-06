@@ -41,6 +41,10 @@ let  uploadPage = {
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
   surfaceItems: { value: function (n) { return browser.element(`(//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//option)[${n}]`); }},
   materialItems: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]//option[${n}]`); }},
+  listViewButton: { value: function () { return browser.element('//li[@class="card disable"]'); }},
+  gridViewButton: { value: function () { return browser.element('//li[@class="list"]'); }},
+  listView: { value: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix styleList"]'); }},
+  gridView: { value: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix"]'); }},
     
   
   /**
@@ -640,6 +644,12 @@ let  uploadPage = {
       this.surfaceItems(1).click();
       browser.refresh();
       browser.extraLongWait();
+
+    }
+  },
+
+  checkProjectListStyle:{
+    value: function(){
 
     }
   }
