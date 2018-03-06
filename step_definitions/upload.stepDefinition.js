@@ -89,5 +89,9 @@ module.exports = function () {
   this.Given(/^Refresh the page$/, () => {
     uploadPage.pageRefresh();
   });
+  this.Given(/^Check project list style by changing to list view and then grid view$/, () => {
+    uploadPage.checkProjectListStyle();
+  });
+
 };
 

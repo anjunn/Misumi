@@ -45,6 +45,9 @@ exports.config = {
     scenario10: [
       './feature/MZ_010-labSiteCombinationCheck.feature'
     ],
+    scenario14: [
+      './feature/MZ_014-projectListStyleCheck.feature'
+    ],
     smokeTest: [
       './feature/MZ_015-smokeTest.feature'
     ],

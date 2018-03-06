@@ -41,10 +41,10 @@ let  uploadPage = {
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
   surfaceItems: { value: function (n) { return browser.element(`(//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//option)[${n}]`); }},
   materialItems: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]//option[${n}]`); }},
-  listViewButton: { value: function () { return browser.element('//li[@class="card disable"]'); }},
-  gridViewButton: { value: function () { return browser.element('//li[@class="list"]'); }},
-  listView: { value: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix styleList"]'); }},
-  gridView: { value: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix"]'); }},
+  listViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="list"]/a'); }},
+  gridViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="card"]'); }},
+  listView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix styleList"]'); }},
+  gridView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix"]'); }},
     
   
   /**
@@ -647,10 +647,22 @@ let  uploadPage = {
 
     }
   },
-
+  /*
+   * Checking project listing style; Grid view & List view  
+   */
   checkProjectListStyle:{
     value: function(){
-
+      this.listViewButton.waitForEnabled();
+      this.listViewButton.click();
+      browser.mediumWait();
+      expect(this.listView.isVisible());
+      console.log("List view enabled");
+      browser.debug();
+      this.gridViewButton.waitForEnabled();
+      this.gridViewButton.click();
+      browser.mediumWait();
+      expect(this.gridView.isVisible());
+      console.log("Grid view enabled");
     }
   }
 };
