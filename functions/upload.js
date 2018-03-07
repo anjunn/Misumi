@@ -48,6 +48,9 @@ let  uploadPage = {
   projectCountButton: { get: function () { return browser.element('//select[@class="textBold"]'); }},
   projectCount: { value: function (n) { return browser.element(`(//select[@class="textBold"]//option)[${n}]`); }},
   dataBox: { get: function () { return browser.elements('//li[@class="dataBox"]'); }},
+  sortButton: { get: function() { return browser.element('//ul[@class="projectSort"]'); }},
+  sortButtonSelector: { get: function() { return `  #main > div > ul.projectSort > li > span` } },
+  sortItems: { get: function(n) { return browser.element(`(//UL[@class="menuSecond"]//li)[${n}]`); }},
 
   /**
    * Upload file by triggering drop event
@@ -688,7 +691,20 @@ let  uploadPage = {
         browser.refresh();
       }
     }
-  }
+  },
+  /*
+   * Checks sort order listing  
+   */
+  checkSortOrder:{
+    value: function(){
+      if (browser.desiredCapabilities.browserName === 'chrome') {
+        this.sortButton.moveToObject();
+      } else {
+        browser.scrollToElement(this.sortButtonSelector);
+      }
+
+    }
+  }   
 };
 
 module.exports = Object.create(Page, uploadPage);
