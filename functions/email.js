@@ -37,7 +37,10 @@ let emailPage = {
    */
   goToEmail: {
     value: function () {
-      browser.url(inputData.url.mailUrl);
+      let env = process.env.npm_config_env || 'tst';
+      const urlData = browser.filterByUsage(env)[0];
+      url = urlData;
+      browser.url(url.mailUrl);
     }
   },
 

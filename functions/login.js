@@ -29,11 +29,15 @@ let loginPage = {
    */
   goToHomePage: {
     value: function () {
-      browser.url(data.url.homePageUrl);
+      let env = process.env.npm_config_env || 'tst';
+      const urlData = browser.filterByUsage(env)[0];
+      url = urlData;
+      browser.url(url.homePageUrl);
       if (this.systemCheckPopup.isVisible()) {
         this.systemCheckBox.click();
         this.systemCheckButton.click();
       }
+      browser.pause(5000);
     }
   },
 
@@ -97,7 +101,10 @@ let loginPage = {
     value: function () {
       // if (!browser.isLoginPage()) return;
       this.loginButton.waitForVisible();
-      expect(browser.getUrl()).to.equal(data.url.login);
+      let env = process.env.npm_config_env || 'tst';
+      const urlData = browser.filterByUsage(env)[0];
+      url = urlData;
+      expect(browser.getUrl()).to.equal(url.login);
     }
   },
 
@@ -136,7 +143,11 @@ let loginPage = {
    */
   goToHomePageLabSite: {
     value: function () {
-      browser.url(data.url.homePageUrlLabSite);
+      this.loginButton.waitForVisible();
+      let env = process.env.npm_config_env || 'tst';
+      const urlData = browser.filterByUsage(env)[0];
+      url = urlData;
+      browser.url(url.homePageUrlLabSite);
       if (this.systemCheckPopup.isVisible()) {
         this.systemCheckBox.click();
         this.systemCheckButton.click();
