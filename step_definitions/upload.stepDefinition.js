@@ -97,5 +97,10 @@ module.exports = function () {
   this.Then(/^Check project counts displayed in the upload screen$/, () => {
     uploadPage.checkProjectCount();
   });
+
+  this.Then(/^Check sort order$/, () => {
+    uploadPage.checkSortOrder();
+  });
+
 };
 

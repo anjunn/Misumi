@@ -48,10 +48,21 @@ let  uploadPage = {
   projectCountButton: { get: function () { return browser.element('//select[@class="textBold"]'); }},
   projectCount: { value: function (n) { return browser.element(`(//select[@class="textBold"]//option)[${n}]`); }},
   dataBox: { get: function () { return browser.elements('//li[@class="dataBox"]'); }},
-  sortButton: { get: function() { return browser.element('//ul[@class="projectSort"]'); }},
+  sortButton: { get: function() { return browser.element('//main[@id="main"]//ul[@class="projectSort"]'); }},
   sortButtonSelector: { get: function() { return `  #main > div > ul.projectSort > li > span` } },
-  sortItems: { get: function(n) { return browser.element(`(//UL[@class="menuSecond"]//li)[${n}]`); }},
+  sortItems: { value: function(n) { return browser.element(`(//ul[@class="menuSecond"]//li)[${n}]`); }},
+  // sortItemsName: { get: function() { return browser.element('(//ul[@class="menuSecond"]//li)'); }},
+  sortItemsName: { get: function() { return browser.element('(//ul[@class="menuSecond"]//li)[1]'); }},
+  sortByCreationDate: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"作成日順")]'); }},
+  sortByChangedDate: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"変更日順")]'); }},
+  sortByPrice: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"見積金額順")]'); }},
+  sortInAscending: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"昇順")]'); }},
+  sortInDescending: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"降順")]'); }},
+  dateUpload: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateUpload"])[${n}]`)}},
+  dateRenew: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateRenew"])[${n}]`)}},
+  priceListed: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="price"])[${n}]`)}},
 
+  
   /**
    * Upload file by triggering drop event
    */
@@ -697,12 +708,32 @@ let  uploadPage = {
    */
   checkSortOrder:{
     value: function(){
+      this.sortButton.waitForEnabled();
       if (browser.desiredCapabilities.browserName === 'chrome') {
         this.sortButton.moveToObject();
+        console.log("moved");
       } else {
         browser.scrollToElement(this.sortButtonSelector);
       }
-
+      var regexDate = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
+      var regexTime = /^\d{1,2}:\d{1,2}:\d{1,2}$/;
+      this.sortItemsName.selectByVisibleText('作成日順');
+      // this.sortByCreationDate.click(); //Sort by creation date
+      console.log("sortByCreationDate");
+      var list = this.projectCountButton.getText().split('\n');
+      var listLength = list.length;
+      this.sortInAscending.click();   //Ascending order
+      for(i=1; i<= listLength; i++){
+        var date = this.dateUpload(i).getText();
+        var nextDate = this.dateUpload(i+1).getText();
+        if (date != '' && date.match(regexDate)) {
+          console.log("in date format");
+          expect(date).isBelow(nextDate);
+          console.log("date is below next Date")
+        } else if(this.dateUpload.getText().match(regexTime)) {
+          console.log("in time format");
+        }
+      }
     }
   }   
 };
