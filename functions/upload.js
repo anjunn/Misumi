@@ -45,8 +45,10 @@ let  uploadPage = {
   gridViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="card"]'); }},
   listView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix styleList"]'); }},
   gridView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix"]'); }},
-    
-  
+  projectCountButton: { get: function () { return browser.element('//select[@class="textBold"]'); }},
+  projectCount: { value: function (n) { return browser.element(`(//select[@class="textBold"]//option)[${n}]`); }},
+  dataBox: { get: function () { return browser.elements('//li[@class="dataBox"]'); }},
+
   /**
    * Upload file by triggering drop event
    */
@@ -657,12 +659,34 @@ let  uploadPage = {
       browser.mediumWait();
       expect(this.listView.isVisible());
       console.log("List view enabled");
-      browser.debug();
       this.gridViewButton.waitForEnabled();
       this.gridViewButton.click();
       browser.mediumWait();
       expect(this.gridView.isVisible());
       console.log("Grid view enabled");
+    }
+  }, 
+  /*
+   * Checking project count displayed in the upload screen 
+   */
+  checkProjectCount:{
+    value: function(){
+      this.projectCountButton.waitForEnabled();
+      this.projectCountButton.click();
+      var list = this.projectCountButton.getText().split('\n');
+      var listLength = list.length;
+      for (var i = 1; i <= listLength; i++){
+        this.projectCount(i).waitForEnabled();
+        this.projectCount(i).click();
+        browser.mediumWait();
+        var countSelected = parseInt(this.projectCount(i).getValue());
+        console.log("Selected count: ", countSelected);
+        var length = this.dataBox.value.length; 
+        console.log("Items displayed in a single page: ",length);
+        expect(length).to.be.equal(countSelected);
+        console.log("count matched");
+        browser.refresh();
+      }
     }
   }
 };
