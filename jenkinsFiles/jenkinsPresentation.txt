@@ -1,0 +1,107 @@
+// QA-PresentationJobBuilder
+// Pipeline script
+
+node('master') {
+    def pr_to_run = []
+    TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
+    stage ('Fetch PRs to run') {
+        def last_job = new URL('http://localhost:8080/job/QA-PresentationJobBuilder/lastCompletedBuild/api/json').getText()
+        def slurper = new groovy.json.JsonSlurper()
+        def last_check_time = new Date(slurper.parseText(last_job).timestamp)
+        def pr_count = new URL("https://cct-inc.backlog.jp/api/v2/projects/CORE_CCT_BETA/git/repositories/Presentation/pullRequests/count?apiKey=yfisCuf8EXgdlS3BeuUwEViY89bufATDxHXUe0RU1NFvj293k47OZxCdtcQLpjjG&statusId[]=1").getText()
+        def pr_countint = pr_count.findAll( /\d+/ )[0].toInteger() 
+        def offsetvalue = 0
+        
+        
+        while (pr_countint > 0) {
+            def pr = new URL("https://cct-inc.backlog.jp/api/v2/projects/CORE_CCT_BETA/git/repositories/Presentation/pullRequests?apiKey=yfisCuf8EXgdlS3BeuUwEViY89bufATDxHXUe0RU1NFvj293k47OZxCdtcQLpjjG&statusId[]=1&offset=${offsetvalue}&count=100").getText()
+            def open_pr_in_time = slurper.parseText(pr).collect{ [number: it.number, branch: it.branch] }
+            open_pr_in_time.each {
+                def pr_comments = new URL("https://cct-inc.backlog.jp/api/v2/projects/CORE_CCT_BETA/git/repositories/Presentation/pullRequests/${it.number}/comments?apiKey=yfisCuf8EXgdlS3BeuUwEViY89bufATDxHXUe0RU1NFvj293k47OZxCdtcQLpjjG").getText()
+                def pr_comment_formatted = slurper.parseText(pr_comments)
+                def pr_with_run_comments =  pr_comment_formatted.findAll{ (Date.parse("yyyy-MM-dd'T'HH:mm:ss'Z'", it.updated, TimeZone.getTimeZone("UTC")) > last_check_time) && (it.content.contains("run-jenkins")) }
+                def target_branch
+                if (pr_with_run_comments != []) {
+                  target_branch =  pr_with_run_comments.first().content.split("Target: ")[1]
+                }    
+                if (target_branch) {
+                    pr_to_run += [number: it.number, branch: it.branch, target: target_branch]
+                }
+            }
+            pr_countint -= 100
+            offsetvalue += 100
+        }
+    }
+    echo "PRs to run: ${pr_to_run}"
+    pr_to_run.each {
+        notifyChatWork("------------------------------------")
+        notifyChatWork("BUILD STARTING FOR ${it.branch} in Presentation")  
+        def buildPresentation = build( 
+            job: 'build', 
+            parameters: [
+                [$class: 'StringParameterValue', name: 'REPOSITORY', value: "Presentation"], 
+                [$class: 'StringParameterValue', name: 'BRANCH', value: "${it.branch}"]
+            ]
+            )
+        def buildResultPresentation = buildPresentation.getResult()
+        def buildResultManagement
+        if (buildResultPresentation == 'SUCCESS') {
+            notifyChatWork("BUILD STARTING FOR ${it.target} in Management")
+            def buildManagement = build(
+                job: 'build', 
+                parameters: [
+                    [$class: 'StringParameterValue', name: 'REPOSITORY', value: "Management"], 
+                    [$class: 'StringParameterValue', name: 'BRANCH', value: "${it.target}"]
+                ]
+            )
+            buildResultManagement = buildManagement.getResult()
+        }
+        if (buildResultManagement == 'SUCCESS') {
+            notifyChatWork("DEPLOY STARTING FOR ${it.branch} in Presentation")
+            def deployPresentation = build job: 'deploy', 
+            parameters: [
+                [$class: 'StringParameterValue', name: 'REPOSITORY', value: "Presentation"], 
+                [$class: 'StringParameterValue', name: 'BRANCH', value: "${it.branch}"]
+            ]
+            def deployResultPresentation = deployPresentation.getResult()
+            def deployResultManagement
+            if (deployResultPresentation == 'SUCCESS') {
+                notifyChatWork("DEPLOY STARTING FOR ${it.target} in Management")
+                def deployManagement = build(
+                    job: 'deploy', 
+                    parameters: [
+                        [$class: 'StringParameterValue', name: 'REPOSITORY', value: "Management"], 
+                        [$class: 'StringParameterValue', name: 'BRANCH', value: "${it.branch}"]
+                    ]
+                )
+                deployResultManagement = deployManagement.getResult()
+            }
+        }
+        if (deployResultManagement == 'SUCCESS') {
+            notifyChatWork("Starting qa-automation")
+            def qaAutomation = build(job: 'qa_auto')
+            def qaAutomationResult = qaAutomation.getResult()
+            if (qaAutomationResult == 'SUCCESS') {
+                notifyChatWork("QA Automation success")
+                sh(script: "curl --data \"content=QA Automation Successful\"  \"https://cct-inc.backlog.jp/api/v2/projects/CORE_CCT_BETA/git/repositories/Presentation/pullRequests/${it.number}/comments?apiKey=yfisCuf8EXgdlS3BeuUwEViY89bufATDxHXUe0RU1NFvj293k47OZxCdtcQLpjjG\"")
+            } else {
+                notifyChatWork("QA Automation failed")
+                sh(script: "curl --data \"content=QA Automation Failed\"  \"https://cct-inc.backlog.jp/api/v2/projects/CORE_CCT_BETA/git/repositories/Presentation/pullRequests/${it.number}/comments?apiKey=yfisCuf8EXgdlS3BeuUwEViY89bufATDxHXUe0RU1NFvj293k47OZxCdtcQLpjjG\"")
+            }
+        }
+    }
+}
+
+def notifyChatWork(msg) { 
+    def url = new URL("https://api.chatwork.com/v2/rooms/91218846/messages")
+    def connection = url.openConnection()
+    connection.setRequestMethod("POST")
+    connection.doOutput = true
+    connection.setRequestProperty('X-ChatWorkToken', '5822c6f6a7aa3fb918681f1a64d7bb31')
+    def writer = new OutputStreamWriter(connection.outputStream)
+    writer.write("body=${msg}")
+    writer.flush()
+    writer.close()
+    connection.connect()
+    def response = connection.content.text
+}
