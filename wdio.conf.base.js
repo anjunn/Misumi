@@ -290,7 +290,11 @@ exports.config = {
     const allurePath = __dirname + '/allure-results/';
     if( fs.existsSync(allurePath) ) {
       fs.readdirSync(allurePath).forEach(function (file, index) {
-        fs.unlinkSync(allurePath + file)
+        try {
+          fs.unlinkSync(allurePath + file)
+        } catch(e) {
+          console.log(`${allurePath}${file} could not be deleted`)
+        }
       });
     }
   },

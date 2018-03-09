@@ -1,6 +1,7 @@
 /*
 * Utility functions
 */
+let data = require('../data/input-data/dataset.json');
 
 const commonUtilities = {
   /*
@@ -95,6 +96,13 @@ const commonUtilities = {
   extraLongWait: function () {
     browser.pause(5000);
   },
+
+  filterByUsage: function (env) {
+    return data.url.filter(function (content) {
+      return content.usedBy.includes(env);
+    });
+  },
+
 };
 
 /**
