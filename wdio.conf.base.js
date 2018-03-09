@@ -45,6 +45,9 @@ exports.config = {
     scenario10: [
       './feature/MZ_010-labSiteCombinationCheck.feature'
     ],
+    scenario13: [
+      './feature/MZ_013-orderingFromWOS.feature'
+    ],
     smokeTest: [
       './feature/MZ_015-smokeTest.feature'
     ],
@@ -188,7 +191,8 @@ exports.config = {
       './step_definitions/qtProject.stepDefinition.js',
       './step_definitions/soProjectList.stepDefinition.js',
       './step_definitions/soProject.stepDefinition.js',
-      './step_definitions/delete.stepDefinition.js'
+      './step_definitions/delete.stepDefinition.js',
+      './step_definitions/wos.stepDefinition.js'
     ],
     failFast: true,
     dryRun: false,
@@ -198,10 +202,14 @@ exports.config = {
   // params for storing global variables
   params: {
     projectPageUrl: null,
+    modelNumberOrderPage:null,
+    quantiyOrderpage:null,
+    priceOrderPage: null,
     fileName: null,
     initialPrice: null,
     totalPrice: null,
     qtProjectListId: null,
+    purchaseOrderNumber: null,
     singlePinPrice: {
       part1: null,
     },

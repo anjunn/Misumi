@@ -21,5 +21,7 @@ module.exports = function () {
   this.When(/^User goes to Order History Page$/, () => {
   	orderPage.goToOrderHistory();
   });
- 
+   this.When(/^User checks the checkbox and redirect wos page$/, () => {
+    orderPage.clickBoxAndRedirectToWos();
+  });
 };

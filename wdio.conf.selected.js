@@ -10,7 +10,7 @@ let wdioConfChrome = require('./wdio.conf.chrome.js');
 
 const getSelectedTestCases = function () {
   const tickets = (process.env.npm_config_selected || '').split(',');
-  const suites = ['all', 'smokeTest', 'scenario9', 'scenario10'];
+  const suites = ['all', 'smokeTest', 'scenario9', 'scenario10','scenario13'];
   let ticketToTest = [], testFilter;
   if (tickets.find((testSuite) => suites.includes(testSuite))) {
     tickets.forEach((ticket) => {

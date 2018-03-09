@@ -23,7 +23,14 @@ let  orderPage = {
   orderNo: { get: function () { return browser.element('//*[@id="main"]/div/div[1]/div[3]/strong');}},
   goToHistory: { get: function () { return browser.element('//*[contains(text(),"この注文の履歴詳細へ")]');}},
   priceText: { get: function () { return browser.element('(//table[@class="table06"]/tbody//td)[6]');}},
-   okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
+  okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
+  checkBoxToWOS: { get: function () { return browser.element('(//span[@class="check"])[3]'); }},
+  buttonToWOS: { get: function () { return browser.element('//p[@class="btn multiLine btnColor01 outlink"]'); }},
+  closeButtonPopUp: { get: function () { return browser.element('//li[@id="closeBtn"]'); }},
+  collectiveInputButton: { get: function () { return browser.element('(//li[@class="btn"])[3]'); }},
+  modelNumber: { get: function () { return browser.element('//p[@class="modelNum"]'); }},
+  quantityOrderpage: { get: function () { return browser.element('(//span[@class="textBold"])[5]'); }},
+  priceInsideOrderPage: { get: function () { return browser.element('(//td[@class="elementRight"])[3]//span'); }},
 
   /*
    * User goes to the order page
@@ -53,9 +60,9 @@ let  orderPage = {
   },
 
   /*
-   * User places the order
+   * User enters the customer input number
    */
-  placeOrder: {
+   customerInputSinglePin: {
     value: function() {
       browser.smallWait();
       this.customerNumberInput.waitForVisible();
@@ -65,7 +72,29 @@ let  orderPage = {
       this.customerNumberPart1.waitForEnabled();
       this.customerNumberPart1.setValue("ERR");
       this.customerNumberPart2.setValue("1234");
-      this.Okbutton.click();
+      this.collectiveInputButton.waitForVisible();
+      this.collectiveInputButton.click();
+    }
+   } ,
+
+  /*
+   * Get quantity and model number and price
+   */
+  getQuantityModelNumberPrice: {
+    value: function() {
+      this.modelNumber.waitForVisible();
+      browser.params.modelNumberOrderPage=this.modelNumber.getText();
+      browser.params.quantiyOrderpage=this.quantityOrderpage.getText();
+      browser.params.priceOrderPage=this.priceInsideOrderPage.getText();
+    }
+  },
+
+  /*
+   * User places the order
+   */
+  placeOrder: {
+    value: function() {
+      this.customerInputSinglePin();
       this.checkBox.waitForEnabled();
       this.checkBox.click();
       this.placeOrderButton.click();
@@ -92,6 +121,26 @@ let  orderPage = {
       this.goToHistory.click();
       this.priceText.waitForVisible();
       browser.params.totalPrice = this.priceText.getText();
+    }
+  },
+
+  /*
+   * User redirects to Wos page
+   */
+
+  clickBoxAndRedirectToWos: {
+    value: function() {
+     this.getQuantityModelNumberPrice();
+     this.customerInputSinglePin();
+     this.checkBoxToWOS.waitForEnabled();
+     this.checkBoxToWOS.click();
+     this.buttonToWOS.waitForVisible();
+     this.buttonToWOS.click();
+     browser.tinyWait();
+     if(this.closeButtonPopUp.isVisible()){
+      this.closeButtonPopUp.click();
+     }
+     browser.switchTab(browser.windowHandles().value[1]);
     }
   },
 
