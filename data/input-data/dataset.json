@@ -101,6 +101,7 @@
     "internalNameColumn": 1
   },
 
-  "dropdownDisabledState" :"-999"
+  "dropdownDisabledState" :"-999",
+  "department": "Ｑ Ｂ Ｕ Ｒ Ｓ Ｔ"
  
 }

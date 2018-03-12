@@ -21,5 +21,13 @@ module.exports = function () {
   this.When(/^User goes to Order History Page$/, () => {
   	orderPage.goToOrderHistory();
   });
- 
+   this.When(/^User checks the checkbox and redirect wos page$/, () => {
+    orderPage.clickBoxAndRedirectToWos();
+  });
+  this.Then(/^User verifies if the purchase order number appears in order history page$/, () => {
+    orderPage.verifyOrder();
+  });
+  this.Then(/^User verifies the amount displayed$/, () => {
+    orderPage.verifyAmount();
+  });
 };

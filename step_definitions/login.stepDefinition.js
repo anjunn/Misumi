@@ -42,4 +42,7 @@ module.exports = function () {
   this.Given(/^User goes to Home Page of lab site$/, () => {
     loginPage.goToHomePageLabSite();
   });
+  this.When(/^User redirects to order history page$/, () => {
+    loginPage.goToOrderHistory();
+  });
 };
