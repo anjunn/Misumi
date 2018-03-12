@@ -2,7 +2,7 @@ Feature: Scenario 13
 
 Scenario: User logins to presentation site
 
-Given User goes to Home Page of lab site
+Given User goes to Home Page
 Then User validates the webpage header
 And User validates the Start Right Away button
 When User goes to Login Page
@@ -12,10 +12,9 @@ And User enters credentials and logs in
 
 Scenario: User checks the uploaded project
 
-# Given User uploads 3D data for single pin
-# When User verifies whether upload is successful for single pin
-# And User defines quotation condition for single pin
-# Then User checks whether thumb nail of 3D appears for single pin
+Given User uploads 3D data for single pin
+When User verifies whether upload is successful for single pin
+And User defines quotation condition for single pin
 
 Given User opens the uploaded project
 Given User goes to order page
@@ -31,4 +30,7 @@ Given User is in Order Confirmation page and verifies the product details
 When User clicks next in Order Confirmation page
 Then User gets the purchase order number from the Order Complete page 
 
-Given User switches to presentation, and checks if he is in mypage 
+Given User switches to presentation, and checks if he is in mypage
+When User redirects to order history page 
+Then User verifies if the purchase order number appears in order history page
+And User verifies the amount displayed

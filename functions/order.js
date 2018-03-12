@@ -31,6 +31,8 @@ let  orderPage = {
   modelNumber: { get: function () { return browser.element('//p[@class="modelNum"]'); }},
   quantityOrderpage: { get: function () { return browser.element('(//span[@class="textBold"])[5]'); }},
   priceInsideOrderPage: { get: function () { return browser.element('(//td[@class="elementRight"])[3]//span'); }},
+  purchaseOrderNumber: { get: function () { return browser.element('(//div[@class="titleText"]//span)[2]'); }},
+  totalAmount: { get: function () { return browser.element('(//span[@class="textBold"])[3]'); }},
 
   /*
    * User goes to the order page
@@ -144,6 +146,39 @@ let  orderPage = {
     }
   },
 
+  /*
+   * User verifies the order
+   */
+  verifyOrder: {
+    value: function() {
+      var flag=0, count=0;
+       console.log("   Actual   "+" ******** "+"   Expected   ");
+      while(count<=20){
+        this.purchaseOrderNumber.waitForVisible();
+        console.log(this.purchaseOrderNumber.getText()+" ******** "+browser.params.purchaseOrderNumber);
+        if(this.purchaseOrderNumber.getText()===browser.params.purchaseOrderNumber){
+          flag=1;
+          break;
+        }
+        browser.WaitForOneminute();
+        browser.refresh();
+        count=count+1;
+      }
+      expect(flag).to.be.equal(1);
+    }
+  },
+
+  /*
+   * User verifies the amount
+   */
+
+  verifyAmount: {
+    value: function() {
+    this.totalAmount.waitForVisible();
+    var amount=this.totalAmount.getText();
+    expect(amount).to.be.equal(browser.params.priceOrderPage);
+    }
+  },
 };
 
 module.exports = Object.create(Page, orderPage);

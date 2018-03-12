@@ -130,7 +130,7 @@ exports.config = {
   coloredLogs: true,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 60000,
+  waitforTimeout: 960000,
   //
   // Default timeout in milliseconds for request if Selenium Grid doesn't send response
   connectionRetryTimeout: 60000,
@@ -197,7 +197,7 @@ exports.config = {
     failFast: true,
     dryRun: false,
     colors: true,
-    timeout: 500000
+    timeout: 960000
   },
   // params for storing global variables
   params: {

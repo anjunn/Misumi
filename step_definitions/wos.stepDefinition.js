@@ -3,7 +3,7 @@ let data = require('../data/input-data/dataset.json');
 module.exports = function () {
 
   this.Then(/^User verifies if the quantity and model number in Order input page is same as shown in presentation$/, () => {
-      wosPage.checkQuantityAndModel();
+      wosPage.checkQuantityAndModel(data.department);
   });
 
   this.Given(/^User clicks on the next button$/, () => {
@@ -34,7 +34,7 @@ module.exports = function () {
   });
 
    this.Given(/^User switches to presentation, and checks if he is in mypage$/, () => {
-      wosPage.switchToMyPage(data.url.myPageUrl);
+      wosPage.switchToMyPage();
   });
 
 };

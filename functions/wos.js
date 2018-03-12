@@ -1,5 +1,6 @@
 
 let Page = require('./page');
+let data = require('../data/input-data/dataset.json');
 /**
  * wos Page Object
  *
@@ -29,12 +30,16 @@ let wosPage = {
   totalPrice: { get: function () { return browser.element('//td[@class="right"]//strong');}},
   nextInOrderConfirmation: { get: function () { return browser.element('//img[@id="ctl00_ContentPlaceHolder1_btnsubEnter"]');}},
   purchaseOrder: { get: function () { return browser.element('//a[@id="soNumberCommand"]//span');}},
-
+  departmentId: { get: function () { return browser.element('//input[@id="shipToDepartment"]');}},
+  error: { get: function () { return browser.element('//li[@class="iconError"/span]');}},
+  
   /**
    * User verifies model number and quantity
    */
   checkQuantityAndModel: {
-    value: function() {
+    value: function(department) {
+      this.departmentId.waitForEnabled();
+      this.departmentId.setValue("ＱＢＵＲＳＴ");
       this.modelNumber.waitForVisible();
       expect(this.modelNumber.getValue()).to.be.equal(browser.params.modelNumberOrderPage);
       expect(this.orderQuanity.getValue()).to.be.equal(browser.params.quantiyOrderpage);
@@ -49,6 +54,7 @@ let wosPage = {
       browser.scrollToElement(this.nextButtonSelector);
       this.nextButton.waitForVisible();
       this.nextButton.click();
+      
      
     }
   },
@@ -68,7 +74,7 @@ let wosPage = {
    */
   verifyDetails: {
     value: function() {
-     browser.tinyWait
+     browser.tinyWait();
      this.modelNumberInShippingdatePage.waitForVisible(); 
      expect(browser.params.modelNumberOrderPage).to.be.equal(this.modelNumberInShippingdatePage.getText());
      expect(this.priceInShippingDatePage.getText()).to.include(browser.params.priceOrderPage);
@@ -84,10 +90,12 @@ let wosPage = {
       this.nextButtonShippingDate.waitForEnabled();
       this.nextButtonShippingDate.click();
       if(this.shippingError.isVisible()){
-        this.selectDateDropDown.waitForEnabled();
-        this.selectDateDropDown.click();
-        this.selectDate.waitForVisible();
-        this.selectDate.click();
+        if(this.selectDateDropDown.isVisible()){
+          this.selectDateDropDown.waitForEnabled();
+          this.selectDateDropDown.click();
+          this.selectDate.waitForVisible();
+          this.selectDate.click();
+        }
         this.nextButtonShippingDate.waitForEnabled();
         this.nextButtonShippingDate.click();
       }
@@ -133,17 +141,15 @@ let wosPage = {
    * User switches to mypage
    */
   switchToMyPage: {
-    value: function(myPageUrl) {
-     console.log("present tab"+browser.getCurrentTabId());
-     console.log("tab ids"+browser.getTabIds());
+    value: function() {
      browser.switchTab(browser.windowHandles().value[0]);
-     browser.debug();
-     url=browser.getUrl();
-     expect(url).to.be.equal(myPageUrl);
-     browser.debug();
+     let env = process.env.npm_config_env || 'tst';
+     const urlData = browser.filterByUsage(env)[0];
+     url = urlData;
+     presentUrl=browser.getUrl();
+     expect(url.myPageUrl).to.be.equal(presentUrl);
     }
   },
-
 };
 
 module.exports = Object.create(Page, wosPage);
