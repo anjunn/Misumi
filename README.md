@@ -40,6 +40,15 @@ Download the following:
 * For running scenario 6: npm run test-ci-selected --selected=006
 * For running scenario 7: npm run test-ci-selected --selected=007
 
+## Running the test cases in chrome for different environments
+
+* For running in tst: npm run test-ci-selected --selected=001 --env=tst
+'tst' is the default environment when running without env command
+* For running in stg: npm run test-ci-selected --selected=001 --env=stg
+* For running in dvl: npm run test-ci-selected --selected=001 --env=dvl
+* For running in lab: npm run test-ci-selected --selected=001 --env=lab
+
+
 ## Running the test cases in ie
 
 * Setup security settings in IE:
