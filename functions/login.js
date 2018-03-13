@@ -25,6 +25,7 @@ let loginPage = {
   homePageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//*[@class="inner"]//h1');}},
   rightDropDown:{ get: function () { return browser.element('//li[@class="drop menber_menu right"]');}},
   orderHistory:{ get: function () { return browser.element('(//ul[@class="menuSecond"]//li//a)[2]');}},
+  prjectName:{ get: function () { return browser.element('(//div[@class="projectname"]//a)[1]');}},
 
   /*
    * Goes to Home Page
@@ -162,6 +163,8 @@ let loginPage = {
    */
   goToOrderHistory: {
     value: function(){
+     this.prjectName.waitForVisible();
+     browser.params.fileName=this.prjectName.getText();
      this.rightDropDown.waitForEnabled();
      this.rightDropDown.click();
      this.orderHistory.waitForEnabled();

@@ -30,4 +30,7 @@ module.exports = function () {
   this.Then(/^User verifies the amount displayed$/, () => {
     orderPage.verifyAmount();
   });
+  this.Then(/^User verifies the product details in order detail page$/, () => {
+    orderPage.verifyDetailsOfProduct();
+  });
 };

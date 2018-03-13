@@ -100,7 +100,8 @@
     "displayNameColumn": 0,
     "internalNameColumn": 1
   },
-
+  "shipingDateError" : "土祝日は出荷できない商品です。恐れ入りますが希望出荷日を変更してください",
+  "anotherShipingDateError" : "【希望出荷日エラー】 ご指定のお客様希望出荷日では出荷できません。",
   "dropdownDisabledState" :"-999",
   "department": "Ｑ Ｂ Ｕ Ｒ Ｓ Ｔ"
  

@@ -34,3 +34,4 @@ Given User switches to presentation, and checks if he is in mypage
 When User redirects to order history page 
 Then User verifies if the purchase order number appears in order history page
 And User verifies the amount displayed
+And User verifies the product details in order detail page
