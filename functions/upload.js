@@ -712,16 +712,20 @@ let  uploadPage = {
       var regexDate = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
       var regexTime = /^\d{1,2}:\d{1,2}:\d{1,2}$/;
       this.sortButton.waitForEnabled();
-        console.log(regexTime);
-       console.log(regexTime);
+      console.log(regexDate);
+      console.log(regexTime);
+      this.listViewButton.waitForEnabled();
+      this.listViewButton.click();
+      expect(this.listView.isVisible());
+      console.log("List view enabled");
         // console.log(date.getTime);
-
-      if (browser.desiredCapabilities.browserName === 'chrome') {
+      browser.mediumWait();
+      // ---------------------if (browser.desiredCapabilities.browserName === 'chrome') {
         this.sortButton.click();
-        console.log("clicked");
-      } else {
-        browser.scrollToElement(this.sortButtonSelector);
-      }
+        console.log("sortButton clicked");
+      // } else {
+      //   browser.scrollToElement(this.sortButtonSelector);
+      // }
       browser.mediumWait();
       if(!this.sortByCreationDate.isEnabled()){ //Sort by creation date
         this.sortByCreationDate.click();
@@ -729,6 +733,7 @@ let  uploadPage = {
       } else{
         console.log("sortByCreationDate");
       }
+      this.projectCountButton.click();
       var list = this.projectCountButton.getText().split('\n');
       var listLength = list.length;
       console.log("listLength: ",listLength);
@@ -740,15 +745,24 @@ let  uploadPage = {
       }
       for(var i=1; i<= listLength; i++){
         console.log("in for loop");
-        var date = this.dateUpload(i).getText();
-        console.log(date.getTime);
-        var nextDate = this.dateUpload(i+1).getText();
-        if (date != '' && date.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+        this.dateUpload(i).waitForVisible();
+        var dateTime = this.dateUpload(i).getText();
+        browser.debug();
+        console.log("dateTime: ",dateTime);
+        // this.dateUpload(2).waitForVisible();
+        // var nextDate = this.dateUpload(2).getText();
+        // console.log("nextdate",nextDate);
+        // if (date != '' && date.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+        if(dateTime.includes("/")){
           console.log("in date format");
-          expect(date).isBelow(nextDate);
-          console.log("date is below next Date")
-        } else if(this.dateUpload(i).getText().match(regexTime)) {
+          // expect(date).isBelow(nextDate);
+
+          // console.log("date is below next Date")
+        // } else if(this.dateUpload(1).getText().match(regexTime)) {
+        } else if(dateTime.includes(":")){
           console.log("in time format");
+        } else {
+          console.log("in else");
         }
       }
     }
