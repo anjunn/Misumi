@@ -45,6 +45,9 @@ exports.config = {
     scenario10: [
       './feature/MZ_010-labSiteCombinationCheck.feature'
     ],
+    scenario13: [
+      './feature/MZ_013-orderingFromWOS.feature'
+    ],
     scenario14: [
       './feature/MZ_014-projectListStyleCheck.feature'
     ],
@@ -130,7 +133,7 @@ exports.config = {
   coloredLogs: true,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 60000,
+  waitforTimeout: 960000,
   //
   // Default timeout in milliseconds for request if Selenium Grid doesn't send response
   connectionRetryTimeout: 60000,
@@ -191,20 +194,25 @@ exports.config = {
       './step_definitions/qtProject.stepDefinition.js',
       './step_definitions/soProjectList.stepDefinition.js',
       './step_definitions/soProject.stepDefinition.js',
-      './step_definitions/delete.stepDefinition.js'
+      './step_definitions/delete.stepDefinition.js',
+      './step_definitions/wos.stepDefinition.js'
     ],
     failFast: true,
     dryRun: false,
     colors: true,
-    timeout: 500000
+    timeout: 960000
   },
   // params for storing global variables
   params: {
     projectPageUrl: null,
+    modelNumberOrderPage:null,
+    quantiyOrderpage:null,
+    priceOrderPage: null,
     fileName: null,
     initialPrice: null,
     totalPrice: null,
     qtProjectListId: null,
+    purchaseOrderNumber: null,
     singlePinPrice: {
       part1: null,
     },
@@ -285,7 +293,11 @@ exports.config = {
     const allurePath = __dirname + '/allure-results/';
     if( fs.existsSync(allurePath) ) {
       fs.readdirSync(allurePath).forEach(function (file, index) {
-        fs.unlinkSync(allurePath + file)
+        try {
+          fs.unlinkSync(allurePath + file)
+        } catch(e) {
+          console.log(`${allurePath}${file} could not be deleted`)
+        }
       });
     }
   },

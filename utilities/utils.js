@@ -70,6 +70,14 @@ const commonUtilities = {
   },
 
   /*
+  * Wait for one minute
+  */
+  WaitForOneminute: function () {
+    browser.pause(60000);
+  },
+
+
+  /*
   * Wait for elements for a medium period
   */
   mediumWait: function () {

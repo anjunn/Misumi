@@ -23,6 +23,8 @@ let loginPage = {
   memberMenuButton:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logoutButton:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
   homePageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//*[@class="inner"]//h1');}},
+  rightDropDown:{ get: function () { return browser.element('//li[@class="drop menber_menu right"]');}},
+  orderHistory:{ get: function () { return browser.element('(//ul[@class="menuSecond"]//li//a)[2]');}},
 
   /*
    * Goes to Home Page
@@ -152,6 +154,18 @@ let loginPage = {
         this.systemCheckBox.click();
         this.systemCheckButton.click();
       }
+    }
+  },
+
+  /*
+   * Go to order history
+   */
+  goToOrderHistory: {
+    value: function(){
+     this.rightDropDown.waitForEnabled();
+     this.rightDropDown.click();
+     this.orderHistory.waitForEnabled();
+     this.orderHistory.click();
     }
   },
 
