@@ -64,9 +64,11 @@ let wosPage = {
    */
   clickcloseButton: {
     value: function() {
-      this.closeButton.waitForVisible();
-      this.closeButton.click();
-      this.checkError();  
+      browser.mediumWait();
+      if(this.closeButton.isVisible()){
+        this.closeButton.click();
+        this.checkError();  
+      }
     }
   },
 
@@ -116,61 +118,61 @@ let wosPage = {
     value: function() {
       browser.smallWait();
       var errorFlag=0;
-      while(this.error.isVisible() && errorFlag===0){
-        if(this.error.getText().includes(data.shipingDateError)||this.error.getText().includes(data.anotherShipingDateError)){
-          var date=this.currentShippingDate.getValue();
-          date.split();
-          var day=this.joinElements(date[8],date[9]);
-          var month=this.joinElements(date[5],date[6]);
-          var year=this.joinElementsYear(date[0],date[1],date[2],date[3])
-            if(month=="01"||month=="03"||month=="05"||month=="07"||month=="08"||month=="10"||month=="12"){
-              if(day==31)
-              {
-                if(month==12)  {
-                  month="01";
-                  day="01";
-                  year=parseInt(year)+1;
+      if(this.error.isVisible())
+      {
+        while(this.error.isVisible() && errorFlag===0){
+          if(this.error.getText().includes(data.shipingDateError)||this.error.getText().includes(data.anotherShipingDateError)){
+            var date=this.currentShippingDate.getValue();
+            date.split();
+            var day=this.joinElements(date[8],date[9]);
+            var month=this.joinElements(date[5],date[6]);
+            var year=this.joinElementsYear(date[0],date[1],date[2],date[3])
+              if(month=="01"||month=="03"||month=="05"||month=="07"||month=="08"||month=="10"||month=="12"){
+                if(day==31)
+                {
+                  if(month==12)  {
+                    month="01";
+                    day="01";
+                    year=parseInt(year)+1;
+                  }
+                  else {
+                    month=parseInt(month)+1;
+                    day="01";
+                  } 
                 }
                 else {
+                  day=parseInt(day)+1;
+                }
+              }
+              else if(month=="04"||month=="06"||month=="09"||month=="11"){
+                if(day==30) {
                   month=parseInt(month)+1;
                   day="01";
-                } 
+                }
+                else {
+                  day=parseInt(day)+1;
+                }
               }
-              else {
-                day=parseInt(day)+2;
-              }
-            }
-            else if(month=="04"||month=="06"||month=="09"||month=="11"){
-              if(day==30) {
-                month=parseInt(month)+1;
+              else if(month=="02") {
+              if(day=="28"||day=="29")
+              {
                 day="01";
+                month=parseInt(month)+1;
               }
               else {
-                day=parseInt(day)+2;
+                day=parseInt(day)+1;
               }
-            }
-            else if(month=="02") {
-            if(day=="28"||day=="29")
-            {
-              day="01";
-              month=parseInt(month)+1;
-            }
-            else {
-              day=parseInt(day)+2;
-            }
-            }
-            var dateFinal=this.formdate(year,month,day);
-            this.currentShippingDate.setValue(dateFinal);
-            this.currentShippingDate.click();
-            if (browser.alertText()) {
-              browser.alertAccept();
-            }
-            this.clickNext();
-        }
-        else {
-          errorFlag=1;
-          console.log("ERROR : " + this.error.getText());
-        }
+              }
+              var dateFinal=this.formdate(year,month,day);
+              this.currentShippingDate.setValue(dateFinal);
+              this.currentShippingDate.click();
+              this.clickNext();
+          }
+          else {
+            errorFlag=1;
+            console.log("ERROR : " + this.error.getText());
+          }
+        }  
       }
      expect(errorFlag).to.be.equal(0); 
     }

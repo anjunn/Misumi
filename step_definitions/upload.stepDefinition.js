@@ -3,6 +3,7 @@ let data = require('../data/input-data/dataset.json');
 let singlePinInputData = require('../data/input-data/single-pin.json');
 let multiplePinInputData = require('../data/input-data/multiple-pin.json');
 let pinAndPlateInputData = require('../data/input-data/pin-and-plate.json');
+let pinsInputData = require('../data/input-data/pins.json');
 let plateInputData = require('../data/input-data/plate.json');
 let singlePinExpectedData = require('../data/expected-results/single-pin.json');
 let multiplePinExpectedData = require('../data/expected-results/multiple-pin.json');
@@ -11,7 +12,7 @@ let plateExpectedData = require('../data/expected-results/plate.json');
 
 module.exports = function () {
 
-  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate) from dialog$/, (pinType) => {
+  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate|pins) from dialog$/, (pinType) => {
   	if (pinType === 'single pin') {
   	  path = data.uploadPath.singlePin;
   	} else if (pinType === 'multiple pin'){
@@ -20,11 +21,13 @@ module.exports = function () {
  	    path = data.uploadPath.plate;
   	} else if (pinType === 'pin and plate') {
   	  path = data.uploadPath.pinPlate;
-  	}
+  	} else if (pinType === 'pins') {
+      path = data.uploadPath.pins;
+    }
   	uploadPage.uploadFromDialog(path);
   });
 
-  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.Given(/^User uploads 3D data for ((single|multiple) pin|plate|pin and plate|pins)$/, (pinType) => {
     if (pinType === 'single pin') {
       path = data.uploadPath.singlePin;
     } else if (pinType === 'multiple pin'){
@@ -33,15 +36,17 @@ module.exports = function () {
       path = data.uploadPath.plate;
     } else if (pinType === 'pin and plate') {
       path = data.uploadPath.pinPlate;
+    }else if (pinType === 'pins') {
+      path = data.uploadPath.pins;
     }
     uploadPage.upload(path);
   });
 
-  this.When(/^User verifies whether upload is successful for ((single|multiple) pin|plate|pin and plate)$/, {retry: 2},(pinType) => {
+  this.When(/^User verifies whether upload is successful for ((single|multiple) pin|plate|pin and plate|pins)$/, {retry: 2},(pinType) => {
     uploadPage.verifyUpload();
   });
 
-  this.When(/^User defines quotation condition for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.When(/^User defines quotation condition for ((single|multiple) pin|plate|pin and plate|pins)$/, (pinType) => {
   	if (pinType === 'single pin') {
       uploadPage.quotationConditionFill(singlePinInputData.quotationCondition);
     } else if (pinType === 'multiple pin') {
@@ -50,10 +55,12 @@ module.exports = function () {
 		  uploadPage.quotationConditionFillPlate(plateInputData.quotationCondition);
     } else if (pinType === 'pin and plate') {
       uploadPage.quotationConditionFill(pinAndPlateInputData.quotationCondition);
+    } else if (pinType === 'pins') {
+      uploadPage.quotationConditionFill(pinsInputData.quotationCondition);
     }
   });
 
-  this.Then(/^User checks whether thumb nail of 3D appears for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.Then(/^User checks whether thumb nail of 3D appears for ((single|multiple) pin|plate|pin and plate|pins)$/, (pinType) => {
   	if (pinType === 'single pin') {
       uploadPage.checkThumbNail('single-pin/single-pin-thumbnail.png');
   	} else if (pinType === 'multiple pin') {
@@ -63,9 +70,12 @@ module.exports = function () {
   	} else if (pinType === 'pin and plate') {
   		uploadPage.checkThumbNail('pin-and-plate/pin-and-plate-thumbnail.png');
   	}
+    else if (pinType === 'pins') {
+      uploadPage.checkThumbNail('pins/pins-thumbnail.png');
+    }
   });
 
-  this.Then(/^User verifies project details for ((single|multiple) pin|plate|pin and plate)$/, (pinType) => {
+  this.Then(/^User verifies project details for ((single|multiple) pin|plate|pin and plate|pins)$/, (pinType) => {
     uploadPage.checkNameAndPrice(pinType);
   });
 

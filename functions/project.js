@@ -97,7 +97,8 @@ let  projectPage = {
   surfaceTensionArray: { get: function () { return browser.element('(//div[@class="customSelect"])[4]'); }},
   popUpChangesTitle: { get: function () { return browser.element('//p[@id="titleDialog"]'); }},
   okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
-
+  inputBackNumberingSelect: { get: function () { return browser.element('//a[contains(text(),"ツバ裏ナンバリング入力")]'); }},
+  
 
   /*
    * Open project by clicking on thumbnail
@@ -1011,6 +1012,18 @@ let  projectPage = {
           }
         browser.tinyWait();
       }  
+    }
+  },
+
+  /*
+   * User selects Input back numbering input
+   */
+  selectInputBackNumbering:{
+    value: function() {
+      this.listFunctionOpen.waitForEnabled();
+      this.listFunctionOpen.click();
+      this.inputBackNumberingSelect.waitForVisible();
+      this.inputBackNumberingSelect.click();
     }
   },
 };

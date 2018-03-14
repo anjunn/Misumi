@@ -2,8 +2,8 @@
   
   "loginCredentials": {
     "presentation": {
-      "username": "QB_QA-Auto01",
-      "password": "VRIFBTD9"
+      "username": "QB_QA-Auto03",
+      "password": "XB35C4A9"
     },
     "management": {
       "username": "Anju",
@@ -57,6 +57,7 @@
     "multiplePin": "./data/cad-drawings/multiple-pins.SLDPRT",
     "plate": "./data/cad-drawings/plate.SLDPRT",
     "pinPlate": "./data/cad-drawings/pin-and-plate.x_t",
+    "pins": "./data/cad-drawings/Numbering.ipt",
     "tproDrawing": "./data/2D-Data/TJP17AL8GZ02AA.pdf"
   },
 

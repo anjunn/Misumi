@@ -10,7 +10,7 @@ module.exports = function () {
       wosPage.clickNext();
   });
 
-  this.Given(/^User clicks the close button in the popup$/,{retry: 2}, () => {
+  this.Given(/^User clicks the close button in the popup$/, () => {
       wosPage.clickcloseButton();
   });
 
