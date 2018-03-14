@@ -62,7 +62,7 @@ let  uploadPage = {
   dateUpload: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateUpload"])[${n}]`)}},
   dateRenew: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateRenew"])[${n}]`)}},
   priceListed: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="price"])[${n}]`)}},
-
+  projectName: { value: function(n){ return browser.element(`(//div[@class="projectname"])[${n}]`)}},
   
   /**
    * Upload file by triggering drop event
@@ -743,28 +743,66 @@ let  uploadPage = {
       } else{
         console.log("sortInAscending");
       }
-      for(var i=1; i<= listLength; i++){
-        console.log("in for loop");
+      /*var dateTime =[];
+      for(var i=1; i<=listLength; i++){
+        console.log(i);
         this.dateUpload(i).waitForVisible();
-        var dateTime = this.dateUpload(i).getText();
-        browser.debug();
-        console.log("dateTime: ",dateTime);
-        // this.dateUpload(2).waitForVisible();
-        // var nextDate = this.dateUpload(2).getText();
-        // console.log("nextdate",nextDate);
-        // if (date != '' && date.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
-        if(dateTime.includes("/")){
-          console.log("in date format");
-          // expect(date).isBelow(nextDate);
-
-          // console.log("date is below next Date")
-        // } else if(this.dateUpload(1).getText().match(regexTime)) {
-        } else if(dateTime.includes(":")){
-          console.log("in time format");
-        } else {
-          console.log("in else");
+        dateTime[i-1] = this.dateUpload(i).getText();
+      }
+      console.log(dateTime);
+      for(var i=0; i<listLength; i++){
+        console.log("==================\n",dateTime[i+1]);
+        console.log(datetimee[i]);
+      if(Date (dateTime[i+1]) > Date (dateTime[i])){
+          console.log("date and i: ",Date (datetime[i]),i);
         }
       }
+      */
+      var name= [];
+      var thenum = [];
+      for(var i=1; i<=listLength; i++){
+        name[i-1] = this.projectName(i).getText();
+        // thenum[i] = name[i].replace( /^\D+/g, '');
+        thenum[i-1] = name[i-1].replace(/[^0-9]/g,'');
+      }
+      console.log("name",name);
+      console.log("thenum",thenum);
+      for (var i=0; i < listLength; i++){
+        if(thenum[i] != ''){
+          if (thenum[i+1] !='') {
+            if ( thenum[i] < thenum[i+1]){
+              console.log("Ascending");
+            } else {
+              console.log("Wrong");
+            }
+            console.log("1notchecked", thenum[i+1]);
+            continue;
+          } else {
+              continue;
+          }
+        } else {
+          continue;
+        }
+      }
+      // {
+      //   // browser.debug();
+      //   console.log("dateTime: ",dateTime);
+      //   // this.dateUpload(2).waitForVisible();
+      //   // var nextDate = this.dateUpload(2).getText();
+      //   // console.log("nextdate",nextDate);
+      //   // if (date != '' && date.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+      //   if(dateTime.includes("/")){
+      //     console.log("in date format");
+      //     // expect(date).isBelow(nextDate);
+
+      //     // console.log("date is below next Date")
+      //   // } else if(this.dateUpload(1).getText().match(regexTime)) {
+      //   } else if(dateTime.includes(":")){
+      //     console.log("in time format");
+      //   } else {
+      //     console.log("in else");
+      //   }
+      // }
     }
   }   
 };
