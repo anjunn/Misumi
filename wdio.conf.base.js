@@ -48,6 +48,9 @@ exports.config = {
     scenario13: [
       './feature/MZ_013-orderingFromWOS.feature'
     ],
+    scenario14: [
+      './feature/MZ_014-numberingWizard.feature'
+    ],
     smokeTest: [
       './feature/MZ_015-smokeTest.feature'
     ],
@@ -130,7 +133,7 @@ exports.config = {
   coloredLogs: true,
   //
   // Default timeout for all waitFor* commands.
-  waitforTimeout: 960000,
+  waitforTimeout: 60000,
   //
   // Default timeout in milliseconds for request if Selenium Grid doesn't send response
   connectionRetryTimeout: 60000,
@@ -197,7 +200,7 @@ exports.config = {
     failFast: true,
     dryRun: false,
     colors: true,
-    timeout: 960000
+    timeout: 1200000
   },
   // params for storing global variables
   params: {

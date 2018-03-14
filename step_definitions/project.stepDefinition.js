@@ -160,10 +160,21 @@ module.exports = function () {
   this.Given(/^User checks if the surface tension listed matches with the material selected$/, {retry: 2},() => {
      projectPage.excelParsingInPartsViewPageSelectMaterial(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
+
   this.Then(/^User checks if the material listed matches with the surface tension selected$/, {retry: 2},() => {
-     projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
+    projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
-    this.Then(/^User clicks on the thumbnail after uploading$/, () => {
-     projectPage.ClickThumbnail();
+
+  this.Then(/^User clicks on the thumbnail after uploading$/, () => {
+    projectPage.ClickThumbnail();
   });
+
+  this.Then(/^User selects Input back numbering input$/,() => {
+    projectPage.selectInputBackNumbering();
+});
+
+  this.Then(/^User fills the data for Input back numbering$/, () => {
+   projectPage.giveInputBackNumbering();
+});
+
 };
