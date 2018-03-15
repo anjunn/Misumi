@@ -20,7 +20,7 @@ let wosPage = {
   buttonNextSelector: { get: function() { return `#btnNextAreaDiv > div > a:nth-child(1)` } },
   buttonNext:{ get: function () { return browser.element('(//a[@class="btnNext"])[1]');}},
   nextButtonSelector: { get: function() { return `#dictBulk` } },
-  closeButton: { get: function () { return browser.element('//a[@class="btnClose"]');}},
+  closeButton: { get: function () { return browser.element('//a[contains(@class,"btnClose")]');}},
   nextButtonShippingDate: { get: function () { return browser.element('//a[@class="btnNext"]');}},
   shippingError: { get: function () { return browser.element('//div[@class="marginL10 marginT15"]//span');}},
   selectDateDropDown: { get: function () { return browser.element('//select[@name="arrivalDateList_0.inputArrivalDateString"]');}},
@@ -53,9 +53,12 @@ let wosPage = {
    */
   clickNext: {
     value: function() {
+      browser.mediumWait();
+      if(this.error.isVisible())
+          this.checkError();
       browser.scrollToElement(this.buttonNextSelector);
       this.buttonNext.waitForVisible();
-      this.buttonNext.click();
+      this.buttonNext.click(); 
     }
   },
 
@@ -77,11 +80,17 @@ let wosPage = {
    */
   verifyDetails: {
     value: function() {
-     browser.tinyWait();
-     this.modelNumberInShippingdatePage.waitForVisible(); 
-     expect(browser.params.modelNumberOrderPage).to.be.equal(this.modelNumberInShippingdatePage.getText());
-     expect(this.priceInShippingDatePage.getText()).to.include(browser.params.priceOrderPage);
-     expect(browser.params.quantiyOrderpage).to.be.equal(this.quantityInShippingDatePage.getText());
+     browser.mediumWait();
+     if(this.modelNumberInShippingdatePage.isVisible()){
+       this.modelNumberInShippingdatePage.waitForVisible(); 
+       expect(browser.params.modelNumberOrderPage).to.be.equal(this.modelNumberInShippingdatePage.getText());
+       expect(this.priceInShippingDatePage.getText()).to.include(browser.params.priceOrderPage);
+       expect(browser.params.quantiyOrderpage).to.be.equal(this.quantityInShippingDatePage.getText());
+      } else {
+        this.closeButton.waitForVisible();
+        this.closeButton.click();
+        this.verifyDetails();
+      }
     }
   },
   /*

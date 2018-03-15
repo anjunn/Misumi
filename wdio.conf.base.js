@@ -48,8 +48,8 @@ exports.config = {
     scenario13: [
       './feature/MZ_013-orderingFromWOS.feature'
     ],
-    scenario14: [
-      './feature/MZ_014-numberingWizard.feature'
+    scenario16: [
+      './feature/MZ_016-numberingWizard.feature'
     ],
     smokeTest: [
       './feature/MZ_015-smokeTest.feature'
