@@ -54,7 +54,6 @@ let wosPage = {
    */
   clickNext: {
     value: function() {
-      browser.debug();
       browser.mediumWait();
       if(this.error.isVisible() && firstCount==0)
           this.checkError();
