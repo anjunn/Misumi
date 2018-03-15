@@ -9,6 +9,9 @@
 
   "quotionConditionInPartsView": {
     "quantity": 2
-  }
+  },
+
+  "numberOfItems" : 2,
+  "partText" : "NHC-"
 
 }

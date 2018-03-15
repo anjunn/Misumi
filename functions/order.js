@@ -175,6 +175,9 @@ let  orderPage = {
       count=count+1;
           
       }
+      if(flag==0){
+        console.log("Product not visible even after 20 minutes.")
+      }
       expect(flag).to.be.equal(1);
     }
   },
