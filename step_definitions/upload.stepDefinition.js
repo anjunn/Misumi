@@ -100,7 +100,7 @@ module.exports = function () {
     uploadPage.pageRefresh();
   });
 
-  this.Then(/^Check project list style by changing to list view and then grid view$/, () => {
+  this.When(/^Check project list style by changing to list view and then grid view$/, () => {
     uploadPage.checkProjectListStyle();
   });
 
