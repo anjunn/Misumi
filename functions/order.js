@@ -1,4 +1,5 @@
 let Page = require('./page');
+let data = require('../data/input-data/dataset.json');
 let order;
 /**
  * order Page Object
@@ -33,6 +34,10 @@ let  orderPage = {
   priceInsideOrderPage: { get: function () { return browser.element('(//td[@class="elementRight"])[3]//span'); }},
   purchaseOrderNumber: { get: function () { return browser.element('(//div[@class="titleText"]//span)[2]'); }},
   totalAmount: { get: function () { return browser.element('(//span[@class="textBold"])[3]'); }},
+  projectName: { get: function () { return browser.element('(//h2[@class="historyTitle"]//a)[1]'); }},
+  projectNameDetailsPage: { get: function () { return browser.element('//h2[@class="historyTitle"]'); }},
+  purchaseOrderNumberDetailsPage: { get: function () { return browser.element('(//div[@class="col mainCol"]//span)[2]'); }},
+  amountDetailsPage: { get: function () { return browser.element('(//div[@class="col mainCol"]//span)[3]'); }},
 
   /*
    * User goes to the order page
@@ -152,17 +157,26 @@ let  orderPage = {
   verifyOrder: {
     value: function() {
       var flag=0, count=0;
-       console.log("   Actual   "+" ******** "+"   Expected   ");
       while(count<=20){
-        this.purchaseOrderNumber.waitForVisible();
-        console.log(this.purchaseOrderNumber.getText()+" ******** "+browser.params.purchaseOrderNumber);
-        if(this.purchaseOrderNumber.getText()===browser.params.purchaseOrderNumber){
-          flag=1;
-          break;
-        }
-        browser.WaitForOneminute();
-        browser.refresh();
-        count=count+1;
+        browser.smallWait();
+        if(this.purchaseOrderNumber.isVisible()){
+          if(this.purchaseOrderNumber.getText()===browser.params.purchaseOrderNumber){
+            this.projectName.waitForVisible();
+            console.log("   Actual   "+" ******** "+"   Expected   ");
+            console.log(this.purchaseOrderNumber.getText()+" ******** "+browser.params.purchaseOrderNumber);
+           if(this.projectName.getText()===browser.params.fileName) {  
+              flag=1;
+              break;
+            }
+          }
+        }  
+      browser.WaitForOneminute();
+      browser.refresh();
+      count=count+1;
+          
+      }
+      if(flag==0){
+        console.log("Product not visible even after 20 minutes.")
       }
       expect(flag).to.be.equal(1);
     }
@@ -177,6 +191,21 @@ let  orderPage = {
     this.totalAmount.waitForVisible();
     var amount=this.totalAmount.getText();
     expect(amount).to.be.equal(browser.params.priceOrderPage);
+    }
+  },
+
+  /*
+   * User verifies the project details
+   */
+
+  verifyDetailsOfProduct: {
+    value: function() {
+     this.projectName.waitForVisible();
+     this.projectName.click();
+     this.projectNameDetailsPage.waitForVisible();
+     expect(browser.params.fileName).to.be.equal(this.projectNameDetailsPage.getText());
+     expect(browser.params.priceOrderPage).to.be.equal(this.amountDetailsPage.getText());
+     expect(browser.params.purchaseOrderNumber).to.be.equal(this.purchaseOrderNumberDetailsPage.getText());
     }
   },
 };

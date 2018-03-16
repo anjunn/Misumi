@@ -97,8 +97,13 @@ let  projectPage = {
   surfaceTensionArray: { get: function () { return browser.element('(//div[@class="customSelect"])[4]'); }},
   popUpChangesTitle: { get: function () { return browser.element('//p[@id="titleDialog"]'); }},
   okButton: { get: function () { return browser.element('//li[@id="okBtn"]//a'); }},
-
-
+  inputBackNumberingSelect: { get: function () { return browser.element('//a[contains(text(),"ツバ裏ナンバリング入力")]'); }},
+  inputsAlphabet: { value: function (n) { return browser.element(`(//td[@class="numTubaura"]//input)[${n}]`); }},
+  backNumberingConfirmButton: { get: function () { return browser.element('(//li[@class="btn"])[5]'); }},
+  checkBoxselector: { get: function() { return `#condNhc` } },
+  inputNHC: { get: function () { return browser.element('//input[@class="inputNHC"]'); }},
+  classCheckInput: { get: function () { return browser.element('(//table[@class="tblForm col1"]//tr)[5]'); }},
+  backButtonSelector:{ get: function() { return `#wrapper > div.WindowMain > span > p > a`} },
   /*
    * Open project by clicking on thumbnail
    */
@@ -260,7 +265,10 @@ let  projectPage = {
         } else if (pinType === 'pin and plate') {
           browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
         } else {
-          browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+         this.backButton.waitForEnabled();
+         this.backButton.click();
+         browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+
         }
       }
     }
@@ -1011,6 +1019,96 @@ let  projectPage = {
           }
         browser.tinyWait();
       }  
+    }
+  },
+
+  /*
+   * User selects Input back numbering input
+   */
+  selectInputBackNumbering:{
+    value: function() {
+      this.listFunctionOpen.waitForEnabled();
+      this.listFunctionOpen.click();
+      this.inputBackNumberingSelect.waitForVisible();
+      this.inputBackNumberingSelect.click();
+    }
+  },
+
+   /*
+   * Function to join days and months
+   */
+  joinElements: {
+   value: function(element1,element2) {
+   var s = Array.prototype.join.call(arguments,'');
+   return s;
+   }
+  },
+
+  /*
+   * User gives the Input data to different parts
+   */
+  giveInputBackNumbering:{
+    value: function(count) {
+      var alphabet=65;
+      for(var i=1;i<=count;i++){
+        this.inputsAlphabet(i).waitForEnabled();
+        this.inputsAlphabet(i).setValue(String.fromCharCode(alphabet));
+        alphabet=alphabet+1;   
+      }
+      this.backNumberingConfirmButton.waitForEnabled();
+      this.backNumberingConfirmButton.click();
+    }
+  },
+
+  /*
+   * verify if model number contains the text from the part selected
+   */
+  verifyModelNumber:{
+    value: function(partText,count) {
+      var alphabet=65;
+      for(var i=1;i<=count;i++){
+        this.modelNumber(i).waitForVisible();
+        var finalString=this.joinElements(partText,String.fromCharCode(alphabet));
+        expect(this.modelNumber(i).getText()).to.include(finalString);
+        alphabet=alphabet+1;
+       } 
+    }
+  },
+
+  /*
+   * User
+   */
+  openPartsViewAndVerify:{
+    value: function(count) {
+      var alphabet=65, flagText = 0, flagCheckbox = 0;
+      for(var i=1;i<=count;i++){
+        this.partNumberGroup(i).waitForEnabled();
+        this.partNumberGroup(i).click();
+        browser.mediumWait();
+        browser.scrollToElement(this.checkBoxselector);
+        this.inputNHC.waitForVisible();
+        if(this.inputNHC.getValue()===String.fromCharCode(alphabet)){
+          flagText=1;
+        }
+        if(flagText==0) {
+          console.log("Text mismatch! - Please check the textBox of 'Set the back numbering process'");
+        }
+        expect(flagText).to.equal(1);
+        expect(this.inputNHC.getValue()).to.be.equal(String.fromCharCode(alphabet));
+        alphabet=alphabet+1;
+        this.classCheckInput.waitForEnabled();
+        var classCheck=this.classCheckInput.getAttribute('class');
+        if(classCheck==='')
+        {
+          flagCheckbox=1;
+        }
+        if(flagCheckbox==0) {
+          console.log("CheckBox of 'Set the back numbering process' not checked!")
+        }
+        expect(classCheck).to.be.equal("");
+        browser.scrollToElement(this.backButtonSelector);
+        this.backButton.click();
+       } 
     }
   },
 };

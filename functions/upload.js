@@ -5,7 +5,6 @@ let fs = require('fs');
 var path = require('path');
 var xlsx = require('node-xlsx');
 const resultPath = './Data/output/uploadExcelComparison.txt';
-      
 
 /**
  * upload Page Object
@@ -51,19 +50,21 @@ let  uploadPage = {
   sortButton: { get: function() { return browser.element('//main[@id="main"]//ul[@class="projectSort"]'); }},
   sortButtonSelector: { get: function() { return `  #main > div > ul.projectSort > li > span` } },
   sortItems: { value: function(n) { return browser.element(`(//ul[@class="menuSecond"]//li)[${n}]`); }},
-  // sortItemsName: { get: function() { return browser.element('(//ul[@class="menuSecond"]//li)'); }},
   sortItemsName: { get: function() { return browser.element('(//ul[@class="menuSecond"]'); }},
-  // sortByCreationDate: { get: function() { return browser.element('//main[@id="main"]//ul[@class="projectSort"]//ul//li'); }},
   sortByCreationDate: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"作成日順")]'); }},
   sortByChangedDate: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"変更日順")]'); }},
   sortByPrice: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"見積金額順")]'); }},
+  sortInAscendingState: { get: function() { return browser.element('//main[@id="main"]//li[@class="border disable"]'); }},
+  sortInDescendingState: { get: function() { return browser.element('//main[@id="main"]//li[@class="border"]'); }},
   sortInAscending: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"昇順")]'); }},
   sortInDescending: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"降順")]'); }},
   dateUpload: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateUpload"])[${n}]`)}},
   dateRenew: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateRenew"])[${n}]`)}},
   priceListed: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="price"])[${n}]`)}},
   projectName: { value: function(n){ return browser.element(`(//div[@class="projectname"])[${n}]`)}},
-  
+  thumbnailAll: { get: function() { return browser.element('//a[@class="figureBox"]//figure'); }},
+  thumbnailEach: { value: function(n) { return browser.element(`//a[@class="figureBox"]//figure)[${n}]`); }},
+    
   /**
    * Upload file by triggering drop event
    */
@@ -669,6 +670,8 @@ let  uploadPage = {
    */
   checkProjectListStyle:{
     value: function(){
+      console.log("Checking Project Listing Style");
+      console.log("==============================");
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       browser.mediumWait();
@@ -679,6 +682,7 @@ let  uploadPage = {
       browser.mediumWait();
       expect(this.gridView.isVisible());
       console.log("Grid view enabled");
+      console.log("__________________________________________________________________");
     }
   }, 
   /*
@@ -686,6 +690,8 @@ let  uploadPage = {
    */
   checkProjectCount:{
     value: function(){
+      console.log("Checking Project Count in a single page");
+      console.log("=======================================");
       this.projectCountButton.waitForEnabled();
       this.projectCountButton.click();
       var list = this.projectCountButton.getText().split('\n');
@@ -696,115 +702,184 @@ let  uploadPage = {
         browser.mediumWait();
         var countSelected = parseInt(this.projectCount(i).getValue());
         console.log("Selected count: ", countSelected);
-        var length = this.dataBox.value.length; 
-        console.log("Items displayed in a single page: ",length);
-        expect(length).to.be.equal(countSelected);
-        console.log("count matched");
+        var totalCount = this.dataBox.value.length; 
+        console.log("Items displayed in a single page: ",totalCount);
+        if(totalCount === countSelected){
+          console.log("count matched");
+        } else if(totalCount < countSelected){
+          console.log("count is lesser than selected");
+        } else {
+          console.log("count is greater than selected");
+        }        
         browser.refresh();
       }
+      console.log("__________________________________________________________________");
     }
   },
   /*
-   * Checks sort order listing  
+   * Checks sort orders of date in the list view  
    */
-  checkSortOrder:{
+  checkDateTimeOrder:{
     value: function(){
-      var regexDate = /^\d{4}\/\d{1,2}\/\d{1,2}$/;
-      var regexTime = /^\d{1,2}:\d{1,2}:\d{1,2}$/;
-      this.sortButton.waitForEnabled();
-      console.log(regexDate);
-      console.log(regexTime);
+      console.log("Checking DateTime Order");
+      console.log("=======================");
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       expect(this.listView.isVisible());
-      console.log("List view enabled");
-        // console.log(date.getTime);
       browser.mediumWait();
-      // ---------------------if (browser.desiredCapabilities.browserName === 'chrome') {
-        this.sortButton.click();
-        console.log("sortButton clicked");
-      // } else {
-      //   browser.scrollToElement(this.sortButtonSelector);
-      // }
-      browser.mediumWait();
-      if(!this.sortByCreationDate.isEnabled()){ //Sort by creation date
-        this.sortByCreationDate.click();
-        console.log("sortByCreationDate clicked");
-      } else{
-        console.log("sortByCreationDate");
+      var totalProjects = this.dataBox.value.length;
+      console.log("Total Projects: ",totalProjects);
+      this.sortButton.waitForEnabled();
+      this.sortButton.click();
+      browser.extraLongWait();
+      if(!this.sortInAscendingState.isVisible()){ 
+        this.sortInAscending.click();   
       }
-      this.projectCountButton.click();
-      var list = this.projectCountButton.getText().split('\n');
-      var listLength = list.length;
-      console.log("listLength: ",listLength);
-      if(!this.sortInAscending.isEnabled()){
-        this.sortInAscending.click();   //Ascending order
-        console.log("sortInAscending clicked");
-      } else{
-        console.log("sortInAscending");
-      }
-      /*var dateTime =[];
-      for(var i=1; i<=listLength; i++){
-        console.log(i);
-        this.dateUpload(i).waitForVisible();
-        dateTime[i-1] = this.dateUpload(i).getText();
-      }
-      console.log(dateTime);
-      for(var i=0; i<listLength; i++){
-        console.log("==================\n",dateTime[i+1]);
-        console.log(datetimee[i]);
-      if(Date (dateTime[i+1]) > Date (dateTime[i])){
-          console.log("date and i: ",Date (datetime[i]),i);
-        }
-      }
-      */
+      console.log("Ascending Order Checking");
+      console.log("------------------------");      
       var name= [];
-      var thenum = [];
-      for(var i=1; i<=listLength; i++){
+      var dateTimeUniqueId = [];
+      for(var i=1; i<=totalProjects; i++){
+        this.projectName(i).waitForVisible();
         name[i-1] = this.projectName(i).getText();
-        // thenum[i] = name[i].replace( /^\D+/g, '');
-        thenum[i-1] = name[i-1].replace(/[^0-9]/g,'');
+        dateTimeUniqueId[i-1] = name[i-1].replace(/[^0-9]/g,'');
       }
-      console.log("name",name);
-      console.log("thenum",thenum);
-      for (var i=0; i < listLength; i++){
-        if(thenum[i] != ''){
-          if (thenum[i+1] !='') {
-            if ( thenum[i] < thenum[i+1]){
-              console.log("Ascending");
+      for (var i=0; i < totalProjects; i++){
+        if(dateTimeUniqueId[i] != ''){
+          console.log("i",i,"dateTimeUniqueId[i]: ",dateTimeUniqueId[i]);
+          for (var j = i+1; j < totalProjects; j++){
+            if (dateTimeUniqueId[j] !='') {
+              console.log("j",j,"dateTimeUniqueId[j]: ",dateTimeUniqueId[j]);
+              if ( dateTimeUniqueId[i] < dateTimeUniqueId[j]){
+                console.log("Ascending");
+                break;
+              } else {
+                console.log("Ascending Wrong!!!", dateTimeUniqueId[i] ,dateTimeUniqueId[j]);
+              }
             } else {
-              console.log("Wrong");
-            }
-            console.log("1notchecked", thenum[i+1]);
-            continue;
-          } else {
               continue;
+            }
           }
         } else {
           continue;
         }
       }
-      // {
-      //   // browser.debug();
-      //   console.log("dateTime: ",dateTime);
-      //   // this.dateUpload(2).waitForVisible();
-      //   // var nextDate = this.dateUpload(2).getText();
-      //   // console.log("nextdate",nextDate);
-      //   // if (date != '' && date.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
-      //   if(dateTime.includes("/")){
-      //     console.log("in date format");
-      //     // expect(date).isBelow(nextDate);
-
-      //     // console.log("date is below next Date")
-      //   // } else if(this.dateUpload(1).getText().match(regexTime)) {
-      //   } else if(dateTime.includes(":")){
-      //     console.log("in time format");
-      //   } else {
-      //     console.log("in else");
-      //   }
-      // }
+      this.sortButton.click();
+      browser.mediumWait();
+      if(!this.sortInDescendingState.isVisible()){ 
+        this.sortInDescending.click();   
+        console.log("SortInDescending clicked");
+        browser.mediumWait();
+      }
+      console.log("Descending Order Checking");
+      console.log("-------------------------");      
+      var name= [];
+      var dateTimeUniqueId = [];
+      for(var i=1; i<=totalProjects; i++){
+        this.projectName(i).waitForVisible();
+        name[i-1] = this.projectName(i).getText();
+        dateTimeUniqueId[i-1] = name[i-1].replace(/[^0-9]/g,'');
+      }
+      for (var i=0; i < totalProjects; i++){
+        if(dateTimeUniqueId[i] != ''){
+          console.log("i",i,"dateTimeUniqueId[i]: ",dateTimeUniqueId[i]);
+          for (var j = i+1; j < totalProjects; j++){
+            if (dateTimeUniqueId[j] !='') {
+              console.log("j",j,"dateTimeUniqueId[j]: ",dateTimeUniqueId[j]);
+              if ( dateTimeUniqueId[i] > dateTimeUniqueId[j]){
+                console.log("Descending");
+                break;
+              } else {
+                console.log("Descending Wrong");
+              }
+            } else {
+              continue;
+            }
+          }
+        } else {
+          continue;
+        }
+      }
+      console.log("__________________________________________________________________");
     }
-  }   
+  },
+  /*
+   * Checks sort order of price in the list view  
+   */
+  checkPriceOrder:{
+    value: function(){
+      console.log("Checking Price Order");
+      console.log("====================");
+      browser.refresh();
+      if(!this.listView.isVisible()){
+        this.listViewButton.waitForEnabled();
+        this.listViewButton.click();
+        expect(this.listView.isVisible());
+        browser.mediumWait();
+      }
+      var totalProjects = this.dataBox.value.length;
+      this.sortButton.waitForEnabled();
+      this.sortButton.click();
+      browser.mediumWait();
+      if(this.sortByPrice.isEnabled()){
+        this.sortByPrice.click();
+      } 
+      if(!this.sortInAscendingState.isVisible()){ 
+        this.sortInAscending.click();   
+        browser.extraLongWait();
+      }
+      console.log("Ascending Order Checking");
+      console.log("------------------------");
+      var price= [];
+      var priceValue = [];
+      var ascendingArray= [];
+      var descendingArray = [];
+      for(var i=1; i<=totalProjects; i++){
+        this.priceListed(1).waitForVisible();
+        if (this.priceListed(i).isVisible()){
+          price[i-1] = this.priceListed(i).getText();
+          priceValue[i-1] = price[i-1].replace(/[^0-9]/g,'');
+        } else {
+          continue;
+        }
+      }
+      ascendingArray = priceValue.sort(function(a, b){return a - b}); //ascending order sorting
+      for (var i=0; i < priceValue.length ; i++){
+        if(priceValue[i] === ascendingArray[i]){
+          console.log("matches","i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          continue;
+        } else{
+          console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+        }
+      }
+      this.sortButton.click();
+      browser.mediumWait();
+      if(!this.sortInDescendingState.isVisible()){ 
+        this.sortInDescending.click();   
+      }
+      console.log("Descending Order Checking");
+      console.log("-------------------------");
+      this.priceListed(1).waitForVisible();
+      for(var i=1; i<=totalProjects; i++){
+        if (this.priceListed(i).isVisible()){
+          price[i-1] = this.priceListed(i).getText();
+          priceValue[i-1] = price[i-1].replace(/[^0-9]/g,'');
+        } else {
+          continue;
+        }
+      }
+      descendingArray = priceValue.sort(function(a, b){return b - a}); //descending order sorting
+      for (var i=0; i < priceValue.length ; i++){
+        if(priceValue[i] === descendingArray[i]){
+          console.log("matches","i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          continue;
+        } else{
+          console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+        }
+      }
+      console.log("__________________________________________________________________");
+    }
+  }
 };
 
 module.exports = Object.create(Page, uploadPage);

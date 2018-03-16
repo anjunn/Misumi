@@ -16,9 +16,11 @@ let wosPage = {
   priceInShippingDatePage: { get: function () { return browser.element('(//td[@class="right"])[2]//span');}},
   quantityInShippingDatePage: { get: function () { return browser.element('(//td[@class="right"])[1]');}},
   orderQuanity: { get: function () { return browser.element('//input[@id="detailList_0.quantity"]');}},
-  nextButton:{ get: function () { return browser.element('//a[@id="dictBulk"]');}},
+  buttonNext:{ get: function () { return browser.element('//a[@id="dictBulk"]');}},
+  buttonNextSelector: { get: function() { return `#btnNextAreaDiv > div > a:nth-child(1)` } },
+  buttonNext:{ get: function () { return browser.element('(//a[@class="btnNext"])[1]');}},
   nextButtonSelector: { get: function() { return `#dictBulk` } },
-  closeButton: { get: function () { return browser.element('//a[@class="btnClose"]');}},
+  closeButton: { get: function () { return browser.element('//a[contains(@class,"btnClose")]');}},
   nextButtonShippingDate: { get: function () { return browser.element('//a[@class="btnNext"]');}},
   shippingError: { get: function () { return browser.element('//div[@class="marginL10 marginT15"]//span');}},
   selectDateDropDown: { get: function () { return browser.element('//select[@name="arrivalDateList_0.inputArrivalDateString"]');}},
@@ -31,14 +33,14 @@ let wosPage = {
   nextInOrderConfirmation: { get: function () { return browser.element('//img[@id="ctl00_ContentPlaceHolder1_btnsubEnter"]');}},
   purchaseOrder: { get: function () { return browser.element('//a[@id="soNumberCommand"]//span');}},
   departmentId: { get: function () { return browser.element('//input[@id="shipToDepartment"]');}},
-  error: { get: function () { return browser.element('//li[@class="iconError"/span]');}},
-  
+  error: { get: function () { return browser.element('(//li[@class="iconWarning"]//span)[1]'); }},
+  currentShippingDate: { get: function () { return browser.element('//input[@id="detailList_0.inputSpecifiedShipDate"]'); }},
   /**
    * User verifies model number and quantity
    */
   checkQuantityAndModel: {
     value: function(department) {
-      this.departmentId.waitForEnabled();
+      browser.smallWait();
       this.departmentId.setValue("ＱＢＵＲＳＴ");
       this.modelNumber.waitForVisible();
       expect(this.modelNumber.getValue()).to.be.equal(browser.params.modelNumberOrderPage);
@@ -51,11 +53,12 @@ let wosPage = {
    */
   clickNext: {
     value: function() {
-      browser.scrollToElement(this.nextButtonSelector);
-      this.nextButton.waitForVisible();
-      this.nextButton.click();
-      
-     
+      browser.mediumWait();
+      if(this.error.isVisible())
+          this.checkError();
+      browser.scrollToElement(this.buttonNextSelector);
+      this.buttonNext.waitForVisible();
+      this.buttonNext.click(); 
     }
   },
 
@@ -64,8 +67,11 @@ let wosPage = {
    */
   clickcloseButton: {
     value: function() {
-      this.closeButton.waitForVisible();
-      this.closeButton.click();
+      browser.mediumWait();
+      if(this.closeButton.isVisible()){
+        this.closeButton.click();
+        this.checkError();  
+      }
     }
   },
 
@@ -74,11 +80,110 @@ let wosPage = {
    */
   verifyDetails: {
     value: function() {
-     browser.tinyWait();
-     this.modelNumberInShippingdatePage.waitForVisible(); 
-     expect(browser.params.modelNumberOrderPage).to.be.equal(this.modelNumberInShippingdatePage.getText());
-     expect(this.priceInShippingDatePage.getText()).to.include(browser.params.priceOrderPage);
-     expect(browser.params.quantiyOrderpage).to.be.equal(this.quantityInShippingDatePage.getText());
+     browser.mediumWait();
+     if(this.modelNumberInShippingdatePage.isVisible()){
+       this.modelNumberInShippingdatePage.waitForVisible(); 
+       expect(browser.params.modelNumberOrderPage).to.be.equal(this.modelNumberInShippingdatePage.getText());
+       expect(this.priceInShippingDatePage.getText()).to.include(browser.params.priceOrderPage);
+       expect(browser.params.quantiyOrderpage).to.be.equal(this.quantityInShippingDatePage.getText());
+      } else {
+        this.closeButton.waitForVisible();
+        this.closeButton.click();
+        this.verifyDetails();
+      }
+    }
+  },
+  /*
+   * Function to join days and months
+   */
+  joinElements: {
+   value: function(element1,element2) {
+   var s = Array.prototype.join.call(arguments,'');
+   return s;
+   }
+  },
+   /*
+   * Function to join days and months
+   */
+  joinElementsYear: {
+   value: function(element1,element2,element3,element4) {
+   var s = Array.prototype.join.call(arguments,'');
+   return s;
+   }
+  },
+  /*
+   * Function to form date
+   */
+  formdate: {
+   value: function(years,months,days) {
+   var s = Array.prototype.join.call(arguments,'/');
+   return s;
+   }
+  },
+  /*
+   * User check if any error
+   */
+  checkError: {
+    value: function() {
+      browser.smallWait();
+      var errorFlag=0;
+      if(this.error.isVisible())
+      {
+        while(this.error.isVisible() && errorFlag===0){
+          if(this.error.getText().includes(data.shipingDateError)||this.error.getText().includes(data.anotherShipingDateError)){
+            var date=this.currentShippingDate.getValue();
+            date.split();
+            var day=this.joinElements(date[8],date[9]);
+            var month=this.joinElements(date[5],date[6]);
+            var year=this.joinElementsYear(date[0],date[1],date[2],date[3])
+              if(month=="01"||month=="03"||month=="05"||month=="07"||month=="08"||month=="10"||month=="12"){
+                if(day==31)
+                {
+                  if(month==12)  {
+                    month="01";
+                    day="01";
+                    year=parseInt(year)+1;
+                  }
+                  else {
+                    month=parseInt(month)+1;
+                    day="01";
+                  } 
+                }
+                else {
+                  day=parseInt(day)+1;
+                }
+              }
+              else if(month=="04"||month=="06"||month=="09"||month=="11"){
+                if(day==30) {
+                  month=parseInt(month)+1;
+                  day="01";
+                }
+                else {
+                  day=parseInt(day)+1;
+                }
+              }
+              else if(month=="02") {
+              if(day=="28"||day=="29")
+              {
+                day="01";
+                month=parseInt(month)+1;
+              }
+              else {
+                day=parseInt(day)+1;
+              }
+              }
+              var dateFinal=this.formdate(year,month,day);
+              this.currentShippingDate.setValue(dateFinal);
+              this.currentShippingDate.click();
+              this.clickNext();
+          }
+          else {
+            errorFlag=1;
+            console.log("ERROR : " + this.error.getText());
+          }
+        }  
+      }
+     expect(errorFlag).to.be.equal(0); 
     }
   },
 

@@ -10,6 +10,10 @@ Then User is redirected to Login Page
 And User validates username field
 And User validates Password field
 And User enters credentials and logs in
-# Then Check project list style by changing to list view and then grid view
-# Then Check project counts displayed in the upload screen
-Then Check sort order
+
+Scenario: User checks project listing style and sort order
+
+Then Check project list style by changing to list view and then grid view
+Then Check project counts displayed in the upload screen
+Then Check sort order of Date in ascending and then in descending
+Then Check sort order of Price in ascending and then in descending

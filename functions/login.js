@@ -23,8 +23,9 @@ let loginPage = {
   memberMenuButton:{ get: function () { return browser.element('//*[@id="nav"]//ul//li[2]//a//span');}},
   logoutButton:{ get: function () { return browser.element('//*[@id="logoutButton"]');}},
   homePageHeader:{ get: function () { return browser.element('//section[@id="moldMv"]//*[@class="inner"]//h1');}},
-  rightDropDown:{ get: function () { return browser.element('//li[@class="drop menber_menu right"]');}},
-  orderHistory:{ get: function () { return browser.element('(//ul[@class="menuSecond"]//li//a)[2]');}},
+  rightDropDown:{ get: function () { return browser.element('//li[contains(@class,"drop menber_menu right")]');}},
+  orderHistory:{ get: function () { return browser.element('//a[contains(text(),"注文履歴")]');}},
+  prjectName:{ get: function () { return browser.element('(//div[@class="projectname"]//a)[1]');}},
 
   /*
    * Goes to Home Page
@@ -124,7 +125,12 @@ let loginPage = {
       if (this.errorMessage.isVisible()) {
         this.loginButton.waitForEnabled();
         this.loginButton.click();
+        browser.extraLongWait();
       }
+      let env = process.env.npm_config_env || 'tst';
+      const urlData = browser.filterByUsage(env)[0];
+      url = urlData;
+      expect(browser.getUrl()).to.equal(url.myPageUrl);
     }
   },
 
@@ -162,6 +168,9 @@ let loginPage = {
    */
   goToOrderHistory: {
     value: function(){
+    
+     this.prjectName.waitForVisible();
+     browser.params.fileName=this.prjectName.getText();
      this.rightDropDown.waitForEnabled();
      this.rightDropDown.click();
      this.orderHistory.waitForEnabled();

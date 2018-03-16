@@ -8,7 +8,7 @@ let multiplePinInputData = require('../data/input-data/multiple-pin.json');
 let plateInputData = require('../data/input-data/plate.json');
 let pinAndPlateInputData = require('../data/input-data/pin-and-plate.json');
 let data = require('../data/input-data/dataset.json');
-
+let pinsInputData = require('../data/input-data/pins.json');
 module.exports = function () {
 
   this.Given(/^User opens the uploaded project$/,  {retry: 2},() => {
@@ -160,10 +160,29 @@ module.exports = function () {
   this.Given(/^User checks if the surface tension listed matches with the material selected$/, {retry: 2},() => {
      projectPage.excelParsingInPartsViewPageSelectMaterial(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
+
   this.Then(/^User checks if the material listed matches with the surface tension selected$/, {retry: 2},() => {
-     projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
+    projectPage.excelParsingInPartsViewPageSelectSurfarceTension(data.combinationTableData.combinationTable,data.conversionTableData.conversionTable);
   });
-    this.Then(/^User clicks on the thumbnail after uploading$/, () => {
-     projectPage.ClickThumbnail();
+
+  this.Then(/^User clicks on the thumbnail after uploading$/, () => {
+    projectPage.ClickThumbnail();
   });
+
+  this.Then(/^User selects Input back numbering input$/,() => {
+    projectPage.selectInputBackNumbering();
+  });
+
+  this.Then(/^User fills the data for Input back numbering and confirms$/, () => {
+   projectPage.giveInputBackNumbering(pinsInputData.numberOfItems);
+  });
+
+  this.When(/^User verifies if the model number contains NHC-data in it$/,() => {
+    projectPage.verifyModelNumber(pinsInputData.partText,pinsInputData.numberOfItems);
+  });
+
+   this.When(/^User opens parts view of each item and view details like checkbox and textbox$/,() => {
+    projectPage.openPartsViewAndVerify(pinsInputData.numberOfItems);
+  });
+
 };

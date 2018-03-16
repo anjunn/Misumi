@@ -1,0 +1,17 @@
+{
+
+  "quotationCondition": {
+    "quantity": "2",
+    "material": 1,
+    "surfaceTreatment": "なし",
+    "toleranceGrade": "並級"
+  },
+
+  "quotionConditionInPartsView": {
+    "quantity": 2
+  },
+
+  "numberOfItems" : 2,
+  "partText" : "NHC-"
+
+}
