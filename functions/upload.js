@@ -666,7 +666,7 @@ let  uploadPage = {
     }
   },
   /*
-   * Checking project listing style; Grid view & List view  
+   * Checks project listing style; Grid view & List view  
    */
   checkProjectListStyle:{
     value: function(){
@@ -686,7 +686,7 @@ let  uploadPage = {
     }
   }, 
   /*
-   * Checking project count displayed in the upload screen 
+   * Checks project count displayed in the upload screen 
    */
   checkProjectCount:{
     value: function(){
@@ -843,8 +843,7 @@ let  uploadPage = {
           continue;
         }
       }
-      ascendingArray = priceValue.sort(function(a, b){return a - b}); //ascending order sorting
-      for (var i=0; i < priceValue.length ; i++){
+      ascendingArray = priceValue.sort(function(a, b){return a - b}); 
         if(priceValue[i] === ascendingArray[i]){
           console.log("matches","i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
           continue;
@@ -868,7 +867,7 @@ let  uploadPage = {
           continue;
         }
       }
-      descendingArray = priceValue.sort(function(a, b){return b - a}); //descending order sorting
+      descendingArray = priceValue.sort(function(a, b){return b - a}); 
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === descendingArray[i]){
           console.log("matches","i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
