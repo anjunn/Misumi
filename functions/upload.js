@@ -845,7 +845,7 @@ let  uploadPage = {
       }
       ascendingArray = priceValue.sort(function(a, b){return a - b}); 
         if(priceValue[i] === ascendingArray[i]){
-          console.log("matches","i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          console.log("Matched  i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
           continue;
         } else{
           console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
@@ -870,7 +870,7 @@ let  uploadPage = {
       descendingArray = priceValue.sort(function(a, b){return b - a}); 
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === descendingArray[i]){
-          console.log("matches","i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          console.log("Matched  i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
           continue;
         } else{
           console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
