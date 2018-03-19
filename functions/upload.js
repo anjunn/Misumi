@@ -705,11 +705,11 @@ let  uploadPage = {
         var totalCount = this.dataBox.value.length; 
         console.log("Items displayed in a single page: ",totalCount);
         if(totalCount === countSelected){
-          console.log("count matched");
+          console.log("Count correctly displayed");
         } else if(totalCount < countSelected){
-          console.log("count is lesser than selected");
+          console.log("Count is lesser than selected");
         } else {
-          console.log("count is greater than selected");
+          console.log("Wrong!!! Count is greater than selected");
         }        
         browser.refresh();
       }
