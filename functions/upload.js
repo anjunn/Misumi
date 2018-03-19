@@ -41,8 +41,8 @@ let  uploadPage = {
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
   surfaceItems: { value: function (n) { return browser.element(`(//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//option)[${n}]`); }},
   materialItems: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]//option[${n}]`); }},
-    
-  
+  passAutoQuotation: { get : function() { return browser.element('(//ul[contains(@class,"partsStatusList")])[1]//li'); }},  
+  thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
   /**
    * Upload file by triggering drop event
    */
@@ -641,6 +641,23 @@ let  uploadPage = {
       browser.refresh();
       browser.extraLongWait();
 
+    }
+  },
+
+  /*
+   * Verify automatic quotaion passes 
+   */
+  verifyAutoQuotation:{
+    value: function(){    
+     browser.longWait();
+     this.thumbnail.waitForVisible();
+     flag=0;
+     var classCheck=this.passAutoQuotation.getAttribute('class')
+     if(classCheck==="status01")
+     {
+      flag=1;
+     }
+      expect(flag).to.equal(1);
     }
   }
 };

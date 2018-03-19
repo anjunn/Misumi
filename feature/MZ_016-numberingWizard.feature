@@ -15,6 +15,7 @@ Scenario: User checks the uploaded project
 Given User uploads 3D data for pins
 When User verifies whether upload is successful for pins
 And User defines quotation condition for pins
+Given User verifies if automatic quotation passes
 
 Scenario: User checks the functioning of Input back numbering input
 

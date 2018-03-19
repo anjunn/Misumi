@@ -99,5 +99,9 @@ module.exports = function () {
   this.Given(/^Refresh the page$/, () => {
     uploadPage.pageRefresh();
   });
+
+  this.Given(/^User verifies if automatic quotation passes$/, () => {
+    uploadPage.verifyAutoQuotation();
+  });
 };
 
