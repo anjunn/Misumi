@@ -666,7 +666,7 @@ let  uploadPage = {
     }
   },
   /*
-   * Checks project listing style; Grid view & List view  
+   * Checking project listing style; Grid view & List view  
    */
   checkProjectListStyle:{
     value: function(){
@@ -686,7 +686,7 @@ let  uploadPage = {
     }
   }, 
   /*
-   * Checks project count displayed in the upload screen 
+   * Checking project count displayed in the upload screen 
    */
   checkProjectCount:{
     value: function(){
@@ -843,9 +843,10 @@ let  uploadPage = {
           continue;
         }
       }
-      ascendingArray = priceValue.sort(function(a, b){return a - b}); 
+      ascendingArray = priceValue.sort(function(a, b){return a - b}); //ascending order sorting
+      for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === ascendingArray[i]){
-          console.log("Matched  i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          console.log("Matches  i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
           continue;
         } else{
           console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
@@ -867,10 +868,10 @@ let  uploadPage = {
           continue;
         }
       }
-      descendingArray = priceValue.sort(function(a, b){return b - a}); 
+      descendingArray = priceValue.sort(function(a, b){return b - a}); //descending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === descendingArray[i]){
-          console.log("Matched  i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          console.log("Matches  i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
           continue;
         } else{
           console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
