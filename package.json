@@ -11,8 +11,8 @@
     "test-ci-s15": "node_modules/.bin/wdio wdio.conf.chrome.js --suite smokeTest",
     "test-ci-selected": "node_modules/.bin/wdio wdio.conf.selected.js --suite selected",
     "test-ci-delete": "node_modules/.bin/wdio wdio.conf.chrome.js --suite scenario8",
-    "webdriver-install": "node_modules/.bin/selenium-standalone install",
-    "webdriver-start": "node_modules/.bin/selenium-standalone start",
+    "webdriver-install": "node_modules/.bin/selenium-standalone install --version=3.6.0",
+    "webdriver-start": "node_modules/.bin/selenium-standalone start --version=3.6.0",
     "test-ci-s3-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s3Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s3Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s3Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s3Iepart4",
     "test-ci-s4-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s4Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s4Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s4Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s4Iepart4",
     "test-ci-s7-ie": "node_modules/.bin/wdio wdio.conf.ie.js --suite s7Iepart1 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s7Iepart2 && node_modules\\.bin\\wdio wdio.conf.ie.js --suite s7Iepart3 && node_modules\\.bin\\wdio wdio.conf.chrome.js --suite s7Iepart4"
@@ -28,12 +28,12 @@
     "pdf-text": "^0.4.0",
     "pixelmatch": "^4.0.2",
     "pngjs": "^3.3.1",
-    "selenium-standalone": "^6.13.0",
+    "selenium-standalone": "^6.4.1",
     "wdio-allure-reporter": "^0.1.2",
     "wdio-chromedriver-service": "~0.1",
     "wdio-cucumber-framework": "^0.3.0",
     "wdio-screenshot": "^0.6.0",
-    "wdio-selenium-standalone-service": "^0.0.10",
+    "wdio-selenium-standalone-service": "^0.0.8",
     "wdio-spec-reporter": "^0.1.0",
     "webdriverio": "^4.8.0"
   }
