@@ -125,7 +125,12 @@ let loginPage = {
       if (this.errorMessage.isVisible()) {
         this.loginButton.waitForEnabled();
         this.loginButton.click();
+        browser.extraLongWait();
       }
+      let env = process.env.npm_config_env || 'tst';
+      const urlData = browser.filterByUsage(env)[0];
+      url = urlData;
+      expect(browser.getUrl()).to.equal(url.myPageUrl);
     }
   },
 
