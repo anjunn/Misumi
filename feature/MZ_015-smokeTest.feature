@@ -1,4 +1,4 @@
-Feature: Scenario: Smoke Test
+Feature: Smoke Test
 
 Scenario: User logins to presentation site
 

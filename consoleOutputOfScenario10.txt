@@ -1,0 +1,584 @@
+C:\Users\Anju\Projects\Misumi\QA_Automation>npm run test-ci-selected --selected=010
+
+> qa_automation_for_meviy@1.0.0 test-ci-selected C:\Users\Anju\Projects\Misumi\QA_Automation
+> wdio wdio.conf.selected.js --suite selected
+
+Starting Test Case: - MZ_010-labSiteCombinationCheck.feature
+Checking Combination: Material To Surfacetreatment
+----------------------------------------------
+material array: ????????,SKH51,SKD61,NAK80,STAVAX ESR ???,DH2F(SKD61????????),??????(C1720),DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ???? ??
+materialLength: 11
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: SKH51
+surfaceTypeArray: ????????,??,????????
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotRecommended surfaceType: NITRIDING
+NotRecommended failed!!!
+-------------------------------
+Recommended surfaceType: HARD_CHROME_PLATING
+surfaceName from site: HARD_CHROME_PLATING
+Recommended displayed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: SKD61
+surfaceTypeArray: ????????,??,????
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+Recommended surfaceType: NITRIDING
+surfaceName from site: NITRIDING
+Recommended displayed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: NAK80
+surfaceTypeArray: ????????,??,---------------,????
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotRecommended surfaceType: NITRIDING
+surfaceType from sheet: NITRIDING
+NotRecommended properlydisplayed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: STAVAX ESR ???
+surfaceTypeArray: ????????,??
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotSupported surfaceType: NITRIDING
+NotSupported passed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: DH2F(SKD61????????)
+surfaceTypeArray: ????????,??,---------------,????
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotRecommended surfaceType: NITRIDING
+surfaceType from sheet: NITRIDING
+NotRecommended properlydisplayed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: ??????(C1720)
+surfaceTypeArray: ????????,??
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotSupported surfaceType: NITRIDING
+NotSupported passed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: DAC (41~45HRC) ??????
+surfaceTypeArray: ????????,??,?????? (??????),????? (??????),??????? (?? ????),ALCRONA PRO (??????),ALCRONA PRO DUPLEX???+ ALCRONA? (??????),LUMENA (??????),LUMENA DUPLEX ???+ LUMENA? (??????),CrN (??????),TiN (??????),TiALN?PVD? (??????)
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotSupported surfaceType: NITRIDING
+NotSupported passed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+-------------------------------
+Recommended surfaceType: TUFFTRIDE
+surfaceName from site: TUFFTRIDE
+Recommended displayed
+-------------------------------
+Recommended surfaceType: GAS_SOFT_NITRIDING
+surfaceName from site: GAS_SOFT_NITRIDING
+Recommended displayed
+-------------------------------
+Recommended surfaceType: NEW_KANUC
+surfaceName from site: NEW_KANUC
+Recommended displayed
+-------------------------------
+Recommended surfaceType: ALCRONA PRO
+surfaceName from site: ALCRONA PRO
+Recommended displayed
+-------------------------------
+Recommended surfaceType: ALCRONA PRO DUPLEX
+surfaceName from site: ALCRONA PRO DUPLEX
+Recommended displayed
+-------------------------------
+Recommended surfaceType: LUMENA
+surfaceName from site: LUMENA
+Recommended displayed
+-------------------------------
+Recommended surfaceType: LUMENA DUPLEX
+surfaceName from site: LUMENA DUPLEX
+Recommended displayed
+-------------------------------
+Recommended surfaceType: CrN
+surfaceName from site: CrN
+Recommended displayed
+-------------------------------
+Recommended surfaceType: TiN
+surfaceName from site: TiN
+Recommended displayed
+-------------------------------
+Recommended surfaceType: TiALN
+surfaceName from site: TiALN
+Recommended displayed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: DAC (44~46HRC) ??????
+surfaceTypeArray: ????????,??,?????? (??????),????? (??????),??????? (?? ????),ALCRONA PRO (??????),ALCRONA PRO DUPLEX???+ ALCRONA? (??????),LUMENA (??????),LUMENA DUPLEX ???+ LUMENA? (??????),CrN (??????),TiN (??????),TiALN?PVD? (??????)
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotSupported surfaceType: NITRIDING
+NotSupported passed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+-------------------------------
+Recommended surfaceType: TUFFTRIDE
+surfaceName from site: TUFFTRIDE
+Recommended displayed
+-------------------------------
+Recommended surfaceType: GAS_SOFT_NITRIDING
+surfaceName from site: GAS_SOFT_NITRIDING
+Recommended displayed
+-------------------------------
+Recommended surfaceType: NEW_KANUC
+surfaceName from site: NEW_KANUC
+Recommended displayed
+-------------------------------
+Recommended surfaceType: ALCRONA PRO
+surfaceName from site: ALCRONA PRO
+Recommended displayed
+-------------------------------
+Recommended surfaceType: ALCRONA PRO DUPLEX
+surfaceName from site: ALCRONA PRO DUPLEX
+Recommended displayed
+-------------------------------
+Recommended surfaceType: LUMENA
+surfaceName from site: LUMENA
+Recommended displayed
+-------------------------------
+Recommended surfaceType: LUMENA DUPLEX
+surfaceName from site: LUMENA DUPLEX
+Recommended displayed
+-------------------------------
+Recommended surfaceType: CrN
+surfaceName from site: CrN
+Recommended displayed
+-------------------------------
+Recommended surfaceType: TiN
+surfaceName from site: TiN
+Recommended displayed
+-------------------------------
+Recommended surfaceType: TiALN
+surfaceName from site: TiALN
+Recommended displayed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+SelectedMaterial from site: DAC (46~48HRC) ??????
+surfaceTypeArray: ????????,??,?????? (??????),????? (??????),??????? (?? ????),ALCRONA PRO (??????),ALCRONA PRO DUPLEX???+ ALCRONA? (??????),LUMENA (??????),LUMENA DUPLEX ???+ LUMENA? (??????),CrN (??????),TiN (??????),TiALN?PVD? (??????)
+==================================================
+-------------------------------
+Recommended surfaceType: NO_TREATMENT
+surfaceName from site: NO_TREATMENT
+Recommended displayed
+-------------------------------
+NotSupported surfaceType: NITRIDING
+NotSupported passed
+-------------------------------
+NotSupported surfaceType: HARD_CHROME_PLATING
+NotSupported passed
+-------------------------------
+Recommended surfaceType: TUFFTRIDE
+surfaceName from site: TUFFTRIDE
+Recommended displayed
+-------------------------------
+Recommended surfaceType: GAS_SOFT_NITRIDING
+surfaceName from site: GAS_SOFT_NITRIDING
+Recommended displayed
+-------------------------------
+Recommended surfaceType: NEW_KANUC
+surfaceName from site: NEW_KANUC
+Recommended displayed
+-------------------------------
+Recommended surfaceType: ALCRONA PRO
+surfaceName from site: ALCRONA PRO
+Recommended displayed
+-------------------------------
+Recommended surfaceType: ALCRONA PRO DUPLEX
+surfaceName from site: ALCRONA PRO DUPLEX
+Recommended displayed
+-------------------------------
+Recommended surfaceType: LUMENA
+surfaceName from site: LUMENA
+Recommended displayed
+-------------------------------
+Recommended surfaceType: LUMENA DUPLEX
+surfaceName from site: LUMENA DUPLEX
+Recommended displayed
+-------------------------------
+Recommended surfaceType: CrN
+surfaceName from site: CrN
+Recommended displayed
+-------------------------------
+Recommended surfaceType: TiN
+surfaceName from site: TiN
+Recommended displayed
+-------------------------------
+Recommended surfaceType: TiALN
+surfaceName from site: TiALN
+Recommended displayed
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+check Combination Surfacetreatment To Material
+----------------------------------------------
+fullMaterialArray: ????????,SKH51,SKD61,NAK80,STAVAX ESR ???,DH2F(SKD61????????),??????(C1720),DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+fullMaterialArrayLength: 11
+surfaceTypeArray: ????????,??,????,????????,?????? (??????),????? (??????),??????? (??????),ALCRONA PRO (??????),ALCRONA PRO DUPLEX???+ ALCRONA? (??????),LUMENA (??????),LUMENA DUPLEX ???+ LUMENA? (??????),CrN (??????),TiN (??????),TiALN?PVD? (??????)
+surfaceTypeArrayLength: 14
+#########################################################
+No: 2 Selected SurfaceTreatment: ?? :  NO_TREATMENT
+materialArray: ????????,SKH51,SKD61,NAK80,STAVAX ESR ???,DH2F(SKD61????????),??????(C1720),DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 11
+#########################################################
+#########################################################
+No: 3 Selected SurfaceTreatment: ???? :  NITRIDING
+materialArray: ????????,SKD61,DAC (48~50HRC) ??????,---------------,SKH51,NAK80,DH2F(SKD61????????)
+materialArray.length: 7
+-------------------------------
+Recommended material: SKD61
+materialName from site: SKD61
+Recommended passed
+Material:  SKD61_PRE - Status:  NotSupported - Row:  70 - c:  11
+Material:  SKD61_EPP - Status:  NotSupported - Row:  72 - c:  13
+Material:  SKD61_ESV - Status:  NotSupported - Row:  72 - c:  13
+-------------------------------
+NotRecommended material: NAK80
+materialType from sheet: NAK80
+NotRecommended properlydisplayed
+-------------------------------
+NotRecommended material: DH2F
+materialType from sheet: DH2F
+NotRecommended properlydisplayed
+#########################################################
+#########################################################
+No: 4 Selected SurfaceTreatment: ???????? :  HARD_CHROME_PLATING
+materialArray: ????????,SKH51,DAC (48~50HRC) ??????
+materialArray.length: 3
+-------------------------------
+Recommended material: SKH51
+materialName from site: SKH51
+Recommended passed
+#########################################################
+#########################################################
+No: 5 Selected SurfaceTreatment: ?????? (??????) :  TUFFTRIDE
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 6 Selected SurfaceTreatment: ????? (??????) :  GAS_SOFT_NITRIDING
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 7 Selected SurfaceTreatment: ??????? (??????) :  NEW_KANUC
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 8 Selected SurfaceTreatment: ALCRONA PRO (??????) :  ALCRONA PRO
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 9 Selected SurfaceTreatment: ALCRONA PRO DUPLEX???+ ALCRONA? (??????) :  ALCRONA PRO DUPLEX
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 10 Selected SurfaceTreatment: LUMENA (??????) :  LUMENA
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 11 Selected SurfaceTreatment: LUMENA DUPLEX ???+ LUMENA? (??????) :  LUMENA DUPLEX
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 12 Selected SurfaceTreatment: CrN (??????) :  CrN
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 13 Selected SurfaceTreatment: TiN (??????) :  TiN
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+#########################################################
+No: 14 Selected SurfaceTreatment: TiALN?PVD? (??????) :  TiALN
+materialArray: ????????,DAC (41~45HRC) ??????,DAC (44~46HRC) ??????,DAC (46~48HRC) ??????,DAC (48~50HRC) ??????
+materialArray.length: 5
+-------------------------------
+Recommended material: DAC_DC_1
+materialName from site: DAC_DC_1
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_2
+materialName from site: DAC_DC_2
+Recommended passed
+-------------------------------
+Recommended material: DAC_DC_3
+materialName from site: DAC_DC_3
+Recommended passed
+#########################################################
+            MATERIAL ---> SURFACE TENSION
+**********************************************************
+...........................................................
+???? ***** SKH51 **** NO_TREATMENT **** Recommended
+Recommended status Pass
+???? ***** SKH51 **** NITRIDING **** NotRecommended
+Not Recommended status Pass
+...........................................................
+???? ***** SKD61 **** NO_TREATMENT **** Recommended
+Recommended status Pass
+???? ***** SKD61 **** NITRIDING **** NotRecommended
+Not Recommended status Pass
+...........................................................
+???? ***** NAK80 **** NO_TREATMENT **** Recommended
+Recommended status Pass
+???? ***** NAK80 **** NITRIDING **** NotRecommended
+Not Recommended status Pass
+...........................................................
+???? ***** STAVAX **** NO_TREATMENT **** Recommended
+Recommended status Pass
+???? ***** STAVAX **** NITRIDING **** NotRecommended
+Not Recommended status Pass
+...........................................................
+???? ***** DH2F **** NO_TREATMENT **** Recommended
+Recommended status Pass
+???? ***** DH2F **** NITRIDING **** NotRecommended
+Not Recommended status Pass
+...........................................................
+???? ***** C1720 **** NO_TREATMENT **** Recommended
+Recommended status Pass
+???? ***** C1720 **** NITRIDING **** NotRecommended
+Not Recommended status Pass
+**********************************************************
+           SURFACE TENSION ---> MATERIAL
+**********************************************************
+...........................................................
+???? ***** SKH51 **** ?? **** Recommended
+Recommended status Pass
+???? ***** SKD61 **** ?? **** Recommended
+Recommended status Pass
+???? ***** NAK80 **** ?? **** Recommended
+Recommended status Pass
+???? ***** DH2F **** ?? **** Recommended
+Recommended status Pass
+???? ***** STAVAX **** ?? **** Recommended
+Recommended status Pass
+???? ***** C1720 **** ?? **** Recommended
+Recommended status Pass
+...........................................................
+???? ***** SKH51 **** ???? **** NotRecommended
+Row:144
+Not Recommended status Fail
+???? ***** SKD61 **** ???? **** NotRecommended
+Row:145
+Not Recommended status Fail
+???? ***** NAK80 **** ???? **** NotRecommended
+Row:146
+Not Recommended status Fail
+???? ***** DH2F **** ???? **** NotRecommended
+Row:147
+Not Recommended status Fail
+???? ***** STAVAX **** ???? **** NotRecommended
+Row:148
+Not Recommended status Fail
+???? ***** C1720 **** ???? **** NotRecommended
+Row:149
+Not Recommended status Fail
+------------------------------------------------------------------
+[chrome #0-0] Session ID: c7eefb0161264d580c9bab501e7e779e
+[chrome #0-0] Spec: C:\Users\Anju\Projects\Misumi\QA_Automation\feature\MZ_010-labSiteCombinationCheck.feature
+[chrome #0-0] Running: chrome
+[chrome #0-0]
+[chrome #0-0] Scenario 10
+[chrome #0-0]
+[chrome #0-0]     User logins to presentation site
+[chrome #0-0]       v User goes to Home Page of lab site
+[chrome #0-0]       v User validates the webpage header
+[chrome #0-0]       v User validates the Start Right Away button
+[chrome #0-0]       v User goes to Login Page
+[chrome #0-0]       v User validates username field
+[chrome #0-0]       v User validates Password field
+[chrome #0-0]       v User enters credentials and logs in
+[chrome #0-0]
+[chrome #0-0]     User checks the uploaded project
+[chrome #0-0]       v User uploads 3D data for single pin
+[chrome #0-0]       v User verifies whether upload is successful for single pin
+[chrome #0-0]       v Check Material To Surfacetreatment combinations in site with the same from the Excel sheet
+[chrome #0-0]       v Check Surfacetreatment To Material combinations in site with the same from the Excel sheet
+[chrome #0-0]       v Refresh the page
+[chrome #0-0]       v User uploads 3D data for single pin
+[chrome #0-0]       v User defines quotation condition for single pin
+[chrome #0-0]       v User clicks on the thumbnail after uploading
+[chrome #0-0]       v User checks if the surface tension listed matches with the material selected
+[chrome #0-0]       v User checks if the material listed matches with the surface tension selected
+[chrome #0-0]
+[chrome #0-0]
+[chrome #0-0] 17 passing (4m, 13s)
+[chrome #0-0]
+
+
+
+17 passing (259.40s)
+
+
+C:\Users\Anju\Projects\Misumi\QA_Automation>

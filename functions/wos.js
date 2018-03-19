@@ -1,7 +1,6 @@
 
 let Page = require('./page');
 let data = require('../data/input-data/dataset.json');
-var firstCount=0
 /**
  * wos Page Object
  *
@@ -55,7 +54,7 @@ let wosPage = {
   clickNext: {
     value: function() {
       browser.mediumWait();
-      if(this.error.isVisible() && firstCount==0)
+      if(this.error.isVisible())
           this.checkError();
       browser.scrollToElement(this.buttonNextSelector);
       this.buttonNext.waitForVisible();
@@ -126,7 +125,6 @@ let wosPage = {
    */
   checkError: {
     value: function() {
-      firstCount=1;
       browser.smallWait();
       var errorFlag=0;
       if(this.error.isVisible())
@@ -184,8 +182,8 @@ let wosPage = {
             console.log("ERROR : " + this.error.getText());
           }
         }  
-     expect(errorFlag).to.be.equal(0);
-     } 
+      }
+     expect(errorFlag).to.be.equal(0); 
     }
   },
 

@@ -31,7 +31,7 @@ module.exports = function () {
    	loginPage.validatePasswordField();
   });
 
-  this.Then(/^User enters credentials and logs in$/, () => {
+  this.Then(/^User enters credentials and logs in$/, {retry: 2}, () => {
     loginPage.login();
   });
 
