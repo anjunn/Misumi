@@ -55,7 +55,6 @@ let wosPage = {
    */
   clickNext: {
     value: function() {
-      browser.debug();
       browser.mediumWait();
       if(this.error.isVisible() && firstCount==0){
         this.checkError(); }
@@ -128,7 +127,6 @@ let wosPage = {
    */
   checkError: {
     value: function() {
-      console.log("Inside error");
       firstCount=1;
       browser.smallWait();
       var errorFlag=0;
@@ -141,6 +139,7 @@ let wosPage = {
             browser.switchTab(browser.windowHandles().value[2]);
             this.clickDate.waitForEnabled();
             this.clickDate.click();
+            browser.switchTab(browser.windowHandles().value[1]);
             this.clickNext();
             errorFlag=0;
           }
