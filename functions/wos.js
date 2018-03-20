@@ -1,6 +1,7 @@
 
 let Page = require('./page');
 let data = require('../data/input-data/dataset.json');
+var firstCount=0;
 /**
  * wos Page Object
  *
@@ -41,7 +42,8 @@ let wosPage = {
    */
   checkQuantityAndModel: {
     value: function(department) {
-      browser.smallWait();
+      browser.mediumWait();
+      this.departmentId.waitForEnabled();
       this.departmentId.setValue("ＱＢＵＲＳＴ");
       this.modelNumber.waitForVisible();
       expect(this.modelNumber.getValue()).to.be.equal(browser.params.modelNumberOrderPage);
@@ -54,10 +56,11 @@ let wosPage = {
    */
   clickNext: {
     value: function() {
-      browser.mediumWait();
-      if(this.error.isVisible() && firstCount==0){
+      browser.longWait();
+      if(this.error.isVisible() && firstCount===0){
         this.checkError(); }
       browser.scrollToElement(this.buttonNextSelector);
+      browser.smallWait();
       if(this.buttonNext.isVisible()){
         this.buttonNext.waitForEnabled();
         this.buttonNext.click();
@@ -138,7 +141,9 @@ let wosPage = {
             this.clickDate.waitForEnabled();
             this.clickDate.click();
             browser.switchTab(browser.windowHandles().value[1]);
-            this.clickNext();
+            browser.scrollToElement(this.buttonNextSelector);
+            this.buttonNext.waitForEnabled();
+            this.buttonNext.click();
             errorFlag=0;
           }
           else {

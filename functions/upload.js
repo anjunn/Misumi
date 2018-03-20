@@ -683,6 +683,8 @@ let  uploadPage = {
       flag=1;
      }
       expect(flag).to.equal(1);
+    }
+  },
 
   /*
    * Checking project listing style; Grid view & List view  
@@ -694,14 +696,20 @@ let  uploadPage = {
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       browser.mediumWait();
-      expect(this.listView.isVisible());
-      console.log("List view enabled");
-      this.gridViewButton.waitForEnabled();
-      this.gridViewButton.click();
-      browser.mediumWait();
-      expect(this.gridView.isVisible());
-      console.log("Grid view enabled");
-      console.log("__________________________________________________________________");
+     if(this.listView.isVisible()){
+       console.log("List view enabled");
+     } else {
+       console.log("List view not enabled");
+     }
+     this.gridViewButton.waitForEnabled();
+     this.gridViewButton.click();
+     browser.mediumWait();
+     if(this.gridView.isVisible()){
+       console.log("Grid view enabled");
+     } else {
+       console.log("Grid view not enabled");
+     }
+     console.log("__________________________________________________________________");
     }
   }, 
   /*
@@ -865,10 +873,10 @@ let  uploadPage = {
       ascendingArray = priceValue.sort(function(a, b){return a - b}); //ascending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === ascendingArray[i]){
-          console.log("True  i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          console.log("True" ,  i," priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
           continue;
         } else{
-          console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          console.log("Wrong!!! ",  i," priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
         }
       }
       this.sortButton.click();
@@ -890,14 +898,13 @@ let  uploadPage = {
       descendingArray = priceValue.sort(function(a, b){return b - a}); //descending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === descendingArray[i]){
-          console.log("True  i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          console.log("True ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
           continue;
         } else{
-          console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          console.log("Wrong!!!", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
         }
       }
       console.log("__________________________________________________________________");
-
     }
   }
 };
