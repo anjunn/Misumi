@@ -5,149 +5,160 @@ Checking Project Listing Style
 
 List view enabled
 Grid view enabled
+__________________________________________________________________
+
 
 Checking Project Count in a single page
 =======================================
 
-__________________________________________________________________
 *Selected count: 20 *Items displayed in a single page: 20 *Count correctly displayed
 *Selected count: 30 *Items displayed in a single page: 30 *Count correctly displayed
 *Selected count: 45 *Items displayed in a single page: 45 *Count correctly displayed
 *Selected count: 60 *Items displayed in a single page: 60 *Count correctly displayed
 __________________________________________________________________
 
+
 Checking DateTime Order
 =======================
 Total Projects: 60
+
 Ascending Order Checking
 ------------------------
 
-True     i 0 dateTimeUniqueId: 1520843809191 j 3 dateTimeUniqueId[j]: 1520940791348
-True     i 3 dateTimeUniqueId: 1520940791348 j 4 dateTimeUniqueId[j]: 1520941683111
-True     i 6 dateTimeUniqueId: 1520942153117 j 7 dateTimeUniqueId[j]: 1520944058032
-True     i 4 dateTimeUniqueId: 1520941683111 j 5 dateTimeUniqueId[j]: 1520941864853
-True     i 5 dateTimeUniqueId: 1520941864853 j 6 dateTimeUniqueId[j]: 1520942153117
-True     i 7 dateTimeUniqueId: 1520944058032 j 8 dateTimeUniqueId[j]: 1520944165385
-True     i 9 dateTimeUniqueId: 1520998308958 j 10 dateTimeUniqueId[j]: 1521002063780
-True     i 11 dateTimeUniqueId: 1521002661974 j 12 dateTimeUniqueId[j]: 1521002915160
-True     i 10 dateTimeUniqueId: 1521002063780 j 11 dateTimeUniqueId[j]: 1521002661974
-True     i 14 dateTimeUniqueId: 1521014083730 j 15 dateTimeUniqueId[j]: 1521014212427
-True     i 15 dateTimeUniqueId: 1521014212427 j 16 dateTimeUniqueId[j]: 1521014816816
-True     i 16 dateTimeUniqueId: 1521014816816 j 17 dateTimeUniqueId[j]: 1521015359473
-True     i 12 dateTimeUniqueId: 1521002915160 j 14 dateTimeUniqueId[j]: 1521014083730
-True     i 8 dateTimeUniqueId: 1520944165385 j 9 dateTimeUniqueId[j]: 1520998308958
-True     i 17 dateTimeUniqueId: 1521015359473 j 18 dateTimeUniqueId[j]: 1521015748914
-True     i 19 dateTimeUniqueId: 1521015949222 j 20 dateTimeUniqueId[j]: 1521016107045
-True     i 18 dateTimeUniqueId: 1521015748914 j 19 dateTimeUniqueId[j]: 1521015949222
-True     i 21 dateTimeUniqueId: 1521016428696 j 22 dateTimeUniqueId[j]: 1521019459736
-True     i 22 dateTimeUniqueId: 1521019459736 j 23 dateTimeUniqueId[j]: 1521019864257
-True     i 23 dateTimeUniqueId: 1521019864257 j 24 dateTimeUniqueId[j]: 1521029220788
-True     i 24 dateTimeUniqueId: 1521029220788 j 25 dateTimeUniqueId[j]: 1521030178379
-True     i 25 dateTimeUniqueId: 1521030178379 j 26 dateTimeUniqueId[j]: 1521097715164
-True     i 26 dateTimeUniqueId: 1521097715164 j 27 dateTimeUniqueId[j]: 1521097968978
-True     i 27 dateTimeUniqueId: 1521097968978 j 28 dateTimeUniqueId[j]: 1521098113100
-True     i 28 dateTimeUniqueId: 1521098113100 j 29 dateTimeUniqueId[j]: 1521098769890
-True     i 29 dateTimeUniqueId: 1521098769890 j 30 dateTimeUniqueId[j]: 1521099367823
-True     i 30 dateTimeUniqueId: 1521099367823 j 31 dateTimeUniqueId[j]: 1521099730851
-True     i 31 dateTimeUniqueId: 1521099730851 j 32 dateTimeUniqueId[j]: 1521100051200
-True     i 32 dateTimeUniqueId: 1521100051200 j 33 dateTimeUniqueId[j]: 1521101929414
-True     i 33 dateTimeUniqueId: 1521101929414 j 34 dateTimeUniqueId[j]: 1521102344903
-True     i 20 dateTimeUniqueId: 1521016107045 j 21 dateTimeUniqueId[j]: 1521016428696
-True     i 35 dateTimeUniqueId: 1521102642429 j 36 dateTimeUniqueId[j]: 1521107455171
-True     i 37 dateTimeUniqueId: 1521107596543 j 38 dateTimeUniqueId[j]: 1521107769492
-True     i 38 dateTimeUniqueId: 1521107769492 j 39 dateTimeUniqueId[j]: 1521107819836
-True     i 39 dateTimeUniqueId: 1521107819836 j 40 dateTimeUniqueId[j]: 1521107891996
-True     i 40 dateTimeUniqueId: 1521107891996 j 41 dateTimeUniqueId[j]: 1521107934586
-True     i 36 dateTimeUniqueId: 1521107455171 j 37 dateTimeUniqueId[j]: 1521107596543
-True     i 42 dateTimeUniqueId: 1521108222991 j 43 dateTimeUniqueId[j]: 1521108245420
-True     i 34 dateTimeUniqueId: 1521102344903 j 35 dateTimeUniqueId[j]: 1521102642429
-True     i 45 dateTimeUniqueId: 1521109005254 j 46 dateTimeUniqueId[j]: 1521113225059
-True     i 46 dateTimeUniqueId: 1521113225059 j 47 dateTimeUniqueId[j]: 1521114174569
-True     i 47 dateTimeUniqueId: 1521114174569 j 48 dateTimeUniqueId[j]: 1521114275624
-True     i 48 dateTimeUniqueId: 1521114275624 j 49 dateTimeUniqueId[j]: 1521114419747
-True     i 49 dateTimeUniqueId: 1521114419747 j 50 dateTimeUniqueId[j]: 1521114820628
-True     i 50 dateTimeUniqueId: 1521114820628 j 51 dateTimeUniqueId[j]: 1521115744124
-True     i 51 dateTimeUniqueId: 1521115744124 j 52 dateTimeUniqueId[j]: 1521116015616
-True     i 52 dateTimeUniqueId: 1521116015616 j 53 dateTimeUniqueId[j]: 1521180211369
-True     i 53 dateTimeUniqueId: 1521180211369 j 54 dateTimeUniqueId[j]: 1521180867124
-True     i 54 dateTimeUniqueId: 1521180867124 j 55 dateTimeUniqueId[j]: 1521182028161
-True     i 55 dateTimeUniqueId: 1521182028161 j 56 dateTimeUniqueId[j]: 1521182794668
-True     i 41 dateTimeUniqueId: 1521107934586 j 42 dateTimeUniqueId[j]: 1521108222991
-True     i 44 dateTimeUniqueId: 1521108552984 j 45 dateTimeUniqueId[j]: 1521109005254
-True     i 57 dateTimeUniqueId: 1521183764991 j 58 dateTimeUniqueId[j]: 1521184086817
-True     i 43 dateTimeUniqueId: 1521108245420 j 44 dateTimeUniqueId[j]: 1521108552984
-True     i 58 dateTimeUniqueId: 1521184086817 j 59 dateTimeUniqueId[j]: 1521184534530
-True     i 56 dateTimeUniqueId: 1521182794668 j 57 dateTimeUniqueId[j]: 1521183764991
+True     0 dateTimeUniqueId: 1520843809191 3 dateTimeUniqueId: 1520940791348
+True     3 dateTimeUniqueId: 1520940791348 4 dateTimeUniqueId: 1520941683111
+True     4 dateTimeUniqueId: 1520941683111 5 dateTimeUniqueId: 1520941864853
+True     5 dateTimeUniqueId: 1520941864853 6 dateTimeUniqueId: 1520942153117
+True     6 dateTimeUniqueId: 1520942153117 7 dateTimeUniqueId: 1520944058032
+True     7 dateTimeUniqueId: 1520944058032 8 dateTimeUniqueId: 1520944165385
+True     8 dateTimeUniqueId: 1520944165385 9 dateTimeUniqueId: 1520998308958
+True     9 dateTimeUniqueId: 1520998308958 10 dateTimeUniqueId: 1521002063780
+True     10 dateTimeUniqueId: 1521002063780 11 dateTimeUniqueId: 1521002661974
+True     11 dateTimeUniqueId: 1521002661974 12 dateTimeUniqueId: 1521002915160
+True     12 dateTimeUniqueId: 1521002915160 13 dateTimeUniqueId: 1521014083730
+True     13 dateTimeUniqueId: 1521014083730 14 dateTimeUniqueId: 1521014212427
+True     14 dateTimeUniqueId: 1521014212427 15 dateTimeUniqueId: 1521014816816
+True     15 dateTimeUniqueId: 1521014816816 16 dateTimeUniqueId: 1521015359473
+True     16 dateTimeUniqueId: 1521015359473 17 dateTimeUniqueId: 1521016107045
+True     17 dateTimeUniqueId: 1521016107045 18 dateTimeUniqueId: 1521019459736
+True     18 dateTimeUniqueId: 1521019459736 19 dateTimeUniqueId: 1521019864257
+True     19 dateTimeUniqueId: 1521019864257 20 dateTimeUniqueId: 1521029220788
+True     20 dateTimeUniqueId: 1521029220788 21 dateTimeUniqueId: 1521030178379
+True     21 dateTimeUniqueId: 1521030178379 22 dateTimeUniqueId: 1521098113100
+True     22 dateTimeUniqueId: 1521098113100 23 dateTimeUniqueId: 1521101929414
+True     23 dateTimeUniqueId: 1521101929414 24 dateTimeUniqueId: 1521102344903
+True     24 dateTimeUniqueId: 1521102344903 25 dateTimeUniqueId: 1521102642429
+True     25 dateTimeUniqueId: 1521102642429 26 dateTimeUniqueId: 1521107455171
+True     26 dateTimeUniqueId: 1521107455171 27 dateTimeUniqueId: 1521107596543
+True     27 dateTimeUniqueId: 1521107596543 28 dateTimeUniqueId: 1521107769492
+True     28 dateTimeUniqueId: 1521107769492 29 dateTimeUniqueId: 1521107819836
+True     29 dateTimeUniqueId: 1521107819836 30 dateTimeUniqueId: 1521107891996
+True     30 dateTimeUniqueId: 1521107891996 31 dateTimeUniqueId: 1521107934586
+True     31 dateTimeUniqueId: 1521107934586 32 dateTimeUniqueId: 1521108222991
+True     32 dateTimeUniqueId: 1521108222991 33 dateTimeUniqueId: 1521108245420
+True     33 dateTimeUniqueId: 1521108245420 34 dateTimeUniqueId: 1521108552984
+True     34 dateTimeUniqueId: 1521108552984 35 dateTimeUniqueId: 1521109005254
+True     35 dateTimeUniqueId: 1521109005254 36 dateTimeUniqueId: 1521113225059
+True     36 dateTimeUniqueId: 1521113225059 37 dateTimeUniqueId: 1521114275624
+True     37 dateTimeUniqueId: 1521114275624 38 dateTimeUniqueId: 1521114419747
+True     38 dateTimeUniqueId: 1521114419747 39 dateTimeUniqueId: 1521116015616
+True     39 dateTimeUniqueId: 1521116015616 40 dateTimeUniqueId: 1521182794668
+True     40 dateTimeUniqueId: 1521182794668 41 dateTimeUniqueId: 1521184086817
+True     41 dateTimeUniqueId: 1521184086817 42 dateTimeUniqueId: 1521184534530
+True     42 dateTimeUniqueId: 1521184534530 43 dateTimeUniqueId: 1521184869339
+True     43 dateTimeUniqueId: 1521184869339 44 dateTimeUniqueId: 1521189795227
+True     44 dateTimeUniqueId: 1521189795227 45 dateTimeUniqueId: 1521431856093
+True     45 dateTimeUniqueId: 1521431856093 46 dateTimeUniqueId: 1521443080721
+True     46 dateTimeUniqueId: 1521443080721 47 dateTimeUniqueId: 1521443276306
+True     47 dateTimeUniqueId: 1521443276306 48 dateTimeUniqueId: 1521446531358
+True     48 dateTimeUniqueId: 1521446531358 49 dateTimeUniqueId: 1521451616994
+True     49 dateTimeUniqueId: 1521451616994 50 dateTimeUniqueId: 1521452071383
+True     50 dateTimeUniqueId: 1521452071383 51 dateTimeUniqueId: 1521452970378
+True     51 dateTimeUniqueId: 1521452970378 52 dateTimeUniqueId: 1521453379676
+True     52 dateTimeUniqueId: 1521453379676 53 dateTimeUniqueId: 1521519429831
+True     53 dateTimeUniqueId: 1521519429831 54 dateTimeUniqueId: 1521519563441
+True     54 dateTimeUniqueId: 1521519563441 55 dateTimeUniqueId: 1521519764696
+True     55 dateTimeUniqueId: 1521519764696 56 dateTimeUniqueId: 1521519985118
+True     56 dateTimeUniqueId: 1521519985118 57 dateTimeUniqueId: 1521520064111
+True     57 dateTimeUniqueId: 1521520064111 58 dateTimeUniqueId: 1521521063785
+True     58 dateTimeUniqueId: 1521521063785 59 dateTimeUniqueId: 1521521753696
+
 Descending Order Checking
 -------------------------
 
-True     i 0 dateTimeUniqueId: 1521453379676 j 1 dateTimeUniqueId: 1521452970378
-True     i 1 dateTimeUniqueId: 1521452970378 j 2 dateTimeUniqueId: 1521452071383
-True     i 2 dateTimeUniqueId: 1521452071383 j 3 dateTimeUniqueId: 1521451616994
-True     i 4 dateTimeUniqueId: 1521448639118 j 5 dateTimeUniqueId: 1521448253192
-True     i 6 dateTimeUniqueId: 1521447896279 j 7 dateTimeUniqueId: 1521446531358
-True     i 7 dateTimeUniqueId: 1521446531358 j 8 dateTimeUniqueId: 1521443276306
-True     i 8 dateTimeUniqueId: 1521443276306 j 9 dateTimeUniqueId: 1521443080721
-True     i 10 dateTimeUniqueId: 1521431856093 j 11 dateTimeUniqueId: 1521189795227
-True     i 11 dateTimeUniqueId: 1521189795227 j 12 dateTimeUniqueId: 1521184869339
-True     i 12 dateTimeUniqueId: 1521184869339 j 13 dateTimeUniqueId: 1521184534530
-True     i 13 dateTimeUniqueId: 1521184534530 j 14 dateTimeUniqueId: 1521184086817
-True     i 14 dateTimeUniqueId: 1521184086817 j 15 dateTimeUniqueId: 1521183764991
-True     i 15 dateTimeUniqueId: 1521183764991 j 16 dateTimeUniqueId: 1521182794668
-True     i 16 dateTimeUniqueId: 1521182794668 j 17 dateTimeUniqueId: 1521182028161
-True     i 17 dateTimeUniqueId: 1521182028161 j 18 dateTimeUniqueId: 1521180867124
-True     i 5 dateTimeUniqueId: 1521448253192 j 6 dateTimeUniqueId: 1521447896279
-True     i 9 dateTimeUniqueId: 1521443080721 j 10 dateTimeUniqueId: 1521431856093
-True     i 18 dateTimeUniqueId: 1521180867124 j 19 dateTimeUniqueId: 1521180211369
-True     i 19 dateTimeUniqueId: 1521180211369 j 20 dateTimeUniqueId: 1521116015616
-True     i 20 dateTimeUniqueId: 1521116015616 j 21 dateTimeUniqueId: 1521115744124
-True     i 21 dateTimeUniqueId: 1521115744124 j 22 dateTimeUniqueId: 1521114820628
-True     i 22 dateTimeUniqueId: 1521114820628 j 23 dateTimeUniqueId: 1521114419747
-True     i 23 dateTimeUniqueId: 1521114419747 j 24 dateTimeUniqueId: 1521114275624
-True     i 24 dateTimeUniqueId: 1521114275624 j 25 dateTimeUniqueId: 1521114174569
-True     i 25 dateTimeUniqueId: 1521114174569 j 26 dateTimeUniqueId: 1521113225059
-True     i 3 dateTimeUniqueId: 1521451616994 j 4 dateTimeUniqueId: 1521448639118
-True     i 28 dateTimeUniqueId: 1521108552984 j 29 dateTimeUniqueId: 1521108245420
-True     i 29 dateTimeUniqueId: 1521108245420 j 30 dateTimeUniqueId: 1521108222991
-True     i 26 dateTimeUniqueId: 1521113225059 j 27 dateTimeUniqueId: 1521109005254
-True     i 27 dateTimeUniqueId: 1521109005254 j 28 dateTimeUniqueId: 1521108552984
-True     i 32 dateTimeUniqueId: 1521107891996 j 33 dateTimeUniqueId: 1521107819836
-True     i 30 dateTimeUniqueId: 1521108222991 j 31 dateTimeUniqueId: 1521107934586
-True     i 31 dateTimeUniqueId: 1521107934586 j 32 dateTimeUniqueId: 1521107891996
-True     i 35 dateTimeUniqueId: 1521107596543 j 36 dateTimeUniqueId: 1521107455171
-True     i 37 dateTimeUniqueId: 1521102642429 j 38 dateTimeUniqueId: 1521102344903
-True     i 38 dateTimeUniqueId: 1521102344903 j 39 dateTimeUniqueId: 1521101929414
-True     i 39 dateTimeUniqueId: 1521101929414 j 40 dateTimeUniqueId: 1521100051200
-True     i 40 dateTimeUniqueId: 1521100051200 j 41 dateTimeUniqueId: 1521099730851
-True     i 41 dateTimeUniqueId: 1521099730851 j 42 dateTimeUniqueId: 1521099367823
-True     i 42 dateTimeUniqueId: 1521099367823 j 43 dateTimeUniqueId: 1521098769890
-True     i 36 dateTimeUniqueId: 1521107455171 j 37 dateTimeUniqueId: 1521102642429
-True     i 33 dateTimeUniqueId: 1521107819836 j 34 dateTimeUniqueId: 1521107769492
-True     i 44 dateTimeUniqueId: 1521098113100 j 45 dateTimeUniqueId: 1521097968978
-True     i 46 dateTimeUniqueId: 1521097715164 j 47 dateTimeUniqueId: 1521030178379
-True     i 47 dateTimeUniqueId: 1521030178379 j 48 dateTimeUniqueId: 1521029220788
-True     i 48 dateTimeUniqueId: 1521029220788 j 49 dateTimeUniqueId: 1521019864257
-True     i 49 dateTimeUniqueId: 1521019864257 j 50 dateTimeUniqueId: 1521019459736
-True     i 50 dateTimeUniqueId: 1521019459736 j 51 dateTimeUniqueId: 1521016428696
-True     i 51 dateTimeUniqueId: 1521016428696 j 52 dateTimeUniqueId: 1521016107045
-True     i 52 dateTimeUniqueId: 1521016107045 j 53 dateTimeUniqueId: 1521015949222
-True     i 53 dateTimeUniqueId: 1521015949222 j 54 dateTimeUniqueId: 1521015748914
-True     i 45 dateTimeUniqueId: 1521097968978 j 46 dateTimeUniqueId: 1521097715164
-True     i 54 dateTimeUniqueId: 1521015748914 j 55 dateTimeUniqueId: 1521015359473
-True     i 34 dateTimeUniqueId: 1521107769492 j 35 dateTimeUniqueId: 1521107596543
-True     i 43 dateTimeUniqueId: 1521098769890 j 44 dateTimeUniqueId: 1521098113100
-True     i 56 dateTimeUniqueId: 1521014816816 j 57 dateTimeUniqueId: 1521014212427
-True     i 55 dateTimeUniqueId: 1521015359473 j 56 dateTimeUniqueId: 1521014816816
-True     i 57 dateTimeUniqueId: 1521014212427 j 58 dateTimeUniqueId: 1521014083730
+True    0 dateTimeUniqueId: 1521529767530 1 dateTimeUniqueId: 1521527107734
+True    1 dateTimeUniqueId: 1521527107734 2 dateTimeUniqueId: 1521523912343
+True    2 dateTimeUniqueId: 1521523912343 3 dateTimeUniqueId: 1521523161189
+True    3 dateTimeUniqueId: 1521523161189 4 dateTimeUniqueId: 1521522284111
+True    4 dateTimeUniqueId: 1521522284111 5 dateTimeUniqueId: 1521521753696
+True    5 dateTimeUniqueId: 1521521753696 6 dateTimeUniqueId: 1521521063785
+True    6 dateTimeUniqueId: 1521521063785 7 dateTimeUniqueId: 1521520064111
+True    7 dateTimeUniqueId: 1521520064111 8 dateTimeUniqueId: 1521519985118
+True    8 dateTimeUniqueId: 1521519985118 9 dateTimeUniqueId: 1521519764696
+True    9 dateTimeUniqueId: 1521519764696 10 dateTimeUniqueId: 1521519563441
+True    10 dateTimeUniqueId: 1521519563441 11 dateTimeUniqueId: 1521519429831
+True    11 dateTimeUniqueId: 1521519429831 12 dateTimeUniqueId: 1521453379676
+True    12 dateTimeUniqueId: 1521453379676 13 dateTimeUniqueId: 1521452970378
+True    13 dateTimeUniqueId: 1521452970378 14 dateTimeUniqueId: 1521452071383
+True    14 dateTimeUniqueId: 1521452071383 15 dateTimeUniqueId: 1521451616994
+True    15 dateTimeUniqueId: 1521451616994 16 dateTimeUniqueId: 1521446531358
+True    16 dateTimeUniqueId: 1521446531358 17 dateTimeUniqueId: 1521443276306
+True    17 dateTimeUniqueId: 1521443276306 18 dateTimeUniqueId: 1521443080721
+True    18 dateTimeUniqueId: 1521443080721 19 dateTimeUniqueId: 1521431856093
+True    19 dateTimeUniqueId: 1521431856093 20 dateTimeUniqueId: 1521189795227
+True    20 dateTimeUniqueId: 1521189795227 21 dateTimeUniqueId: 1521184869339
+True    21 dateTimeUniqueId: 1521184869339 22 dateTimeUniqueId: 1521184534530
+True    22 dateTimeUniqueId: 1521184534530 23 dateTimeUniqueId: 1521184086817
+True    23 dateTimeUniqueId: 1521184086817 24 dateTimeUniqueId: 1521182794668
+True    24 dateTimeUniqueId: 1521182794668 25 dateTimeUniqueId: 1521116015616
+True    25 dateTimeUniqueId: 1521116015616 26 dateTimeUniqueId: 1521114419747
+True    26 dateTimeUniqueId: 1521114419747 27 dateTimeUniqueId: 1521114275624
+True    27 dateTimeUniqueId: 1521114275624 28 dateTimeUniqueId: 1521113225059
+True    28 dateTimeUniqueId: 1521113225059 29 dateTimeUniqueId: 1521109005254
+True    29 dateTimeUniqueId: 1521109005254 30 dateTimeUniqueId: 1521108552984
+True    30 dateTimeUniqueId: 1521108552984 31 dateTimeUniqueId: 1521108245420
+True    31 dateTimeUniqueId: 1521108245420 32 dateTimeUniqueId: 1521108222991
+True    32 dateTimeUniqueId: 1521108222991 33 dateTimeUniqueId: 1521107934586
+True    33 dateTimeUniqueId: 1521107934586 34 dateTimeUniqueId: 1521107891996
+True    34 dateTimeUniqueId: 1521107891996 35 dateTimeUniqueId: 1521107819836
+True    35 dateTimeUniqueId: 1521107819836 36 dateTimeUniqueId: 1521107769492
+True    36 dateTimeUniqueId: 1521107769492 37 dateTimeUniqueId: 1521107596543
+True    37 dateTimeUniqueId: 1521107596543 38 dateTimeUniqueId: 1521107455171
+True    38 dateTimeUniqueId: 1521107455171 39 dateTimeUniqueId: 1521102642429
+True    39 dateTimeUniqueId: 1521102642429 40 dateTimeUniqueId: 1521102344903
+True    40 dateTimeUniqueId: 1521102344903 41 dateTimeUniqueId: 1521101929414
+True    41 dateTimeUniqueId: 1521101929414 42 dateTimeUniqueId: 1521098113100
+True    42 dateTimeUniqueId: 1521098113100 43 dateTimeUniqueId: 1521030178379
+True    43 dateTimeUniqueId: 1521030178379 44 dateTimeUniqueId: 1521029220788
+True    44 dateTimeUniqueId: 1521029220788 45 dateTimeUniqueId: 1521019864257
+True    45 dateTimeUniqueId: 1521019864257 46 dateTimeUniqueId: 1521019459736
+True    46 dateTimeUniqueId: 1521019459736 47 dateTimeUniqueId: 1521016107045
+True    47 dateTimeUniqueId: 1521016107045 48 dateTimeUniqueId: 1521015359473
+True    48 dateTimeUniqueId: 1521015359473 49 dateTimeUniqueId: 1521014816816
+True    49 dateTimeUniqueId: 1521014816816 50 dateTimeUniqueId: 1521014212427
+True    50 dateTimeUniqueId: 1521014212427 51 dateTimeUniqueId: 1521014083730
+True    51 dateTimeUniqueId: 1521014083730 52 dateTimeUniqueId: 1521002915160
+True    52 dateTimeUniqueId: 1521002915160 53 dateTimeUniqueId: 1521002661974
+True    53 dateTimeUniqueId: 1521002661974 54 dateTimeUniqueId: 1521002063780
+True    54 dateTimeUniqueId: 1521002063780 55 dateTimeUniqueId: 1520998308958
+True    55 dateTimeUniqueId: 1520998308958 56 dateTimeUniqueId: 1520944165385
+True    56 dateTimeUniqueId: 1520944165385 57 dateTimeUniqueId: 1520944058032
+True    57 dateTimeUniqueId: 1520944058032 58 dateTimeUniqueId: 1520942153117
+True    58 dateTimeUniqueId: 1520942153117 59 dateTimeUniqueId: 1520941864853
 __________________________________________________________________
+
 Checking Price Order
 ====================
+
 
 Ascending Order Checking
 ------------------------
 
 True    0 priceValue: 5043 ascendingArrayValue: 5043
 True    1 priceValue: 5043 ascendingArrayValue: 5043
+True    2 priceValue: 5043 ascendingArrayValue: 5043
+True    3 priceValue: 5043 ascendingArrayValue: 5043
+True    4 priceValue: 5043 ascendingArrayValue: 5043
 True    5 priceValue: 5043 ascendingArrayValue: 5043
 True    6 priceValue: 5043 ascendingArrayValue: 5043
 True    7 priceValue: 5043 ascendingArrayValue: 5043
@@ -162,7 +173,6 @@ True    15 priceValue: 5043 ascendingArrayValue: 5043
 True    16 priceValue: 5043 ascendingArrayValue: 5043
 True    17 priceValue: 5043 ascendingArrayValue: 5043
 True    18 priceValue: 5043 ascendingArrayValue: 5043
-True    3 priceValue: 5043 ascendingArrayValue: 5043
 True    19 priceValue: 5043 ascendingArrayValue: 5043
 True    20 priceValue: 5043 ascendingArrayValue: 5043
 True    21 priceValue: 5043 ascendingArrayValue: 5043
@@ -171,37 +181,51 @@ True    23 priceValue: 5043 ascendingArrayValue: 5043
 True    24 priceValue: 5043 ascendingArrayValue: 5043
 True    25 priceValue: 5043 ascendingArrayValue: 5043
 True    26 priceValue: 5043 ascendingArrayValue: 5043
-True    2 priceValue: 5043 ascendingArrayValue: 5043
 True    27 priceValue: 5043 ascendingArrayValue: 5043
-True    28 priceValue: 7212 ascendingArrayValue: 7212
-True    29 priceValue: 7212 ascendingArrayValue: 7212
-True    30 priceValue: 7212 ascendingArrayValue: 7212
-True    31 priceValue: 8501 ascendingArrayValue: 8501
-True    32 priceValue: 8501 ascendingArrayValue: 8501
-True    33 priceValue: 8501 ascendingArrayValue: 8501
-True    35 priceValue: 14361 ascendingArrayValue: 14361
-True    37 priceValue: 15794 ascendingArrayValue: 15794
-True    34 priceValue: 8501 ascendingArrayValue: 8501
-True    38 priceValue: 17306 ascendingArrayValue: 17306
-True    36 priceValue: 15606 ascendingArrayValue: 15606
-True    40 priceValue: 18236 ascendingArrayValue: 18236
-True    4 priceValue: 5043 ascendingArrayValue: 5043
-True    39 priceValue: 17306 ascendingArrayValue: 17306
+True    28 priceValue: 5043 ascendingArrayValue: 5043
+True    29 priceValue: 5043 ascendingArrayValue: 5043
+True    30 priceValue: 5043 ascendingArrayValue: 5043
+True    31 priceValue: 5043 ascendingArrayValue: 5043
+True    32 priceValue: 5043 ascendingArrayValue: 5043
+True    33 priceValue: 5043 ascendingArrayValue: 5043
+True    34 priceValue: 5043 ascendingArrayValue: 5043
+True    35 priceValue: 5043 ascendingArrayValue: 5043
+True    36 priceValue: 5043 ascendingArrayValue: 5043
+True    37 priceValue: 5043 ascendingArrayValue: 5043
+True    38 priceValue: 6912 ascendingArrayValue: 6912
+True    39 priceValue: 7212 ascendingArrayValue: 7212
+True    40 priceValue: 7212 ascendingArrayValue: 7212
+True    41 priceValue: 7212 ascendingArrayValue: 7212
+True    42 priceValue: 8501 ascendingArrayValue: 8501
+True    43 priceValue: 8501 ascendingArrayValue: 8501
+True    44 priceValue: 8501 ascendingArrayValue: 8501
+True    45 priceValue: 8501 ascendingArrayValue: 8501
+True    46 priceValue: 14361 ascendingArrayValue: 14361
+True    47 priceValue: 15606 ascendingArrayValue: 15606
+True    48 priceValue: 15794 ascendingArrayValue: 15794
+True    49 priceValue: 17306 ascendingArrayValue: 17306
+True    50 priceValue: 17306 ascendingArrayValue: 17306
+True    51 priceValue: 18236 ascendingArrayValue: 18236
+True    52 priceValue: 18236 ascendingArrayValue: 18236
+
 Descending Order Checking
 -------------------------
 
 True  0 priceValue: 18236 descendingArrayValue: 18236
-True  1 priceValue: 17306 descendingArrayValue: 17306
+True  1 priceValue: 18236 descendingArrayValue: 18236
 True  2 priceValue: 17306 descendingArrayValue: 17306
-True  3 priceValue: 15794 descendingArrayValue: 15794
-True  4 priceValue: 15606 descendingArrayValue: 15606
-True  5 priceValue: 14361 descendingArrayValue: 14361
-True  6 priceValue: 8501 descendingArrayValue: 8501
+True  3 priceValue: 17306 descendingArrayValue: 17306
+True  4 priceValue: 15794 descendingArrayValue: 15794
+True  5 priceValue: 15606 descendingArrayValue: 15606
+True  6 priceValue: 14361 descendingArrayValue: 14361
+True  7 priceValue: 8501 descendingArrayValue: 8501
 True  8 priceValue: 8501 descendingArrayValue: 8501
 True  9 priceValue: 8501 descendingArrayValue: 8501
-True  7 priceValue: 8501 descendingArrayValue: 8501
-True  10 priceValue: 7212 descendingArrayValue: 7212
-True  14 priceValue: 5043 descendingArrayValue: 5043
+True  10 priceValue: 8501 descendingArrayValue: 8501
+True  11 priceValue: 7212 descendingArrayValue: 7212
+True  12 priceValue: 7212 descendingArrayValue: 7212
+True  13 priceValue: 7212 descendingArrayValue: 7212
+True  14 priceValue: 6912 descendingArrayValue: 6912
 True  15 priceValue: 5043 descendingArrayValue: 5043
 True  16 priceValue: 5043 descendingArrayValue: 5043
 True  17 priceValue: 5043 descendingArrayValue: 5043
@@ -228,7 +252,16 @@ True  37 priceValue: 5043 descendingArrayValue: 5043
 True  38 priceValue: 5043 descendingArrayValue: 5043
 True  39 priceValue: 5043 descendingArrayValue: 5043
 True  40 priceValue: 5043 descendingArrayValue: 5043
+True  41 priceValue: 5043 descendingArrayValue: 5043
+True  42 priceValue: 5043 descendingArrayValue: 5043
+True  43 priceValue: 5043 descendingArrayValue: 5043
+True  44 priceValue: 5043 descendingArrayValue: 5043
+True  45 priceValue: 5043 descendingArrayValue: 5043
+True  46 priceValue: 5043 descendingArrayValue: 5043
+True  47 priceValue: 5043 descendingArrayValue: 5043
+True  48 priceValue: 5043 descendingArrayValue: 5043
+True  49 priceValue: 5043 descendingArrayValue: 5043
+True  50 priceValue: 5043 descendingArrayValue: 5043
+True  51 priceValue: 5043 descendingArrayValue: 5043
+True  52 priceValue: 5043 descendingArrayValue: 5043
 __________________________________________________________________
-True  11 priceValue: 7212 descendingArrayValue: 7212
-True  12 priceValue: 7212 descendingArrayValue: 7212
-True  13 priceValue: 5043 descendingArrayValue: 5043
