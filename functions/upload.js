@@ -699,6 +699,7 @@ let  uploadPage = {
       } else {
         fs.appendFile(displayStyleOutput,"\nList view not enabled", function(err) { if (err) return console.log(err); });
       }
+      browser.mediumWait();
       this.gridViewButton.waitForEnabled();
       this.gridViewButton.click();
       browser.mediumWait();
