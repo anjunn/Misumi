@@ -269,7 +269,6 @@ let  projectPage = {
           }
         } else {
           if (this.backButton.isVisible()){
-            console.log("backbtnnn");
             this.backButton.click();
           }
           if(this.partsPriceText(i).isVisible()){
