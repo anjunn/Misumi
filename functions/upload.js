@@ -5,6 +5,7 @@ let fs = require('fs');
 var path = require('path');
 var xlsx = require('node-xlsx');
 const resultPath = './Data/output/uploadExcelComparison.txt';
+const displayStyleOutput = './Data/output/displayStyleChecking.txt';
 
 /**
  * upload Page Object
@@ -668,7 +669,6 @@ let  uploadPage = {
 
     }
   },
-
   /*
    * Verify automatic quotaion passes 
    */
@@ -685,31 +685,29 @@ let  uploadPage = {
       expect(flag).to.equal(1);
     }
   },
-
   /*
    * Checking project listing style; Grid view & List view  
    */
   checkProjectListStyle:{
     value: function(){
-      console.log("Checking Project Listing Style");
-      console.log("==============================");
+      fs.writeFile(displayStyleOutput,"\nChecking Project Listing Style\n==============================\n\n", function(err) { if (err) return console.log(err); });
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       browser.mediumWait();
-     if(this.listView.isVisible()){
-       console.log("List view enabled");
-     } else {
-       console.log("List view not enabled");
-     }
-     this.gridViewButton.waitForEnabled();
-     this.gridViewButton.click();
-     browser.mediumWait();
-     if(this.gridView.isVisible()){
-       console.log("Grid view enabled");
-     } else {
-       console.log("Grid view not enabled");
-     }
-     console.log("__________________________________________________________________");
+      if(this.listView.isVisible()){
+        fs.appendFile(displayStyleOutput,"\nList view enabled", function(err) { if (err) return console.log(err); });
+      } else {
+        fs.appendFile(displayStyleOutput,"\nList view not enabled", function(err) { if (err) return console.log(err); });
+      }
+      this.gridViewButton.waitForEnabled();
+      this.gridViewButton.click();
+      browser.mediumWait();
+      if(this.gridView.isVisible()){
+        fs.appendFile(displayStyleOutput,"\nGrid view enabled", function(err) { if (err) return console.log(err); });
+      } else {
+        fs.appendFile(displayStyleOutput,"\nGrid view not enabled", function(err) { if (err) return console.log(err); });
+      }
+      fs.appendFile(displayStyleOutput,"\n__________________________________________________________________\n", function(err) {if (err) return console.log(err); });
     }
   }, 
   /*
@@ -717,8 +715,7 @@ let  uploadPage = {
    */
   checkProjectCount:{
     value: function(){
-      console.log("Checking Project Count in a single page");
-      console.log("=======================================");
+      fs.appendFile(displayStyleOutput,"\n\nChecking Project Count in a single page\n=======================================\n", function(err) { if (err) return console.log(err); });
       this.projectCountButton.waitForEnabled();
       this.projectCountButton.click();
       var list = this.projectCountButton.getText().split('\n');
@@ -728,19 +725,17 @@ let  uploadPage = {
         this.projectCount(i).click();
         browser.mediumWait();
         var countSelected = parseInt(this.projectCount(i).getValue());
-        console.log("Selected count: ", countSelected);
         var totalCount = this.dataBox.value.length; 
-        console.log("Items displayed in a single page: ",totalCount);
         if(totalCount === countSelected){
-          console.log("Count correctly displayed");
+          fs.appendFile(displayStyleOutput,"\n*Selected count: "+ countSelected+" *Items displayed in a single page: "+totalCount + " *Count correctly displayed", function(err) {if (err) return console.log(err); });
         } else if(totalCount < countSelected){
-          console.log("Count is lesser than selected");
+          fs.appendFile(displayStyleOutput,"\n*Selected count: "+ countSelected+" *Items displayed in a single page: "+totalCount + " *Count is lesser than selected", function(err) {if (err) return console.log(err); });
         } else {
-          console.log("Wrong!!! Count is greater than selected");
+          fs.appendFile(displayStyleOutput,"\n*Selected count: "+ countSelected+" *Items displayed in a single page: "+totalCount + " *Wrong!!! Count is greater than selected", function(err) {if (err) return console.log(err); });
         }        
         browser.refresh();
       }
-      console.log("__________________________________________________________________");
+      fs.appendFile(displayStyleOutput,"\n__________________________________________________________________\n", function(err) {if (err) return console.log(err); });
     }
   },
   /*
@@ -748,40 +743,39 @@ let  uploadPage = {
    */
   checkDateTimeOrder:{
     value: function(){
-      console.log("Checking DateTime Order");
-      console.log("=======================");
+      fs.appendFile(displayStyleOutput,"\n\nChecking DateTime Order\n=======================\n", function(err) {if (err) return console.log(err); });
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       expect(this.listView.isVisible());
       browser.mediumWait();
       var totalProjects = this.dataBox.value.length;
-      console.log("Total Projects: ",totalProjects);
+      fs.appendFile(displayStyleOutput,"Total Projects: "+totalProjects, function(err) {if (err) return console.log(err); });
       this.sortButton.waitForEnabled();
       this.sortButton.click();
       browser.extraLongWait();
       if(!this.sortInAscendingState.isVisible()){ 
         this.sortInAscending.click();   
       }
-      console.log("Ascending Order Checking");
-      console.log("------------------------");      
+      fs.appendFile(displayStyleOutput,"\n\nAscending Order Checking\n------------------------\n", function(err) {if (err) return console.log(err); });
       var name= [];
       var dateTimeUniqueId = [];
+      browser.longWait();
       for(var i=1; i<=totalProjects; i++){
-        this.projectName(i).waitForVisible();
-        name[i-1] = this.projectName(i).getText();
-        dateTimeUniqueId[i-1] = name[i-1].replace(/[^0-9]/g,'');
+        if(this.projectName(i).isVisible()) {
+          name[i-1] = this.projectName(i).getText();
+          dateTimeUniqueId[i-1] = name[i-1].replace(/[^0-9]/g,'');
+        } else continue;
       }
       for (var i=0; i < totalProjects; i++){
         if(dateTimeUniqueId[i] != ''){
-          console.log("i",i,"dateTimeUniqueId[i]: ",dateTimeUniqueId[i]);
           for (var j = i+1; j < totalProjects; j++){
-            if (dateTimeUniqueId[j] !='') {
-              console.log("j",j,"dateTimeUniqueId[j]: ",dateTimeUniqueId[j]);
+            if (dateTimeUniqueId[j] !=''&& typeof(dateTimeUniqueId[j]) !="undefined") {
               if ( dateTimeUniqueId[i] < dateTimeUniqueId[j]){
-                console.log("Ascending");
+                fs.appendFileSync(displayStyleOutput,"\nTrue     "+i+" dateTimeUniqueId: "+dateTimeUniqueId[i]+ " "+j+" dateTimeUniqueId: "+dateTimeUniqueId[j], function(err) {if (err) return console.log(err); });
                 break;
               } else {
-                console.log("Ascending Wrong!!!", dateTimeUniqueId[i] ,dateTimeUniqueId[j]);
+                fs.appendFileSync(displayStyleOutput,"\nWrong!!! "+i+" dateTimeUniqueId: "+dateTimeUniqueId[i]+ " "+j+" dateTimeUniqueId: "+dateTimeUniqueId[j], function(err) {if (err) return console.log(err); });
+                break;
               }
             } else {
               continue;
@@ -795,29 +789,29 @@ let  uploadPage = {
       browser.mediumWait();
       if(!this.sortInDescendingState.isVisible()){ 
         this.sortInDescending.click();   
-        console.log("SortInDescending clicked");
         browser.mediumWait();
       }
-      console.log("Descending Order Checking");
-      console.log("-------------------------");      
+      fs.appendFile(displayStyleOutput,"\n\nDescending Order Checking\n-------------------------\n", function(err) {if (err) return console.log(err); });
+      browser.mediumWait();
       var name= [];
       var dateTimeUniqueId = [];
+      browser.longWait();
       for(var i=1; i<=totalProjects; i++){
-        this.projectName(i).waitForVisible();
-        name[i-1] = this.projectName(i).getText();
-        dateTimeUniqueId[i-1] = name[i-1].replace(/[^0-9]/g,'');
+        if(this.projectName(i).isVisible()) {
+          name[i-1] = this.projectName(i).getText();
+          dateTimeUniqueId[i-1] = name[i-1].replace(/[^0-9]/g,'');
+        } else continue;
       }
       for (var i=0; i < totalProjects; i++){
         if(dateTimeUniqueId[i] != ''){
-          console.log("i",i,"dateTimeUniqueId[i]: ",dateTimeUniqueId[i]);
           for (var j = i+1; j < totalProjects; j++){
             if (dateTimeUniqueId[j] !='') {
-              console.log("j",j,"dateTimeUniqueId[j]: ",dateTimeUniqueId[j]);
               if ( dateTimeUniqueId[i] > dateTimeUniqueId[j]){
-                console.log("Descending");
+                fs.appendFileSync(displayStyleOutput,"\nTrue    "+i+" dateTimeUniqueId: "+dateTimeUniqueId[i]+" "+j+" dateTimeUniqueId: "+dateTimeUniqueId[j], function(err) {if (err) return console.log(err); });
                 break;
               } else {
-                console.log("Descending Wrong");
+                fs.appendFileSync(displayStyleOutput,"\nWrong!!!"+i+" dateTimeUniqueId: "+dateTimeUniqueId[i]+" "+j+" dateTimeUniqueId: "+dateTimeUniqueId[j], function(err) {if (err) return console.log(err); });
+                break;
               }
             } else {
               continue;
@@ -827,7 +821,7 @@ let  uploadPage = {
           continue;
         }
       }
-      console.log("__________________________________________________________________");
+      fs.appendFile(displayStyleOutput,"\n__________________________________________________________________\n", function(err) {if (err) return console.log(err); });
     }
   },
   /*
@@ -835,8 +829,7 @@ let  uploadPage = {
    */
   checkPriceOrder:{
     value: function(){
-      console.log("Checking Price Order");
-      console.log("====================");
+      fs.appendFile(displayStyleOutput,"\nChecking Price Order\n====================\n", function(err) {if (err) return console.log(err); });
       browser.refresh();
       if(!this.listView.isVisible()){
         this.listViewButton.waitForEnabled();
@@ -855,8 +848,7 @@ let  uploadPage = {
         this.sortInAscending.click();   
         browser.extraLongWait();
       }
-      console.log("Ascending Order Checking");
-      console.log("------------------------");
+      fs.appendFile(displayStyleOutput,"\n\nAscending Order Checking\n------------------------\n", function(err) {if (err) return console.log(err); });
       var price= [];
       var priceValue = [];
       var ascendingArray= [];
@@ -873,10 +865,10 @@ let  uploadPage = {
       ascendingArray = priceValue.sort(function(a, b){return a - b}); //ascending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === ascendingArray[i]){
-          console.log("True" ,  i," priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          fs.appendFileSync(displayStyleOutput,"\nTrue    "+ i+" priceValue: "+priceValue[i]+ " ascendingArrayValue: "+ ascendingArray[i], function(err) {if (err) return console.log(err); });
           continue;
         } else{
-          console.log("Wrong!!! ",  i," priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          fs.appendFileSync(displayStyleOutput,"\nWrong!!!"+ i+" priceValue: ",priceValue[i], " ascendingArrayValue: ", ascendingArray[i], function(err) {if (err) return console.log(err); });
         }
       }
       this.sortButton.click();
@@ -884,8 +876,7 @@ let  uploadPage = {
       if(!this.sortInDescendingState.isVisible()){ 
         this.sortInDescending.click();   
       }
-      console.log("Descending Order Checking");
-      console.log("-------------------------");
+      fs.appendFile(displayStyleOutput,"\n\nDescending Order Checking\n-------------------------\n", function(err) {if (err) return console.log(err); });
       this.priceListed(1).waitForVisible();
       for(var i=1; i<=totalProjects; i++){
         if (this.priceListed(i).isVisible()){
@@ -898,13 +889,13 @@ let  uploadPage = {
       descendingArray = priceValue.sort(function(a, b){return b - a}); //descending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === descendingArray[i]){
-          console.log("True ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          fs.appendFileSync(displayStyleOutput,"\nTrue  "+ i+ " priceValue: "+priceValue[i]+ " descendingArrayValue: "+ descendingArray[i], function(err) {if (err) return console.log(err); });
           continue;
         } else{
-          console.log("Wrong!!!", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          fs.appendFileSync(displayStyleOutput,"\nWrong!!!"+ i+ " priceValue: "+priceValue[i]+ " descendingArrayValue: "+ descendingArray[i], function(err) {if (err) return console.log(err); });
         }
       }
-      console.log("__________________________________________________________________");
+      fs.appendFile(displayStyleOutput,"\n__________________________________________________________________", function(err) {if (err) return console.log(err); });
     }
   }
 };
