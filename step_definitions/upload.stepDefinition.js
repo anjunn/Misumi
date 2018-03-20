@@ -100,6 +100,10 @@ module.exports = function () {
     uploadPage.pageRefresh();
   });
 
+  this.Given(/^User verifies if automatic quotation passes$/, () => {
+    uploadPage.verifyAutoQuotation();
+  });
+
   this.When(/^Check project list style by changing to list view and then grid view$/, () => {
     uploadPage.checkProjectListStyle();
   });
@@ -115,6 +119,5 @@ module.exports = function () {
   this.Then(/^Check sort order of Price in ascending and then in descending$/, () => {
     uploadPage.checkPriceOrder();
   });
-
 };
 

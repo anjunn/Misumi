@@ -263,11 +263,17 @@ let  projectPage = {
           this.partsPriceText(i).waitForVisible();
           browser.params.multiplePinPrice[`part${i}`] = this.partsPriceText(i).getText();
         } else if (pinType === 'pin and plate') {
-          browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+
+          if(this.partsPriceText(i).isVisible()){
+            browser.params.pinAndPlatePrice[`part${i}`] = this.partsPriceText(i).getText();
+          }
         } else {
-         this.backButton.waitForEnabled();
-         this.backButton.click();
-         browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+          if (this.backButton.isVisible()){
+            this.backButton.click();
+          }
+          if(this.partsPriceText(i).isVisible()){
+            browser.params.platePrice[`part${i}`] = this.partsPriceText(i).getText();
+          }
 
         }
       }
@@ -300,13 +306,16 @@ let  projectPage = {
   */
   estimateConditionPartsview: {
     value: function(estimateCondition, pinType) {
+      if(this.backButton.isVisible()){
+        this.backButton.click();
+        }
       if (pinType === 'pin and plate'){
         this.manualQuotationPinAndPlate.waitForVisible();
         this.manualQuotationPinAndPlate.click();
       } else {
         browser.extraLongWait();
-        this.manualQuotationPlate.waitForVisible();
-        this.manualQuotationPlate.click();
+            this.manualQuotationPlate.waitForVisible();
+            this.manualQuotationPlate.click();
       }
       this.materialFieldPartsView.waitForEnabled();
       this.materialFieldPartsView.selectByVisibleText(estimateCondition.material);

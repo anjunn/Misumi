@@ -2,11 +2,11 @@ let wosPage = require('../functions/wos.js');
 let data = require('../data/input-data/dataset.json');
 module.exports = function () {
 
-  this.Then(/^User verifies if the quantity and model number in Order input page is same as shown in presentation$/,{retry: 2},() => {
+  this.Then(/^User verifies if the quantity and model number in Order input page is same as shown in presentation$/,() => {
       wosPage.checkQuantityAndModel(data.department);
   });
 
-  this.Given(/^User clicks on the next button$/,{retry: 2},() => {
+  this.Given(/^User clicks on the next button$/,() => {
       wosPage.clickNext();
   });
 

@@ -40,6 +40,8 @@ let  uploadPage = {
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
   surfaceItems: { value: function (n) { return browser.element(`(//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//option)[${n}]`); }},
   materialItems: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]//option[${n}]`); }},
+  passAutoQuotation: { get : function() { return browser.element('(//ul[contains(@class,"partsStatusList")])[1]//li'); }},  
+  thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
   listViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="list"]/a'); }},
   gridViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="card"]'); }},
   listView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix styleList"]'); }},
@@ -65,6 +67,7 @@ let  uploadPage = {
   thumbnailAll: { get: function() { return browser.element('//a[@class="figureBox"]//figure'); }},
   thumbnailEach: { value: function(n) { return browser.element(`//a[@class="figureBox"]//figure)[${n}]`); }},
     
+
   /**
    * Upload file by triggering drop event
    */
@@ -665,6 +668,24 @@ let  uploadPage = {
 
     }
   },
+
+  /*
+   * Verify automatic quotaion passes 
+   */
+  verifyAutoQuotation:{
+    value: function(){    
+     browser.longWait();
+     this.thumbnail.waitForVisible();
+     flag=0;
+     var classCheck=this.passAutoQuotation.getAttribute('class')
+     if(classCheck==="status01")
+     {
+      flag=1;
+     }
+      expect(flag).to.equal(1);
+    }
+  },
+
   /*
    * Checking project listing style; Grid view & List view  
    */
@@ -675,14 +696,20 @@ let  uploadPage = {
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       browser.mediumWait();
-      expect(this.listView.isVisible());
-      console.log("List view enabled");
-      this.gridViewButton.waitForEnabled();
-      this.gridViewButton.click();
-      browser.mediumWait();
-      expect(this.gridView.isVisible());
-      console.log("Grid view enabled");
-      console.log("__________________________________________________________________");
+     if(this.listView.isVisible()){
+       console.log("List view enabled");
+     } else {
+       console.log("List view not enabled");
+     }
+     this.gridViewButton.waitForEnabled();
+     this.gridViewButton.click();
+     browser.mediumWait();
+     if(this.gridView.isVisible()){
+       console.log("Grid view enabled");
+     } else {
+       console.log("Grid view not enabled");
+     }
+     console.log("__________________________________________________________________");
     }
   }, 
   /*
@@ -846,10 +873,10 @@ let  uploadPage = {
       ascendingArray = priceValue.sort(function(a, b){return a - b}); //ascending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === ascendingArray[i]){
-          console.log("True  i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          console.log("True" ,  i," priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
           continue;
         } else{
-          console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
+          console.log("Wrong!!! ",  i," priceValue[i]: ",priceValue[i], " ascendingArray[i]: ", ascendingArray[i]);
         }
       }
       this.sortButton.click();
@@ -871,10 +898,10 @@ let  uploadPage = {
       descendingArray = priceValue.sort(function(a, b){return b - a}); //descending order sorting
       for (var i=0; i < priceValue.length ; i++){
         if(priceValue[i] === descendingArray[i]){
-          console.log("True  i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          console.log("True ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
           continue;
         } else{
-          console.log("Wrong!!! i: ", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
+          console.log("Wrong!!!", i, " priceValue[i]: ",priceValue[i], " descendingArray[i]: ", descendingArray[i]);
         }
       }
       console.log("__________________________________________________________________");

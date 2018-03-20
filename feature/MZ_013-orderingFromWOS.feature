@@ -15,6 +15,7 @@ Scenario: User checks the uploaded project
 Given User uploads 3D data for single pin
 When User verifies whether upload is successful for single pin
 And User defines quotation condition for single pin
+Given User verifies if automatic quotation passes
 Given User opens the uploaded project
 Given User goes to order page
 

@@ -1,6 +1,7 @@
 
 let Page = require('./page');
 let data = require('../data/input-data/dataset.json');
+var firstCount=0;
 /**
  * wos Page Object
  *
@@ -16,7 +17,6 @@ let wosPage = {
   priceInShippingDatePage: { get: function () { return browser.element('(//td[@class="right"])[2]//span');}},
   quantityInShippingDatePage: { get: function () { return browser.element('(//td[@class="right"])[1]');}},
   orderQuanity: { get: function () { return browser.element('//input[@id="detailList_0.quantity"]');}},
-  buttonNext:{ get: function () { return browser.element('//a[@id="dictBulk"]');}},
   buttonNextSelector: { get: function() { return `#btnNextAreaDiv > div > a:nth-child(1)` } },
   buttonNext:{ get: function () { return browser.element('(//a[@class="btnNext"])[1]');}},
   nextButtonSelector: { get: function() { return `#dictBulk` } },
@@ -35,12 +35,15 @@ let wosPage = {
   departmentId: { get: function () { return browser.element('//input[@id="shipToDepartment"]');}},
   error: { get: function () { return browser.element('(//li[@class="iconWarning"]//span)[1]'); }},
   currentShippingDate: { get: function () { return browser.element('//input[@id="detailList_0.inputSpecifiedShipDate"]'); }},
+  clickCalender: { get: function () { return browser.element('(//span[contains(@class,"btnCalendar")])[2]'); }},
+  clickDate: { get: function () { return browser.element('(//a[contains(@onclick,"doSelect")])[1]'); }},
   /**
    * User verifies model number and quantity
    */
   checkQuantityAndModel: {
     value: function(department) {
-      browser.smallWait();
+      browser.mediumWait();
+      this.departmentId.waitForEnabled();
       this.departmentId.setValue("ＱＢＵＲＳＴ");
       this.modelNumber.waitForVisible();
       expect(this.modelNumber.getValue()).to.be.equal(browser.params.modelNumberOrderPage);
@@ -53,12 +56,15 @@ let wosPage = {
    */
   clickNext: {
     value: function() {
-      browser.mediumWait();
-      if(this.error.isVisible())
-          this.checkError();
+      browser.longWait();
+      if(this.error.isVisible() && firstCount===0){
+        this.checkError(); }
       browser.scrollToElement(this.buttonNextSelector);
-      this.buttonNext.waitForVisible();
-      this.buttonNext.click(); 
+      browser.smallWait();
+      if(this.buttonNext.isVisible()){
+        this.buttonNext.waitForEnabled();
+        this.buttonNext.click();
+      }
     }
   },
 
@@ -87,9 +93,7 @@ let wosPage = {
        expect(this.priceInShippingDatePage.getText()).to.include(browser.params.priceOrderPage);
        expect(browser.params.quantiyOrderpage).to.be.equal(this.quantityInShippingDatePage.getText());
       } else {
-        this.closeButton.waitForVisible();
-        this.closeButton.click();
-        this.verifyDetails();
+        this.checkError();
       }
     }
   },
@@ -131,51 +135,16 @@ let wosPage = {
       {
         while(this.error.isVisible() && errorFlag===0){
           if(this.error.getText().includes(data.shipingDateError)||this.error.getText().includes(data.anotherShipingDateError)){
-            var date=this.currentShippingDate.getValue();
-            date.split();
-            var day=this.joinElements(date[8],date[9]);
-            var month=this.joinElements(date[5],date[6]);
-            var year=this.joinElementsYear(date[0],date[1],date[2],date[3])
-              if(month=="01"||month=="03"||month=="05"||month=="07"||month=="08"||month=="10"||month=="12"){
-                if(day==31)
-                {
-                  if(month==12)  {
-                    month="01";
-                    day="01";
-                    year=parseInt(year)+1;
-                  }
-                  else {
-                    month=parseInt(month)+1;
-                    day="01";
-                  } 
-                }
-                else {
-                  day=parseInt(day)+1;
-                }
-              }
-              else if(month=="04"||month=="06"||month=="09"||month=="11"){
-                if(day==30) {
-                  month=parseInt(month)+1;
-                  day="01";
-                }
-                else {
-                  day=parseInt(day)+1;
-                }
-              }
-              else if(month=="02") {
-              if(day=="28"||day=="29")
-              {
-                day="01";
-                month=parseInt(month)+1;
-              }
-              else {
-                day=parseInt(day)+1;
-              }
-              }
-              var dateFinal=this.formdate(year,month,day);
-              this.currentShippingDate.setValue(dateFinal);
-              this.currentShippingDate.click();
-              this.clickNext();
+            this.clickCalender.click();
+            var windowHandles = browser.windowHandles()
+            browser.switchTab(browser.windowHandles().value[2]);
+            this.clickDate.waitForEnabled();
+            this.clickDate.click();
+            browser.switchTab(browser.windowHandles().value[1]);
+            browser.scrollToElement(this.buttonNextSelector);
+            this.buttonNext.waitForEnabled();
+            this.buttonNext.click();
+            errorFlag=0;
           }
           else {
             errorFlag=1;
