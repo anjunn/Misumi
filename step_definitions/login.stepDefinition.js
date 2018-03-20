@@ -31,7 +31,7 @@ module.exports = function () {
    	loginPage.validatePasswordField();
   });
 
-  this.Then(/^User enters credentials and logs in$/, () => {
+  this.Then(/^User enters credentials and logs in$/, {retry: 2}, () => {
     loginPage.login();
   });
 
@@ -42,7 +42,7 @@ module.exports = function () {
   this.Given(/^User goes to Home Page of lab site$/, () => {
     loginPage.goToHomePageLabSite();
   });
-  this.When(/^User redirects to order history page$/, () => {
+  this.When(/^User redirects to order history page$/, {retry: 2}, () => {
     loginPage.goToOrderHistory();
   });
 };

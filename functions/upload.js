@@ -7,7 +7,6 @@ var xlsx = require('node-xlsx');
 const resultPath = './Data/output/uploadExcelComparison.txt';
 const displayStyleOutput = './Data/output/displayStyleChecking.txt';
 
-
 /**
  * upload Page Object
  *
@@ -42,8 +41,34 @@ let  uploadPage = {
   previous: { get: function () { return browser.element(' (//li[@class="btn btnColor04"])[2]'); }},
   surfaceItems: { value: function (n) { return browser.element(`(//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="surfaceId"]//option)[${n}]`); }},
   materialItems: { value: function (n) { return browser.element(`//div[@class="dataLst clearfix"]/ul/li[1]//select[@name="materialId"]//option[${n}]`); }},
+  passAutoQuotation: { get : function() { return browser.element('(//ul[contains(@class,"partsStatusList")])[1]//li'); }},  
+  thumbnail: { get : function() { return browser.element('//div[@class="dataLst clearfix"]/ul/li[1]//figure/img'); }},
+  listViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="list"]/a'); }},
+  gridViewButton: { get: function () { return browser.element('//ul[@class="projectStyle"]//li[@class="card"]'); }},
+  listView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix styleList"]'); }},
+  gridView: { get: function () { return browser.element('//div[@id="masonryArea"][@class="clearfix"]'); }},
+  projectCountButton: { get: function () { return browser.element('//select[@class="textBold"]'); }},
+  projectCount: { value: function (n) { return browser.element(`(//select[@class="textBold"]//option)[${n}]`); }},
+  dataBox: { get: function () { return browser.elements('//li[@class="dataBox"]'); }},
+  sortButton: { get: function() { return browser.element('//main[@id="main"]//ul[@class="projectSort"]'); }},
+  sortButtonSelector: { get: function() { return `  #main > div > ul.projectSort > li > span` } },
+  sortItems: { value: function(n) { return browser.element(`(//ul[@class="menuSecond"]//li)[${n}]`); }},
+  sortItemsName: { get: function() { return browser.element('(//ul[@class="menuSecond"]'); }},
+  sortByCreationDate: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"作成日順")]'); }},
+  sortByChangedDate: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"変更日順")]'); }},
+  sortByPrice: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"見積金額順")]'); }},
+  sortInAscendingState: { get: function() { return browser.element('//main[@id="main"]//li[@class="border disable"]'); }},
+  sortInDescendingState: { get: function() { return browser.element('//main[@id="main"]//li[@class="border"]'); }},
+  sortInAscending: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"昇順")]'); }},
+  sortInDescending: { get: function() { return browser.element('//main[@id="main"]//a[contains(text(),"降順")]'); }},
+  dateUpload: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateUpload"])[${n}]`)}},
+  dateRenew: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="dateRenew"])[${n}]`)}},
+  priceListed: { value: function(n){ return browser.element(`(//li[@class="dataBox"]//p[@class="price"])[${n}]`)}},
+  projectName: { value: function(n){ return browser.element(`(//div[@class="projectname"])[${n}]`)}},
+  thumbnailAll: { get: function() { return browser.element('//a[@class="figureBox"]//figure'); }},
+  thumbnailEach: { value: function(n) { return browser.element(`//a[@class="figureBox"]//figure)[${n}]`); }},
     
-  
+
   /**
    * Upload file by triggering drop event
    */
@@ -645,36 +670,46 @@ let  uploadPage = {
     }
   },
   /*
+   * Verify automatic quotaion passes 
+   */
+  verifyAutoQuotation:{
+    value: function(){    
+     browser.longWait();
+     this.thumbnail.waitForVisible();
+     flag=0;
+     var classCheck=this.passAutoQuotation.getAttribute('class')
+     if(classCheck==="status01")
+     {
+      flag=1;
+     }
+      expect(flag).to.equal(1);
+    }
+  },
+  /*
    * Checking project listing style; Grid view & List view  
    */
   checkProjectListStyle:{
     value: function(){
-      fs.writeFile(displayStyleOutput,"\nChecking Project Listing Style\n==============================\n\n", function(err) {
-        if (err) return console.log(err); });
-      console.log("Checking Project Listing Style");
-      console.log("==============================");
+      fs.writeFile(displayStyleOutput,"\nChecking Project Listing Style\n==============================\n\n", function(err) { if (err) return console.log(err); });
+      console.log("\nChecking Project Listing Style\n==============================\n\n");
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       browser.mediumWait();
       if(this.listView.isVisible()){
-        fs.appendFile(displayStyleOutput,"\nList view enabled", function(err) {
-        if (err) return console.log(err); });
-          console.log("List view enabled");
+        fs.appendFile(displayStyleOutput,"\nList view enabled", function(err) { if (err) return console.log(err); });
+        console.log("List view enabled");
       } else {
-        fs.appendFile(displayStyleOutput,"\nList view not enabled", function(err) {
-        if (err) return console.log(err); });
+        fs.appendFile(displayStyleOutput,"\nList view not enabled", function(err) { if (err) return console.log(err); });
         console.log("List view not enabled");
       }
       this.gridViewButton.waitForEnabled();
       this.gridViewButton.click();
       browser.mediumWait();
       if(this.gridView.isVisible()){
-        fs.appendFile(displayStyleOutput,"\nGrid view enabled", function(err) {
-        if (err) return console.log(err); });
+        fs.appendFile(displayStyleOutput,"\nGrid view enabled", function(err) { if (err) return console.log(err); });
         console.log("Grid view enabled");
       } else {
-        fs.appendFile(displayStyleOutput,"\nGrid view not enabled", function(err) {
-        if (err) return console.log(err); });
+        fs.appendFile(displayStyleOutput,"\nGrid view not enabled", function(err) { if (err) return console.log(err); });
         console.log("Grid view not enabled");
       }
       fs.appendFile(displayStyleOutput,"\n__________________________________________________________________", function(err) {if (err) return console.log(err); });
@@ -686,10 +721,8 @@ let  uploadPage = {
    */
   checkProjectCount:{
     value: function(){
-      fs.appendFile(displayStyleOutput,"\n\nChecking Project Count in a single page\n=======================================\n", function(err) {
-        if (err) return console.log(err); });
-      console.log("Checking Project Count in a single page");
-      console.log("=======================================");
+      fs.appendFile(displayStyleOutput,"\n\nChecking Project Count in a single page\n=======================================\n", function(err) { if (err) return console.log(err); });
+      console.log("Checking Project Count in a single page\n=======================================");
       this.projectCountButton.waitForEnabled();
       this.projectCountButton.click();
       var list = this.projectCountButton.getText().split('\n');
@@ -722,8 +755,7 @@ let  uploadPage = {
   checkDateTimeOrder:{
     value: function(){
       fs.appendFile(displayStyleOutput,"\n\nChecking DateTime Order\n=======================\n", function(err) {if (err) return console.log(err); });
-      console.log("Checking DateTime Order");
-      console.log("=======================");
+      console.log("Checking DateTime Order\n=======================");
       this.listViewButton.waitForEnabled();
       this.listViewButton.click();
       expect(this.listView.isVisible());
@@ -776,6 +808,8 @@ let  uploadPage = {
         browser.mediumWait();
       }
       fs.appendFile(displayStyleOutput,"\nDescending Order Checking\n-------------------------\n", function(err) {if (err) return console.log(err); });
+      console.log("SortInDescending clicked");
+      browser.mediumWait();
       console.log("Descending Order Checking");
       console.log("-------------------------");      
       var name= [];

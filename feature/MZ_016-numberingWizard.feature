@@ -1,4 +1,4 @@
-Feature: Scenario 14
+Feature: Scenario 16
 
 Scenario: User logins to presentation site
 
@@ -15,7 +15,13 @@ Scenario: User checks the uploaded project
 Given User uploads 3D data for pins
 When User verifies whether upload is successful for pins
 And User defines quotation condition for pins
+Given User verifies if automatic quotation passes
+
+Scenario: User checks the functioning of Input back numbering input
 
 Given User opens the uploaded project
 When User selects Input back numbering input
-Then User fills the data for Input back numbering
+Then User fills the data for Input back numbering and confirms
+
+When User verifies if the model number contains NHC-data in it 
+Then User opens parts view of each item and view details like checkbox and textbox
